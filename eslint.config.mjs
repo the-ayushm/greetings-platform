@@ -17,6 +17,9 @@ const config = [
     // Templates render customer-written content: no raw HTML, ever, and no reaching into server code.
     files: ["src/templates/**/*.{ts,tsx}"],
     rules: {
+      // Customer photos are private, pre-resized variants behind short-lived signed URLs;
+      // routing them through the Next image optimiser would proxy private media via our server.
+      "@next/next/no-img-element": "off",
       "no-restricted-imports": ["error", { patterns: ["@/server/*", "@/lib/supabase/*", "@/app/*"] }],
       "no-restricted-properties": ["error",
         { property: "innerHTML", message: "Templates must render customer text through JSX only." },

@@ -84,4 +84,15 @@ export const STATES: VisualState[] = [
 export async function ready(page: Page) {
   await page.evaluate(() => document.fonts.ready.then(() => undefined));
   await page.waitForTimeout(250);
+  // Under reduced motion every animation is finite; finishing them (including ones still in an
+  // animation-delay) makes the captured frame independent of exactly when the shot is taken.
+  await page.evaluate(() => {
+    for (const a of document.getAnimations()) {
+      try {
+        a.finish();
+      } catch {
+        /* infinite animation: leave as is */
+      }
+    }
+  });
 }
