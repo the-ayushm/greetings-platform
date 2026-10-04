@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.png binary
+*.html text eol=lf
+legacy/** -text
+Your_Birthday_Surprise.html -text
