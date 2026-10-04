@@ -16,3 +16,4 @@ supabase/.temp/
 supabase/.branches/
 .vercel/
 .DS_Store
+tests/fixtures/real.heic

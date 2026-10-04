@@ -82,6 +82,8 @@ export const STATES: VisualState[] = [
 
 /** Wait until web fonts are in and nothing is mid-layout. */
 export async function ready(page: Page) {
+  // Park the pointer in a corner so no :hover styles leak into the frame.
+  await page.mouse.move(0, 0);
   await page.evaluate(() => document.fonts.ready.then(() => undefined));
   await page.waitForTimeout(250);
   // Under reduced motion every animation is finite; finishing them (including ones still in an

@@ -1,0 +1,14 @@
+/* Shared look for the passcode gate and the not-found page on the renderer origin. */
+html,body{margin:0;min-height:100%}
+body{background:#ffe8ef;color:#6a3346;font-family:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif}
+.gate{min-height:100dvh;display:grid;place-items:center;padding:24px 16px;box-sizing:border-box;
+  background-color:#ffe8ef;background-image:linear-gradient(90deg,rgba(245,154,184,.38) 50%,transparent 50%),linear-gradient(rgba(245,154,184,.38) 50%,transparent 50%);background-size:30px 30px}
+.gate-card{width:min(100%,380px);box-sizing:border-box;background:#fff8ec;border:2.5px solid #6a3346;box-shadow:7px 7px 0 #f59ab8;padding:28px 22px;text-align:center}
+.gate-hand{font-family:'Caveat','Segoe Print',cursive;font-size:28px;color:#d2475f;margin:0}
+.gate-title{font-family:'Pixelify Sans','Courier New',monospace;font-size:26px;line-height:1.2;color:#d2475f;margin:6px 0 10px}
+.gate-text{margin:0 0 18px;line-height:1.5}
+.gate input{display:block;width:100%;box-sizing:border-box;font:inherit;font-family:'Pixelify Sans',monospace;font-size:28px;letter-spacing:.4em;text-align:center;padding:10px;border:2.5px solid #6a3346;background:#fff;color:#6a3346}
+.gate input:focus-visible,.gate button:focus-visible{outline:3px solid #d2475f;outline-offset:3px}
+.gate button{margin-top:14px;width:100%;min-height:52px;font:inherit;font-family:'Pixelify Sans',monospace;font-weight:700;font-size:18px;color:#fff;background:#d2475f;border:0;box-shadow:4px 4px 0 #f59ab8;cursor:pointer}
+.gate button:disabled{opacity:.6}
+.gate-err{color:#b33a50;font-weight:700;margin:10px 0 0;min-height:1.5em}
