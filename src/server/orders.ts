@@ -277,11 +277,12 @@ export async function reconcile() {
   for (const o of open ?? []) {
     report.checked++;
     try {
+      // An order can carry several attempts (failed, wrong amount, captured…): try each captured one.
       const pays = await razorpay.orderPayments(o.razorpay_order_id!);
-      const captured = pays.find((p) => p.status === "captured");
-      if (captured) {
-        const r = await fulfil(o.razorpay_order_id!, captured, "reconcile");
+      for (const p of pays.filter((x) => x.status === "captured")) {
+        const r = await fulfil(o.razorpay_order_id!, p, "reconcile");
         if (r.status === "fulfilled") report.fulfilled++;
+        if (r.status === "fulfilled" || r.status === "already") break;
       }
     } catch (e) {
       report.errors++;

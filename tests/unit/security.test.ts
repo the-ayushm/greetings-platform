@@ -105,3 +105,13 @@ describe("filenames", () => {
     expect(sanitizeFilename("")).toBe("file");
   });
 });
+
+describe("error logging", () => {
+  it("keeps error type/detail but masks emails and phone numbers", async () => {
+    const { _describeErrorForTest } = await import("@/server/log");
+    const d = _describeErrorForTest(new Error('duplicate key (email)=(priya@example.com) phone +91 98765 43210'));
+    expect(d.type).toBe("Error");
+    expect(d.detail).toContain("duplicate key");
+    expect(d.detail).not.toMatch(/priya@example\.com|98765/);
+  });
+});

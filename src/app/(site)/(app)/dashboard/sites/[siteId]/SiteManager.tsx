@@ -8,13 +8,16 @@ import { api, ApiFailure } from "@/lib/api-client";
 
 type Props = { siteId: string; status: string; url: string | null; hasPasscode: boolean; editable: boolean; disabledReason: string | null };
 
-export function SiteManager({ siteId, status, url, hasPasscode, editable, disabledReason }: Props) {
+export function SiteManager({ siteId, status, url: serverUrl, hasPasscode, editable, disabledReason }: Props) {
   const router = useRouter();
   const [msg, setMsg] = useState<{ tone: "success" | "error"; text: string } | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [qr, setQr] = useState<string | null>(null);
   const [code, setCode] = useState("");
   const [confirmDelete, setConfirmDelete] = useState("");
+  // Shown immediately after a rotation (before the server refresh lands), then kept in sync.
+  const [rotated, setRotated] = useState<{ from: string | null; to: string } | null>(null);
+  const url = rotated && rotated.from === serverUrl ? rotated.to : serverUrl;
   const live = status === "published" && url;
 
   useEffect(() => {
@@ -22,11 +25,12 @@ export function SiteManager({ siteId, status, url, hasPasscode, editable, disabl
     QRCode.toDataURL(url, { margin: 1, width: 360, color: { dark: "#6a3346", light: "#ffffff" } }).then(setQr, () => setQr(null));
   }, [live, url]);
 
-  async function run(name: string, fn: () => Promise<unknown>, ok: string) {
+  async function run(name: string, fn: () => Promise<unknown>, ok: string, after?: (r: unknown) => void) {
     setBusy(name);
     setMsg(null);
     try {
-      await fn();
+      const r = await fn();
+      after?.(r);
       setMsg({ tone: "success", text: ok });
       router.refresh();
     } catch (e) {
@@ -142,7 +146,7 @@ export function SiteManager({ siteId, status, url, hasPasscode, editable, disabl
               variant="secondary"
               disabled={busy !== null}
               onClick={() => {
-                if (confirm("Make a new link? The current link will stop working immediately.")) void run("rotate", () => api(`/api/sites/${siteId}/rotate-link`, { method: "POST" }), "New link created. The old link no longer works.");
+                if (confirm("Make a new link? The current link will stop working immediately.")) void run("rotate", () => api<{ url: string }>(`/api/sites/${siteId}/rotate-link`, { method: "POST" }), "New link created. The old link no longer works.", (r) => setRotated({ from: serverUrl, to: (r as { url: string }).url }));
               }}
             >
               Make a new link

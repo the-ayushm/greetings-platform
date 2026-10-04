@@ -47,7 +47,8 @@ export function Editor({ siteId, initial, initialRevision, status, publishedUrl 
   const dirty = useRef(false);
   const inflight = useRef<Promise<void> | null>(null);
   const frame = useRef<HTMLIFrameElement>(null);
-  const first = useRef(true);
+  // Autosave triggers on real changes only (compared with what the server last accepted).
+  const savedJson = useRef(JSON.stringify(initial));
 
   const edit = useCallback((fn: (d: ScrapbookContent) => void) => {
     setC((prev) => {
@@ -85,6 +86,7 @@ export function Editor({ siteId, initial, initialRevision, status, publishedUrl 
       try {
         const r = await api<{ revision: number }>(`/api/sites/${siteId}/draft`, { method: "PUT", body: { content: body, revision: revision.current } });
         revision.current = r.revision;
+        savedJson.current = JSON.stringify(body);
         setSave(dirty.current ? "unsaved" : "saved");
       } catch (e) {
         dirty.current = true;
@@ -103,10 +105,7 @@ export function Editor({ siteId, initial, initialRevision, status, publishedUrl 
 
   useEffect(() => {
     latest.current = c;
-    if (first.current) {
-      first.current = false;
-      return;
-    }
+    if (JSON.stringify(c) === savedJson.current) return;
     dirty.current = true;
     setSave("unsaved");
     setIssues([]);

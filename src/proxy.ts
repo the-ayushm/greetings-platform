@@ -126,6 +126,8 @@ export async function proxy(req: NextRequest) {
   }
 
   if (!isApi) res.headers.set("Content-Security-Policy", policy);
+  // Private pages must never be stored by shared caches or the browser's back/forward cache.
+  if (kind === "renderer" && !isApi) res.headers.set("Cache-Control", "private, no-store, max-age=0");
   const privatePage = kind === "renderer" || /^\/(dashboard|admin|preview|login|account)/.test(path);
   if (privatePage) res.headers.set("X-Robots-Tag", "noindex, nofollow");
   return baseHeaders(res, kind);

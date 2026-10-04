@@ -21,8 +21,24 @@ function scrub(v: unknown, depth = 0): unknown {
   return v;
 }
 
-function emit(level: "info" | "warn" | "error", event: string, fields?: Fields) {
-  const line = JSON.stringify({ level, event, at: new Date().toISOString(), ...(scrub(fields ?? {}) as Fields) });
+/** Error text can quote values (e.g. a unique-key violation): mask emails and long digit runs. */
+const maskText = (t: string) =>
+  t
+    .replace(/[^\s@"'()]+@[^\s@"'()]+\.[a-z]{2,}/gi, "[email]")
+    .replace(/\+?\d[\d\s-]{8,}\d/g, "[number]")
+    .slice(0, 300);
+
+function describeError(err: unknown) {
+  if (err instanceof Error) return { type: err.name, detail: maskText(err.message) };
+  if (err && typeof err === "object") {
+    const e = err as { code?: unknown; message?: unknown };
+    return { type: String(e.code ?? "object"), detail: maskText(String(e.message ?? "")) };
+  }
+  return { type: typeof err, detail: maskText(String(err ?? "")) };
+}
+
+function emit(level: "info" | "warn" | "error", event: string, fields?: Fields, err?: unknown) {
+  const line = JSON.stringify({ level, event, at: new Date().toISOString(), ...(scrub(fields ?? {}) as Fields), ...(err !== undefined ? { err: describeError(err) } : {}) });
   if (level === "error") console.error(line);
   else if (level === "warn") console.warn(line);
   else if (process.env.LOG_LEVEL !== "silent") process.stdout.write(line + "\n");
@@ -31,11 +47,8 @@ function emit(level: "info" | "warn" | "error", event: string, fields?: Fields) 
 export const log = {
   info: (event: string, fields?: Fields) => emit("info", event, fields),
   warn: (event: string, fields?: Fields) => emit("warn", event, fields),
-  error: (event: string, err?: unknown, fields?: Fields) =>
-    emit("error", event, {
-      ...fields,
-      error: err instanceof Error ? { name: err.name, message: err.message.slice(0, 300) } : String(err ?? ""),
-    }),
+  error: (event: string, err?: unknown, fields?: Fields) => emit("error", event, fields, err ?? null),
 };
 
 export const _scrubForTest = scrub;
+export const _describeErrorForTest = describeError;
