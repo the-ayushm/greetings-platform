@@ -112,6 +112,12 @@ async function timeline(page: Page, url: string, probe: Probe) {
       // time of the first DOM change in that frame.
       let pendingAt: number | null = null;
       const flush = () => {
+        // The port builds a scene when it is first entered (behind the page-turn), so before that
+        // none of its elements exist yet. Such a state can't be seen and isn't recorded.
+        if (watch.every((sel) => !document.querySelector(sel))) {
+          pendingAt = null;
+          return;
+        }
         const state = snap();
         if (w.__tl[w.__tl.length - 1]?.state !== state) w.__tl.push({ at: Math.round(pendingAt! - t0), state });
         pendingAt = null;
@@ -157,7 +163,8 @@ test.describe("motion parity with legacy", () => {
       expect(R.map((x) => x.state), "state sequence").toEqual(L.map((x) => x.state));
       // …reached at the same moments. Times are exact DOM-change timestamps; the remaining
       // difference is setTimeout scheduling delay on a loaded machine. Tolerance: 250 ms.
-      L.forEach((x, i) => expect(Math.abs(R[i]!.at - x.at), `"${x.state}" at legacy ${x.at} ms vs ${R[i]!.at} ms`).toBeLessThanOrEqual(250));
+      // Index 0 is the starting state, not a transition: its "time" is just when recording began.
+      L.forEach((x, i) => i > 0 && expect(Math.abs(R[i]!.at - x.at), `"${x.state}" at legacy ${x.at} ms vs ${R[i]!.at} ms`).toBeLessThanOrEqual(250));
     });
   }
 
