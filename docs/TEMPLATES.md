@@ -32,6 +32,6 @@ A template = code (React scenes + CSS + schema + defaults) **plus** a database r
 ## Assets & licences
 
 The scrapbook artwork is CSS/SVG written for this project. Fonts (Caveat, Fraunces, Nunito,
-Pixelify Sans) are SIL OFL 1.1, self-hosted from `src/templates/scrapbook/fonts/`. The music-box
+Pixelify Sans) are SIL OFL 1.1, self-hosted from `public/fonts/` (stylesheet: `src/templates/scrapbook/fonts/fonts.css`; licence texts in `public/fonts/licenses/`). The music-box
 melody is the project's own sequence (owner to confirm originality — see RELEASE_CHECKLIST.md).
 No Pinterest or third-party images are used.

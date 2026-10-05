@@ -1,3 +1,4 @@
+import { DemoTeaser } from "@/components/DemoTeaser";
 import { ButtonLink, Card, formatINR } from "@/components/ui";
 import { activeProduct } from "@/server/catalog";
 
@@ -43,9 +44,9 @@ export default async function Landing() {
           </div>
           <div className="mx-auto w-full max-w-[300px]">
             <div className="overflow-hidden rounded-[2.2rem] border-[10px] border-ink bg-ink shadow-[8px_8px_0_var(--color-pink)]">
-              <iframe src="/demo" title="Interactive demo of a birthday website" className="block aspect-[9/17] w-full bg-baby" loading="lazy" />
+              <DemoTeaser />
             </div>
-            <p className="mt-3 text-center font-hand text-xl text-ink-soft">go on, tap it ♡</p>
+            <p className="mt-3 text-center font-hand text-xl text-ink-soft">a real one, try it ♡</p>
           </div>
         </div>
       </section>

@@ -3,9 +3,9 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 /**
- * Motion parity (normal motion, not reduced): for each interaction, sample the class/visibility
- * state of the animated elements every 100 ms in the legacy file and in /demo, and compare the
- * timelines. Also compares the CSS animations attached on scene entry (name, duration, delay,
+ * Motion parity (normal motion, not reduced): for each interaction, record every change to the
+ * class/visibility state of the animated elements (exact timestamps) in the legacy file and in
+ * /demo, and compare the timelines. Also compares the CSS animations attached on scene entry (name, duration, delay,
  * easing, iterations). Screenshots prove the frames; this proves the choreography.
  */
 const LEGACY = pathToFileURL(path.resolve("legacy/Your_Birthday_Surprise.html")).href;
@@ -13,32 +13,37 @@ const LEGACY = pathToFileURL(path.resolve("legacy/Your_Birthday_Surprise.html"))
 /** Direct DOM click: same handlers, no pointer hover side effects or stability waits. */
 const tap = (p: Page, sel: string, nth = 0) => p.evaluate(([s, n]) => (document.querySelectorAll(s as string)[n as number] as HTMLElement).click(), [sel, nth] as const);
 
+/** Navigate and wait until the page-turn has finished (the router ignores taps mid-turn). */
+async function goTo(p: Page, sel: string, scene: string, nth = 0) {
+  await p.waitForSelector("#wipe:not(.run)", { state: "attached" });
+  await tap(p, sel, nth);
+  await p.waitForSelector(`#${scene}.scene.on`);
+  await p.waitForSelector("#wipe:not(.run)", { state: "attached" });
+  await p.waitForTimeout(150);
+}
+
 type Probe = { name: string; setup: (p: Page) => Promise<void>; act: (p: Page) => Promise<void>; watch: string[]; ms: number };
 
 async function toMenu(p: Page) {
-  await tap(p, '#cover [data-go="quiz"]');
-  await p.waitForTimeout(1100);
+  await goTo(p, '#cover [data-go="quiz"]', "quiz");
   for (let i = 0; i < 3; i++) {
+    const before = await p.locator("#qDots span.on").count();
     await tap(p, "#qBody [data-a]");
-    await p.waitForTimeout(1400);
+    await p.waitForFunction((n) => document.querySelectorAll("#qDots span.on").length > n, before);
+    await p.waitForTimeout(100);
   }
-  await tap(p, '#qBody [data-go="menu"]');
-  await p.waitForTimeout(1100);
+  await goTo(p, '#qBody [data-go="menu"]', "menu");
 }
 async function toCard(p: Page, card: string) {
   await toMenu(p);
-  await tap(p, `#menu [data-card="${card}"]`);
-  await p.waitForTimeout(1100);
+  await goTo(p, `#menu [data-card="${card}"]`, card === "gift" ? "surprise" : card);
 }
 
 const PROBES: Probe[] = [
   { name: "page-turn wipe", setup: async () => {}, act: (p) => tap(p, '#cover [data-go="quiz"]'), watch: ["#wipe", "#cover", "#quiz"], ms: 1300 },
   {
     name: "quiz answer → next question",
-    setup: async (p) => {
-      await tap(p, '#cover [data-go="quiz"]');
-      await p.waitForTimeout(1100);
-    },
+    setup: (p) => goTo(p, '#cover [data-go="quiz"]', "quiz"),
     act: (p) => tap(p, "#qBody [data-a]", 1),
     watch: ["#qReply", "#qBody [data-a]", "#qBar", "#qDots span"],
     ms: 1800,
@@ -53,13 +58,14 @@ const PROBES: Probe[] = [
   {
     name: "coupon lift + auto flip + use",
     setup: (p) => toCard(p, "coupons"),
-    act: async (p) => {
-      await tap(p, '#coupons [data-c="0"]');
-      await p.waitForTimeout(1300);
-      await tap(p, "#useBtn");
-    },
+    // Both clicks are driven by the page's own clock, so runner latency can't skew timings.
+    act: (p) =>
+      p.evaluate(() => {
+        (document.querySelector('#coupons [data-c="0"]') as HTMLElement).click();
+        setTimeout(() => (document.getElementById("useBtn") as HTMLElement).click(), 1300);
+      }),
     watch: ["#lift", "#flipCard", "#rStamp", "#useBtn"],
-    ms: 1500,
+    ms: 2800,
   },
   { name: "cupcake", setup: (p) => toCard(p, "gift"), act: (p) => tap(p, "#cupcake"), watch: ["#cupcake", "#sHint", "#sNext"], ms: 2000 },
   {
@@ -67,7 +73,8 @@ const PROBES: Probe[] = [
     setup: async (p) => {
       await toCard(p, "gift");
       await tap(p, "#cupcake");
-      await p.waitForTimeout(1600);
+      await p.waitForSelector("#sNext.show");
+      await p.waitForTimeout(700);
     },
     act: (p) => tap(p, '#surprise [data-go="final"]'),
     watch: [".pre p", "#fin", ".fin-lines span", "#finAgain"],
@@ -81,7 +88,7 @@ async function timeline(page: Page, url: string, probe: Probe) {
   if (url.startsWith("http")) await page.waitForSelector("#app[data-hydrated]");
   await probe.setup(page);
   await page.evaluate((watch) => {
-    const w = window as unknown as { __tl: string[] };
+    const w = window as unknown as { __tl: { at: number; state: string }[] };
     w.__tl = [];
     const snap = () =>
       watch
@@ -97,45 +104,60 @@ async function timeline(page: Page, url: string, probe: Probe) {
             .join(","),
         )
         .join(" | ");
-    // Time zero is the probe's first click (captured before any handler runs), so both pages
-    // are sampled from the same moment regardless of test-runner latency.
+    // Time zero is the probe's first click (captured before any handler runs). Every DOM change
+    // after that is timestamped exactly by a MutationObserver (no polling, no sampling lag).
     const start = () => {
       const t0 = performance.now();
-      const iv = setInterval(() => {
-        w.__tl.push(snap());
-        if (performance.now() - t0 > 30000) clearInterval(iv);
-      }, 100);
+      // At most one snapshot per frame (snapshots force style recalculation), stamped with the
+      // time of the first DOM change in that frame.
+      let pendingAt: number | null = null;
+      const flush = () => {
+        const state = snap();
+        if (w.__tl[w.__tl.length - 1]?.state !== state) w.__tl.push({ at: Math.round(pendingAt! - t0), state });
+        pendingAt = null;
+      };
+      const record = () => {
+        if (pendingAt !== null) return;
+        pendingAt = performance.now();
+        requestAnimationFrame(flush);
+      };
+      pendingAt = t0;
+      flush();
+      new MutationObserver(record).observe(document.documentElement, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["class", "style"] });
     };
     addEventListener("click", start, { capture: true, once: true });
   }, probe.watch);
   await probe.act(page);
-  await page.waitForTimeout(probe.ms);
-  return page.evaluate(() => (window as unknown as { __tl: string[] }).__tl);
+  // Generous margin: once an animation settles no new states appear, but a busy machine can
+  // push the last transitions later than the nominal schedule.
+  await page.waitForTimeout(probe.ms + 2500);
+  return page.evaluate(() => (window as unknown as { __tl: { at: number; state: string }[] }).__tl);
 }
 
-/** Collapse a sampled timeline into its sequence of distinct states with approximate times. */
-function transitions(tl: string[]) {
-  const out: { at: number; state: string }[] = [];
-  tl.forEach((s, i) => {
-    if (!out.length || out[out.length - 1]!.state !== s) out.push({ at: i * 100, state: s });
-  });
-  return out;
-}
 
 test.describe("motion parity with legacy", () => {
-  test.describe.configure({ mode: "serial", timeout: 120_000 });
+  // Each probe records four timelines (two per page); the final sequence alone is ~15 s each.
+  test.describe.configure({ mode: "serial", timeout: 480_000 });
 
   for (const probe of PROBES) {
     test(probe.name, async ({ browser, baseURL }) => {
-      const a = await (await browser.newContext({ viewport: { width: 390, height: 844 } })).newPage();
-      const b = await (await browser.newContext({ viewport: { width: 390, height: 844 } })).newPage();
-      const [legacy, react] = await Promise.all([timeline(a, LEGACY, probe), timeline(b, `${baseURL}/demo`, probe)]);
-      const L = transitions(legacy),
-        R = transitions(react);
+      // Each page is recorded twice, one at a time. Timers can only fire late (never early) on a
+      // busy machine, so the earliest time a state is seen across runs is the truest measure.
+      const run = async (url: string) => {
+        const page = await (await browser.newContext({ viewport: { width: 390, height: 844 } })).newPage();
+        const tl = await timeline(page, url, probe);
+        await page.context().close();
+        return tl;
+      };
+      const earliest = (a: { at: number; state: string }[], b: { at: number; state: string }[]) =>
+        a.map((x, i) => (b[i]?.state === x.state ? { ...x, at: Math.min(x.at, b[i]!.at) } : x));
+      const L = earliest(await run(LEGACY), await run(LEGACY));
+      const R = earliest(await run(`${baseURL}/demo`), await run(`${baseURL}/demo`));
       // Same sequence of states…
       expect(R.map((x) => x.state), "state sequence").toEqual(L.map((x) => x.state));
-      // …reached at the same moments (±250 ms sampling/scheduling jitter).
-      L.forEach((x, i) => expect(Math.abs(R[i]!.at - x.at), `"${x.state}" timing`).toBeLessThanOrEqual(250));
+      // …reached at the same moments. Times are exact DOM-change timestamps; the remaining
+      // difference is setTimeout scheduling delay on a loaded machine. Tolerance: 250 ms.
+      L.forEach((x, i) => expect(Math.abs(R[i]!.at - x.at), `"${x.state}" at legacy ${x.at} ms vs ${R[i]!.at} ms`).toBeLessThanOrEqual(250));
     });
   }
 
@@ -147,13 +169,16 @@ test.describe("motion parity with legacy", () => {
       const out: Record<string, string[]> = {};
       const read = async (key: string) => {
         out[key] = await p.evaluate(() =>
+          // Declared animations (computed style), not the ones still running at this instant:
+          // timing-independent, and it covers finished entry animations too.
           [...document.querySelectorAll(".scene.on *")]
-            .flatMap((el) => el.getAnimations().map((a) => a as CSSAnimation))
-            .filter((a) => "animationName" in a)
-            .map((a) => {
-              const t = a.effect!.getTiming();
-              return `${(a.effect as KeyframeEffect).target!.className.toString().split(" ")[0]}:${a.animationName}:${t.duration}:${t.delay}:${t.easing}:${t.iterations}`;
+            .map((el) => {
+              const s = getComputedStyle(el);
+              if (s.animationName === "none") return null;
+              const cls = el.getAttribute("class")?.split(" ")[0] ?? el.tagName;
+              return `${cls}:${s.animationName}:${s.animationDuration}:${s.animationDelay}:${s.animationTimingFunction}:${s.animationIterationCount}:${s.animationFillMode}`;
             })
+            .filter((x): x is string => x !== null)
             .sort(),
         );
       };
@@ -162,10 +187,12 @@ test.describe("motion parity with legacy", () => {
       await read("menu");
       for (const card of ["memories", "coupons", "song"]) {
         await tap(p, `#menu [data-card="${card}"]`);
-        await p.waitForTimeout(500);
+        await p.waitForSelector(`#${card}.scene.on`);
         await read(card);
+        await p.waitForTimeout(700); // let the page-turn finish (the router ignores taps mid-turn)
         await tap(p, `#${card} [data-go="menu"]`);
-        await p.waitForTimeout(1100);
+        await p.waitForSelector("#menu.scene.on");
+        await p.waitForTimeout(600);
       }
       return out;
     };

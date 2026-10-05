@@ -16,7 +16,7 @@ const SUPABASE = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? "http://127.0.0
 const DEV = process.env.NODE_ENV === "development";
 const HTTPS = APP.protocol === "https:";
 
-const RENDERER_PATHS = /^\/(birthday\/[A-Za-z0-9]{1,64}\/?|api\/r\/[a-z-]+|robots\.txt|favicon\.ico|icon\.svg)$/;
+const RENDERER_PATHS = /^\/(birthday\/[A-Za-z0-9]{1,64}\/?|api\/r\/[a-z-]+|fonts\/[a-f0-9]{16}\.woff2|robots\.txt|favicon\.ico|icon\.svg)$/;
 
 function csp(kind: "app" | "renderer", nonce: string) {
   const script = `'self' 'nonce-${nonce}' 'strict-dynamic'${DEV ? " 'unsafe-eval'" : ""}`;

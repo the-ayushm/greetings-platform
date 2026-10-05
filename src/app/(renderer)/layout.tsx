@@ -1,3 +1,4 @@
+import { FontPreload } from "@/templates/scrapbook/FontPreload";
 import type { Metadata, Viewport } from "next";
 
 // Root layout for every page that shows a birthday experience (demo, owner preview, recipient
@@ -14,7 +15,10 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, view
 export default function RendererRootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <FontPreload />
+        {children}
+      </body>
     </html>
   );
 }

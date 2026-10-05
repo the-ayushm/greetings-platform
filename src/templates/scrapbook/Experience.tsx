@@ -325,6 +325,9 @@ export function Experience({ content: c, mode, media, storageKey, onMediaError }
 
   const body = (id: SceneId) => {
     const k = visits[id];
+    // Scenes are built on first visit (hidden scenes are display:none, so nothing visible
+    // changes); this keeps the first load and hydration down to the cover.
+    if (k === 0 && current !== id) return null;
     switch (id) {
       case "cover": return <Cover key={k} />;
       case "quiz": return <Quiz key={k} />;

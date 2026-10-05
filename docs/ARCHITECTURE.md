@@ -34,7 +34,7 @@ importing server or database modules.
 
 - `scrapbook.css` — the legacy CSS **byte-for-byte** (verified by diff), plus an appended block
   of non-visual additions (dvh, `color-mix()` fallbacks for old WebViews, a11y helpers).
-- `fonts/` — the exact Google Fonts files the legacy page loaded, self-hosted (OFL).
+- `fonts/fonts.css` + `public/fonts/` — the exact Google Fonts files the legacy page loaded, self-hosted (OFL).
 - `Experience.tsx` + `scenes/*` — same DOM structure, ids and class names; React state replaces
   `innerHTML` (so customer text is always escaped).
 - `engine/` — router timers, confetti, pops and the music box, ported unchanged.
@@ -78,6 +78,17 @@ Storage paths are `<asset uuid>/<variant>` — no user or site ids in URLs.
 See CUSTOMER-FLOW.md. The webhook is the source of truth; the checkout callback is a fast path.
 Both converge on the idempotent `fulfil_order` function. A reconcile cron recovers missed
 webhooks and pending refunds.
+
+## Performance
+
+- Scenes are built on first visit (the original built all nine up front); hidden scenes are
+  `display:none`, so this changes nothing visible but cuts first-load hydration to the cover.
+- The five Latin font files are preloaded (HTTP `Link` header) from stable `/fonts/…` URLs with
+  year-long immutable caching; other subsets load on demand via `unicode-range`.
+- The landing page shows a still of the cover and loads the live demo only when tapped.
+- Photos are 480/1200 px WebP served directly from storage (never through our functions).
+- `node scripts/lighthouse.mjs` measures mobile (simulated slow 4G, 4× CPU). See
+  RELEASE_CHECKLIST.md for the latest numbers and the budget.
 
 ## Observability
 

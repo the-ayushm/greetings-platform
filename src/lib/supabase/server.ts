@@ -3,6 +3,7 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { env } from "@/server/env";
 import type { Database } from "./database.types";
+import { fetchWithTimeout } from "./fetch-timeout";
 
 /**
  * Per-request client acting as the signed-in user (publishable key + the user's session
@@ -11,6 +12,7 @@ import type { Database } from "./database.types";
 export async function userDb() {
   const store = await cookies();
   return createServerClient<Database>(env().NEXT_PUBLIC_SUPABASE_URL, env().NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, {
+    global: { fetch: fetchWithTimeout },
     cookies: {
       getAll: () => store.getAll(),
       setAll: (list) => {

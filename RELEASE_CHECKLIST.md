@@ -29,4 +29,8 @@ environment and need you (or real accounts/devices).
 - [ ] `npm run typecheck` · `npm run lint`
 - [ ] `npm run test:unit` · `npm run test:db`
 - [ ] `npm run build` then `PW_SERVER=prod npx playwright test` (visual, motion, e2e, a11y, mobile)
-- [ ] `node scripts/lighthouse.mjs` within budget
+- [ ] ⚠ `node scripts/lighthouse.mjs https://<staging>/demo https://<staging>/` within budget (performance ≥ 0.85, LCP ≤ 2.5 s, TBT ≤ 300 ms).
+  Last local run (development laptop at 100% CPU, so pessimistic): demo 0.61 (FCP 1.5 s, LCP 4.5 s),
+  landing 0.73 (LCP 3.0 s), pricing 0.70 (FCP 1.1 s, LCP 4.1 s); accessibility 1.0, best practices 0.96.
+  **Not yet within budget** — measure on staging; next levers if still short: inline critical CSS,
+  smaller display font for store pages, defer the paper-grain overlay.
