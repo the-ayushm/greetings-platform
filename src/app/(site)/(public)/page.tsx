@@ -74,7 +74,7 @@ export default async function Landing() {
               ["Share the link", "Publish and send your private link on WhatsApp, or print the QR code inside a card."],
             ].map(([t, b], i) => (
               <li key={t} className="rounded-2xl border-2 border-dashed border-pink bg-cream p-5">
-                <span className="font-pixel text-3xl text-pink">0{i + 1}</span>
+                <span className="font-pixel text-3xl text-rose" aria-hidden="true">0{i + 1}</span>
                 <h3 className="mt-1 text-lg font-extrabold">{t}</h3>
                 <p className="mt-1 text-ink-soft">{b}</p>
               </li>

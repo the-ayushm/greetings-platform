@@ -3,8 +3,8 @@
 @theme {
   --color-ink: #6a3346;
   --color-ink-soft: #8a5468;
-  --color-rose: #d2475f;
-  --color-rose-dark: #b33a50;
+  --color-rose: #c13a52; /* store UI: 5:1+ on cream/white (the template keeps its own #d2475f) */
+  --color-rose-dark: #a32f45;
   --color-pink: #f59ab8;
   --color-blush: #fbcfdd;
   --color-baby: #ffe8ef;
