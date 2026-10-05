@@ -37,7 +37,7 @@ export async function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t-2 border-ink/10 bg-white/60">
+    <footer className="mt-16 shrink-0 border-t-2 border-ink/10 bg-white/60">
       <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p className="text-ink-soft">© {new Date().getFullYear()} Birthday Surprise. Made with care in India.</p>
         <nav aria-label="Legal" className="flex flex-wrap gap-x-4 gap-y-2 font-bold">
