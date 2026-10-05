@@ -44,7 +44,7 @@ Local `.env.local` values: `APP_ORIGIN=http://app.localhost:3000`,
 values (see `.github/workflows/ci.yml`), and random `APP_SECRET` / `CRON_SECRET`.
 
 - Store: http://app.localhost:3000 · Demo: http://app.localhost:3000/demo
-- Sign-in codes arrive in the local mail catcher: http://127.0.0.1:54324
+- Sign-in link emails arrive in the local mail catcher: http://127.0.0.1:54324
 - Make yourself admin: `npx tsx scripts/make-admin.ts you@example.com`, then open `/admin`
   (you'll enrol an authenticator app on first visit).
 

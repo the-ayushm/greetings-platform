@@ -95,6 +95,13 @@ export async function proxy(req: NextRequest) {
   if (kind === "renderer" && !RENDERER_PATHS.test(path)) return notFound("renderer");
   if (kind === "app" && (path.startsWith("/birthday") || path.startsWith("/api/r/"))) return notFound("app");
 
+  // If Supabase falls back to the Site URL, the sign-in link lands on "/" — finish it at the callback.
+  if (kind === "app" && path === "/" && ["code", "token_hash", "error_code"].some((k) => req.nextUrl.searchParams.has(k))) {
+    const to = req.nextUrl.clone();
+    to.pathname = "/auth/callback";
+    return NextResponse.redirect(to);
+  }
+
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   const policy = csp(kind, nonce);
   const reqHeaders = new Headers(req.headers);

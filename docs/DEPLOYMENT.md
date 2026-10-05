@@ -24,10 +24,10 @@ non-Razorpay API base outside local, or http origins outside local.
    npx supabase link --project-ref <ref>
    npx supabase db push            # applies supabase/migrations
    ```
-   Auth settings: Site URL = app origin; redirect URLs = app origin; email OTP length 6, expiry
-   900 s; **enable TOTP MFA**; set custom SMTP (e.g. Resend/Postmark) — the built-in sender is
-   heavily rate-limited; paste `supabase/templates/otp.html` as the Magic Link and Confirm signup
-   templates; tune rate limits (emails/hour).
+   Auth settings: Site URL = app origin; **Redirect URLs must include `<app origin>/auth/callback`**
+   (sign-in links land there); **enable TOTP MFA**. Sign-in uses Supabase's default magic-link
+   email (no custom template needed). The built-in email sender is heavily rate-limited (a few
+   emails per hour), so set custom SMTP (e.g. Resend/Postmark) before launch.
 3. **Razorpay.** Complete KYC (needs the live Terms, Privacy, Refund, Delivery and Contact pages —
    fill the [bracketed] details in `src/app/(site)/(public)/legal/[doc]/content.ts` and
    `contact/page.tsx` first). Create a webhook to `https://<app>/api/webhooks/razorpay` with events

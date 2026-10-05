@@ -10,32 +10,31 @@ const MAILPIT = "http://127.0.0.1:54324";
 export const uid = () => crypto.randomBytes(4).toString("hex");
 export const email = (tag: string) => `${tag}-${uid()}@example.com`;
 
-/** Reads the newest sign-in code sent to this address from the local mail catcher. */
-export async function otpFor(address: string, after: number): Promise<string> {
+/** Reads the newest sign-in link sent to this address from the local mail catcher. */
+export async function linkFor(address: string, after: number): Promise<string> {
   for (let i = 0; i < 40; i++) {
     const r = await fetch(`${MAILPIT}/api/v1/search?query=${encodeURIComponent(`to:"${address}"`)}`);
     const j = (await r.json()) as { messages?: { ID: string; Created: string }[] };
     const msg = (j.messages ?? []).find((m) => new Date(m.Created).getTime() >= after - 2000);
     if (msg) {
       const full = (await (await fetch(`${MAILPIT}/api/v1/message/${msg.ID}`)).json()) as { HTML?: string; Text?: string };
-      const m = (full.HTML ?? full.Text ?? "").match(/data-otp>\s*(\d{6})|\b(\d{6})\b/);
-      if (m) return (m[1] ?? m[2])!;
+      const m = (full.HTML ?? full.Text ?? "").match(/href="([^"]*\/auth\/v1\/verify[^"]*)"/);
+      if (m) return m[1]!.replace(/&amp;/g, "&");
     }
     await new Promise((r) => setTimeout(r, 500));
   }
-  throw new Error(`no OTP email for ${address}`);
+  throw new Error(`no sign-in email for ${address}`);
 }
 
-/** Real sign-in flow: email → emailed 6-digit code → session cookie. */
+/** Real sign-in flow: email → "Check your email" → click the emailed link → /auth/callback → session. */
 export async function login(page: Page, address: string, next = "/dashboard") {
   await page.goto(`${APP}/login?next=${encodeURIComponent(next)}`);
   await page.getByLabel("Email").fill(address);
   const t = Date.now();
-  await page.getByRole("button", { name: "Email me a code" }).click();
-  const code = await otpFor(address, t);
-  await page.getByLabel("6-digit code").fill(code);
-  await page.getByRole("button", { name: "Sign in" }).click();
-  await page.waitForURL((u) => !u.pathname.startsWith("/login"));
+  await page.getByRole("button", { name: "Send sign-in link" }).click();
+  await expect(page.getByRole("heading", { name: "Check your email" })).toBeVisible();
+  await page.goto(await linkFor(address, t));
+  await page.waitForURL((u) => u.origin === APP && !u.pathname.startsWith("/login") && !u.pathname.startsWith("/auth/"));
 }
 
 /**

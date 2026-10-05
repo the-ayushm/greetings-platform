@@ -5,7 +5,7 @@
 ```
  www.example.in  (APP_ORIGIN)                     wishes.example.in  (RENDERER_ORIGIN)
  ├─ store: /, /product, /demo, /legal/*           └─ /birthday/<22-char slug>   recipient page
- ├─ /login (email code)                              /api/r/{unlock,media,view,report}
+ ├─ /login (email link → /auth/callback)               /api/r/{unlock,media,view,report}
  ├─ /checkout → Razorpay Checkout                    no auth cookies · no-referrer · noindex
  ├─ /dashboard, /dashboard/sites/:id/edit            strict CSP · frame-ancestors 'none'
  ├─ /preview/:id (owner-only draft, iframe)
