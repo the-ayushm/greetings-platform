@@ -42,6 +42,10 @@ jobs:
       - run: npm run test:db
       - run: npm run build
       - run: npx playwright install --with-deps chromium webkit
+      # The golden baseline is rendered from the untouched legacy file on this same OS, so the
+      # port is compared like for like (the committed baseline is Windows-rendered).
+      - name: Capture legacy visual baseline (Linux)
+        run: npm run test:visual:baseline
       - name: End-to-end, isolation, visual, motion, a11y and mobile suites
         run: npx playwright test --workers 2
       - uses: actions/upload-artifact@v4

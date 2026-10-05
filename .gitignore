@@ -17,3 +17,5 @@ supabase/.branches/
 .vercel/
 .DS_Store
 tests/fixtures/real.heic
+tests/visual/baseline/linux/
+tests/visual/baseline/darwin/

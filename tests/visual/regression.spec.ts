@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import fs from "node:fs";
 import path from "node:path";
 import { compareToBaseline } from "./compare";
 import { STATES, VIEWPORTS, ready } from "./states";
@@ -7,8 +8,12 @@ import { STATES, VIEWPORTS, ready } from "./states";
  * The React renderer (/demo, same content as the legacy config) must match the golden legacy
  * screenshots state by state. Allowed difference: 11% of pixels (browser rendering drift across CI/runtime updates).
  */
-const MAX_RATIO = 0.11;
-const BASE = path.resolve("tests/visual/baseline");
+const MAX_RATIO = 0.001;
+// Compared on the same OS the baseline was rendered on (fonts rasterise differently per OS).
+const BASE = path.resolve("tests/visual/baseline", process.platform);
+if (!fs.existsSync(BASE)) {
+  throw new Error(`No legacy baseline for ${process.platform}. Capture it first: npm run test:visual:baseline`);
+}
 const OUT = path.resolve("test-results/visual-diff");
 
 for (const vp of VIEWPORTS) {

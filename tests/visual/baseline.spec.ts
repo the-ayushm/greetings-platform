@@ -6,11 +6,13 @@ import { STATES, VIEWPORTS, ready } from "./states";
 
 /**
  * PHASE 0 — captures the golden baseline from the untouched legacy file.
- * Run once (npm run test:visual:baseline); the PNGs are committed and are the
+ * Font rasterisation differs per OS, so baselines live under baseline/<platform>/: the Windows
+ * set is committed for local runs; CI captures its own Linux set from the same legacy file
+ * before comparing (npm run test:visual:baseline). The PNGs are the
  * reference every renderer change is compared against.
  */
 const LEGACY = pathToFileURL(path.resolve("legacy/Your_Birthday_Surprise.html")).href;
-const OUT = path.resolve("tests/visual/baseline");
+const OUT = path.resolve("tests/visual/baseline", process.platform);
 
 for (const vp of VIEWPORTS) {
   test.describe(vp.name, () => {
