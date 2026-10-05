@@ -109,18 +109,34 @@ async function refundDuplicate(paymentId: string, amount: number) {
   }
 }
 
+/**
+ * Accounts can be set to capture payments manually; an authorized payment for exactly the
+ * order's amount is captured here (only ever after the signature/order checks by the caller).
+ */
+async function ensureCaptured(p: RzpPayment, amountPaise: number, currency: string): Promise<RzpPayment> {
+  if (p.status !== "authorized" || p.amount !== amountPaise || p.currency !== currency) return p;
+  try {
+    return await razorpay.capture(p.id, amountPaise, currency);
+  } catch {
+    // Already captured elsewhere (auto-capture, a webhook, a parallel request): re-read it.
+    log.warn("payment.capture_failed", { payment: p.id });
+    return razorpay.fetchPayment(p.id);
+  }
+}
+
 /** Razorpay Checkout success handler → verify signature, confirm with the API, fulfil. */
 export async function verifyCheckout(userId: string, input: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) {
-  const { data: order } = await db().from("orders").select("id, status, razorpay_order_id").eq("razorpay_order_id", input.razorpay_order_id).eq("user_id", userId).maybeSingle();
+  const { data: order } = await db().from("orders").select("id, status, razorpay_order_id, amount_paise, currency").eq("razorpay_order_id", input.razorpay_order_id).eq("user_id", userId).maybeSingle();
   if (!order) throw notFound();
   if (!verifyCheckoutSignature(input.razorpay_order_id, input.razorpay_payment_id, input.razorpay_signature)) {
     await audit("payment.bad_signature", "order", order.id, {}, userId, "customer");
     throw badRequest("Payment could not be verified.");
   }
   // The signature proves Razorpay authorised this payment for this order; the API call
-  // confirms it was actually captured and for the right amount.
-  const p = await razorpay.fetchPayment(input.razorpay_payment_id);
+  // confirms it was actually captured (capturing it if needed) and for the right amount.
+  let p = await razorpay.fetchPayment(input.razorpay_payment_id);
   if (p.order_id !== input.razorpay_order_id) throw badRequest("Payment does not belong to this order.");
+  p = await ensureCaptured(p, order.amount_paise, order.currency);
   if (p.status !== "captured") return { status: "pending" as const, orderId: order.id };
   const r = await fulfil(input.razorpay_order_id, p, "checkout");
   if (r.status === "fulfilled" || r.status === "already") return { status: "paid" as const, orderId: order.id, siteId: r.site_id ?? null };
@@ -268,7 +284,7 @@ export async function reconcile() {
   // 1. Unpaid orders whose webhook may have been missed.
   const { data: open } = await db()
     .from("orders")
-    .select("id, razorpay_order_id")
+    .select("id, razorpay_order_id, amount_paise, currency")
     .eq("status", "created")
     .not("razorpay_order_id", "is", null)
     .lte("created_at", new Date(now - 2 * 60_000).toISOString())
@@ -279,7 +295,9 @@ export async function reconcile() {
     try {
       // An order can carry several attempts (failed, wrong amount, captured…): try each captured one.
       const pays = await razorpay.orderPayments(o.razorpay_order_id!);
-      for (const p of pays.filter((x) => x.status === "captured")) {
+      for (const raw of pays.filter((x) => x.status === "captured" || x.status === "authorized")) {
+        const p = await ensureCaptured(raw, o.amount_paise, o.currency);
+        if (p.status !== "captured") continue;
         const r = await fulfil(o.razorpay_order_id!, p, "reconcile");
         if (r.status === "fulfilled") report.fulfilled++;
         if (r.status === "fulfilled" || r.status === "already") break;

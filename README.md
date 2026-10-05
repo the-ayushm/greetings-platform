@@ -57,6 +57,28 @@ npm run test:db          # tenant isolation straight against Postgres/Storage (c
 npm run build && PW_SERVER=prod npx playwright test   # everything below, against the prod build
 ```
 
+Automated tests must run against the **local** Supabase stack and the **Razorpay mock**, never
+your hosted project or real Razorpay. With real values in `.env.local`, export these first (they
+override `.env.local`), then build and start the app in the same shell:
+
+```bash
+export NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321 \
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<publishable key from `npm run db:start`> \
+  SUPABASE_SECRET_KEY=<secret key from `npm run db:start`> \
+  RAZORPAY_KEY_ID=rzp_test_localmock0001 \
+  RAZORPAY_KEY_SECRET=localmock_key_secret_not_a_real_credential \
+  RAZORPAY_WEBHOOK_SECRET=localmock_webhook_secret_not_a_real_credential \
+  RAZORPAY_API_BASE=http://127.0.0.1:4010
+```
+
+### Manual Razorpay test-mode payment
+
+Put your `rzp_test_…` key id and secret in `.env.local` (no `RAZORPAY_API_BASE`), `npm run build &&
+npm start`, sign in, open **Pricing → Buy now → Pay ₹499**. In Razorpay's test checkout choose
+**Netbanking → any bank → Success** on the demo bank page (or card `4111 1111 1111 1111`, any
+future expiry, any CVV). You land on "Payment received" only after `/api/checkout/verify` has
+checked the signature on the server; the order shows as *paid* under My sites and in Admin → Orders.
+
 Playwright projects: `visual` (100 screenshots vs the legacy file + motion timelines), `e2e`
 (journey, isolation/IDOR, payments, uploads, security, admin), `a11y` (axe + keyboard),
 `mobile-ios` / `mobile-android`. `npm run qa` runs the full chain.

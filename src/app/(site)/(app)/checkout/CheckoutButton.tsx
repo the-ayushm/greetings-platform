@@ -66,7 +66,8 @@ export function CheckoutButton({ productId, email, label }: { productId: string;
       },
     });
     rzp.on("payment.failed", (r) => {
-      setError(r.error?.description ? `Payment failed: ${r.error.description}. You haven't been charged — you can try again.` : "Payment failed. You can try again.");
+      const reason = r.error?.description?.trim().replace(/[.\s]+$/, "");
+      setError(reason ? `Payment failed: ${reason}. You haven't been charged — you can try again.` : "Payment failed. You haven't been charged — you can try again.");
     });
     setState("open");
     rzp.open();

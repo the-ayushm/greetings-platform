@@ -135,6 +135,17 @@ const server = http.createServer(async (req, res) => {
       const pay = payments.get(m[1]);
       return pay ? send(res, 200, paymentEntity(pay)) : err(res, 400, "BAD_REQUEST_ERROR", "The id provided does not exist");
     }
+    if ((m = p.match(/^\/v1\/payments\/([^/]+)\/capture$/)) && req.method === "POST") {
+      const pay = payments.get(m[1]);
+      const b = await readBody(req);
+      if (!pay) return err(res, 400, "BAD_REQUEST_ERROR", "The id provided does not exist");
+      if (pay.status !== "authorized") return err(res, 400, "BAD_REQUEST_ERROR", "This payment has already been captured");
+      if (b.amount !== pay.amount || b.currency !== pay.currency) return err(res, 400, "BAD_REQUEST_ERROR", "Capture amount must be equal to the amount authorized");
+      pay.status = "captured";
+      const o = orders.get(pay.order_id);
+      if (o) o.status = "paid";
+      return send(res, 200, paymentEntity(pay));
+    }
     if ((m = p.match(/^\/v1\/payments\/([^/]+)\/refund$/)) && req.method === "POST") {
       const pay = payments.get(m[1]);
       if (!pay || pay.status !== "captured") return err(res, 400, "BAD_REQUEST_ERROR", "payment not refundable");

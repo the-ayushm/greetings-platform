@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import { expect, test, type Page } from "@playwright/test";
 import { admin, totp } from "../helpers/db";
-import { api, APP, MOCK, newCustomer, RENDERER } from "./helpers";
+import { api, APP, MOCK, newCustomer, RENDERER, stubRazorpay } from "./helpers";
 
 /**
  * Payment flows against the Razorpay mock (which signs exactly like Razorpay). Exercises the
@@ -26,6 +26,25 @@ async function siteCount(orderId: string) {
 test.beforeAll(async ({ browser }) => {
   ({ page } = await newCustomer(browser, "pay"));
   productId = (await db().from("products").select("id").eq("is_active", true).limit(1).single()).data!.id;
+});
+
+test("an authorized (not yet captured) payment is captured after verification, then fulfilled once", async () => {
+  const s = await startCheckout();
+  const paid = await mock("/test/pay", { order_id: s.razorpayOrderId, outcome: "authorized", webhook: false });
+  // A forged signature must not trigger a capture.
+  const bad = await api(page).post("/api/checkout/verify", { ...paid, razorpay_signature: "0".repeat(64) });
+  expect(bad.status).toBe(400);
+  let state = (await (await fetch(`${MOCK}/test/state`)).json()) as { payments: { id: string; status: string }[] };
+  expect(state.payments.find((p) => p.id === paid.razorpay_payment_id)!.status).toBe("authorized");
+  // The real signature: captured on the server, then the order is fulfilled.
+  const ok = await api(page).post("/api/checkout/verify", paid);
+  expect(ok.json).toMatchObject({ status: "paid" });
+  state = (await (await fetch(`${MOCK}/test/state`)).json()) as { payments: { id: string; status: string }[] };
+  expect(state.payments.find((p) => p.id === paid.razorpay_payment_id)!.status).toBe("captured");
+  expect(await siteCount(s.orderId)).toBe(1);
+  const again = await api(page).post("/api/checkout/verify", paid);
+  expect(again.json).toMatchObject({ status: "paid" });
+  expect(await siteCount(s.orderId)).toBe(1);
 });
 
 test("the price always comes from the database", async () => {
@@ -179,4 +198,24 @@ test("admin refund: refund → webhook → order refunded and the site's link st
   const { data: log } = await db().from("audit_log").select("action").eq("target_id", s.orderId);
   expect(log!.map((l) => l.action)).toEqual(expect.arrayContaining(["admin.refund", "refund.processed"]));
   await ad.context.close();
+});
+
+test("checkout UI: failed payment shows the reason; closing the checkout re-enables Pay; nothing is marked paid", async ({ browser }) => {
+  const c = await newCustomer(browser, "pay-ui");
+  let outcome: "fail" | "dismiss" = "fail";
+  await stubRazorpay(c.page, () => outcome);
+  await c.page.goto(`${APP}/product`);
+  await c.page.getByRole("link", { name: "Buy now" }).click();
+  await c.page.getByTestId("pay").click();
+  await expect(c.page.getByRole("alert").filter({ hasText: "Payment failed" })).toContainText("You haven't been charged");
+  await expect(c.page.getByRole("alert").filter({ hasText: "Payment failed" })).not.toContainText("..");
+  outcome = "dismiss";
+  await c.page.reload();
+  await c.page.getByTestId("pay").click();
+  await expect(c.page.getByTestId("pay")).toBeEnabled();
+  await expect(c.page.getByTestId("pay")).toHaveText(/^Pay /);
+  const { data: u } = await db().from("profiles").select("id").eq("email", c.email).single();
+  const { data: orders } = await db().from("orders").select("status").eq("user_id", u!.id);
+  expect(orders!.every((o) => o.status === "created")).toBe(true);
+  await c.context.close();
 });

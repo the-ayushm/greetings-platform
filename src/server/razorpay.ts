@@ -61,6 +61,9 @@ export const razorpay = {
   fetchPayment: (paymentId: string) => call("GET", `/v1/payments/${encodeURIComponent(paymentId)}`, paymentSchema),
   orderPayments: (orderId: string) =>
     call("GET", `/v1/orders/${encodeURIComponent(orderId)}/payments`, z.object({ items: z.array(paymentSchema) })).then((r) => r.items),
+  /** Captures an authorized payment (used when the account doesn't auto-capture). */
+  capture: (paymentId: string, amountPaise: number, currency: string) =>
+    call("POST", `/v1/payments/${encodeURIComponent(paymentId)}/capture`, paymentSchema, { amount: amountPaise, currency }),
   refund: (paymentId: string, amountPaise: number, receipt: string) =>
     call("POST", `/v1/payments/${encodeURIComponent(paymentId)}/refund`, refundSchema, { amount: amountPaise, speed: "normal", receipt }),
   fetchRefund: (refundId: string) => call("GET", `/v1/refunds/${encodeURIComponent(refundId)}`, refundSchema),

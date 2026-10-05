@@ -42,8 +42,9 @@ export async function login(page: Page, address: string, next = "/dashboard") {
  * serves a tiny stub at the same URL. It asks the local mock to "pay" — which signs the result
  * with the key secret and delivers a signed webhook to the app, like Razorpay does.
  */
-export async function stubRazorpay(page: Page, outcome: () => "success" | "fail" = () => "success") {
+export async function stubRazorpay(page: Page, outcome: () => "success" | "fail" | "dismiss" = () => "success") {
   await page.exposeFunction("__rzpTestPay", async (orderId: string) => {
+    if (outcome() === "dismiss") return { dismissed: true };
     const r = await fetch(`${MOCK}/test/pay`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ order_id: orderId, outcome: outcome() }) });
     return r.json();
   });
@@ -53,7 +54,8 @@ export async function stubRazorpay(page: Page, outcome: () => "success" | "fail"
       body: `window.Razorpay=function(o){this.o=o;this.h={}};
 window.Razorpay.prototype.on=function(e,f){this.h[e]=f};
 window.Razorpay.prototype.open=async function(){var r=await window.__rzpTestPay(this.o.order_id);
- if(r.error){this.h["payment.failed"]&&this.h["payment.failed"]({error:r.error})}else{this.o.handler(r)}};`,
+ if(r.dismissed){this.o.modal&&this.o.modal.ondismiss&&this.o.modal.ondismiss()}
+ else if(r.error){this.h["payment.failed"]&&this.h["payment.failed"]({error:r.error})}else{this.o.handler(r)}};`,
     }),
   );
 }
