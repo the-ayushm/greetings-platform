@@ -6,6 +6,7 @@ import { AUDIO_MAX_BYTES, processAudio } from "./audio";
 import { ApiError, badRequest, conflict, notFound } from "./http";
 import { MediaRejected, processImage } from "./images";
 import { log } from "./log";
+import { isTransient, storageBusy, storageCall } from "./retry";
 import { getOwnedSite, MEDIA_BUCKET, removePrefix, SIGNED_URL_TTL } from "./sites";
 
 export const IMAGE_MAX_BYTES = 15 * 1024 * 1024;
@@ -63,8 +64,12 @@ export async function createUpload(
       rights_confirmed_at: input.kind === "audio" ? new Date().toISOString() : null,
     });
   if (error) throw error;
-  const { data: signed, error: signErr } = await adminDb().storage.from(MEDIA_BUCKET).createSignedUploadUrl(`${id}/upload`);
-  if (signErr || !signed) throw signErr ?? new Error("signed upload failed");
+  const { data: signed, error: signErr } = await storageCall("sign-upload", () => adminDb().storage.from(MEDIA_BUCKET).createSignedUploadUrl(`${id}/upload`));
+  if (signErr || !signed) {
+    await adminDb().from("assets").delete().eq("id", id);
+    if (isTransient(signErr)) throw storageBusy();
+    throw signErr ?? new Error("signed upload failed");
+  }
   return { assetId: id, path: signed.path, token: signed.token };
 }
 
@@ -82,7 +87,8 @@ export async function completeUpload(userId: string, assetId: string) {
 
   const store = adminDb().storage.from(MEDIA_BUCKET);
   const uploadPath = `${asset.storage_prefix}/upload`;
-  const { data: blob, error } = await store.download(uploadPath);
+  const { data: blob, error } = await storageCall("download-upload", () => store.download(uploadPath));
+  if (error && isTransient(error)) throw storageBusy(); // asset stays pending: completing again retries
   if (error || !blob) throw badRequest("The upload didn't arrive. Please try again.");
   const buf = Buffer.from(await blob.arrayBuffer());
 
@@ -96,7 +102,7 @@ export async function completeUpload(userId: string, assetId: string) {
       const variants: Record<string, string> = {};
       for (const [name, data] of Object.entries(img.variants)) {
         const path = `${asset.storage_prefix}/${name}.webp`;
-        const up = await store.upload(path, data, { contentType: "image/webp", upsert: true, cacheControl: "31536000" });
+        const up = await storageCall("upload-variant", () => store.upload(path, data, { contentType: "image/webp", upsert: true, cacheControl: "31536000" }));
         if (up.error) throw up.error;
         variants[name] = path;
       }
@@ -104,7 +110,7 @@ export async function completeUpload(userId: string, assetId: string) {
     } else {
       const a = await processAudio(buf);
       const path = `${asset.storage_prefix}/audio.${a.ext}`;
-      const up = await store.upload(path, a.buffer, { contentType: a.mime, upsert: true, cacheControl: "31536000" });
+      const up = await storageCall("upload-audio", () => store.upload(path, a.buffer, { contentType: a.mime, upsert: true, cacheControl: "31536000" }));
       if (up.error) throw up.error;
       update = { status: "ready", mime: a.mime, bytes: a.buffer.length, duration_s: a.duration, variants: { audio: path }, sha256 };
     }
@@ -112,6 +118,7 @@ export async function completeUpload(userId: string, assetId: string) {
     const { data: updated } = await adminDb().from("assets").update(update as never).eq("id", asset.id).select("*").single();
     return publicAsset(updated!);
   } catch (e) {
+    if (!(e instanceof MediaRejected) && isTransient(e)) throw storageBusy(); // still pending; retry completes it
     await store.remove([uploadPath]);
     const reason = e instanceof MediaRejected ? e.message : "That file couldn't be processed.";
     await adminDb().from("assets").update({ status: "rejected", rejection_reason: reason }).eq("id", asset.id);

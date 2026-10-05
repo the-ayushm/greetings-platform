@@ -97,11 +97,16 @@ async function timeline(page: Page, url: string, probe: Probe) {
             .join(","),
         )
         .join(" | ");
-    const t0 = performance.now();
-    const iv = setInterval(() => {
-      w.__tl.push(snap());
-      if (performance.now() - t0 > 30000) clearInterval(iv);
-    }, 100);
+    // Time zero is the probe's first click (captured before any handler runs), so both pages
+    // are sampled from the same moment regardless of test-runner latency.
+    const start = () => {
+      const t0 = performance.now();
+      const iv = setInterval(() => {
+        w.__tl.push(snap());
+        if (performance.now() - t0 > 30000) clearInterval(iv);
+      }, 100);
+    };
+    addEventListener("click", start, { capture: true, once: true });
   }, probe.watch);
   await probe.act(page);
   await page.waitForTimeout(probe.ms);

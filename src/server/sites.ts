@@ -8,6 +8,7 @@ import { hashPasscode, newSlug } from "./crypto";
 import { rendererOrigin } from "./env";
 import { ApiError, badRequest, conflict, notFound } from "./http";
 import { log } from "./log";
+import { storageCall } from "./retry";
 
 export const MEDIA_BUCKET = "media";
 export const SIGNED_URL_TTL = 2 * 60 * 60;
@@ -203,7 +204,7 @@ export async function signMedia(siteId: string, content: ScrapbookContent): Prom
   const paths: string[] = [];
   for (const a of assets ?? []) for (const p of Object.values((a.variants ?? {}) as Record<string, string>)) paths.push(p);
   if (!paths.length) return out;
-  const { data: signed } = await db.storage.from(MEDIA_BUCKET).createSignedUrls(paths, SIGNED_URL_TTL);
+  const { data: signed } = await storageCall("sign-media", () => db.storage.from(MEDIA_BUCKET).createSignedUrls(paths, SIGNED_URL_TTL));
   const url = new Map((signed ?? []).filter((s) => s.signedUrl && s.path).map((s) => [s.path!, s.signedUrl]));
   for (const a of assets ?? []) {
     const v = (a.variants ?? {}) as Record<string, string>;

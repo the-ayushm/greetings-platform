@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   description: "Try the interactive scrapbook birthday website.",
 };
 
+// Rendered per request so the CSP nonce reaches its scripts (a static page would be blocked).
+export const dynamic = "force-dynamic";
+
 const EMPTY_MEDIA = { images: {}, audio: {} };
 
 export default function DemoPage() {

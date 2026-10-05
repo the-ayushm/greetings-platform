@@ -21,81 +21,85 @@ async function noSideScroll(page: Page, where: string) {
 }
 
 test("tap through the whole birthday experience", async ({ page }) => {
+  // Playwright's WebKit "stable" check waits on requestAnimationFrame, which parallel headless
+  // WebKit instances can throttle indefinitely. Taps skip that wait; every tap below is followed
+  // by an assertion of its effect, so an unresponsive control still fails the test.
+  const tap = (sel: string) => page.locator(sel).first().tap({ force: true });
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(`${APP}/demo`);
   await page.waitForSelector("#app[data-hydrated]");
   await noSideScroll(page, "cover");
-  await page.tap('#cover [data-go="quiz"]');
+  await tap('#cover [data-go="quiz"]');
   await page.waitForTimeout(1100);
   for (let i = 0; i < 3; i++) {
-    await page.locator("#qBody [data-a]").first().tap();
+    await tap("#qBody [data-a]");
     await page.waitForTimeout(1300);
   }
   await expect(page.locator("#qBar")).toHaveText("ready.exe");
-  await page.tap('#qBody [data-go="menu"]');
+  await tap('#qBody [data-go="menu"]');
   await page.waitForTimeout(1100);
   await noSideScroll(page, "menu");
 
-  await page.tap('#menu [data-card="letter"]');
+  await tap('#menu [data-card="letter"]');
   await page.waitForTimeout(1100);
-  await page.tap("#lenv");
+  await tap("#lenv");
   await expect(page.locator("#sheet.show")).toBeVisible({ timeout: 5000 });
   await expect(page.locator("#sheet .doodle.show")).toBeVisible({ timeout: 10_000 });
   await noSideScroll(page, "letter");
-  await page.tap('#letter [data-go="menu"]');
+  await tap('#letter [data-go="menu"]');
   await page.waitForTimeout(1100);
 
-  await page.tap('#menu [data-card="memories"]');
+  await tap('#menu [data-card="memories"]');
   await page.waitForTimeout(1100);
-  await page.locator('#memories [data-m="0"]').tap();
+  await tap('#memories [data-m="0"]');
   await expect(page.locator("#lift.on .pol.big")).toBeVisible();
-  await page.locator('#lift [data-p="1"]').tap();
+  await tap('#lift [data-p="1"]');
   await expect(page.locator("#lift.on .cap")).toHaveText("that day...");
-  await page.locator("#lift [data-close]").tap();
+  await tap("#lift [data-close]");
   await page.waitForTimeout(400);
   await noSideScroll(page, "memories");
-  await page.tap('#memories [data-go="menu"]');
+  await tap('#memories [data-go="menu"]');
   await page.waitForTimeout(1100);
 
-  await page.tap('#menu [data-card="coupons"]');
+  await tap('#menu [data-card="coupons"]');
   await page.waitForTimeout(1100);
-  await page.locator('#coupons [data-c="0"]').tap();
+  await tap('#coupons [data-c="0"]');
   await expect(page.locator("#flipCard.turned")).toBeVisible({ timeout: 3000 });
-  await page.locator("#useBtn").tap();
+  await tap("#useBtn");
   await expect(page.locator("#rStamp.on")).toBeVisible();
-  await page.locator("#lift [data-close]").tap();
+  await tap("#lift [data-close]");
   await page.waitForTimeout(400);
   await expect(page.locator('#coupons [data-c="0"].used')).toBeVisible();
-  await page.tap('#coupons [data-go="menu"]');
+  await tap('#coupons [data-go="menu"]');
   await page.waitForTimeout(1100);
 
-  await page.tap('#menu [data-card="song"]');
+  await tap('#menu [data-card="song"]');
   await page.waitForTimeout(1100);
-  await page.tap("#playBtn");
+  await tap("#playBtn");
   // Playwright's Windows WebKit build ships without WebAudio (real iOS Safari has it). Where it's
   // missing, the page must degrade to a friendly message rather than break.
   const hasWebAudio = await page.evaluate(() => typeof AudioContext !== "undefined" || "webkitAudioContext" in window);
   if (hasWebAudio) {
     await expect(page.locator("#player.playing")).toBeVisible();
-    await page.tap("#playBtn");
+    await tap("#playBtn");
   } else {
     test.info().annotations.push({ type: "limitation", description: "WebAudio unavailable in this WebKit build; music-box playback not verified" });
     await expect(page.locator("#songHint")).toHaveText("the song couldn't load right now. try again in a moment ♡");
   }
   await noSideScroll(page, "song");
-  await page.tap('#song [data-go="menu"]');
+  await tap('#song [data-go="menu"]');
   await page.waitForTimeout(1100);
 
-  await page.tap('#menu [data-card="gift"]');
+  await tap('#menu [data-card="gift"]');
   await page.waitForTimeout(1100);
-  await page.tap("#cupcake");
+  await tap("#cupcake");
   await expect(page.locator("#cupcake.blown")).toBeVisible();
   await expect(page.locator("#sNext.show")).toBeVisible({ timeout: 4000 });
-  await page.tap('#surprise [data-go="final"]');
+  await tap('#surprise [data-go="final"]');
   await expect(page.locator("#finAgain.show")).toBeVisible({ timeout: 20_000 });
   await noSideScroll(page, "final");
-  await page.tap("#againBtn");
+  await tap("#againBtn");
   await page.waitForTimeout(1100);
   await expect(page.locator("#cover.on")).toBeVisible();
 

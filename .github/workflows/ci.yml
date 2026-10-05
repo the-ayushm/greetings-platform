@@ -1,0 +1,49 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      APP_ORIGIN: http://app.localhost:3000
+      RENDERER_ORIGIN: http://wishes.localhost:3000
+      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+      # Razorpay: local mock only (tests/mocks/razorpay-mock.mjs). Not real credentials.
+      RAZORPAY_KEY_ID: rzp_test_localmock0001
+      RAZORPAY_KEY_SECRET: localmock_key_secret_not_a_real_credential
+      RAZORPAY_WEBHOOK_SECRET: localmock_webhook_secret_not_a_real_credential
+      RAZORPAY_API_BASE: http://127.0.0.1:4010
+      APP_SECRET: ci-only-app-secret-0123456789abcdef0123456789
+      CRON_SECRET: ci-only-cron-secret-0123456789abcdef012345678
+      PW_SERVER: prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - uses: supabase/setup-cli@v1
+        with: { version: latest }
+      - name: Start Supabase (local stack in Docker)
+        run: supabase start -x analytics,realtime,studio,edge-runtime,vector,imgproxy,postgres-meta,logflare
+      - name: Export local Supabase keys
+        run: |
+          supabase status -o env | sed -n 's/^PUBLISHABLE_KEY=/NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=/p; s/^SECRET_KEY=/SUPABASE_SECRET_KEY=/p' | tr -d '"' >> "$GITHUB_ENV"
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:unit
+      - run: npm run test:db
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium webkit
+      - name: End-to-end, isolation, visual, motion, a11y and mobile suites
+        run: npx playwright test --workers 2
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with: { name: playwright-report, path: playwright-report, retention-days: 7 }
