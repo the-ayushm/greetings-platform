@@ -44,7 +44,9 @@ export function LoginForm({ next }: { next: string }) {
       setError(
         error.status === 429
           ? "Too many requests. Please wait a few minutes and try again."
-          : "Couldn't send a code to that address. Please check it and try again.",
+          : error.status != null && error.status >= 500
+            ? "We couldn't send the email right now. Please try again in a few minutes."
+            : "Couldn't send a code to that address. Please check it and try again.",
       );
       return;
     }
