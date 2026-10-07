@@ -5,6 +5,7 @@
  * Uses NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SECRET_KEY from the environment.
  */
 import { createClient } from "@supabase/supabase-js";
+process.loadEnvFile?.(".env.local");
 
 const email = process.argv[2]?.trim().toLowerCase();
 if (!email) {

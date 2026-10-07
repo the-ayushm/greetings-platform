@@ -22,6 +22,9 @@ export async function SiteHeader() {
               <Link className="rounded-md px-2 py-2 hover:bg-baby" href="/dashboard">
                 My sites
               </Link>
+              <Link className="rounded-md px-2 py-2 hover:bg-baby" href="/account">
+                Account
+              </Link>
               <SignOutButton />
             </>
           ) : (
