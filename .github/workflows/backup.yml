@@ -1,7 +1,5 @@
 name: Nightly storage backup
 on:
-  schedule:
-    - cron: "15 20 * * *" # 01:45 IST
   workflow_dispatch:
 
 jobs:
