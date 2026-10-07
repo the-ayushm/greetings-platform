@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { currentUser } from "@/server/auth";
-import { SignOutButton } from "./SignOutButton";
 
 export async function SiteHeader() {
   const user = await currentUser();
@@ -22,10 +21,9 @@ export async function SiteHeader() {
               <Link className="rounded-md px-2 py-2 hover:bg-baby" href="/dashboard">
                 My sites
               </Link>
-              <Link className="rounded-md px-2 py-2 hover:bg-baby" href="/account">
+              <Link className="rounded-md px-2 py-2 hover:bg-baby" href="/dashboard/account">
                 Account
               </Link>
-              <SignOutButton />
             </>
           ) : (
             <Link className="rounded-md bg-ink px-3 py-2 text-white hover:bg-rose" href="/login">

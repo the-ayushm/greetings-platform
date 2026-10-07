@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 
-export function SignOutButton() {
+export function SignOutButton({ className = "rounded-md px-2 py-2 hover:bg-baby" }: { className?: string }) {
   const [busy, setBusy] = useState(false);
   return (
     <button
-      className="rounded-md px-2 py-2 hover:bg-baby disabled:opacity-50"
+      className={`${className} disabled:opacity-50`}
       disabled={busy}
       onClick={async () => {
         setBusy(true);

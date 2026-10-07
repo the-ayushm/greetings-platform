@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SignOutButton } from "@/components/SignOutButton";
 import { Card, PageShell } from "@/components/ui";
 import { requireUserPage } from "@/server/auth";
 import { DeleteAccount } from "./DeleteAccount";
@@ -18,6 +19,11 @@ export default async function AccountPage() {
         <a href="/api/account/export" className="mt-3 inline-flex min-h-11 items-center rounded-lg border-2 border-ink bg-white px-5 py-2.5 font-bold shadow-[3px_3px_0_var(--color-ink)] hover:bg-baby" data-testid="export">
           Download my data
         </a>
+      </Card>
+      <Card className="mt-6">
+        <h2 className="text-lg font-extrabold">Sign out</h2>
+        <p className="mt-1 text-sm text-ink-soft">Sign out of Birthday Surprise on this device.</p>
+        <SignOutButton className="mt-3 inline-flex min-h-11 items-center rounded-lg border-2 border-ink bg-white px-5 py-2.5 font-bold shadow-[3px_3px_0_var(--color-ink)] hover:bg-baby" />
       </Card>
       <DeleteAccount />
     </PageShell>
