@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { currentUser, isAdminRole } from "@/server/auth";
+import { currentUser, isAdminUser } from "@/server/auth";
 
 export async function SiteHeader() {
   const user = await currentUser();
-  const isAdmin = user ? await isAdminRole(user.id) : false;
+  const isAdmin = user ? await isAdminUser(user.id) : false;
   return (
     <header className="border-b-2 border-ink/10 bg-cream/90 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
