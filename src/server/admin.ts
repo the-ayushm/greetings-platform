@@ -51,12 +51,14 @@ export async function resolveReport(adminId: string, reportId: string, status: "
   return { ok: true };
 }
 
-export async function updateProduct(adminId: string, productId: string, patch: { pricePaise?: number; isActive?: boolean }) {
-  const { data: before } = await db().from("products").select("price_paise, is_active").eq("id", productId).maybeSingle();
+export async function updateProduct(adminId: string, productId: string, patch: { pricePaise?: number; isActive?: boolean; editDays?: number; liveDays?: number }) {
+  const { data: before } = await db().from("products").select("price_paise, is_active, edit_days, live_days").eq("id", productId).maybeSingle();
   if (!before) throw notFound();
-  const upd: { price_paise?: number; is_active?: boolean } = {};
+  const upd: { price_paise?: number; is_active?: boolean; edit_days?: number; live_days?: number } = {};
   if (patch.pricePaise !== undefined) upd.price_paise = patch.pricePaise;
   if (patch.isActive !== undefined) upd.is_active = patch.isActive;
+  if (patch.editDays !== undefined) upd.edit_days = patch.editDays;
+  if (patch.liveDays !== undefined) upd.live_days = patch.liveDays;
   await db().from("products").update(upd).eq("id", productId);
   await adminAudit(adminId, "admin.product.update", "product", productId, { before, after: upd });
   return { ok: true };

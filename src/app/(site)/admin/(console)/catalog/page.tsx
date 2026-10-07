@@ -47,7 +47,7 @@ export default async function AdminCatalog() {
             <p className="text-ink-soft">
               Template {p.template_key} · edit {p.edit_days} days · live {p.live_days} days
             </p>
-            <CatalogControls kind="product" id={p.id} active={p.is_active} pricePaise={p.price_paise} />
+            <CatalogControls kind="product" id={p.id} active={p.is_active} pricePaise={p.price_paise} editDays={p.edit_days} liveDays={p.live_days} />
           </li>
         ))}
       </ul>
