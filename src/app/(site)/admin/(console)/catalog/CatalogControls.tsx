@@ -7,18 +7,22 @@ import { useToast } from "@/components/admin/toast";
 import { Button } from "@/components/ui";
 import { api, ApiFailure } from "@/lib/api-client";
 
-export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDays }: {
+export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDays, name, description }: {
   kind: "template" | "product";
   id: string;
   active: boolean;
   pricePaise?: number;
   editDays?: number;
   liveDays?: number;
+  name?: string;
+  description?: string;
 }) {
   const router = useRouter();
   const toast = useToast();
   const dialog = useDialog();
-  const [price, setPrice] = useState(pricePaise ? String(pricePaise / 100) : "");
+  const [price, setPrice] = useState(pricePaise !== undefined ? String(pricePaise / 100) : "");
+  const [title, setTitle] = useState(name ?? "");
+  const [desc, setDesc] = useState(description ?? "");
   const [editD, setEditD] = useState(editDays ? String(editDays) : "");
   const [liveD, setLiveD] = useState(liveDays ? String(liveDays) : "");
   const [busy, setBusy] = useState<string | null>(null);
@@ -46,7 +50,11 @@ export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDa
         disabled={busy === "isActive"}
         onClick={async () => {
           const ok = await dialog.confirm(
-            active ? `Deactivate this ${kind}? It will no longer be available in the store.` : `Activate this ${kind}?`,
+            active
+              ? `Deactivate this ${kind}? It will no longer be available in the store.`
+              : kind === "product" && pricePaise === 0
+                ? "Put this product on sale? Its price is ₹0, so every customer will get it free."
+                : `Activate this ${kind}?`,
             { destructive: active },
           );
           if (ok) void patch({ isActive: !active }, active ? "Deactivated" : "Activated");
@@ -62,9 +70,13 @@ export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDa
             onSubmit={async (e) => {
               e.preventDefault();
               const rupees = Number(price);
-              if (!Number.isFinite(rupees) || rupees < 1) { toast("Enter a valid price in rupees.", "error"); return; }
-              const ok = await dialog.confirm(`Set price to ₹${rupees}? New checkouts use it immediately.`);
-              if (ok) void patch({ pricePaise: Math.round(rupees * 100) }, `Price updated to ₹${rupees}`);
+              if (price.trim() === "" || !Number.isFinite(rupees) || (rupees !== 0 && (rupees < 1 || rupees > 100000))) { toast("Enter ₹0 (free) or a price between ₹1 and ₹1,00,000.", "error"); return; }
+              const ok = await dialog.confirm(
+                rupees === 0
+                  ? "Make this product free (₹0)? Checkout skips payment entirely" + (active ? " — it's on sale, so customers get it free immediately." : ".")
+                  : `Set price to ₹${rupees}? New checkouts use it immediately.`,
+              );
+              if (ok) void patch({ pricePaise: Math.round(rupees * 100) }, rupees === 0 ? "Price set to free (₹0)" : `Price updated to ₹${rupees}`);
             }}
           >
             <label className="flex items-center gap-1 text-sm font-medium">
@@ -104,6 +116,29 @@ export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDa
             <Button variant="secondary" className="min-h-9 px-3 py-1.5 text-sm" type="submit" disabled={busy === "editDays"}>
               {busy === "editDays" ? <Spinner /> : "Save days"}
             </Button>
+          </form>
+          <form
+            className="flex w-full flex-col gap-2"
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if (!title.trim()) { toast("The title can't be empty.", "error"); return; }
+              const ok = await dialog.confirm("Save the product title and description? The store shows them immediately.");
+              if (ok) void patch({ name: title, description: desc }, "Title and description saved");
+            }}
+          >
+            <label className="text-sm font-medium">
+              Title
+              <input value={title} onChange={e => setTitle(e.target.value)} maxLength={80} className="mt-1 block w-full rounded-lg border-2 border-ink/20 px-2 py-1 text-sm focus:border-rose focus:outline-none" />
+            </label>
+            <label className="text-sm font-medium">
+              Description
+              <textarea value={desc} onChange={e => setDesc(e.target.value)} maxLength={500} rows={3} className="mt-1 block w-full rounded-lg border-2 border-ink/20 px-2 py-1 text-sm focus:border-rose focus:outline-none" />
+            </label>
+            <div>
+              <Button variant="secondary" className="min-h-9 px-3 py-1.5 text-sm" type="submit" disabled={busy === "name"}>
+                {busy === "name" ? <Spinner /> : "Save title & description"}
+              </Button>
+            </div>
           </form>
         </>
       )}

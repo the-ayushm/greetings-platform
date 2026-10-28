@@ -41,6 +41,12 @@ imports only its own template, so template stylesheets never share a page.
 |---|---|---|---|
 | `scrapbook` | Scrapbook Surprise (birthday) | `src/templates/scrapbook/` | `/birthday/<slug>` |
 | `lovestory` | Our Little Universe (love story) | `src/templates/lovestory/` | `/love/<slug>` |
+| `wedding` | Royal Burgundy (wedding invitation) | `src/templates/wedding/` | `/wedding/<slug>` |
+
+The wedding pages (`/demo/wedding`, `/preview/wedding/:id`, `/wedding/:slug`) live in their own root
+layout `src/app/(wedding)/` so guests only download the two wedding fonts. Guests RSVP through
+`POST /api/r/rsvp` (renderer origin, rate-limited, honeypot, one reply per normalised name); the
+renderer CSP allows `frame-src https://www.google.com` for the optional venue map embed.
 
 ## The love story template
 

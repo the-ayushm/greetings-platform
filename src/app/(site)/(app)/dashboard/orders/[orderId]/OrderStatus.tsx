@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { ButtonLink, Card, Notice } from "@/components/ui";
 import { api } from "@/lib/api-client";
 
-type Order = { id: string; status: string; template_key?: string; siteId: string | null; last_payment_error: string | null };
+type Order = { id: string; status: string; template_key?: string; amount_paise?: number; siteId: string | null; last_payment_error: string | null };
+
+const READY: Record<string, string> = {
+  lovestory: "Your love story is ready — add your photos, memories and words in the studio.",
+  wedding: "Your wedding invitation is ready — add your names, date, venue and schedule in the studio.",
+};
 
 /** Waits for the payment webhook to land (usually a second or two), then links to the editor. */
 export function OrderStatus({ orderId }: { orderId: string }) {
@@ -36,8 +41,8 @@ export function OrderStatus({ orderId }: { orderId: string }) {
     return (
       <Card>
         <p className="font-hand text-2xl text-rose">yay ♡</p>
-        <h1 className="font-display text-3xl font-semibold">Payment received</h1>
-        <p className="mt-2 text-ink-soft">{order.template_key === "lovestory" ? "Your love story is ready — add your photos, memories and words in the studio." : "Your birthday website is ready to personalise."}</p>
+        <h1 className="font-display text-3xl font-semibold">{order.amount_paise === 0 ? "You're all set" : "Payment received"}</h1>
+        <p className="mt-2 text-ink-soft">{READY[order.template_key ?? ""] ?? "Your birthday website is ready to personalise."}</p>
         <ButtonLink href={`/dashboard/sites/${order.siteId}/edit`} className="mt-6 w-full" data-testid="start-editing">
           Start personalising
         </ButtonLink>

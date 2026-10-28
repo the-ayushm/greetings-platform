@@ -28,6 +28,17 @@ sections start switched on and the starting theme for *new* orders (Admin → Te
 pricing); that edits the current version's `default_content` (audited) and never touches
 existing stories. Theme presets live in `theme.ts` because they are tied to the CSS.
 
+## The wedding invitation (`wedding`)
+
+Content: `src/templates/wedding/schema.ts` + `defaults.ts`; pure date/countdown/link helpers in
+`time.ts`; original SVG art in `art.tsx`. Regenerate the seed with
+`npx tsx scripts/gen-template-migration.ts wedding` (new migration file for a deployed DB). Fonts:
+`node scripts/fetch-wedding-fonts.mjs`; share image: `node scripts/make-wedding-og.mjs`; store
+previews (needs the app running): `node scripts/make-wedding-previews.mjs <app origin>`.
+
+Products that aren't on sale (`is_active = false`) can be opened and acquired by MFA'd admins
+only (testing). A ₹0 product skips Razorpay entirely (`fulfil_free_order`).
+
 ## Adding a new template
 
 1. `src/templates/<key>/` with `Experience.tsx`, `schema.ts` (draft + publish), `defaults.ts`,

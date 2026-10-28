@@ -5,7 +5,7 @@ import { userDb } from "@/lib/supabase/server";
 import { requireUserPage } from "@/server/auth";
 import { isTemplateKey, templateDef } from "@/templates/registry";
 
-const TEMPLATE_LABEL: Record<string, string> = { scrapbook: "Birthday scrapbook", lovestory: "Love story" };
+const TEMPLATE_LABEL: Record<string, string> = { scrapbook: "Birthday scrapbook", lovestory: "Love story", wedding: "Wedding invitation" };
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "My sites" };
@@ -65,7 +65,7 @@ export default async function Dashboard() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="text-xs font-bold tracking-wide text-ink-soft uppercase">{TEMPLATE_LABEL[s.template_key] ?? s.template_key}</p>
-                      <h2 className="font-display text-xl font-semibold break-words">For {name || "someone special"} ♡</h2>
+                      <h2 className="font-display text-xl font-semibold break-words">{s.template_key === "wedding" ? `${name || "Your"} wedding ♡` : `For ${name || "someone special"} ♡`}</h2>
                     </div>
                     <Badge tone={st.tone}>{st.label}</Badge>
                   </div>

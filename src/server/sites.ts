@@ -152,6 +152,7 @@ export async function purgeSiteContent(siteId: string) {
   await db.from("site_versions").delete().eq("site_id", siteId);
   await db.from("assets").delete().eq("site_id", siteId);
   await db.from("site_responses").delete().eq("site_id", siteId);
+  await db.from("site_rsvps").delete().eq("site_id", siteId);
 }
 
 export async function removePrefix(prefix: string) {

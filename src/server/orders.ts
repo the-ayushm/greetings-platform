@@ -24,14 +24,27 @@ export type CheckoutSession = {
   productName: string;
 };
 
-/** Creates (or reuses a recent unpaid) order. The price always comes from the database. */
-export async function createCheckout(userId: string, productId: string): Promise<CheckoutSession> {
-  const { data: product } = await db().from("products").select("*").eq("id", productId).eq("is_active", true).maybeSingle();
+/** A ₹0 product: no payment provider involved, the site is created straight away. */
+export type FreeCheckout = { free: true; orderId: string; siteId: string | null };
+
+/** Free orders one customer can claim per product per day (they each create a site). */
+const FREE_PER_DAY = 5;
+
+/**
+ * Creates (or reuses a recent unpaid) order. The price always comes from the database.
+ * `includeUnlisted` lets an MFA'd admin test a product that isn't on sale yet.
+ */
+export async function createCheckout(userId: string, productId: string, includeUnlisted = false): Promise<CheckoutSession | FreeCheckout> {
+  let pq = db().from("products").select("*").eq("id", productId);
+  if (!includeUnlisted) pq = pq.eq("is_active", true);
+  const { data: product } = await pq.maybeSingle();
   if (!product) throw notFound();
   const { data: template } = await db().from("templates").select("key").eq("key", product.template_key).eq("is_active", true).maybeSingle();
   if (!template) throw notFound();
   const { data: tv } = await db().from("template_versions").select("version").eq("template_key", product.template_key).eq("is_current", true).maybeSingle();
   if (!tv) throw new ApiError(503, "template_unavailable", "This design is temporarily unavailable.");
+
+  if (product.price_paise === 0) return createFreeOrder(userId, product, tv.version);
 
   // Reuse an unpaid order for the same product/price from the last 30 minutes (no order spam).
   const since = new Date(Date.now() - 30 * 60_000).toISOString();
@@ -79,6 +92,36 @@ export async function createCheckout(userId: string, productId: string): Promise
     await db().from("orders").update({ status: "expired", last_payment_error: "provider_order_failed" }).eq("id", order.id);
     throw e;
   }
+}
+
+type ProductRow = { id: string; template_key: string; price_paise: number; currency: string; edit_days: number; live_days: number };
+
+/** ₹0 order → site immediately (no Razorpay order, no payment row). Never used for a priced product. */
+async function createFreeOrder(userId: string, product: ProductRow, templateVersion: number): Promise<FreeCheckout> {
+  const since = new Date(Date.now() - 86_400_000).toISOString();
+  const { count } = await db().from("orders").select("id", { count: "exact", head: true }).eq("user_id", userId).eq("product_id", product.id).eq("amount_paise", 0).gte("created_at", since);
+  if ((count ?? 0) >= FREE_PER_DAY) throw new ApiError(429, "rate_limited", "You've claimed this a few times today. Please try again tomorrow.");
+  const { data: order, error } = await db()
+    .from("orders")
+    .insert({
+      user_id: userId,
+      product_id: product.id,
+      template_key: product.template_key,
+      template_version: templateVersion,
+      amount_paise: 0,
+      currency: product.currency,
+      edit_days: product.edit_days,
+      live_days: product.live_days,
+      receipt: `free_${newSlug(20)}`,
+    })
+    .select("id")
+    .single();
+  if (error || !order) throw error ?? new Error("order insert failed");
+  const { data, error: fErr } = await db().rpc("fulfil_free_order", { p_order_id: order.id, p_user_id: userId });
+  if (fErr) throw fErr;
+  const r = data as FulfilResult;
+  if (r.status !== "fulfilled" && r.status !== "already") throw new ApiError(409, "not_fulfilled", "This order couldn't be completed. Please try again.");
+  return { free: true, orderId: order.id, siteId: r.site_id ?? null };
 }
 
 type FulfilResult = { status: string; order_id?: string; site_id?: string };

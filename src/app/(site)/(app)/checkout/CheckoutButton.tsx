@@ -28,12 +28,26 @@ function loadCheckoutScript(): Promise<RazorpayCtor> {
 
 type Session = { orderId: string; razorpayOrderId: string; amount: number; currency: string; keyId: string; productName: string };
 
-export function CheckoutButton({ productId, email, label }: { productId: string; email: string; label: string }) {
+export function CheckoutButton({ productId, email, label, free = false }: { productId: string; email: string; label: string; free?: boolean }) {
   const router = useRouter();
   const [state, setState] = useState<"idle" | "starting" | "open" | "verifying">("idle");
   const [error, setError] = useState<string | null>(null);
 
+  /** ₹0 product: the server creates the order and the site in one step — no payment window. */
+  async function claim() {
+    setError(null);
+    setState("starting");
+    try {
+      const r = await api<{ free?: boolean; orderId: string }>("/api/checkout", { method: "POST", body: { productId } });
+      router.push(`/dashboard/orders/${r.orderId}`);
+    } catch (e) {
+      setState("idle");
+      setError(e instanceof ApiFailure ? e.message : "That didn't work. Check your connection and try again.");
+    }
+  }
+
   async function pay() {
+    if (free) return claim();
     setError(null);
     setState("starting");
     let session: Session;
@@ -77,9 +91,9 @@ export function CheckoutButton({ productId, email, label }: { productId: string;
     <div className="mt-6 space-y-3">
       {error && <Notice tone="error">{error}</Notice>}
       <Button onClick={pay} disabled={state !== "idle"} className="w-full" data-testid="pay">
-        {state === "starting" ? "Starting secure payment…" : state === "verifying" ? "Confirming payment…" : label}
+        {state === "starting" ? (free ? "Setting it up…" : "Starting secure payment…") : state === "verifying" ? "Confirming payment…" : label}
       </Button>
-      <p className="text-center text-xs text-ink-soft">Secure payment by Razorpay · UPI, cards, netbanking, wallets</p>
+      <p className="text-center text-xs text-ink-soft">{free ? "No payment details needed." : "Secure payment by Razorpay · UPI, cards, netbanking, wallets"}</p>
     </div>
   );
 }

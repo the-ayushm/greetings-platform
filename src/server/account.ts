@@ -7,12 +7,13 @@ import { purgeSiteContent, siteUrl } from "./sites";
 /** Everything we hold about the signed-in customer, as JSON (read through RLS). */
 export async function exportAccount(userId: string) {
   const db = await userDb();
-  const [{ data: profile }, { data: orders }, { data: sites }, { data: assets }, { data: responses }] = await Promise.all([
+  const [{ data: profile }, { data: orders }, { data: sites }, { data: assets }, { data: responses }, { data: rsvps }] = await Promise.all([
     db.from("profiles").select("email, full_name, created_at").eq("id", userId).single(),
     db.from("orders").select("id, status, amount_paise, currency, created_at, paid_at, refunded_at").order("created_at"),
     db.from("sites").select("id, status, slug, template_key, created_at, updated_at, edit_until, expires_at, view_count, first_viewed_at, draft_content, published_version_id"),
     db.from("assets").select("id, site_id, kind, original_name, created_at, width, height, duration_s"),
     db.from("site_responses").select("site_id, kind, label, value, created_at").order("created_at"),
+    db.from("site_rsvps").select("site_id, guest_name, attending, guests, message, created_at").order("created_at"),
   ]);
   const versions = new Map<string, unknown>();
   for (const s of sites ?? []) {
@@ -40,6 +41,7 @@ export async function exportAccount(userId: string) {
     })),
     files: assets ?? [],
     recipientResponses: responses ?? [],
+    weddingRsvps: rsvps ?? [],
     note: "Photo and song files can be downloaded from the editor while your site is active.",
   };
 }

@@ -52,3 +52,11 @@ export async function requireAdminPage(): Promise<SessionUser> {
 export async function isAdminUser(userId: string) {
   return isAdminRole(userId);
 }
+
+/**
+ * Admins with an MFA session may see and acquire products that aren't on sale yet (testing a
+ * new product before it's published). Same bar as the admin console.
+ */
+export async function canSeeUnlisted(u: SessionUser | null) {
+  return Boolean(u && u.aal === "aal2" && (await isAdminRole(u.id)));
+}

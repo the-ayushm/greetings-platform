@@ -201,6 +201,25 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"site_rsvps": {
+                  Row: {
+                    "attending": boolean,"created_at": string,"guest_name": string,"guests": number,"id": string,"message": string,"name_key": string,"site_id": string
+                  }
+                  Insert: {
+                    "attending": boolean,"created_at"?: string,"guest_name": string,"guests": number,"id"?: string,"message"?: string,"name_key": string,"site_id": string
+                  }
+                  Update: {
+                    "attending"?: boolean,"created_at"?: string,"guest_name"?: string,"guests"?: number,"id"?: string,"message"?: string,"name_key"?: string,"site_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "site_rsvps_site_id_fkey"
+      columns: ["site_id"]
+isOneToOne: false
+      referencedRelation: "sites"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"site_versions": {
                   Row: {
                     "content": NonNullable<Json>,"created_at": string,"created_by": string | null,"id": string,"schema_version": number,"site_id": string,"version": number
@@ -291,6 +310,9 @@ isOneToOne: false
           Functions: {
             "apply_refund":
 { Args: { "p_amount": number,"p_payment_id": string,"p_refund_id": string,"p_status": string }; Returns: Json
+                           },
+"fulfil_free_order":
+{ Args: { "p_order_id": string,"p_user_id": string }; Returns: Json
                            },
 "fulfil_order":
 { Args: { "p_actor"?: string,"p_amount": number,"p_currency": string,"p_method": string,"p_payment_id": string,"p_razorpay_order_id": string }; Returns: Json

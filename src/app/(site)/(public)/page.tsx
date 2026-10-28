@@ -22,9 +22,10 @@ const FAQ = [
 ];
 
 export default async function Landing() {
-  const [product, love] = await Promise.all([activeProduct(), activeProduct("lovestory")]);
+  const [product, love, wedding] = await Promise.all([activeProduct(), activeProduct("lovestory"), activeProduct("wedding")]);
   const price = product ? formatINR(product.price_paise) : null;
   const loveP = love ? formatINR(love.price_paise) : null;
+  const weddingP = wedding ? (wedding.price_paise === 0 ? "Free" : formatINR(wedding.price_paise)) : null;
   return (
     <main>
       <section className="gingham border-b-2 border-ink/10">
@@ -65,6 +66,26 @@ export default async function Landing() {
               <div className="flex flex-wrap gap-3">
                 <ButtonLink href="/products/love-story">See it{loveP ? ` · ${loveP}` : ""}</ButtonLink>
                 <ButtonLink href="/demo/love-story" variant="secondary">
+                  Demo
+                </ButtonLink>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {wedding && (
+        <section className="mx-auto max-w-5xl px-4 pt-6 sm:px-6" aria-labelledby="wedding-promo">
+          <div className="relative overflow-hidden rounded-3xl bg-[radial-gradient(120%_90%_at_85%_0%,#7a2840_0%,#5b1727_50%,#351018_100%)] p-6 text-white shadow-[8px_8px_0_#b76e79] sm:p-8">
+            <div className="relative grid items-center gap-5 md:grid-cols-[1fr_auto]">
+              <div>
+                <p className="font-display text-lg text-[#e8c98a] italic">Wedding Invitations</p>
+                <h2 id="wedding-promo" className="font-display text-3xl font-semibold">Royal Burgundy — an interactive wedding invitation</h2>
+                <p className="mt-2 max-w-prose text-white/85">A wax-sealed envelope that opens in golden light, your names, a live countdown, schedule, venue map, dress code and RSVPs — sent as one WhatsApp link.</p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <ButtonLink href="/products/wedding-invitation">See it · {weddingP}</ButtonLink>
+                <ButtonLink href="/demo/wedding" variant="secondary">
                   Demo
                 </ButtonLink>
               </div>

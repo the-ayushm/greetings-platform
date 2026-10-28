@@ -51,7 +51,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
                   </Link>
                 </td>
                 <td className="px-3 py-2">{(o.profiles as { email?: string } | null)?.email ?? <em className="text-ink-soft">deleted account</em>}</td>
-                <td className="px-3 py-2">{o.template_key === "lovestory" ? "Love story" : "Scrapbook"}</td>
+                <td className="px-3 py-2">{o.template_key === "lovestory" ? "Love story" : o.template_key === "wedding" ? "Wedding invitation" : "Scrapbook"}</td>
                 <td className="px-3 py-2">{formatINR(o.amount_paise)}</td>
                 <td className="px-3 py-2 capitalize">{o.status.replace("_", " ")}</td>
                 <td className="px-3 py-2">{formatDateTime(o.created_at)}</td>

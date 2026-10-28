@@ -40,7 +40,7 @@ export default async function AdminSite({ params }: { params: Promise<{ siteId: 
           <dt className="text-ink-soft">Owner</dt>
           <dd>{(s.profiles as { email?: string } | null)?.email ?? "—"}</dd>
           <dt className="text-ink-soft">Product</dt>
-          <dd>{s.template_key === "lovestory" ? "Love story (Our Little Universe)" : "Birthday scrapbook"}</dd>
+          <dd>{s.template_key === "lovestory" ? "Love story (Our Little Universe)" : s.template_key === "wedding" ? "Wedding invitation (Royal Burgundy)" : "Birthday scrapbook"}</dd>
           <dt className="text-ink-soft">Status</dt>
           <dd>
             {s.status}

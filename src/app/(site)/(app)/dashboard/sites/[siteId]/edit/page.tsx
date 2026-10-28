@@ -7,8 +7,11 @@ import { newSiteContent as newLoveStory } from "@/templates/lovestory/defaults";
 import { draftContentSchema as loveDraftSchema } from "@/templates/lovestory/schema";
 import { newSiteContent } from "@/templates/scrapbook/defaults";
 import { draftContentSchema } from "@/templates/scrapbook/schema";
+import { newSiteContent as newWedding } from "@/templates/wedding/defaults";
+import { draftContentSchema as weddingDraftSchema } from "@/templates/wedding/schema";
 import { Editor } from "./Editor";
 import { LoveStudio } from "./love/LoveStudio";
+import { WeddingStudio } from "./wedding/WeddingStudio";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Edit your site" };
@@ -34,6 +37,20 @@ export default async function EditPage({ params }: { params: Promise<{ siteId: s
       <LoveStudio
         siteId={site.id}
         initial={parsed.success ? parsed.data : newLoveStory()}
+        initialRevision={site.draft_revision}
+        status={site.status}
+        publishedUrl={publishedUrl}
+        editUntil={site.edit_until}
+      />
+    );
+  }
+
+  if (site.template_key === "wedding") {
+    const parsed = weddingDraftSchema.safeParse(site.draft_content);
+    return (
+      <WeddingStudio
+        siteId={site.id}
+        initial={parsed.success ? parsed.data : newWedding()}
         initialRevision={site.draft_revision}
         status={site.status}
         publishedUrl={publishedUrl}

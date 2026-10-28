@@ -98,3 +98,18 @@ test("customer dashboard, editor, share and account pages", async ({ browser }) 
   await rc.close();
   await c.context.close();
 });
+
+test("wedding invitation (demo): envelope, every section and the RSVP dialog", async ({ page }) => {
+  await page.goto(`${APP}/demo/wedding`);
+  await page.waitForSelector(".wd[data-hydrated]");
+  await scan(page, "wedding envelope");
+  await page.getByTestId("wd-seal").click({ force: true });
+  await expect(page.locator(".wd-env")).toHaveCount(0, { timeout: 6000 });
+  // Reveal every section (as scrolling does) so axe checks them at full opacity.
+  await page.evaluate(() => document.querySelectorAll(".wd-reveal").forEach((e) => e.setAttribute("data-in", "")));
+  await page.waitForTimeout(1200);
+  await scan(page, "wedding sections");
+  await page.getByTestId("wd-rsvp-open").click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await scan(page, "wedding RSVP dialog");
+});

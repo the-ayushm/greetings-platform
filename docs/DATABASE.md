@@ -13,6 +13,8 @@ filename order by `supabase db reset` locally and `supabase db push` remotely).
 | `…0006_anon_is_admin.sql` | lets anonymous visitors evaluate the public catalog policy |
 | `20261013000001_love_story_responses.sql` | `site_responses` (recipient answers for love stories), owner-only RLS |
 | `20261013000002_seed_love_story_template.sql` | template `lovestory` v1 + its product (generated) |
+| `20261028000001_wedding_rsvps_and_free_orders.sql` | ₹0 products/orders allowed; `site_rsvps` (owner-only RLS); `fulfil_free_order()` |
+| `20261028000002_seed_wedding_template.sql` | template `wedding` v1 + its product, **not on sale**, ₹0 (generated) |
 
 ## Tables
 
@@ -31,6 +33,7 @@ filename order by `supabase db reset` locally and `supabase db push` remotely).
 | `audit_log` | `actor_id`, `actor_role`, `action`, `target_type/id`, `meta` | admin + business events |
 | `abuse_reports` | `site_id`, `reason`, `details`, `reporter_hash`, `status` | from the renderer's report link |
 | `rate_limits` | (`key`, `window_start`), `count` | keys are keyed hashes; cleaned daily |
+| `site_rsvps` | `site_id`, `guest_name`, `name_key` (unique per site), `attending`, `guests`, `message` | wedding RSVPs; written only by `/api/r/rsvp` after re-validating against the published invitation; ≤ 1000 per site; purged with the site |
 | `site_responses` | `site_id`, `kind` (`text`/`slider`/`coupon`), `item_id`, `label`, `value` | love story answers; stored only when the creator turned collection on; label taken server-side from the published content; ≤ 300 per site; purged with the site |
 
 Money is integer paise. Content JSON is size-capped at 256 KB.

@@ -2,6 +2,8 @@ import { newSiteContent as newScrapbook } from "./scrapbook/defaults";
 import * as scrapbook from "./scrapbook/schema";
 import { newSiteContent as newLoveStory } from "./lovestory/defaults";
 import * as lovestory from "./lovestory/schema";
+import { newSiteContent as newWedding } from "./wedding/defaults";
+import * as wedding from "./wedding/schema";
 
 /**
  * Every sellable template, keyed by `templates.key` / `sites.template_key`. Server code (drafts,
@@ -17,7 +19,7 @@ export type TemplateDef = {
   key: TemplateKey;
   schemaVersion: number;
   /** Recipient URL path prefix on the renderer origin. */
-  path: "birthday" | "love";
+  path: "birthday" | "love" | "wedding";
   /** Preview route (app origin) used by the editor iframe. */
   previewPath: (siteId: string) => string;
   /** Live (pending + ready) files a single site may hold. */
@@ -69,9 +71,25 @@ export const TEMPLATES = {
     recipientName: (d: unknown) => str((d as { people?: { partnerName?: unknown } } | null)?.people?.partnerName),
     shareText: "I made a little world, just for us ♡",
   },
+  wedding: {
+    key: "wedding",
+    schemaVersion: wedding.SCHEMA_VERSION,
+    path: "wedding",
+    previewPath: (id: string) => `/preview/wedding/${id}`,
+    limits: { image: 20, audio: 3 },
+    parseDraft: wrap(wedding.draftContentSchema),
+    parsePublish: wrap(wedding.publishContentSchema),
+    refs: (c: object) => wedding.referencedAssets(c as wedding.WeddingContent),
+    newContent: newWedding,
+    recipientName: (d: unknown) => {
+      const c = (d as { couple?: { brideName?: unknown; groomName?: unknown } } | null)?.couple;
+      return [str(c?.brideName), str(c?.groomName)].filter(Boolean).join(" & ");
+    },
+    shareText: "You're invited to our wedding ♡",
+  },
 } satisfies Record<string, TemplateDef & { key: string }>;
 
-export type TemplateKey = "scrapbook" | "lovestory";
+export type TemplateKey = "scrapbook" | "lovestory" | "wedding";
 
 export function isTemplateKey(k: string): k is TemplateKey {
   return Object.hasOwn(TEMPLATES, k);
