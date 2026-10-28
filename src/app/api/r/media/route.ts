@@ -13,5 +13,5 @@ export const POST = route(async (req) => {
   await rateLimit("media-refresh", clientIp(req), 30, 600);
   const site = await resolvePublicSite(slug);
   if (!site || !(await isUnlocked(site))) throw notFound();
-  return json(await signMedia(site.id, site.content));
+  return json(await signMedia(site.id, site.refs));
 });

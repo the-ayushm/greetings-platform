@@ -7,15 +7,17 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Sites" };
 
 const STATUSES = ["all", "draft", "published", "unpublished", "disabled", "expired", "deleted"];
+const TEMPLATES = [["all", "All products"], ["scrapbook", "Birthday scrapbook"], ["lovestory", "Love story"]] as const;
 
 /** Metadata only. Customer content is not shown here (see the audited "view content" action). */
-export default async function AdminSites({ searchParams }: { searchParams: Promise<{ status?: string }> }) {
+export default async function AdminSites({ searchParams }: { searchParams: Promise<{ status?: string; template?: string }> }) {
   await requireAdminPage();
-  const { status = "all" } = await searchParams;
+  const { status = "all", template = "all" } = await searchParams;
   // Admin-only page (guarded by the console layout); explicit column lists, never content.
   const db = adminDb();
-  let query = db.from("sites").select("id, status, created_at, expires_at, edit_until, view_count, profiles(email)").order("created_at", { ascending: false }).limit(100);
+  let query = db.from("sites").select("id, status, template_key, published_at, created_at, expires_at, edit_until, view_count, profiles(email)").order("created_at", { ascending: false }).limit(100);
   if (STATUSES.includes(status) && status !== "all") query = query.eq("status", status);
+  if (TEMPLATES.some(([k]) => k === template) && template !== "all") query = query.eq("template_key", template);
   const { data } = await query;
   return (
     <>
@@ -26,6 +28,13 @@ export default async function AdminSites({ searchParams }: { searchParams: Promi
             <option key={s}>{s}</option>
           ))}
         </select>
+        <select name="template" defaultValue={template} className="rounded-lg border-2 border-ink/20 px-2 py-1.5" aria-label="Product">
+          {TEMPLATES.map(([k, l]) => (
+            <option key={k} value={k}>
+              {l}
+            </option>
+          ))}
+        </select>
         <button className="rounded-lg bg-ink px-3 py-1.5 font-bold text-white">Filter</button>
       </form>
       <div className="mt-4 overflow-x-auto rounded-xl border-2 border-ink/15 bg-white">
@@ -34,7 +43,9 @@ export default async function AdminSites({ searchParams }: { searchParams: Promi
             <tr>
               <th className="px-3 py-2">Site</th>
               <th className="px-3 py-2">Owner</th>
+              <th className="px-3 py-2">Product</th>
               <th className="px-3 py-2">Status</th>
+              <th className="px-3 py-2">Published</th>
               <th className="px-3 py-2">Views</th>
               <th className="px-3 py-2">Edit until</th>
               <th className="px-3 py-2">Expires</th>
@@ -49,7 +60,9 @@ export default async function AdminSites({ searchParams }: { searchParams: Promi
                   </Link>
                 </td>
                 <td className="px-3 py-2">{(s.profiles as { email?: string } | null)?.email ?? "—"}</td>
+                <td className="px-3 py-2">{s.template_key === "lovestory" ? "Love story" : "Scrapbook"}</td>
                 <td className="px-3 py-2">{s.status}</td>
+                <td className="px-3 py-2">{formatDate(s.published_at)}</td>
                 <td className="px-3 py-2">{s.view_count}</td>
                 <td className="px-3 py-2">{formatDate(s.edit_until)}</td>
                 <td className="px-3 py-2">{formatDate(s.expires_at)}</td>

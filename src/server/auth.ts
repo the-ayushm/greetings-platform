@@ -21,7 +21,7 @@ export async function requireUser(): Promise<SessionUser> {
   return u;
 }
 
-async function isAdminRole(userId: string) {
+export async function isAdminRole(userId: string) {
   const { data } = await adminDb().from("profiles").select("role").eq("id", userId).maybeSingle();
   return data?.role === "admin";
 }

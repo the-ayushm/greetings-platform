@@ -1,7 +1,7 @@
 import "server-only";
 import crypto from "node:crypto";
 import { adminDb } from "@/lib/supabase/admin";
-import { publishContentSchema, referencedAssets } from "@/templates/scrapbook/schema";
+import { templateDef } from "@/templates/registry";
 import { AUDIO_MAX_BYTES, processAudio } from "./audio";
 import { ApiError, badRequest, conflict, notFound } from "./http";
 import { MediaRejected, processImage } from "./images";
@@ -12,7 +12,6 @@ import { getOwnedSite, MEDIA_BUCKET, removePrefix, SIGNED_URL_TTL } from "./site
 export const IMAGE_MAX_BYTES = 15 * 1024 * 1024;
 export const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 export const AUDIO_TYPES = ["audio/mpeg", "audio/mp3", "audio/mp4", "audio/x-m4a", "audio/m4a", "audio/aac", "audio/x-aac"];
-const MAX_LIVE = { image: 40, audio: 3 } as const;
 
 /** Display-only name: no path, no control/bidi characters, bounded. Never used in storage paths. */
 export function sanitizeFilename(name: string): string {
@@ -47,7 +46,7 @@ export async function createUpload(
     if (!input.rightsConfirmed) throw badRequest("Please confirm you have the right to use this song.");
   }
   const { count } = await adminDb().from("assets").select("id", { count: "exact", head: true }).eq("site_id", siteId).eq("kind", input.kind).in("status", ["pending", "ready"]);
-  if ((count ?? 0) >= MAX_LIVE[input.kind]) throw conflict("quota", input.kind === "image" ? "You've reached the photo limit for this site. Delete unused photos first." : "Delete an old song first.");
+  if ((count ?? 0) >= templateDef(site.template_key).limits[input.kind]) throw conflict("quota", input.kind === "image" ? "You've reached the photo limit for this site. Delete unused photos first." : "Delete an old song first.");
 
   const id = crypto.randomUUID();
   const { error } = await adminDb()
@@ -132,8 +131,9 @@ export async function deleteAsset(userId: string, assetId: string) {
   const site = await getOwnedSite(userId, asset.site_id);
   if (site.published_version_id) {
     const { data: v } = await adminDb().from("site_versions").select("content").eq("id", site.published_version_id).single();
-    const parsed = publishContentSchema.safeParse(v?.content);
-    if (parsed.success && referencedAssets(parsed.data).some((r) => r.id === assetId)) {
+    const def = templateDef(site.template_key);
+    const parsed = def.parsePublish(v?.content);
+    if (parsed.success && def.refs(parsed.data).some((r) => r.id === assetId)) {
       throw conflict("in_use", "This file is on your published page. Remove it and publish again before deleting it.");
     }
   }

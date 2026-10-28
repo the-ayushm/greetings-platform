@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { Button, Card, Notice } from "@/components/ui";
 import { api, ApiFailure } from "@/lib/api-client";
 
-type Props = { siteId: string; status: string; url: string | null; hasPasscode: boolean; editable: boolean; disabledReason: string | null };
+type Props = { siteId: string; status: string; url: string | null; hasPasscode: boolean; editable: boolean; disabledReason: string | null; shareText?: string; kindLabel?: string; qrFile?: string };
 
-export function SiteManager({ siteId, status, url: serverUrl, hasPasscode, editable, disabledReason }: Props) {
+export function SiteManager({ siteId, status, url: serverUrl, hasPasscode, editable, disabledReason, shareText = "A little birthday surprise, just for you ♡", kindLabel = "birthday site", qrFile = "birthday-qr.png" }: Props) {
   const router = useRouter();
   const [msg, setMsg] = useState<{ tone: "success" | "error"; text: string } | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -40,7 +40,7 @@ export function SiteManager({ siteId, status, url: serverUrl, hasPasscode, edita
     }
   }
 
-  const share = `A little birthday surprise, just for you ♡ ${url ?? ""}`;
+  const share = `${shareText} ${url ?? ""}`;
 
   return (
     <div className="mt-6 space-y-5">
@@ -79,10 +79,10 @@ export function SiteManager({ siteId, status, url: serverUrl, hasPasscode, edita
             {qr && (
               <div className="mt-4 flex items-center gap-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={qr} alt="QR code for your birthday site" width={140} height={140} className="rounded-lg border-2 border-ink/20" />
+                <img src={qr} alt={`QR code for your ${kindLabel}`} width={140} height={140} className="rounded-lg border-2 border-ink/20" />
                 <div className="text-sm text-ink-soft">
                   <p>Print it inside a card, or put it on the cake box.</p>
-                  <a className="mt-1 inline-block font-bold text-ink underline" href={qr} download="birthday-qr.png">
+                  <a className="mt-1 inline-block font-bold text-ink underline" href={qr} download={qrFile}>
                     Download QR code
                   </a>
                 </div>

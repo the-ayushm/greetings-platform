@@ -182,6 +182,25 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"site_responses": {
+                  Row: {
+                    "created_at": string,"id": string,"item_id": string,"kind": string,"label": string,"site_id": string,"value": string
+                  }
+                  Insert: {
+                    "created_at"?: string,"id"?: string,"item_id": string,"kind": string,"label"?: string,"site_id": string,"value": string
+                  }
+                  Update: {
+                    "created_at"?: string,"id"?: string,"item_id"?: string,"kind"?: string,"label"?: string,"site_id"?: string,"value"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "site_responses_site_id_fkey"
+      columns: ["site_id"]
+isOneToOne: false
+      referencedRelation: "sites"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"site_versions": {
                   Row: {
                     "content": NonNullable<Json>,"created_at": string,"created_by": string | null,"id": string,"schema_version": number,"site_id": string,"version": number

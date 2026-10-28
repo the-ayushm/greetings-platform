@@ -3,6 +3,9 @@ import Link from "next/link";
 import { Badge, ButtonLink, Card, PageShell, formatDate, formatDateTime, formatINR } from "@/components/ui";
 import { userDb } from "@/lib/supabase/server";
 import { requireUserPage } from "@/server/auth";
+import { isTemplateKey, templateDef } from "@/templates/registry";
+
+const TEMPLATE_LABEL: Record<string, string> = { scrapbook: "Birthday scrapbook", lovestory: "Love story" };
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "My sites" };
@@ -19,7 +22,7 @@ export default async function Dashboard() {
   await requireUserPage("/dashboard");
   const db = await userDb();
   const [{ data: sites }, { data: orders }] = await Promise.all([
-    db.from("sites").select("id, status, draft_content, edit_until, expires_at, view_count, first_viewed_at, created_at").order("created_at", { ascending: false }),
+    db.from("sites").select("id, status, template_key, draft_content, edit_until, expires_at, view_count, first_viewed_at, created_at").order("created_at", { ascending: false }),
     db.from("orders").select("id, status, amount_paise, created_at, paid_at").order("created_at", { ascending: false }).limit(20),
   ]);
   const paidOrders = (orders ?? []).filter((o) => o.status !== "created" && o.status !== "expired");
@@ -28,7 +31,7 @@ export default async function Dashboard() {
     <PageShell>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-semibold">My birthday sites</h1>
+          <h1 className="font-display text-3xl font-semibold">My sites</h1>
           <p className="text-ink-soft">Edit, preview and share your surprises.</p>
         </div>
         <div className="flex gap-2">
@@ -42,25 +45,28 @@ export default async function Dashboard() {
       {!sites?.length ? (
         <Card className="mt-8 text-center">
           <p className="font-hand text-2xl text-rose">nothing here yet ♡</p>
-          <p className="mt-2 text-ink-soft">Buy a site to start personalising it. You&apos;ll see a live preview as you type.</p>
+          <p className="mt-2 text-ink-soft">Buy a birthday scrapbook or a love story to start personalising it. You&apos;ll see a live preview as you type.</p>
           <div className="mt-5 flex justify-center gap-3">
-            <ButtonLink href="/product">Get started</ButtonLink>
-            <ButtonLink href="/demo" variant="secondary">
-              See the demo
+            <ButtonLink href="/product">Birthday scrapbook</ButtonLink>
+            <ButtonLink href="/products/love-story" variant="secondary">
+              Love story ♡
             </ButtonLink>
           </div>
         </Card>
       ) : (
         <ul className="mt-8 grid gap-4 md:grid-cols-2">
           {sites.map((s) => {
-            const c = s.draft_content as { recipientName?: string };
+            const name = isTemplateKey(s.template_key) ? templateDef(s.template_key).recipientName(s.draft_content) : "";
             const st = STATUS[s.status] ?? { label: s.status, tone: "neutral" as const };
             const canEdit = ["draft", "published", "unpublished"].includes(s.status) && new Date(s.edit_until) > new Date();
             return (
               <li key={s.id}>
                 <Card className="h-full">
                   <div className="flex items-start justify-between gap-3">
-                    <h2 className="font-display text-xl font-semibold break-words">For {c.recipientName?.trim() || "someone special"} ♡</h2>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold tracking-wide text-ink-soft uppercase">{TEMPLATE_LABEL[s.template_key] ?? s.template_key}</p>
+                      <h2 className="font-display text-xl font-semibold break-words">For {name || "someone special"} ♡</h2>
+                    </div>
                     <Badge tone={st.tone}>{st.label}</Badge>
                   </div>
                   <dl className="mt-3 grid grid-cols-2 gap-y-1 text-sm">

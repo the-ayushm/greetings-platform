@@ -28,6 +28,8 @@ export type CheckoutSession = {
 export async function createCheckout(userId: string, productId: string): Promise<CheckoutSession> {
   const { data: product } = await db().from("products").select("*").eq("id", productId).eq("is_active", true).maybeSingle();
   if (!product) throw notFound();
+  const { data: template } = await db().from("templates").select("key").eq("key", product.template_key).eq("is_active", true).maybeSingle();
+  if (!template) throw notFound();
   const { data: tv } = await db().from("template_versions").select("version").eq("template_key", product.template_key).eq("is_current", true).maybeSingle();
   if (!tv) throw new ApiError(503, "template_unavailable", "This design is temporarily unavailable.");
 

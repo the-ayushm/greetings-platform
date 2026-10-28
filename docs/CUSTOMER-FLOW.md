@@ -28,6 +28,19 @@
     removed immediately; the order record stays for accounting).
 12. **Account**: download all data as JSON, or delete the account entirely.
 
+## Love story (“Our Little Universe”)
+
+Same flow with its own pages: **/products/love-story** (features, section previews into
+`/demo/love-story?at=<section>`, live price) → **Create Your Love Story** → `/checkout?product=<id>`
+→ same Razorpay payment/verification/fulfilment → the **customization studio**
+(`/dashboard/sites/:id/edit`): personal details, photo library (multi-upload with progress),
+welcome & music, questions (right answers + wrong-answer page), unlock, timeline, scrapbook,
+special dates, letter tabs, coupons, photo wall, final surprise, theme editor, section order/
+toggles and response collection. Live preview (mobile/desktop) follows the section being edited.
+Publish → `https://wishes.example.in/love/<22 random chars>`. If response collection is on, the
+recipient's typed answers, love-slider value and redeemed coupons appear under Share & settings
+(owner-only, deletable); the page tells the recipient whether answers are shared.
+
 ## What can go wrong (and what happens)
 
 | Situation | Behaviour |

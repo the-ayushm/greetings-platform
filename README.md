@@ -91,7 +91,9 @@ capture harness changes — never to "accept" a renderer change).
 ```
 legacy/                     original single-file experience (do not edit)
 src/templates/scrapbook/    the birthday experience: scenes, engine, CSS, fonts, Zod schema
-src/app/(renderer)/         renderer root: /birthday/[slug], /demo, /preview/[siteId]
+src/templates/lovestory/    "Our Little Universe" love story: sections, art, theme, Zod schema
+src/templates/registry.ts   template key → schemas, asset refs, public path, limits
+src/app/(renderer)/         renderer root: /birthday/[slug], /love/[slug], /demo(/love-story), /preview/…
 src/app/(site)/             store, login, checkout, dashboard + editor, admin console
 src/app/api/                route handlers (customer, renderer /api/r/*, webhooks, cron, admin)
 src/server/                 server-only logic: auth, orders/Razorpay, sites, media, admin, logging

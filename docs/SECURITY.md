@@ -38,6 +38,14 @@ payment integrity, and admin power.
   passcode, media refresh, reports, export, account deletion. Auth emails are rate-limited by
   Supabase Auth.
 
+## Love story responses
+
+Recipients can send answers only to a published, unlocked love story whose creator enabled
+collection; the item must exist in the **published** content and the stored label is taken from
+it (never from the request). Rate-limited per IP+link (20/10 min), capped at 300 per site,
+owner-only RLS, deleted with the site/account, included in the data export. The page states
+plainly whether an answer is shared or stays on the recipient's screen.
+
 ## Uploads
 
 Type by magic bytes (never filename/MIME); images decoded with a 40-MP limit (bomb guard),

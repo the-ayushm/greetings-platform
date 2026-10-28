@@ -1,7 +1,9 @@
 import "server-only";
 import { adminDb } from "@/lib/supabase/admin";
 import type { Json } from "@/lib/supabase/database.types";
-import { conflict, notFound } from "./http";
+import { draftContentSchema as loveDraftSchema, SECTION_IDS, type SectionId } from "@/templates/lovestory/schema";
+import { presetTheme, THEME_PRESETS } from "@/templates/lovestory/theme";
+import { badRequest, conflict, notFound } from "./http";
 
 const db = () => adminDb();
 
@@ -96,4 +98,35 @@ export async function stats() {
     revenue30: paid30.reduce((n, o) => n + o.amount_paise, 0),
     storageBytes: (storage.data ?? []).reduce((n, a) => n + (a.bytes ?? 0), 0),
   };
+}
+
+/**
+ * Love story defaults for NEW orders: which sections start switched on, and the starting theme.
+ * Edits the current template version's default content (fulfil_order copies it into each new
+ * site); existing customers' stories are never touched. Validated with the template schema.
+ */
+export async function updateLoveDefaults(adminId: string, patch: { sections?: { id: SectionId; enabled: boolean }[]; preset?: keyof typeof THEME_PRESETS }) {
+  const { data: tv } = await db().from("template_versions").select("version, default_content").eq("template_key", "lovestory").eq("is_current", true).maybeSingle();
+  if (!tv) throw notFound();
+  const parsed = loveDraftSchema.safeParse(tv.default_content);
+  if (!parsed.success) throw conflict("invalid_defaults", "The stored defaults don't match the template schema.");
+  const next = parsed.data;
+  if (patch.sections) {
+    const ids = new Set(patch.sections.map((s) => s.id));
+    if (ids.size !== SECTION_IDS.length || SECTION_IDS.some((id) => !ids.has(id))) throw badRequest("Every section must be listed once.");
+    next.sections = patch.sections.map((s) => ({ id: s.id, enabled: s.enabled }));
+  }
+  if (patch.preset) next.theme = presetTheme(patch.preset, { motion: next.theme.motion, hearts: next.theme.hearts, sparkles: next.theme.sparkles, lights: next.theme.lights });
+  const check = loveDraftSchema.safeParse(next);
+  if (!check.success) throw badRequest("Those defaults aren't valid.");
+  await db().from("template_versions").update({ default_content: check.data as unknown as { [k: string]: Json } }).eq("template_key", "lovestory").eq("version", tv.version);
+  await adminAudit(adminId, "admin.template.defaults", "template", "lovestory", { version: tv.version, sections: patch.sections ?? null, preset: patch.preset ?? null });
+  return { ok: true };
+}
+
+/** Current love story defaults, for the admin catalog page. */
+export async function loveDefaults() {
+  const { data: tv } = await db().from("template_versions").select("default_content").eq("template_key", "lovestory").eq("is_current", true).maybeSingle();
+  const parsed = tv ? loveDraftSchema.safeParse(tv.default_content) : null;
+  return parsed?.success ? { sections: parsed.data.sections, preset: parsed.data.theme.preset } : null;
 }

@@ -25,6 +25,14 @@ environment and need you (or real accounts/devices).
 - [ ] ⚠ Paste a link in WhatsApp: preview shows only the generic text.
 - [ ] ⚠ Restore drill (DEPLOYMENT.md → Runbooks).
 
+## Love story ("Our Little Universe") launch
+- [ ] ⚠ `supabase db push` the two `20261013…` migrations to staging, then production (additive only).
+- [ ] ⚠ Set its price in Admin → Templates & pricing (seeded at ₹499, same as the scrapbook) and the default sections/theme for new orders.
+- [ ] ⚠ Staging: buy from `/products/love-story` with a test card → studio opens → upload photos (incl. iPhone HEIC) → publish → open `/love/<slug>` on a real iPhone and Android phone (WhatsApp + Instagram in-app browsers): music only after tap, envelope, slider, coupons, final heart.
+- [ ] ⚠ Turn on "Collect their responses", answer as the recipient, confirm answers appear under Share & settings and can be deleted.
+- [ ] ⚠ Paste a love story link in WhatsApp/Instagram: generic text and the generic image only.
+- [ ] `npx playwright test tests/e2e/lovestory.spec.ts` green against the local stack.
+
 ## Automated (must be green on the release commit)
 - [ ] `npm run typecheck` · `npm run lint`
 - [ ] `npm run test:unit` · `npm run test:db`

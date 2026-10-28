@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { resolvePublicSite, signMedia } from "@/server/sites";
 import { isUnlocked } from "@/server/unlock";
+import type { ScrapbookContent } from "@/templates/scrapbook/schema";
 import { LivePage } from "./LivePage";
 import { PasscodeGate } from "./PasscodeGate";
 
@@ -17,8 +18,8 @@ export const metadata: Metadata = {
 
 export default async function BirthdayPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const site = await resolvePublicSite(slug);
+  const site = await resolvePublicSite(slug, "scrapbook");
   if (!site) notFound();
   if (!(await isUnlocked(site))) return <PasscodeGate slug={slug} />;
-  return <LivePage slug={slug} siteId={site.id} content={site.content} media={await signMedia(site.id, site.content)} />;
+  return <LivePage slug={slug} siteId={site.id} content={site.content as ScrapbookContent} media={await signMedia(site.id, site.refs)} />;
 }

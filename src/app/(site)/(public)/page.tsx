@@ -22,8 +22,9 @@ const FAQ = [
 ];
 
 export default async function Landing() {
-  const product = await activeProduct();
+  const [product, love] = await Promise.all([activeProduct(), activeProduct("lovestory")]);
   const price = product ? formatINR(product.price_paise) : null;
+  const loveP = love ? formatINR(love.price_paise) : null;
   return (
     <main>
       <section className="gingham border-b-2 border-ink/10">
@@ -50,6 +51,27 @@ export default async function Landing() {
           </div>
         </div>
       </section>
+
+      {love && (
+        <section className="mx-auto max-w-5xl px-4 pt-12 sm:px-6" aria-labelledby="love-promo">
+          <div className="relative overflow-hidden rounded-3xl bg-[linear-gradient(150deg,#1a0d2e_0%,#4a0f2a_60%,#5c0f22_100%)] p-6 text-white shadow-[8px_8px_0_var(--color-pink)] sm:p-8">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(2px_2px_at_12%_24%,#fff,transparent),radial-gradient(1.5px_1.5px_at_40%_70%,#fff,transparent),radial-gradient(2px_2px_at_70%_18%,#fff,transparent),radial-gradient(180px_180px_at_90%_10%,rgba(255,140,190,.25),transparent)]" />
+            <div className="relative grid items-center gap-5 md:grid-cols-[1fr_auto]">
+              <div>
+                <p className="font-hand text-xl text-[#ffb3cb]">new ♡ for couples</p>
+                <h2 id="love-promo" className="font-display text-3xl font-semibold">Our Little Universe — a love story website</h2>
+                <p className="mt-2 max-w-prose text-white/85">Questions, your timeline, a scrapbook, special dates, a love letter, coupons and a glowing final surprise. For birthdays, anniversaries and Valentine&apos;s Day.</p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <ButtonLink href="/products/love-story">See it{loveP ? ` · ${loveP}` : ""}</ButtonLink>
+                <ButtonLink href="/demo/love-story" variant="secondary">
+                  Demo
+                </ButtonLink>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6" aria-labelledby="inside">
         <h2 id="inside" className="font-display text-3xl font-semibold">What&apos;s inside</h2>

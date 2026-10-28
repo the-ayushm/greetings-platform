@@ -4,11 +4,12 @@
 
 ```
  www.example.in  (APP_ORIGIN)                     wishes.example.in  (RENDERER_ORIGIN)
- ├─ store: /, /product, /demo, /legal/*           └─ /birthday/<22-char slug>   recipient page
+ ├─ store: /, /product, /demo, /legal/*           ├─ /birthday/<22-char slug>   birthday recipient page
+ ├─ /products/love-story, /demo/love-story       └─ /love/<22-char slug>       love story recipient page
  ├─ /login (email link → /auth/callback)               /api/r/{unlock,media,view,report}
  ├─ /checkout → Razorpay Checkout                    no auth cookies · no-referrer · noindex
  ├─ /dashboard, /dashboard/sites/:id/edit            strict CSP · frame-ancestors 'none'
- ├─ /preview/:id (owner-only draft, iframe)
+ ├─ /preview/:id, /preview/love/:id (owner-only draft, iframe)
  ├─ /admin (role=admin + TOTP MFA)
  └─ /api/* (customer, webhooks, cron, admin)
                  │  server-only reads/writes             │
@@ -27,6 +28,36 @@ separate registrable domain is better still (see SECURITY.md).
 
 **Why one app.** One deploy, one codebase, one set of types. Lint rules stop template code from
 importing server or database modules.
+
+## Templates
+
+Two sellable templates share every piece of infrastructure (checkout, fulfilment, sites,
+drafts, publishing, media, links, passcodes, admin). `src/templates/registry.ts` maps
+`sites.template_key` to each template's schemas, asset references, public path and limits;
+server code looks templates up there instead of importing one directly. Each renderer route
+imports only its own template, so template stylesheets never share a page.
+
+| Key | Product | Code | Public URL |
+|---|---|---|---|
+| `scrapbook` | Scrapbook Surprise (birthday) | `src/templates/scrapbook/` | `/birthday/<slug>` |
+| `lovestory` | Our Little Universe (love story) | `src/templates/lovestory/` | `/love/<slug>` |
+
+## The love story template
+
+`src/templates/lovestory/` — original CSS/SVG artwork (no stock images), scoped under `.lu`:
+
+- `schema.ts` — Zod content (draft vs publish): people, section order/toggles, welcome, music,
+  questions (choice / picture / slider / text, optional right answer), unlock, timeline,
+  scrapbook (+categories), calendar (yearly dates), tabbed letter (safe **bold**/*italic*/list
+  markup parsed into React nodes), coupons, photo wall, final, theme, response collection.
+- `Experience.tsx` + `sections/*` — one step per page: welcome → questions → … → final; music
+  only after a tap; heart bursts; reduced motion respected (plus a customer “motion” setting).
+- `theme.ts` — presets (Cherry Romance, Pink Dream, Midnight Love, Vintage Scrapbook, Soft Pastel)
+  and custom colours → CSS variables (validated hex only).
+- Studio: `dashboard/sites/[siteId]/edit/love/` (panels per section, photo library with
+  multi-upload, live preview with mobile/desktop switch that follows the edited section).
+  Autosave, library and preview bridge are shared hooks (`edit/useDraft.ts`) with the
+  scrapbook editor.
 
 ## The birthday template
 

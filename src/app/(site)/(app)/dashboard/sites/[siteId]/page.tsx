@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Badge, ButtonLink, PageShell, formatDate, formatDateTime } from "@/components/ui";
+import { userDb } from "@/lib/supabase/server";
 import { requireUserPage } from "@/server/auth";
 import { ApiError, isUuid } from "@/server/http";
 import { getOwnedSite, siteUrl } from "@/server/sites";
+import { templateDef } from "@/templates/registry";
+import { ResponsesPanel } from "./ResponsesPanel";
 import { SiteManager } from "./SiteManager";
 
 export const dynamic = "force-dynamic";
@@ -20,12 +23,18 @@ export default async function SitePage({ params }: { params: Promise<{ siteId: s
     if (e instanceof ApiError && e.status === 404) notFound();
     throw e;
   }
-  const c = site.draft_content as { recipientName?: string };
+  const def = templateDef(site.template_key);
+  const love = site.template_key === "lovestory";
+  const name = def.recipientName(site.draft_content);
   const editable = ["draft", "published", "unpublished"].includes(site.status) && new Date(site.edit_until) > new Date();
+  // Recipient responses (love story only): owner-only through RLS.
+  const responses = love
+    ? ((await (await userDb()).from("site_responses").select("id, kind, label, value, created_at").eq("site_id", site.id).order("created_at", { ascending: false }).limit(200)).data ?? [])
+    : [];
   return (
     <PageShell narrow>
       <div className="flex items-start justify-between gap-3">
-        <h1 className="font-display text-3xl font-semibold break-words">For {c.recipientName?.trim() || "someone special"} ♡</h1>
+        <h1 className="font-display text-3xl font-semibold break-words">For {name || "someone special"} ♡</h1>
         <Badge tone={site.status === "published" ? "good" : site.status === "draft" ? "warn" : "neutral"}>{site.status}</Badge>
       </div>
       <p className="mt-1 text-sm text-ink-soft">
@@ -34,17 +43,21 @@ export default async function SitePage({ params }: { params: Promise<{ siteId: s
       </p>
       {editable && (
         <ButtonLink href={`/dashboard/sites/${site.id}/edit`} className="mt-5 w-full">
-          Open the editor
+          {love ? "Open the customization studio" : "Open the editor"}
         </ButtonLink>
       )}
       <SiteManager
         siteId={site.id}
         status={site.status}
-        url={site.slug ? siteUrl(site.slug) : null}
+        url={site.slug ? siteUrl(site.slug, site.template_key) : null}
         hasPasscode={Boolean(site.passcode_hash)}
         editable={editable}
         disabledReason={site.disabled_reason}
+        shareText={def.shareText}
+        kindLabel={love ? "love story" : "birthday site"}
+        qrFile={love ? "love-story-qr.png" : "birthday-qr.png"}
       />
+      {love && <ResponsesPanel siteId={site.id} responses={responses} />}
     </PageShell>
   );
 }

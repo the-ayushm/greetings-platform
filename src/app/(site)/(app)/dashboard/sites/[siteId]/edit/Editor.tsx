@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Button, Notice } from "@/components/ui";
 import { api, ApiFailure } from "@/lib/api-client";
 import { THEME_PRESETS, type ScrapbookContent } from "@/templates/scrapbook/schema";
 import { AudioPicker, ListControls, PhotoPicker, Section, Text } from "./fields";
-import type { LibraryAsset } from "./upload";
+import { SAVE_LABEL, useDraft, useLibrary, usePreviewBridge } from "./useDraft";
 
-type SaveState = "saved" | "unsaved" | "saving" | "error" | "conflict" | "offline";
 type Issue = { path: string; message: string };
 
 const LABELS: Record<string, string> = {
@@ -34,128 +33,23 @@ function move<T>(arr: T[], from: number, to: number) {
 }
 
 export function Editor({ siteId, initial, initialRevision, status, publishedUrl }: { siteId: string; initial: ScrapbookContent; initialRevision: number; status: string; publishedUrl: string | null }) {
-  const [c, setC] = useState(initial);
-  const [save, setSave] = useState<SaveState>("saved");
-  const [library, setLibrary] = useState<LibraryAsset[]>([]);
   const [issues, setIssues] = useState<Issue[]>([]);
   const [publishing, setPublishing] = useState(false);
   const [published, setPublished] = useState<string | null>(status === "published" ? publishedUrl : null);
-  const [notice, setNotice] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
-  const revision = useRef(initialRevision);
-  const latest = useRef(initial);
-  const dirty = useRef(false);
-  const inflight = useRef<Promise<void> | null>(null);
   const frame = useRef<HTMLIFrameElement>(null);
-  // Autosave triggers on real changes only (compared with what the server last accepted).
-  const savedJson = useRef(JSON.stringify(initial));
-
-  const edit = useCallback((fn: (d: ScrapbookContent) => void) => {
-    setC((prev) => {
-      const next = structuredClone(prev);
-      fn(next);
-      return next;
-    });
-  }, []);
-
-  const loadLibrary = useCallback(async () => {
-    try {
-      const r = await api<{ assets: LibraryAsset[] }>(`/api/sites/${siteId}/assets`);
-      setLibrary(r.assets);
-    } catch {
-      /* preview just shows placeholders */
-    }
-  }, [siteId]);
-
-  useEffect(() => {
-    // Initial load of the photo/song library (signed preview URLs), refreshed before they expire.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    void loadLibrary();
-    const iv = setInterval(loadLibrary, 90 * 60_000);
-    return () => clearInterval(iv);
-  }, [loadLibrary]);
-
-  // ───────── autosave (debounced, sequential, optimistic concurrency) ─────────
-  const flush = useCallback(async (): Promise<void> => {
-    if (inflight.current) await inflight.current;
-    if (!dirty.current) return;
-    dirty.current = false;
-    const body = latest.current;
-    setSave("saving");
-    inflight.current = (async () => {
-      try {
-        const r = await api<{ revision: number }>(`/api/sites/${siteId}/draft`, { method: "PUT", body: { content: body, revision: revision.current } });
-        revision.current = r.revision;
-        savedJson.current = JSON.stringify(body);
-        setSave(dirty.current ? "unsaved" : "saved");
-      } catch (e) {
-        dirty.current = true;
-        if (e instanceof ApiFailure && e.code === "revision_conflict") setSave("conflict");
-        else if (e instanceof ApiFailure && e.status === 0) setSave("offline");
-        else {
-          setSave("error");
-          if (e instanceof ApiFailure) setNotice(e.message);
-        }
-      } finally {
-        inflight.current = null;
-      }
-    })();
-    await inflight.current;
-  }, [siteId]);
-
-  useEffect(() => {
-    latest.current = c;
-    if (JSON.stringify(c) === savedJson.current) return;
-    dirty.current = true;
-    setSave("unsaved");
-    setIssues([]);
-    const t = setTimeout(() => void flush(), 900);
-    return () => clearTimeout(t);
-  }, [c, flush]);
-
-  useEffect(() => {
-    const warn = (e: BeforeUnloadEvent) => {
-      if (dirty.current || inflight.current) e.preventDefault();
-    };
-    const online = () => void flush();
-    addEventListener("beforeunload", warn);
-    addEventListener("online", online);
-    return () => {
-      removeEventListener("beforeunload", warn);
-      removeEventListener("online", online);
-    };
-  }, [flush]);
-
-  // ───────── live preview (same-origin iframe running the real renderer) ─────────
-  const post = useCallback(() => {
-    const media = { images: {} as Record<string, { src: string; srcSet?: string }>, audio: {} as Record<string, { src: string }> };
-    for (const a of library) {
-      if (!a.src) continue;
-      if (a.kind === "image") media.images[a.id] = { src: a.src, srcSet: a.srcSmall ? `${a.srcSmall} 480w, ${a.src} 1200w` : undefined };
-      else media.audio[a.id] = { src: a.src };
-    }
-    frame.current?.contentWindow?.postMessage({ type: "bday:content", content: c, media }, window.location.origin);
-  }, [c, library]);
-
-  useEffect(() => {
-    post();
-  }, [post]);
-
-  useEffect(() => {
-    const onMsg = (e: MessageEvent) => {
-      if (e.origin === window.location.origin && e.source === frame.current?.contentWindow && (e.data as { type?: string })?.type === "bday:ready") post();
-    };
-    addEventListener("message", onMsg);
-    return () => removeEventListener("message", onMsg);
-  }, [post]);
+  const clearIssues = useCallback(() => setIssues([]), []);
+  const { c, edit, save, saveNow, notice, setNotice } = useDraft(siteId, initial, initialRevision, clearIssues);
+  const { library, loadLibrary } = useLibrary(siteId);
+  // Live preview: same-origin iframe running the real renderer.
+  const post = usePreviewBridge(frame, c, library);
 
   async function publish() {
     setPublishing(true);
     setIssues([]);
     setNotice(null);
     try {
-      dirty.current = true;
-      await flush();
+      await saveNow();
       const r = await api<{ url: string }>(`/api/sites/${siteId}/publish`, { method: "POST" });
       setPublished(r.url);
       setNotice(null);
@@ -167,14 +61,7 @@ export function Editor({ siteId, initial, initialRevision, status, publishedUrl 
     }
   }
 
-  const saveLabel: Record<SaveState, string> = {
-    saved: "All changes saved",
-    unsaved: "Unsaved changes…",
-    saving: "Saving…",
-    error: "Couldn't save",
-    conflict: "Edited in another tab",
-    offline: "Offline — will retry",
-  };
+  const saveLabel = SAVE_LABEL;
 
   const lib = { siteId, library, onUploaded: loadLibrary };
 

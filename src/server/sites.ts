@@ -2,8 +2,7 @@ import "server-only";
 import { adminDb } from "@/lib/supabase/admin";
 import { userDb } from "@/lib/supabase/server";
 import type { Json } from "@/lib/supabase/database.types";
-import { publishContentSchema, referencedAssets, SCHEMA_VERSION, type ScrapbookContent } from "@/templates/scrapbook/schema";
-import type { MediaMap } from "@/templates/scrapbook/Experience";
+import { templateDef, type AssetRef, type TemplateKey } from "@/templates/registry";
 import { hashPasscode, newSlug } from "./crypto";
 import { rendererOrigin } from "./env";
 import { ApiError, badRequest, conflict, notFound } from "./http";
@@ -27,8 +26,9 @@ export async function getOwnedSite(userId: string, siteId: string) {
   return data;
 }
 
-export function siteUrl(slug: string) {
-  return `${rendererOrigin()}/birthday/${slug}`;
+/** Public link for a site: the path prefix depends on its template (/birthday/…, /love/…). */
+export function siteUrl(slug: string, templateKey: string) {
+  return `${rendererOrigin()}/${templateDef(templateKey).path}/${slug}`;
 }
 
 function assertEditable(site: { status: string; edit_until: string; expires_at: string }) {
@@ -51,10 +51,14 @@ async function assertAssetsOwned(siteId: string, refs: { id: string; kind: "imag
   }
 }
 
-export async function saveDraft(userId: string, siteId: string, content: ScrapbookContent, baseRevision: number) {
+export async function saveDraft(userId: string, siteId: string, rawContent: unknown, baseRevision: number) {
   const site = await getOwnedSite(userId, siteId);
   assertEditable(site);
-  await assertAssetsOwned(siteId, referencedAssets(content), false);
+  const def = templateDef(site.template_key);
+  const parsed = def.parseDraft(rawContent);
+  if (!parsed.success) throw badRequest("Some fields are invalid.", { issues: parsed.issues });
+  const content = parsed.data;
+  await assertAssetsOwned(siteId, def.refs(content), false);
   const { data } = await adminDb()
     .from("sites")
     .update({ draft_content: content as unknown as { [key: string]: Json }, draft_revision: baseRevision + 1 })
@@ -74,22 +78,21 @@ export async function saveDraft(userId: string, siteId: string, content: Scrapbo
 export async function publishSite(userId: string, siteId: string) {
   const site = await getOwnedSite(userId, siteId);
   assertEditable(site);
-  const parsed = publishContentSchema.safeParse(site.draft_content);
-  if (!parsed.success) {
-    throw badRequest("Some required fields are empty.", { issues: parsed.error.issues.slice(0, 20).map((i) => ({ path: i.path.join("."), message: i.message })) });
-  }
-  await assertAssetsOwned(siteId, referencedAssets(parsed.data), true);
+  const def = templateDef(site.template_key);
+  const parsed = def.parsePublish(site.draft_content);
+  if (!parsed.success) throw badRequest("Some required fields are empty.", { issues: parsed.issues });
+  await assertAssetsOwned(siteId, def.refs(parsed.data), true);
   const { data, error } = await adminDb().rpc("publish_site", {
     p_site_id: siteId,
     p_user_id: userId,
     p_content: parsed.data as unknown as { [key: string]: Json },
-    p_schema_version: SCHEMA_VERSION,
+    p_schema_version: def.schemaVersion,
     p_new_slug: newSlug(),
   });
   if (error) throw error;
   const r = data as { status: string; slug?: string; version?: number };
   if (r.status !== "published") throw new ApiError(423, r.status, "This site can't be published right now.");
-  return { slug: r.slug!, url: siteUrl(r.slug!), version: r.version! };
+  return { slug: r.slug!, url: siteUrl(r.slug!, site.template_key), version: r.version! };
 }
 
 async function audit(userId: string, action: string, siteId: string, meta: Record<string, unknown> = {}) {
@@ -112,7 +115,7 @@ export async function rotateLink(userId: string, siteId: string) {
   const slug = newSlug();
   await adminDb().from("sites").update({ slug, passcode_version: site.passcode_version + 1 }).eq("id", siteId).eq("user_id", userId);
   await audit(userId, "site.link_rotated", siteId);
-  return { slug, url: siteUrl(slug) };
+  return { slug, url: siteUrl(slug, site.template_key) };
 }
 
 export async function setPasscode(userId: string, siteId: string, code: string | null) {
@@ -148,6 +151,7 @@ export async function purgeSiteContent(siteId: string) {
   await db.from("sites").update({ published_version_id: null }).eq("id", siteId);
   await db.from("site_versions").delete().eq("site_id", siteId);
   await db.from("assets").delete().eq("site_id", siteId);
+  await db.from("site_responses").delete().eq("site_id", siteId);
 }
 
 export async function removePrefix(prefix: string) {
@@ -162,36 +166,43 @@ export async function removePrefix(prefix: string) {
 
 // ───────────────────────── public renderer ─────────────────────────
 
-export type PublicSite = { id: string; slug: string; passcodeHash: string | null; passcodeVersion: number; content: ScrapbookContent };
+export type MediaMap = {
+  images: Record<string, { src: string; srcSet?: string }>;
+  audio: Record<string, { src: string }>;
+};
+
+export type PublicSite = { id: string; slug: string; templateKey: TemplateKey; passcodeHash: string | null; passcodeVersion: number; content: object; refs: AssetRef[] };
 
 /**
- * Server-only lookup by slug (service role). Only published, unexpired sites resolve; every
- * other state is indistinguishable from "never existed".
+ * Server-only lookup by slug (service role). Only published, unexpired sites resolve — and,
+ * when a template is given, only sites of that template; every other state is
+ * indistinguishable from "never existed".
  */
-export async function resolvePublicSite(slug: string): Promise<PublicSite | null> {
+export async function resolvePublicSite(slug: string, template?: TemplateKey): Promise<PublicSite | null> {
   if (!/^[A-Za-z0-9]{22}$/.test(slug)) return null;
   const db = adminDb();
   const { data: site } = await db
     .from("sites")
-    .select("id, slug, status, expires_at, passcode_hash, passcode_version, published_version_id")
+    .select("id, slug, status, template_key, expires_at, passcode_hash, passcode_version, published_version_id")
     .eq("slug", slug)
     .eq("status", "published")
     .gt("expires_at", new Date().toISOString())
     .maybeSingle();
   if (!site?.published_version_id) return null;
+  if (template && site.template_key !== template) return null;
   const { data: version } = await db.from("site_versions").select("content").eq("id", site.published_version_id).eq("site_id", site.id).maybeSingle();
   if (!version) return null;
-  const parsed = publishContentSchema.safeParse(version.content);
+  const def = templateDef(site.template_key);
+  const parsed = def.parsePublish(version.content);
   if (!parsed.success) {
     log.error("site.invalid_published_content", null, { site: site.id });
     return null;
   }
-  return { id: site.id, slug: site.slug!, passcodeHash: site.passcode_hash, passcodeVersion: site.passcode_version, content: parsed.data };
+  return { id: site.id, slug: site.slug!, templateKey: def.key, passcodeHash: site.passcode_hash, passcodeVersion: site.passcode_version, content: parsed.data, refs: def.refs(parsed.data) };
 }
 
-/** Short-lived signed URLs for exactly the assets this content references (same site only). */
-export async function signMedia(siteId: string, content: ScrapbookContent): Promise<MediaMap> {
-  const refs = referencedAssets(content);
+/** Short-lived signed URLs for exactly the given assets of this site (same site only). */
+export async function signMedia(siteId: string, refs: AssetRef[]): Promise<MediaMap> {
   const out: MediaMap = { images: {}, audio: {} };
   if (!refs.length) return out;
   const db = adminDb();

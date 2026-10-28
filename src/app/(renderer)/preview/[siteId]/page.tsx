@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { requireUserPage } from "@/server/auth";
 import { ApiError, isUuid } from "@/server/http";
 import { getOwnedSite, signMedia } from "@/server/sites";
+import { templateDef } from "@/templates/registry";
 import { newSiteContent } from "@/templates/scrapbook/defaults";
-import { draftContentSchema } from "@/templates/scrapbook/schema";
+import { draftContentSchema, referencedAssets } from "@/templates/scrapbook/schema";
 import { PreviewClient } from "./PreviewClient";
 
 export const dynamic = "force-dynamic";
@@ -22,7 +23,9 @@ export default async function PreviewPage({ params }: { params: Promise<{ siteId
     if (e instanceof ApiError && e.status === 404) notFound();
     throw e;
   }
+  // Each template previews on its own route so template stylesheets never share a page.
+  if (site.template_key !== "scrapbook") redirect(templateDef(site.template_key).previewPath(site.id));
   const parsed = draftContentSchema.safeParse(site.draft_content);
   const content = parsed.success ? parsed.data : newSiteContent();
-  return <PreviewClient initialContent={content} initialMedia={await signMedia(site.id, content)} />;
+  return <PreviewClient initialContent={content} initialMedia={await signMedia(site.id, referencedAssets(content))} />;
 }

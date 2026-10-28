@@ -18,7 +18,7 @@ export default async function AdminSite({ params }: { params: Promise<{ siteId: 
   const db = adminDb();
   const { data: s } = await db
     .from("sites")
-    .select("id, status, order_id, created_at, published_at, edit_until, expires_at, view_count, first_viewed_at, disabled_reason, passcode_hash, slug, profiles(email)")
+    .select("id, status, template_key, order_id, created_at, published_at, edit_until, expires_at, view_count, first_viewed_at, disabled_reason, passcode_hash, slug, profiles(email)")
     .eq("id", siteId)
     .maybeSingle();
   if (!s) notFound();
@@ -39,6 +39,8 @@ export default async function AdminSite({ params }: { params: Promise<{ siteId: 
         <dl className="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
           <dt className="text-ink-soft">Owner</dt>
           <dd>{(s.profiles as { email?: string } | null)?.email ?? "—"}</dd>
+          <dt className="text-ink-soft">Product</dt>
+          <dd>{s.template_key === "lovestory" ? "Love story (Our Little Universe)" : "Birthday scrapbook"}</dd>
           <dt className="text-ink-soft">Status</dt>
           <dd>
             {s.status}

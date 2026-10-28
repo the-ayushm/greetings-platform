@@ -77,13 +77,15 @@ export function audioDuration(file: File): Promise<number | null> {
 }
 
 /** create → upload straight to private storage with a single-use signed URL → server processing */
-export async function uploadAsset(siteId: string, kind: "image" | "audio", blob: Blob, type: string, name: string, rightsConfirmed = false) {
+export async function uploadAsset(siteId: string, kind: "image" | "audio", blob: Blob, type: string, name: string, rightsConfirmed = false, onStep?: (step: "uploading" | "processing") => void) {
   const created = await api<{ assetId: string; path: string; token: string }>(`/api/sites/${siteId}/assets`, {
     method: "POST",
     body: { kind, mime: type, bytes: blob.size, filename: name, rightsConfirmed },
   });
+  onStep?.("uploading");
   const { error } = await browserDb().storage.from("media").uploadToSignedUrl(created.path, created.token, blob, { contentType: type });
   if (error) throw new Error("The upload was interrupted. Please try again.");
+  onStep?.("processing");
   await api(`/api/assets/${created.assetId}/complete`, { method: "POST" });
   return created.assetId;
 }

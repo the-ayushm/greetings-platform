@@ -189,3 +189,37 @@ describe("integrity guards in the database", () => {
     expect(o!.status).toBe("created");
   });
 });
+
+describe("love story: recipient responses are owner-only", () => {
+  it("only the site owner can read responses; nobody can write them through the API", async () => {
+    const svc = admin();
+    const { error } = await svc.from("site_responses").insert({ site_id: a.siteId, kind: "text", item_id: "qwhatami", label: "What am I to you?", value: "my whole world" });
+    expect(error).toBeNull();
+    expect((await A.client.from("site_responses").select("value").eq("site_id", a.siteId)).data).toEqual([{ value: "my whole world" }]);
+    expect((await B.client.from("site_responses").select("*")).data).toEqual([]);
+    expect((await C.client.from("site_responses").select("*").eq("site_id", a.siteId)).data).toEqual([]);
+    expect((await anon().from("site_responses").select("*")).data ?? []).toEqual([]);
+    const writes = [
+      B.client.from("site_responses").insert({ site_id: a.siteId, kind: "text", item_id: "qwhatami", value: "x" }).select(),
+      A.client.from("site_responses").insert({ site_id: a.siteId, kind: "text", item_id: "qwhatami", value: "x" }).select(),
+      A.client.from("site_responses").update({ value: "edited" }).eq("site_id", a.siteId).select(),
+      A.client.from("site_responses").delete().eq("site_id", a.siteId).select(),
+      anon().from("site_responses").insert({ site_id: a.siteId, kind: "text", item_id: "qwhatami", value: "x" }).select(),
+    ];
+    for (const r of await Promise.all(writes)) expect(r.error?.code === "42501" || (r.data ?? []).length === 0).toBe(true);
+    expect((await svc.from("site_responses").select("value").eq("site_id", a.siteId)).data).toEqual([{ value: "my whole world" }]);
+  });
+
+  it("rejects malformed responses at the database level", async () => {
+    const svc = admin();
+    expect((await svc.from("site_responses").insert({ site_id: a.siteId, kind: "html", item_id: "qwhatami", value: "x" })).error).not.toBeNull();
+    expect((await svc.from("site_responses").insert({ site_id: a.siteId, kind: "text", item_id: "<b>", value: "x" })).error).not.toBeNull();
+    expect((await svc.from("site_responses").insert({ site_id: a.siteId, kind: "text", item_id: "qwhatami", value: "x".repeat(1001) })).error).not.toBeNull();
+  });
+
+  it("the love story template and product are seeded", async () => {
+    const db = anon();
+    expect((await db.from("templates").select("key").eq("key", "lovestory")).data).toEqual([{ key: "lovestory" }]);
+    expect((await db.from("products").select("template_key").eq("template_key", "lovestory")).data?.length).toBe(1);
+  });
+});

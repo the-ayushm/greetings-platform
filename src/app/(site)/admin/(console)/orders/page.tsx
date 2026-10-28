@@ -12,7 +12,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
   await requireAdminPage();
   const { status = "all", q = "" } = await searchParams;
   const db = await userDb();
-  let query = db.from("orders").select("id, status, amount_paise, razorpay_order_id, created_at, paid_at, user_id, profiles(email)").order("created_at", { ascending: false }).limit(100);
+  let query = db.from("orders").select("id, status, template_key, amount_paise, razorpay_order_id, created_at, paid_at, user_id, profiles(email)").order("created_at", { ascending: false }).limit(100);
   if (STATUSES.includes(status) && status !== "all") query = query.eq("status", status);
   const term = q.trim();
   if (/^order_[A-Za-z0-9]+$/.test(term)) query = query.eq("razorpay_order_id", term);
@@ -36,6 +36,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
             <tr>
               <th className="px-3 py-2">Order</th>
               <th className="px-3 py-2">Customer</th>
+              <th className="px-3 py-2">Product</th>
               <th className="px-3 py-2">Amount</th>
               <th className="px-3 py-2">Status</th>
               <th className="px-3 py-2">Created</th>
@@ -50,6 +51,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
                   </Link>
                 </td>
                 <td className="px-3 py-2">{(o.profiles as { email?: string } | null)?.email ?? <em className="text-ink-soft">deleted account</em>}</td>
+                <td className="px-3 py-2">{o.template_key === "lovestory" ? "Love story" : "Scrapbook"}</td>
                 <td className="px-3 py-2">{formatINR(o.amount_paise)}</td>
                 <td className="px-3 py-2 capitalize">{o.status.replace("_", " ")}</td>
                 <td className="px-3 py-2">{formatDateTime(o.created_at)}</td>

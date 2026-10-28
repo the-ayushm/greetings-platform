@@ -10,7 +10,7 @@ export async function SiteHeader() {
         <Link href="/" className="font-display text-xl font-semibold italic text-rose">
           Birthday Surprise <span aria-hidden="true">♡</span>
         </Link>
-        <nav aria-label="Main" className="flex items-center gap-1 text-sm font-bold sm:gap-3">
+        <nav aria-label="Main" className="flex flex-wrap items-center justify-end gap-1 text-sm font-bold sm:gap-3">
           <Link className="rounded-md px-2 py-2 hover:bg-baby" href="/">
             Home
           </Link>
@@ -19,6 +19,9 @@ export async function SiteHeader() {
           </Link>
           <Link className="rounded-md px-2 py-2 hover:bg-baby" href="/product">
             Pricing
+          </Link>
+          <Link className="rounded-md px-2 py-2 whitespace-nowrap text-rose hover:bg-baby" href="/products/love-story">
+            Love Story ♡
           </Link>
           {user ? (
             <>
