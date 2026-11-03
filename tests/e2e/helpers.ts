@@ -26,15 +26,25 @@ export async function linkFor(address: string, after: number): Promise<string> {
   throw new Error(`no sign-in email for ${address}`);
 }
 
-/** Real sign-in flow: email → "Check your email" → click the emailed link → /auth/callback → session. */
+/** Password every test account is created with. */
+export const PASSWORD = "test-password-123";
+
+/** Real sign-up flow for a new address: Create account → email, password, confirm → signed in on `next`. */
 export async function login(page: Page, address: string, next = "/dashboard") {
+  await page.goto(`${APP}/login?mode=signup&next=${encodeURIComponent(next)}`);
+  await page.getByLabel("Email").fill(address);
+  await page.getByLabel("Password", { exact: true }).fill(PASSWORD);
+  await page.getByLabel("Confirm password", { exact: true }).fill(PASSWORD);
+  await page.getByTestId("auth-submit").click();
+  await page.waitForURL((u) => u.origin === APP && !u.pathname.startsWith("/login") && !u.pathname.startsWith("/auth/"));
+}
+
+/** Real sign-in flow for an existing account. */
+export async function signIn(page: Page, address: string, password = PASSWORD, next = "/dashboard") {
   await page.goto(`${APP}/login?next=${encodeURIComponent(next)}`);
   await page.getByLabel("Email").fill(address);
-  const t = Date.now();
-  await page.getByRole("button", { name: "Send sign-in link" }).click();
-  await expect(page.getByRole("heading", { name: "Check your email" })).toBeVisible();
-  await page.goto(await linkFor(address, t));
-  await page.waitForURL((u) => u.origin === APP && !u.pathname.startsWith("/login") && !u.pathname.startsWith("/auth/"));
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page.getByTestId("auth-submit").click();
 }
 
 /**

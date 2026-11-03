@@ -52,5 +52,7 @@ export async function GET(req: Request) {
     return toLogin(reason, next);
   }
 
+  // A password-reset link: let them choose the new password now (they're signed in).
+  if (type === "recovery") return NextResponse.redirect(new URL("/reset-password", appOrigin()));
   return NextResponse.redirect(new URL(next, appOrigin()));
 }

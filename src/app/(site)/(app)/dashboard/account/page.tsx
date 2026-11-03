@@ -21,6 +21,13 @@ export default async function AccountPage() {
         </a>
       </Card>
       <Card className="mt-6">
+        <h2 className="text-lg font-extrabold">Password</h2>
+        <p className="mt-1 text-sm text-ink-soft">Set a new password for signing in with your email.</p>
+        <a href="/reset-password" className="mt-3 inline-flex min-h-11 items-center rounded-lg border-2 border-ink bg-white px-5 py-2.5 font-bold shadow-[3px_3px_0_var(--color-ink)] hover:bg-baby">
+          Change password
+        </a>
+      </Card>
+      <Card className="mt-6">
         <h2 className="text-lg font-extrabold">Sign out</h2>
         <p className="mt-1 text-sm text-ink-soft">Sign out of Birthday Surprise on this device.</p>
         <SignOutButton className="mt-3 inline-flex min-h-11 items-center rounded-lg border-2 border-ink bg-white px-5 py-2.5 font-bold shadow-[3px_3px_0_var(--color-ink)] hover:bg-baby" />

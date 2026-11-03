@@ -2,9 +2,11 @@
 
 1. **Landing (`/`) → Demo (`/demo`) → Pricing (`/product`).** Price is read from the database.
 2. **Buy now → `/checkout`.** Not signed in → `/login?next=/checkout…`.
-3. **Sign in** with email → "Check your email" → click the link in Supabase's sign-in email →
-   `/auth/callback` creates the session (same browser required) → back to checkout. The account
-   is created on first sign-in. Expired/used links return to the login page with an explanation.
+3. **Sign in or create an account** with email + password (`/login`, "Create account" tab: email,
+   password, confirm password). Sign-up creates the account already confirmed (server-side, no
+   email sent) and signs the customer in → back to checkout. **Forgot password?** → `/forgot-password`
+   emails a reset link (works in any browser) → `/reset-password` sets a new password without the
+   old one. Customers from the old email-link sign-in have no password: they use Forgot password once.
 4. **Pay.** `POST /api/checkout` creates (or reuses, within 30 minutes) an order with the database
    price and a Razorpay order; Razorpay Checkout opens (UPI, cards, netbanking, wallets).
    - Success → `POST /api/checkout/verify` (signature + payment re-fetched from Razorpay).

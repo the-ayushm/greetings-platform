@@ -1,5 +1,6 @@
 import { AskMini } from "@/components/AskMini";
 import { DemoTeaser } from "@/components/DemoTeaser";
+import { RecoveryRedirect } from "@/components/RecoveryRedirect";
 import { ButtonLink, Card, formatINR } from "@/components/ui";
 import { activeProduct } from "@/server/catalog";
 
@@ -30,6 +31,7 @@ export default async function Landing() {
   const askP = ask ? (ask.price_paise === 0 ? "Free" : formatINR(ask.price_paise)) : null;
   return (
     <main>
+      <RecoveryRedirect />
       <section className="gingham border-b-2 border-ink/10">
         <div className="mx-auto grid max-w-5xl items-center gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.1fr_.9fr] md:py-16">
           <div>

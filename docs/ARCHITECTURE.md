@@ -9,7 +9,7 @@
  ├─ /products/wedding-invitation, /demo/wedding  ├─ /wedding/<22-char slug>    wedding invitation
  ├─ /products/do-you-love-me,                    └─ /ask/<22-char slug>        "Do You Love Me?" page
  │    /demo/do-you-love-me                             /api/r/{unlock,media,view,report,respond,rsvp}
- ├─ /login (email link → /auth/callback)
+ ├─ /login (email + password), /forgot-password → email → /reset-password
  ├─ /checkout → Razorpay Checkout                    no auth cookies · no-referrer · noindex
  ├─ /dashboard, /dashboard/sites/:id/edit            strict CSP · frame-ancestors 'none'
  ├─ /preview/:id, /preview/love/:id, /preview/wedding/:id, /preview/ask/:id (owner-only draft, iframe)
@@ -17,7 +17,7 @@
  └─ /api/* (customer, webhooks, cron, admin)
                  │  server-only reads/writes             │
                  └──────────────┬───────────────────────┘
-        Supabase: Postgres + RLS · Auth (email OTP, TOTP) · private Storage bucket "media"
+        Supabase: Postgres + RLS · Auth (email + password, TOTP) · private Storage bucket "media"
                                 ▲
                      Razorpay (orders API, signed webhooks)
 ```
