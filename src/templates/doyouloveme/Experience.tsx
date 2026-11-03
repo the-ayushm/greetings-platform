@@ -135,8 +135,13 @@ export function AskExperience({ content: c, mode, media, onMediaError, onAnswer,
 
   const soundUp = useCallback(() => {
     if (c.look.sounds && !sfxRef.current) sfxRef.current = createSfx();
-    const m = ensureMusic();
-    if (m) void Promise.resolve(m.play()).catch(() => undefined);
+    // Audio is a bonus: a browser without Web Audio (some in-app WebViews) must never break the page.
+    try {
+      const m = ensureMusic();
+      if (m) void Promise.resolve(m.play()).catch(() => undefined);
+    } catch {
+      /* no audio here */
+    }
     setSoundOn(true);
   }, [c.look.sounds, ensureMusic]);
 
@@ -196,6 +201,12 @@ export function AskExperience({ content: c, mode, media, onMediaError, onAnswer,
       const y = keyboard ? r.top + r.height / 2 : e.clientY;
       setOrigin({ x, y });
       setBurst({ x, y, id: Date.now() });
+      // The celebration first: nothing below (audio, network) may keep them on this screen.
+      setStage("finale");
+      if (mode === "live" && c.responses.notify && !answered.current) {
+        answered.current = true;
+        onAnswer?.(shown);
+      }
       // This tap is the visitor's permission: start the music if the sender asked for it.
       let sound = soundOn;
       if (!sound && c.music.playOnYes && c.music.mode !== "none") {
@@ -204,13 +215,14 @@ export function AskExperience({ content: c, mode, media, onMediaError, onAnswer,
       }
       if (sound) {
         if (!sfxRef.current && c.look.sounds) sfxRef.current = createSfx();
-        requestAnimationFrame(() => sfxRef.current?.yes());
+        requestAnimationFrame(() => {
+          try {
+            sfxRef.current?.yes();
+          } catch {
+            /* no audio here */
+          }
+        });
       }
-      if (mode === "live" && c.responses.notify && !answered.current) {
-        answered.current = true;
-        onAnswer?.(shown);
-      }
-      setStage("finale");
     },
     [c.music.playOnYes, c.music.mode, c.look.sounds, c.responses.notify, soundOn, soundUp, mode, onAnswer, shown],
   );

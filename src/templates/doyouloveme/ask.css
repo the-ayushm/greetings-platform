@@ -7,7 +7,7 @@
 .dy {
   --spring: cubic-bezier(.34, 1.42, .6, 1);
   --ease-out: cubic-bezier(.2, .8, .2, 1);
-  --dy-yes-max: min(2.6rem, 10vw);
+  --dy-yes-max: min(5.2rem, 17vw);
   position: fixed;
   inset: 0;
   overflow-x: hidden;
@@ -22,8 +22,8 @@
   -webkit-tap-highlight-color: transparent;
   text-rendering: optimizeLegibility;
 }
-.dy[data-intensity="calm"] { --dy-yes-max: min(2.1rem, 8.5vw); }
-.dy[data-intensity="extra"] { --dy-yes-max: min(3.2rem, 11.5vw); }
+.dy[data-intensity="calm"] { --dy-yes-max: min(3.6rem, 12.5vw); }
+.dy[data-intensity="extra"] { --dy-yes-max: min(6.4rem, 20vw); }
 .dy *, .dy *::before, .dy *::after { box-sizing: border-box; }
 /* Zero-specificity reset (:where) so .dy-yes / .dy-no font sizes and weights always win. */
 :where(.dy) :where(button) { font: inherit; -webkit-appearance: none; appearance: none; }
@@ -111,7 +111,7 @@
 
 .dy-card {
   position: relative;
-  width: min(100%, calc(25rem + var(--g) * 11rem));
+  width: min(100%, calc(25rem + var(--g) * 20rem));
   padding: clamp(26px, 6.5vw, 40px) clamp(18px, 5.5vw, 38px) clamp(26px, 6.5vw, 38px);
   border-radius: 30px;
   text-align: center;
@@ -142,7 +142,7 @@
   color: var(--dy-ink); overflow-wrap: anywhere;
 }
 .dy-buddy-wrap {
-  width: calc(clamp(116px, 34vw, 152px) * (1 - var(--g) * .22));
+  width: calc(clamp(116px, 34vw, 152px) * (1 - var(--g) * .35));
   margin: .55rem auto .75rem;
   transition: width .6s var(--spring);
 }
@@ -169,7 +169,7 @@
 .dy-yes {
   position: relative; overflow: hidden; isolation: isolate;
   max-width: 100%; min-height: 48px;
-  padding: calc(.6em + var(--g) * .38em) calc(1.45em - var(--g) * .3em);
+  padding: calc(.6em + var(--g) * .55em) calc(1.45em - var(--g) * .75em);
   border: 0; border-radius: .82em; cursor: pointer;
   font-weight: 900; line-height: 1.08; letter-spacing: .01em; overflow-wrap: anywhere;
   font-size: calc(1.08rem + var(--g) * var(--dy-yes-max));

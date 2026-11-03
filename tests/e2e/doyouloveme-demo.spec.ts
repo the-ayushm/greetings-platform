@@ -8,6 +8,9 @@ import { APP } from "./helpers";
  * celebration fits. Plus reduced motion, keyboard use and the sound toggle.
  */
 
+// Each size presses No through every line with pauses for the animations (plus screenshots).
+test.describe.configure({ timeout: 180_000 });
+
 const VIEWPORTS: [number, number][] = [
   [320, 568],
   [375, 667],
