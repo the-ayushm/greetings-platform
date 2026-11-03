@@ -55,10 +55,15 @@ for (const [w, h] of VIEWPORTS) {
     expect((await no.boundingBox())!.height).toBeGreaterThanOrEqual(36);
     await page.screenshot({ path: info.outputPath(`ask-${w}-0.png`) });
 
+    const fontPx = async () => parseFloat(await yes.evaluate((e) => getComputedStyle(e).fontSize));
+    let lastFont = await fontPx();
     for (const [i, msg] of MESSAGES.entries()) {
       await no.click();
       await expect(no).toHaveText(msg);
       await page.waitForTimeout(650);
+      const f = await fontPx();
+      expect(f, `YES text grows after press ${i + 1}`).toBeGreaterThan(lastFont);
+      lastFont = f;
       const y = (await yes.boundingBox())!;
       const n = (await no.boundingBox())!;
       expect(overlaps(y, n), `press ${i + 1}`).toBe(false);

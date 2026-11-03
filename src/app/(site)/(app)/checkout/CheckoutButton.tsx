@@ -64,7 +64,7 @@ export function CheckoutButton({ productId, email, label, free = false }: { prod
       order_id: session.razorpayOrderId,
       amount: session.amount,
       currency: session.currency,
-      name: "Birthday Surprise",
+      name: "Digital Gifting",
       description: session.productName,
       prefill: { email },
       theme: { color: "#d2475f" },

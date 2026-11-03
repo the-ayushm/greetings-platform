@@ -17,12 +17,14 @@ test("complete customer journey", async ({ browser }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
 
-  // Landing → product
+  // Store home → Explore → the birthday product
   await page.goto(APP);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("private scrapbook website");
-  await page.getByRole("link", { name: /Make yours/ }).first().click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("unforgettable");
+  await page.getByRole("main").getByRole("link", { name: "Explore all gifts" }).click();
+  await expect(page).toHaveURL(/\/products$/);
+  await page.locator('[data-testid="product-card"][data-product="scrapbook"] h2 a').click();
   await expect(page).toHaveURL(/\/product$/);
-  await expect(page.getByText("₹499")).toBeVisible();
+  await expect(page.locator("section:has(#pricing)").getByText("₹499")).toBeVisible();
 
   // Buying requires an account: checkout redirects to login with a safe "next".
   await page.getByRole("link", { name: "Buy now" }).click();

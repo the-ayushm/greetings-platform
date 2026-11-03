@@ -25,3 +25,33 @@ body { background: var(--color-cream); color: var(--color-ink); font-family: var
   background-size: 28px 28px;
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+/* ───────── Digital Gifting storefront ───────── */
+@theme {
+  --color-wine: #4a1d2c;
+  --color-champagne: #e9cf9f;
+  --color-ivory: #fffaf3;
+}
+@layer components {
+/* Warm, quiet backdrop for store pages (no birthday gingham). */
+.store-glow {
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, rgba(245, 154, 184, 0.22), transparent 70%),
+    radial-gradient(50rem 28rem at -10% 10%, rgba(233, 207, 159, 0.22), transparent 70%),
+    var(--color-cream);
+}
+/* Soft premium card: hairline border, layered shadow, gentle lift on hover. */
+.soft-card {
+  background: #fff;
+  border: 1px solid rgba(106, 51, 70, 0.1);
+  border-radius: 1.5rem;
+  box-shadow: 0 1px 2px rgba(74, 29, 44, 0.04), 0 12px 32px -18px rgba(74, 29, 44, 0.25);
+  transition: transform 0.25s cubic-bezier(.2, .8, .2, 1), box-shadow 0.25s, border-color 0.25s;
+}
+.soft-card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(193, 58, 82, 0.25);
+  box-shadow: 0 1px 2px rgba(74, 29, 44, 0.05), 0 22px 44px -20px rgba(74, 29, 44, 0.35);
+}
+.eyebrow { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-rose); }
+}

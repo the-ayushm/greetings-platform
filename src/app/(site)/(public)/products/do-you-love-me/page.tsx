@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { RelatedProducts } from "@/components/store/RelatedProducts";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AskMini, type MiniScreen } from "@/components/AskMini";
 import { AskTeaser } from "@/components/AskTeaser";
 import { ButtonLink, Card, Notice, formatINR } from "@/components/ui";
 import { canSeeUnlisted, currentUser } from "@/server/auth";
-import { activeProduct, storeProduct } from "@/server/catalog";
+import { storeProduct } from "@/server/catalog";
 import { appOrigin } from "@/server/env";
 import { Buddy } from "@/templates/doyouloveme/art";
 import { THEME_PRESETS } from "@/templates/doyouloveme/theme";
@@ -13,7 +14,7 @@ import { THEME_PRESETS } from "@/templates/doyouloveme/theme";
 export const dynamic = "force-dynamic";
 
 const PATH = "/products/do-you-love-me";
-const CATEGORY = "Romantic Interactive Websites";
+const CATEGORY = "Love & Romance";
 
 /** Customers see the product once it's on sale; until then only MFA'd admins can open this page. */
 async function load() {
@@ -67,7 +68,6 @@ const FAQ = [
 export default async function DoYouLoveMeProductPage() {
   const p = await load();
   if (!p) notFound();
-  const [love, wedding, birthday] = await Promise.all([activeProduct("lovestory"), activeProduct("wedding"), activeProduct()]);
   const free = p.price_paise === 0;
   const price = free ? "Free" : formatINR(p.price_paise);
   const buy = `/checkout?product=${p.id}`;
@@ -85,11 +85,6 @@ export default async function DoYouLoveMeProductPage() {
         offers: { "@type": "Offer", price: (p.price_paise / 100).toFixed(2), priceCurrency: p.currency, availability: "https://schema.org/InStock", url: `${appOrigin()}${PATH}` },
       }).replace(/</g, "\\u003c")
     : null;
-  const related = [
-    love && { href: "/products/love-story", title: "Our Little Universe", body: "A whole love story website: questions, timeline, scrapbook, love letter and more." },
-    birthday && { href: "/product", title: "Birthday Scrapbook Surprise", body: "A letter in an envelope, polaroids, coupons and a cupcake wish." },
-    wedding && { href: "/products/wedding-invitation", title: "Royal Burgundy wedding invitation", body: "An envelope that opens in golden light, countdown, schedule and RSVPs." },
-  ].filter(Boolean) as { href: string; title: string; body: string }[];
 
   return (
     <main>
@@ -117,7 +112,7 @@ export default async function DoYouLoveMeProductPage() {
               <Link href="/" className="underline-offset-2 hover:underline">
                 Home
               </Link>{" "}
-              › <span>{CATEGORY}</span>
+              › <Link href="/categories/love-and-romance" className="underline-offset-2 hover:underline">{CATEGORY}</Link>
             </nav>
             <p className="mt-3 font-hand text-2xl text-rose">a playful little question ♡</p>
             <h1 className="font-display text-4xl leading-tight font-semibold sm:text-5xl">{p.name}</h1>
@@ -325,23 +320,7 @@ export default async function DoYouLoveMeProductPage() {
         </div>
       </section>
 
-      {/* related */}
-      {related.length > 0 && (
-        <section className="mx-auto max-w-5xl px-4 pt-12 sm:px-6" aria-labelledby="related">
-          <h2 id="related" className="font-display text-2xl font-semibold">More romantic surprises</h2>
-          <ul className="mt-4 grid gap-4 sm:grid-cols-3">
-            {related.map((r) => (
-              <li key={r.href}>
-                <Link href={r.href} className="block h-full rounded-2xl border-2 border-ink/15 bg-white p-5 transition hover:-translate-y-0.5 hover:border-ink/40">
-                  <h3 className="font-display text-lg font-semibold">{r.title}</h3>
-                  <p className="mt-1 text-sm text-ink-soft">{r.body}</p>
-                  <span className="mt-2 inline-block text-sm font-bold text-rose">See it →</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <RelatedProducts current="doyouloveme" />
     </main>
   );
 }

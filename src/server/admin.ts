@@ -56,17 +56,19 @@ export async function resolveReport(adminId: string, reportId: string, status: "
 export async function updateProduct(
   adminId: string,
   productId: string,
-  patch: { pricePaise?: number; isActive?: boolean; editDays?: number; liveDays?: number; name?: string; description?: string },
+  patch: { pricePaise?: number; isActive?: boolean; editDays?: number; liveDays?: number; name?: string; description?: string; isFeatured?: boolean; compareAtPaise?: number | null },
 ) {
-  const { data: before } = await db().from("products").select("price_paise, is_active, edit_days, live_days, name, description").eq("id", productId).maybeSingle();
+  const { data: before } = await db().from("products").select("price_paise, is_active, edit_days, live_days, name, description, is_featured, compare_at_paise").eq("id", productId).maybeSingle();
   if (!before) throw notFound();
-  const upd: { price_paise?: number; is_active?: boolean; edit_days?: number; live_days?: number; name?: string; description?: string } = {};
+  const upd: { price_paise?: number; is_active?: boolean; edit_days?: number; live_days?: number; name?: string; description?: string; is_featured?: boolean; compare_at_paise?: number | null } = {};
   if (patch.pricePaise !== undefined) upd.price_paise = patch.pricePaise;
   if (patch.isActive !== undefined) upd.is_active = patch.isActive;
   if (patch.editDays !== undefined) upd.edit_days = patch.editDays;
   if (patch.liveDays !== undefined) upd.live_days = patch.liveDays;
   if (patch.name !== undefined) upd.name = patch.name;
   if (patch.description !== undefined) upd.description = patch.description;
+  if (patch.isFeatured !== undefined) upd.is_featured = patch.isFeatured;
+  if (patch.compareAtPaise !== undefined) upd.compare_at_paise = patch.compareAtPaise;
   const { error } = await db().from("products").update(upd).eq("id", productId);
   // e.g. a database check constraint (edit days above the column's limit): report, don't pretend.
   if (error) throw badRequest("Those values couldn't be saved.", { detail: error.message.slice(0, 200) });

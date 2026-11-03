@@ -14,6 +14,9 @@ const body = z.object({
     .refine((p) => p === 0 || (p >= 100 && p <= 10_000_000), "Price must be ₹0 or between ₹1 and ₹1,00,000")
     .optional(),
   isActive: z.boolean().optional(),
+  // Storefront merchandising: "Trending" flag and an optional original price (null clears it).
+  isFeatured: z.boolean().optional(),
+  compareAtPaise: z.number().int().min(100).max(10_000_000).nullable().optional(),
   editDays: z.number().int().min(1).max(3650).optional(),
   liveDays: z.number().int().min(1).max(3650).optional(),
   name: z

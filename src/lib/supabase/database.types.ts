@@ -139,13 +139,13 @@ isOneToOne: false
                   ]
                 },"products": {
                   Row: {
-                    "created_at": string,"currency": string,"description": string,"edit_days": number,"id": string,"is_active": boolean,"live_days": number,"name": string,"price_paise": number,"template_key": string,"updated_at": string
+                    "compare_at_paise": number | null,"created_at": string,"currency": string,"description": string,"edit_days": number,"id": string,"is_active": boolean,"is_featured": boolean,"live_days": number,"name": string,"price_paise": number,"template_key": string,"updated_at": string
                   }
                   Insert: {
-                    "created_at"?: string,"currency"?: string,"description"?: string,"edit_days"?: number,"id"?: string,"is_active"?: boolean,"live_days"?: number,"name": string,"price_paise": number,"template_key": string,"updated_at"?: string
+                    "compare_at_paise"?: number | null,"created_at"?: string,"currency"?: string,"description"?: string,"edit_days"?: number,"id"?: string,"is_active"?: boolean,"is_featured"?: boolean,"live_days"?: number,"name": string,"price_paise": number,"template_key": string,"updated_at"?: string
                   }
                   Update: {
-                    "created_at"?: string,"currency"?: string,"description"?: string,"edit_days"?: number,"id"?: string,"is_active"?: boolean,"live_days"?: number,"name"?: string,"price_paise"?: number,"template_key"?: string,"updated_at"?: string
+                    "compare_at_paise"?: number | null,"created_at"?: string,"currency"?: string,"description"?: string,"edit_days"?: number,"id"?: string,"is_active"?: boolean,"is_featured"?: boolean,"live_days"?: number,"name"?: string,"price_paise"?: number,"template_key"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     {

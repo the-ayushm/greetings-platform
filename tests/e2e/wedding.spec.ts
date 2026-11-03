@@ -59,9 +59,10 @@ test.afterAll(async () => {
 
 test("while it isn't on sale, customers can't see or get it", async () => {
   expect((await customer.goto(`${APP}/products/wedding-invitation`))?.status()).toBe(404);
-  await customer.goto(`${APP}/`);
-  await expect(customer.getByRole("link", { name: "Weddings" })).toHaveCount(0);
-  await expect(customer.getByRole("heading", { name: /Royal Burgundy/ })).toHaveCount(0);
+  await customer.goto(`${APP}/products`);
+  await expect(customer.locator('[data-product="wedding"]')).toHaveCount(0);
+  expect((await customer.goto(`${APP}/categories/wedding-invitations`))?.status()).toBe(200);
+  await expect(customer.locator('[data-product="wedding"]')).toHaveCount(0);
   expect((await api(customer).post("/api/checkout", { productId })).status).toBe(404);
   // Existing products are untouched.
   await customer.goto(`${APP}/product`);
@@ -209,9 +210,10 @@ test("each origin serves only its own surface; link previews are generic", async
 
 test("once on sale it's listed for customers; turning it off hides it again", async () => {
   expect((await api(adminPage).raw("PATCH", `/api/admin/products/${productId}`, { isActive: true })).status).toBe(200);
-  await customer.goto(`${APP}/`);
-  await expect(customer.getByRole("link", { name: "Weddings" })).toBeVisible();
-  await expect(customer.getByRole("heading", { name: /Royal Burgundy/ })).toBeVisible();
+  await customer.goto(`${APP}/products`);
+  await expect(customer.locator('[data-testid="product-card"][data-product="wedding"]')).toBeVisible();
+  await customer.goto(`${APP}/categories/wedding-invitations`);
+  await expect(customer.locator('[data-testid="product-card"][data-product="wedding"]')).toBeVisible();
   await customer.goto(`${APP}/products/wedding-invitation`);
   await expect(customer.getByText("Testing mode")).toHaveCount(0);
   await expect(customer.getByTestId("wedding-price")).toHaveText("Free");

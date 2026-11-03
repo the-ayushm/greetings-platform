@@ -61,9 +61,8 @@ test.afterAll(async () => {
 
 test("while it isn't on sale, customers can't see or get it — and existing products are untouched", async () => {
   expect((await customer.goto(`${APP}/products/do-you-love-me`))?.status()).toBe(404);
-  await customer.goto(`${APP}/`);
-  await expect(customer.getByRole("link", { name: "Do You Love Me?" })).toHaveCount(0);
-  await expect(customer.locator("#ask-promo")).toHaveCount(0);
+  await customer.goto(`${APP}/products`);
+  await expect(customer.locator('[data-product="doyouloveme"]')).toHaveCount(0);
   expect((await api(customer).post("/api/checkout", { productId })).status).toBe(404);
   expect((await customer.goto(`${APP}/product`))?.status()).toBe(200);
   expect((await customer.goto(`${APP}/products/love-story`))?.status()).toBe(200);
@@ -84,6 +83,12 @@ test("an MFA'd admin can preview the product page; the price comes from the data
   await adminPage.reload();
   await expect(adminPage.getByTestId("ask-price")).toHaveText("₹149");
   expect((await api(adminPage).raw("PATCH", `/api/admin/products/${productId}`, { pricePaise: 0 })).status).toBe(200);
+  // Storefront merchandising fields: admins only, validated, clearable.
+  expect((await api(adminPage).raw("PATCH", `/api/admin/products/${productId}`, { isFeatured: true, compareAtPaise: 29_900 })).status).toBe(200);
+  expect((await admin().from("products").select("is_featured, compare_at_paise").eq("id", productId).single()).data).toEqual({ is_featured: true, compare_at_paise: 29_900 });
+  expect((await api(adminPage).raw("PATCH", `/api/admin/products/${productId}`, { compareAtPaise: 50 })).status).toBe(400);
+  expect((await api(customer).raw("PATCH", `/api/admin/products/${productId}`, { isFeatured: false })).status).toBe(403);
+  expect((await api(adminPage).raw("PATCH", `/api/admin/products/${productId}`, { isFeatured: false, compareAtPaise: null })).status).toBe(200);
   await adminPage.goto(`${APP}/admin/catalog`);
   await expect(adminPage.getByText(/Do You Love Me\? ❤️ · Free \(₹0\) · not on sale/)).toBeVisible();
 });
@@ -250,9 +255,10 @@ test("each origin serves only its own surface; link previews are generic", async
 
 test("once on sale it's listed for customers with structured data; turning it off hides it again", async () => {
   expect((await api(adminPage).raw("PATCH", `/api/admin/products/${productId}`, { pricePaise: 9_900, isActive: true })).status).toBe(200);
-  await customer.goto(`${APP}/`);
-  await expect(customer.getByRole("link", { name: "Do You Love Me?" })).toBeVisible();
-  await expect(customer.locator("#ask-promo")).toBeVisible();
+  await customer.goto(`${APP}/products`);
+  await expect(customer.locator('[data-testid="product-card"][data-product="doyouloveme"]')).toBeVisible();
+  await customer.goto(`${APP}/categories/love-and-romance`);
+  await expect(customer.locator('[data-testid="product-card"][data-product="doyouloveme"]')).toBeVisible();
   await customer.goto(`${APP}/products/do-you-love-me`);
   await expect(customer.getByText("Testing mode")).toHaveCount(0);
   await expect(customer.getByTestId("ask-price")).toHaveText("₹99");

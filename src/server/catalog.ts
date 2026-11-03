@@ -1,5 +1,8 @@
 import "server-only";
+import { cache } from "react";
+import { toStoreProduct, type StoreProduct, type StoreRow } from "@/lib/store";
 import { adminDb } from "@/lib/supabase/admin";
+import { log } from "./log";
 
 const COLUMNS = "id, template_key, name, description, price_paise, currency, edit_days, live_days, is_active";
 
@@ -30,6 +33,40 @@ export async function storeProduct(templateKey: string, includeUnlisted: boolean
   const { data } = await db.from("products").select(COLUMNS).eq("template_key", templateKey).order("created_at").limit(1).maybeSingle();
   return data;
 }
+
+/**
+ * Every product on sale (product and template active) that the storefront knows how to show,
+ * as store products. One query each; the homepage, Explore, categories, pricing and "related
+ * products" all read from here, so they always agree with Admin → Templates & pricing.
+ */
+export const listStoreProducts = cache(async (): Promise<StoreProduct[]> => {
+  const db = adminDb();
+  const [{ data: templates }, first] = await Promise.all([
+    db.from("templates").select("key").eq("is_active", true),
+    db.from("products").select("id, template_key, name, description, price_paise, compare_at_paise, edit_days, live_days, is_featured, created_at").eq("is_active", true).order("created_at"),
+  ]);
+  let rows: StoreRow[] | null = first.data;
+  if (first.error) {
+    // Code deployed before the store_merchandising migration: show the store without the
+    // optional merchandising fields rather than an empty shop.
+    log.warn("catalog.merchandising_columns_missing", { code: first.error.code ?? null });
+    const { data } = await db.from("products").select("id, template_key, name, description, price_paise, edit_days, live_days, created_at").eq("is_active", true).order("created_at");
+    rows = (data ?? []).map((r) => ({ ...r, compare_at_paise: null, is_featured: false }));
+  }
+  const live = new Set((templates ?? []).map((t) => t.key));
+  const seen = new Set<string>();
+  const out: StoreProduct[] = [];
+  for (const r of rows ?? []) {
+    // One product per template, like the product pages (the oldest active one).
+    if (!live.has(r.template_key) || seen.has(r.template_key)) continue;
+    const p = toStoreProduct(r);
+    if (p) {
+      seen.add(r.template_key);
+      out.push(p);
+    }
+  }
+  return out;
+});
 
 /** A specific product by id, if it (and its template) is on sale — used by checkout. Admins may include unlisted ones. */
 export async function productById(id: string, includeUnlisted = false) {

@@ -7,7 +7,7 @@ import { useToast } from "@/components/admin/toast";
 import { Button } from "@/components/ui";
 import { api, ApiFailure } from "@/lib/api-client";
 
-export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDays, name, description }: {
+export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDays, name, description, featured = false, compareAtPaise = null }: {
   kind: "template" | "product";
   id: string;
   active: boolean;
@@ -16,6 +16,8 @@ export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDa
   liveDays?: number;
   name?: string;
   description?: string;
+  featured?: boolean;
+  compareAtPaise?: number | null;
 }) {
   const router = useRouter();
   const toast = useToast();
@@ -23,6 +25,7 @@ export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDa
   const [price, setPrice] = useState(pricePaise !== undefined ? String(pricePaise / 100) : "");
   const [title, setTitle] = useState(name ?? "");
   const [desc, setDesc] = useState(description ?? "");
+  const [mrp, setMrp] = useState(compareAtPaise ? String(compareAtPaise / 100) : "");
   const [editD, setEditD] = useState(editDays ? String(editDays) : "");
   const [liveD, setLiveD] = useState(liveDays ? String(liveDays) : "");
   const [busy, setBusy] = useState<string | null>(null);
@@ -90,6 +93,35 @@ export function CatalogControls({ kind, id, active, pricePaise, editDays, liveDa
             </label>
             <Button variant="secondary" className="min-h-9 px-3 py-1.5 text-sm" type="submit" disabled={busy === "pricePaise"}>
               {busy === "pricePaise" ? <Spinner /> : "Save price"}
+            </Button>
+          </form>
+          <Button
+            variant={featured ? "primary" : "secondary"}
+            className="min-h-9 px-3 py-1.5 text-sm"
+            disabled={busy === "isFeatured"}
+            aria-pressed={featured}
+            onClick={() => void patch({ isFeatured: !featured }, featured ? "Removed from Trending" : "Shown in Trending on the homepage")}
+            data-testid="toggle-featured"
+          >
+            {busy === "isFeatured" ? <Spinner /> : featured ? "★ Trending" : "☆ Mark as trending"}
+          </Button>
+          <form
+            className="flex items-center gap-2"
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if (mrp.trim() === "") return void patch({ compareAtPaise: null }, "Original price removed");
+              const rupees = Number(mrp);
+              if (!Number.isFinite(rupees) || rupees < 1 || rupees > 100000) { toast("Enter an original price between ₹1 and ₹1,00,000, or leave it empty.", "error"); return; }
+              if (pricePaise !== undefined && rupees * 100 <= pricePaise) { toast("The original price must be higher than the price to show a discount.", "error"); return; }
+              void patch({ compareAtPaise: Math.round(rupees * 100) }, `Original price set to ₹${rupees}`);
+            }}
+          >
+            <label className="flex items-center gap-1 text-sm font-medium" title="Shown crossed out with a discount, only when higher than the price. Leave empty for none.">
+              Original ₹
+              <input value={mrp} onChange={(e) => setMrp(e.target.value)} inputMode="decimal" placeholder="none" className="w-24 rounded-lg border-2 border-ink/20 px-2 py-1 text-sm focus:border-rose focus:outline-none" />
+            </label>
+            <Button variant="secondary" className="min-h-9 px-3 py-1.5 text-sm" type="submit" disabled={busy === "compareAtPaise"}>
+              {busy === "compareAtPaise" ? <Spinner /> : "Save original price"}
             </Button>
           </form>
 

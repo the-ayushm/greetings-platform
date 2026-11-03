@@ -11,7 +11,7 @@ export const LEGAL: Record<LegalDoc, Doc> = {
     title: "Terms of Service",
     updated: UPDATED,
     sections: [
-      ["Who we are", ["Birthday Surprise is operated by [Business legal name], [registered address], India (“we”, “us”). Contact: [support email]."]],
+      ["Who we are", ["Digital Gifting is operated by [Business legal name], [registered address], India (“we”, “us”). Contact: [support email]."]],
       ["What you buy", ["A licence to create one personal birthday website from our template, editable for 30 days after purchase and available online for 1 year after purchase, for personal, non-commercial use."]],
       [
         "Your content",

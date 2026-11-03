@@ -69,6 +69,8 @@ only (testing). A ₹0 product skips Razorpay entirely (`fulfil_free_order`).
    `RENDERER_PATHS` in `src/proxy.ts`), its preview route and its editor branch in
    `dashboard/sites/[siteId]/edit/page.tsx`.
 3. Migration inserting `templates`, `template_versions` (`is_current = true`) and a `products` row.
+   Then one `PRODUCT_META` entry in `src/lib/store.ts` (categories, links, artwork, highlights) — the
+   homepage, Explore, category, pricing and related-product sections pick it up automatically.
 4. Visual baseline for the new template (its own reference screenshots) and add it to CI.
 5. All artwork must be original or properly licensed; fonts must allow commercial embedding.
 

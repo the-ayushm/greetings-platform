@@ -16,7 +16,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <div className="min-h-dvh bg-[#faf7f2]">
           <header className="border-b-2 border-ink/15 bg-white shadow-sm">
             <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
-              <p className="font-pixel text-lg text-rose">Birthday Surprise · Admin</p>
+              <p className="font-pixel text-lg text-rose">Digital Gifting · Admin</p>
               <div className="flex items-center gap-3 text-sm">
                 <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
                   {admin.email} · MFA ✓

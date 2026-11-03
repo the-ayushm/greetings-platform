@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PRODUCT_META } from "@/lib/store";
 import { formatINR } from "@/components/ui";
 import { userDb } from "@/lib/supabase/server";
 import { adminDb } from "@/lib/supabase/admin";
@@ -26,8 +27,8 @@ async function siteCounts(keys: string[]) {
 }
 
 /** Store page per template (admins can open a product's page before it's on sale). */
-const STORE_PAGE: Record<string, string> = { scrapbook: "/product", lovestory: "/products/love-story", wedding: "/products/wedding-invitation", doyouloveme: "/products/do-you-love-me" };
-const DEMO_PAGE: Record<string, string> = { scrapbook: "/demo", lovestory: "/demo/love-story", wedding: "/demo/wedding", doyouloveme: "/demo/do-you-love-me" };
+const STORE_PAGE: Record<string, string> = Object.fromEntries(Object.entries(PRODUCT_META).map(([k, m]) => [k, m.href]));
+const DEMO_PAGE: Record<string, string> = Object.fromEntries(Object.entries(PRODUCT_META).map(([k, m]) => [k, m.demo]));
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Templates & pricing" };
@@ -35,11 +36,15 @@ export const metadata = { title: "Templates & pricing" };
 export default async function AdminCatalog() {
   await requireAdminPage();
   const db = await userDb();
-  const [{ data: templates }, { data: versions }, { data: products }] = await Promise.all([
+  const [{ data: templates }, { data: versions }, firstProducts] = await Promise.all([
     db.from("templates").select("key, name, is_active"),
     db.from("template_versions").select("template_key, version, schema_version, is_current, released_at, notes"),
-    db.from("products").select("id, name, description, template_key, price_paise, is_active, edit_days, live_days"),
+    db.from("products").select("id, name, description, template_key, price_paise, is_active, edit_days, live_days, is_featured, compare_at_paise"),
   ]);
+  // Before the store_merchandising migration is applied: still list products (no trending/original price).
+  const products = firstProducts.error
+    ? ((await db.from("products").select("id, name, description, template_key, price_paise, is_active, edit_days, live_days")).data ?? []).map((p) => ({ ...p, is_featured: false, compare_at_paise: null }))
+    : firstProducts.data;
   const [counts, love] = await Promise.all([siteCounts((templates ?? []).map((t) => t.key)), loveDefaults()]);
   return (
     <>
@@ -92,7 +97,7 @@ export default async function AdminCatalog() {
                 </Link>
               </p>
             )}
-            <CatalogControls kind="product" id={p.id} active={p.is_active} pricePaise={p.price_paise} editDays={p.edit_days} liveDays={p.live_days} name={p.name} description={p.description} />
+            <CatalogControls kind="product" id={p.id} active={p.is_active} pricePaise={p.price_paise} editDays={p.edit_days} liveDays={p.live_days} name={p.name} description={p.description} featured={p.is_featured} compareAtPaise={p.compare_at_paise} />
           </li>
         ))}
       </ul>

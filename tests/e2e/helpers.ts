@@ -4,7 +4,7 @@ import "../helpers/load-env";
 
 export const APP = process.env.APP_ORIGIN ?? "http://app.localhost:3000";
 export const RENDERER = process.env.RENDERER_ORIGIN ?? "http://wishes.localhost:3000";
-export const MOCK = "http://127.0.0.1:4010";
+export const MOCK = process.env.RAZORPAY_API_BASE ?? "http://127.0.0.1:4010";
 const MAILPIT = "http://127.0.0.1:54324";
 
 export const uid = () => crypto.randomBytes(4).toString("hex");

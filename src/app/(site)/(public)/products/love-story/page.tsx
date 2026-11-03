@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RelatedProducts } from "@/components/store/RelatedProducts";
 import Link from "next/link";
 import { LoveStoryTeaser } from "@/components/LoveStoryTeaser";
 import { ButtonLink, Card, Notice, formatINR } from "@/components/ui";
@@ -254,6 +255,7 @@ export default async function LoveStoryProductPage() {
           </div>
         )}
       </section>
+      <RelatedProducts current="lovestory" />
     </main>
   );
 }

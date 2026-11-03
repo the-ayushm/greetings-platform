@@ -17,6 +17,7 @@ filename order by `supabase db reset` locally and `supabase db push` remotely).
 | `20261028000002_seed_wedding_template.sql` | template `wedding` v1 + its product, **not on sale**, ₹0 (generated) |
 | `20261103000001_answer_responses.sql` | `site_responses.kind` may also be `answer` (the partner pressed YES on a "Do You Love Me?" page) |
 | `20261103000002_seed_doyouloveme_template.sql` | template `doyouloveme` v1 + its product, **not on sale**, ₹0 (generated) |
+| `20261104000001_store_merchandising.sql` | `products.is_featured` ("Trending" on the homepage) and optional `products.compare_at_paise` (original price; a discount shows only when it is higher than the price) |
 
 ## Tables
 

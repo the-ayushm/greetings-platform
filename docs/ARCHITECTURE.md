@@ -32,6 +32,19 @@ separate registrable domain is better still (see SECURITY.md).
 **Why one app.** One deploy, one codebase, one set of types. Lint rules stop template code from
 importing server or database modules.
 
+## Storefront (Digital Gifting)
+
+The store is a multi-product gifting shop. Prices, names, descriptions, on-sale status, the
+"Trending" flag and an optional original price live in `products` (Admin → Templates & pricing).
+`src/lib/store.ts` adds only what the database doesn't hold — categories, links, artwork and
+highlights per product (`PRODUCT_META`) — plus search/sort helpers. `listStoreProducts()`
+(`src/server/catalog.ts`, cached per request) joins the two; the homepage (`/`), Explore
+(`/products`, `?q=&sort=`), category pages (`/categories/<slug>`), `/pricing` and every product
+page's "You may also love" read from it, so nothing about a product is hard-coded twice. Product
+artwork is drawn from the templates' own stills and SVG art (`src/components/store/ProductArt.tsx`);
+live demos are the real demo routes, loaded on tap. Reviews render only from genuine data
+(`REVIEWS`, empty today).
+
 ## Templates
 
 Every sellable template shares every piece of infrastructure (checkout, fulfilment, sites,

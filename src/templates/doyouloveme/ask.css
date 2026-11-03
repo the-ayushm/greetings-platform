@@ -25,7 +25,8 @@
 .dy[data-intensity="calm"] { --dy-yes-max: min(2.1rem, 8.5vw); }
 .dy[data-intensity="extra"] { --dy-yes-max: min(3.2rem, 11.5vw); }
 .dy *, .dy *::before, .dy *::after { box-sizing: border-box; }
-.dy button { font: inherit; -webkit-appearance: none; appearance: none; }
+/* Zero-specificity reset (:where) so .dy-yes / .dy-no font sizes and weights always win. */
+:where(.dy) :where(button) { font: inherit; -webkit-appearance: none; appearance: none; }
 .dy button:focus-visible { outline: 3px solid var(--dy-ink); outline-offset: 3px; }
 
 .dy-sr {

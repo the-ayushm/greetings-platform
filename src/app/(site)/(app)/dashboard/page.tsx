@@ -31,26 +31,23 @@ export default async function Dashboard() {
     <PageShell>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-semibold">My sites</h1>
-          <p className="text-ink-soft">Edit, preview and share your surprises.</p>
+          <h1 className="font-display text-3xl font-semibold">My Sites</h1>
+          <p className="text-ink-soft">Edit, preview and share your digital gifts.</p>
         </div>
         <div className="flex gap-2">
           <ButtonLink href="/dashboard/account" variant="ghost">
             Account
           </ButtonLink>
-          <ButtonLink href="/product">New site</ButtonLink>
+          <ButtonLink href="/products">New gift</ButtonLink>
         </div>
       </div>
 
       {!sites?.length ? (
         <Card className="mt-8 text-center">
           <p className="font-hand text-2xl text-rose">nothing here yet ♡</p>
-          <p className="mt-2 text-ink-soft">Buy a birthday scrapbook or a love story to start personalising it. You&apos;ll see a live preview as you type.</p>
+          <p className="mt-2 text-ink-soft">Pick a gift from our collection to start personalising it. You&apos;ll see a live preview as you type.</p>
           <div className="mt-5 flex justify-center gap-3">
-            <ButtonLink href="/product">Birthday scrapbook</ButtonLink>
-            <ButtonLink href="/products/love-story" variant="secondary">
-              Love story ♡
-            </ButtonLink>
+            <ButtonLink href="/products">Explore gifts</ButtonLink>
           </div>
         </Card>
       ) : (
@@ -81,6 +78,11 @@ export default async function Dashboard() {
                     {canEdit && (
                       <ButtonLink href={`/dashboard/sites/${s.id}/edit`} className="flex-1">
                         Edit
+                      </ButtonLink>
+                    )}
+                    {isTemplateKey(s.template_key) && ["draft", "published", "unpublished"].includes(s.status) && (
+                      <ButtonLink href={templateDef(s.template_key).previewPath(s.id)} variant="ghost" target="_blank" className="flex-1">
+                        Preview ↗
                       </ButtonLink>
                     )}
                     <ButtonLink href={`/dashboard/sites/${s.id}`} variant="secondary" className="flex-1">
