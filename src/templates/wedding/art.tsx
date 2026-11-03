@@ -343,13 +343,17 @@ export function EmbossTile() {
     </g>
   );
   // Half-drop repeat: two big roses per 160×160 tile, trailing leaves and stems between them.
-  const motif = (
+  const roses = (
     <g>
       {rose(44, 46, 0.62, 12)}
       {rose(124, 126, 0.52, -30)}
       {rose(124, -34, 0.52, -30)}
       {rose(-36, 126, 0.52, -30)}
       {rose(204, 46, 0.62, 12)}
+    </g>
+  );
+  const leaves = (
+    <g>
       {leaf(70, 80, 140, 0.9)}
       {leaf(20, 84, 210, 0.8)}
       {leaf(92, 40, 70, 0.75)}
@@ -359,6 +363,13 @@ export function EmbossTile() {
       <path d="M62 74c18 16 30 26 44 40M18 78c-8 18-12 30-10 48M96 160c4-10 10-18 20-22" />
     </g>
   );
+  const motif = (
+    <g>
+      {roses}
+      {leaves}
+    </g>
+  );
+  // The gilded copies sit exactly over the embossed lines; the envelope reveals them with light.
   return (
     <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true" focusable="false">
       <defs>
@@ -366,6 +377,14 @@ export function EmbossTile() {
           <g className="wd-emboss-hi" transform="translate(-0.8 -0.8)">{motif}</g>
           <g className="wd-emboss-lo" transform="translate(1 1)">{motif}</g>
           <g className="wd-emboss-body">{motif}</g>
+        </pattern>
+        <pattern id="wd-p-gild-rose" width="160" height="160" patternUnits="userSpaceOnUse">
+          <g className="wd-gild-soft">{roses}</g>
+          <g className="wd-gild-sharp">{roses}</g>
+        </pattern>
+        <pattern id="wd-p-gild-leaf" width="160" height="160" patternUnits="userSpaceOnUse">
+          <g className="wd-gild-soft wd-gild-leaf">{leaves}</g>
+          <g className="wd-gild-sharp wd-gild-leaf">{leaves}</g>
         </pattern>
       </defs>
     </svg>

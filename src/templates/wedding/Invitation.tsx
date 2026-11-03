@@ -29,7 +29,7 @@ export type WeddingInvitationProps = {
 };
 
 /** Opening sequence length; the reduced-motion version is a short fade. */
-const OPEN_MS = 2300;
+const OPEN_MS = 3450;
 const OPEN_MS_STILL = 350;
 const PETALS = [
   { left: "6%", delay: "0s", dur: "17s", size: 14 },
