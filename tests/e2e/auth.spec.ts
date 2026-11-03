@@ -56,7 +56,7 @@ test("sign-up mistakes are caught: bad email, short password, mismatch, existing
   const r = await api(page).post("/api/auth/signup", { email: email("x"), password: PASSWORD, confirm: "different" });
   expect(r.status).toBe(400);
   expect((await api(page).post("/api/auth/signup", { email: email("x"), password: "short", confirm: "short" })).status).toBe(400);
-  expect((await api(page, "http://evil.example").post("/api/auth/signup", { email: email("x"), password: PASSWORD, confirm: PASSWORD })).status).toBe(403);
+  expect((await api(page).raw("POST", "/api/auth/signup", { email: email("x"), password: PASSWORD, confirm: PASSWORD }, { origin: "http://evil.example" })).status).toBe(403);
   // Existing account.
   const taken = email("taken");
   expect((await api(page).post("/api/auth/signup", { email: taken, password: PASSWORD, confirm: PASSWORD })).status).toBe(200);

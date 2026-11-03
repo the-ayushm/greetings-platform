@@ -234,15 +234,17 @@ otp_length = 6
 # Number of seconds before the email OTP expires (defaults to 1 hour).
 otp_expiry = 900
 
-# Use a production-ready SMTP server
-# [auth.email.smtp]
-# enabled = true
-# host = "smtp.sendgrid.net"
-# port = 587
-# user = "apikey"
-# pass = "env(SENDGRID_API_KEY)"
-# admin_email = "admin@email.com"
-# sender_name = "Admin"
+# Local only: send through the local mail catcher as "custom SMTP". Without a custom SMTP server
+# Supabase ignores [auth.rate_limit] email_sent and applies its tiny built-in limit, which the
+# password-reset tests would hit. (Production: configure a real provider in the dashboard.)
+[auth.email.smtp]
+enabled = true
+host = "supabase_inbucket_birthday"
+port = 1025
+user = "local"
+pass = "local"
+admin_email = "admin@email.com"
+sender_name = "Birthday Surprise (local)"
 
 # Uncomment to customize email template
 # [auth.email.template.invite]
