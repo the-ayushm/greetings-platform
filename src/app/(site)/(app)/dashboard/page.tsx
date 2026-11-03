@@ -5,7 +5,7 @@ import { userDb } from "@/lib/supabase/server";
 import { requireUserPage } from "@/server/auth";
 import { isTemplateKey, templateDef } from "@/templates/registry";
 
-const TEMPLATE_LABEL: Record<string, string> = { scrapbook: "Birthday scrapbook", lovestory: "Love story", wedding: "Wedding invitation" };
+const TEMPLATE_LABEL: Record<string, string> = { scrapbook: "Birthday scrapbook", lovestory: "Love story", wedding: "Wedding invitation", doyouloveme: "Do You Love Me?" };
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "My sites" };

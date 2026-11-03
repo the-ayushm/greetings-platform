@@ -5,8 +5,10 @@ import { activeProduct } from "@/server/catalog";
 export async function SiteHeader() {
   const user = await currentUser();
   const isAdmin = user ? await isAdminUser(user.id) : false;
-  // The wedding category appears once its product is on sale (admins testing it see it earlier).
-  const weddings = Boolean(await activeProduct("wedding")) || (await canSeeUnlisted(user));
+  // New products' links appear once they're on sale (admins testing them see them earlier).
+  const [weddingOnSale, askOnSale, unlisted] = await Promise.all([activeProduct("wedding"), activeProduct("doyouloveme"), canSeeUnlisted(user)]);
+  const weddings = Boolean(weddingOnSale) || unlisted;
+  const asks = Boolean(askOnSale) || unlisted;
   return (
     <header className="border-b-2 border-ink/10 bg-cream/90 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
@@ -29,6 +31,11 @@ export async function SiteHeader() {
           {weddings && (
             <Link className="rounded-md px-2 py-2 whitespace-nowrap text-rose hover:bg-baby" href="/products/wedding-invitation">
               Weddings
+            </Link>
+          )}
+          {asks && (
+            <Link className="rounded-md px-2 py-2 whitespace-nowrap text-rose hover:bg-baby" href="/products/do-you-love-me">
+              Do You Love Me?
             </Link>
           )}
           {user ? (

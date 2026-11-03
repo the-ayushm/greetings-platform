@@ -99,6 +99,21 @@ test("customer dashboard, editor, share and account pages", async ({ browser }) 
   await c.context.close();
 });
 
+test("Do You Love Me? (demo): question, a few “No”s, full-screen YES and the celebration", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" }); // scan settled screens, not mid-animation
+  await page.goto(`${APP}/demo/do-you-love-me`);
+  await page.waitForSelector(".dy[data-hydrated]");
+  await scan(page, "ask: question");
+  for (let i = 0; i < 4; i++) await page.getByTestId("dy-no").click();
+  await scan(page, "ask: after four No");
+  await page.goto(`${APP}/demo/do-you-love-me?at=takeover`);
+  await page.waitForSelector(".dy[data-hydrated]");
+  await scan(page, "ask: full-screen YES");
+  await page.getByTestId("dy-takeover").click();
+  await expect(page.getByTestId("dy-finale")).toBeVisible();
+  await scan(page, "ask: celebration");
+});
+
 test("wedding invitation (demo): envelope, every section and the RSVP dialog", async ({ page }) => {
   await page.goto(`${APP}/demo/wedding`);
   await page.waitForSelector(".wd[data-hydrated]");

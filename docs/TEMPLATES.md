@@ -36,6 +36,28 @@ Content: `src/templates/wedding/schema.ts` + `defaults.ts`; pure date/countdown/
 `node scripts/fetch-wedding-fonts.mjs`; share image: `node scripts/make-wedding-og.mjs`; store
 previews (needs the app running): `node scripts/make-wedding-previews.mjs <app origin>`.
 
+## Do You Love Me? (`doyouloveme`)
+
+One playful question. Every press of **No** shows the next line of `question.noMessages` and
+grows **Yes** (`growth()` in `schema.ts`); one press after the last line, Yes expands from its
+own box to the whole screen (`clip-path`), and Yes opens the celebration (a circular reveal
+from the tap point). Content: `src/templates/doyouloveme/schema.ts` + `defaults.ts`; presets in
+`theme.ts`; original SVG characters (bunny, bear, kitty, mochi — four moods) in `art.tsx`;
+synthesised tap/chime sounds in `sound.ts` (only after the visitor turns sound on); the page in
+`Experience.tsx` + `ask.css` (scoped under `.dy`). Studio: `dashboard/sites/[siteId]/edit/ask/`.
+Recipient URL `/ask/<slug>`; demo `/demo/do-you-love-me` (`?at=takeover|finale`); owner preview
+`/preview/ask/:id`. When `responses.notify` is on, pressing Yes records one `site_responses`
+row (`kind = 'answer'`) with how many times No was pressed — the server builds the wording from
+the published content and caps the count. Regenerate the seed with
+`npx tsx scripts/gen-template-migration.ts doyouloveme` (new migration file for a deployed DB);
+share image: `node scripts/make-ask-og.mjs`. Store-side pictures (`src/components/AskMini.tsx`)
+are drawn in JSX with the template's own character, so there are no screenshot assets to refresh.
+
+**Adding another customer:** nothing to code. Each purchase creates its own site from the
+current template version; the customer personalises it in the studio and publishes their own
+link. To change what *new* customers start with, edit `defaults.ts`, then generate a new
+`template_versions` row in a new migration.
+
 Products that aren't on sale (`is_active = false`) can be opened and acquired by MFA'd admins
 only (testing). A ₹0 product skips Razorpay entirely (`fulfil_free_order`).
 

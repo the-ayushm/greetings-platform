@@ -5,11 +5,14 @@
 ```
  www.example.in  (APP_ORIGIN)                     wishes.example.in  (RENDERER_ORIGIN)
  ├─ store: /, /product, /demo, /legal/*           ├─ /birthday/<22-char slug>   birthday recipient page
- ├─ /products/love-story, /demo/love-story       └─ /love/<22-char slug>       love story recipient page
- ├─ /login (email link → /auth/callback)               /api/r/{unlock,media,view,report}
+ ├─ /products/love-story, /demo/love-story       ├─ /love/<22-char slug>       love story recipient page
+ ├─ /products/wedding-invitation, /demo/wedding  ├─ /wedding/<22-char slug>    wedding invitation
+ ├─ /products/do-you-love-me,                    └─ /ask/<22-char slug>        "Do You Love Me?" page
+ │    /demo/do-you-love-me                             /api/r/{unlock,media,view,report,respond,rsvp}
+ ├─ /login (email link → /auth/callback)
  ├─ /checkout → Razorpay Checkout                    no auth cookies · no-referrer · noindex
  ├─ /dashboard, /dashboard/sites/:id/edit            strict CSP · frame-ancestors 'none'
- ├─ /preview/:id, /preview/love/:id (owner-only draft, iframe)
+ ├─ /preview/:id, /preview/love/:id, /preview/wedding/:id, /preview/ask/:id (owner-only draft, iframe)
  ├─ /admin (role=admin + TOTP MFA)
  └─ /api/* (customer, webhooks, cron, admin)
                  │  server-only reads/writes             │
@@ -31,7 +34,7 @@ importing server or database modules.
 
 ## Templates
 
-Two sellable templates share every piece of infrastructure (checkout, fulfilment, sites,
+Every sellable template shares every piece of infrastructure (checkout, fulfilment, sites,
 drafts, publishing, media, links, passcodes, admin). `src/templates/registry.ts` maps
 `sites.template_key` to each template's schemas, asset references, public path and limits;
 server code looks templates up there instead of importing one directly. Each renderer route
@@ -42,6 +45,7 @@ imports only its own template, so template stylesheets never share a page.
 | `scrapbook` | Scrapbook Surprise (birthday) | `src/templates/scrapbook/` | `/birthday/<slug>` |
 | `lovestory` | Our Little Universe (love story) | `src/templates/lovestory/` | `/love/<slug>` |
 | `wedding` | Royal Burgundy (wedding invitation) | `src/templates/wedding/` | `/wedding/<slug>` |
+| `doyouloveme` | Do You Love Me? (romantic question) | `src/templates/doyouloveme/` | `/ask/<slug>` |
 
 The wedding pages (`/demo/wedding`, `/preview/wedding/:id`, `/wedding/:slug`) live in their own root
 layout `src/app/(wedding)/` so guests only download the two wedding fonts. Guests RSVP through

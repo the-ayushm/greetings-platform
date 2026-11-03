@@ -26,8 +26,8 @@ async function siteCounts(keys: string[]) {
 }
 
 /** Store page per template (admins can open a product's page before it's on sale). */
-const STORE_PAGE: Record<string, string> = { scrapbook: "/product", lovestory: "/products/love-story", wedding: "/products/wedding-invitation" };
-const DEMO_PAGE: Record<string, string> = { scrapbook: "/demo", lovestory: "/demo/love-story", wedding: "/demo/wedding" };
+const STORE_PAGE: Record<string, string> = { scrapbook: "/product", lovestory: "/products/love-story", wedding: "/products/wedding-invitation", doyouloveme: "/products/do-you-love-me" };
+const DEMO_PAGE: Record<string, string> = { scrapbook: "/demo", lovestory: "/demo/love-story", wedding: "/demo/wedding", doyouloveme: "/demo/do-you-love-me" };
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Templates & pricing" };

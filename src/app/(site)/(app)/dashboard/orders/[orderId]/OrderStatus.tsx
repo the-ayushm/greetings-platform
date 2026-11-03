@@ -9,6 +9,7 @@ type Order = { id: string; status: string; template_key?: string; amount_paise?:
 const READY: Record<string, string> = {
   lovestory: "Your love story is ready — add your photos, memories and words in the studio.",
   wedding: "Your wedding invitation is ready — add your names, date, venue and schedule in the studio.",
+  doyouloveme: "Your “Do You Love Me?” page is ready — add your names, your love message and your colours in the studio.",
 };
 
 /** Waits for the payment webhook to land (usually a second or two), then links to the editor. */

@@ -7,15 +7,15 @@ import { CheckoutButton } from "./CheckoutButton";
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Checkout" };
 
-const BACK: Record<string, string> = { scrapbook: "/product", lovestory: "/products/love-story", wedding: "/products/wedding-invitation" };
-const KIND: Record<string, string> = { scrapbook: "website", lovestory: "love story", wedding: "wedding invitation" };
+const BACK: Record<string, string> = { scrapbook: "/product", lovestory: "/products/love-story", wedding: "/products/wedding-invitation", doyouloveme: "/products/do-you-love-me" };
+const KIND: Record<string, string> = { scrapbook: "website", lovestory: "love story", wedding: "wedding invitation", doyouloveme: "“Do You Love Me?” page" };
 
 export default async function CheckoutPage({ searchParams }: { searchParams: Promise<{ product?: string }> }) {
   const { product: productId } = await searchParams;
   const user = await requireUserPage(`/checkout${productId ? `?product=${encodeURIComponent(productId)}` : ""}`);
   // No product in the URL keeps the original behaviour (the scrapbook product).
   const p = productId ? await productById(productId, await canSeeUnlisted(user)) : await activeProduct();
-  const studio = p?.template_key === "lovestory" || p?.template_key === "wedding";
+  const studio = p?.template_key === "lovestory" || p?.template_key === "wedding" || p?.template_key === "doyouloveme";
   const free = p?.price_paise === 0;
   const kind = KIND[p?.template_key ?? ""] ?? "website";
   return (

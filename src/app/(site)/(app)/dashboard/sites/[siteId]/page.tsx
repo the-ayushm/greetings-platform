@@ -27,10 +27,11 @@ export default async function SitePage({ params }: { params: Promise<{ siteId: s
   const def = templateDef(site.template_key);
   const love = site.template_key === "lovestory";
   const wedding = site.template_key === "wedding";
+  const ask = site.template_key === "doyouloveme";
   const name = def.recipientName(site.draft_content);
   const editable = ["draft", "published", "unpublished"].includes(site.status) && new Date(site.edit_until) > new Date();
-  // Recipient responses (love story only): owner-only through RLS.
-  const responses = love
+  // Recipient responses (love story answers, "Do You Love Me?" yes): owner-only through RLS.
+  const responses = love || ask
     ? ((await (await userDb()).from("site_responses").select("id, kind, label, value, created_at").eq("site_id", site.id).order("created_at", { ascending: false }).limit(200)).data ?? [])
     : [];
   // Wedding RSVPs: owner-only through RLS.
@@ -49,7 +50,7 @@ export default async function SitePage({ params }: { params: Promise<{ siteId: s
       </p>
       {editable && (
         <ButtonLink href={`/dashboard/sites/${site.id}/edit`} className="mt-5 w-full">
-          {love || wedding ? "Open the customization studio" : "Open the editor"}
+          {love || wedding || ask ? "Open the customization studio" : "Open the editor"}
         </ButtonLink>
       )}
       <SiteManager
@@ -60,10 +61,11 @@ export default async function SitePage({ params }: { params: Promise<{ siteId: s
         editable={editable}
         disabledReason={site.disabled_reason}
         shareText={def.shareText}
-        kindLabel={love ? "love story" : wedding ? "wedding invitation" : "birthday site"}
-        qrFile={love ? "love-story-qr.png" : wedding ? "wedding-invitation-qr.png" : "birthday-qr.png"}
+        kindLabel={love ? "love story" : wedding ? "wedding invitation" : ask ? "page" : "birthday site"}
+        qrFile={love ? "love-story-qr.png" : wedding ? "wedding-invitation-qr.png" : ask ? "do-you-love-me-qr.png" : "birthday-qr.png"}
       />
       {love && <ResponsesPanel siteId={site.id} responses={responses} />}
+      {ask && <ResponsesPanel siteId={site.id} responses={responses} variant="ask" />}
       {wedding && <RsvpPanel siteId={site.id} rsvps={rsvps} />}
     </PageShell>
   );

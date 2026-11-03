@@ -1,3 +1,4 @@
+import { AskMini } from "@/components/AskMini";
 import { DemoTeaser } from "@/components/DemoTeaser";
 import { ButtonLink, Card, formatINR } from "@/components/ui";
 import { activeProduct } from "@/server/catalog";
@@ -22,10 +23,11 @@ const FAQ = [
 ];
 
 export default async function Landing() {
-  const [product, love, wedding] = await Promise.all([activeProduct(), activeProduct("lovestory"), activeProduct("wedding")]);
+  const [product, love, wedding, ask] = await Promise.all([activeProduct(), activeProduct("lovestory"), activeProduct("wedding"), activeProduct("doyouloveme")]);
   const price = product ? formatINR(product.price_paise) : null;
   const loveP = love ? formatINR(love.price_paise) : null;
   const weddingP = wedding ? (wedding.price_paise === 0 ? "Free" : formatINR(wedding.price_paise)) : null;
+  const askP = ask ? (ask.price_paise === 0 ? "Free" : formatINR(ask.price_paise)) : null;
   return (
     <main>
       <section className="gingham border-b-2 border-ink/10">
@@ -87,6 +89,29 @@ export default async function Landing() {
                 <ButtonLink href="/products/wedding-invitation">See it · {weddingP}</ButtonLink>
                 <ButtonLink href="/demo/wedding" variant="secondary">
                   Demo
+                </ButtonLink>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {ask && (
+        <section className="mx-auto max-w-5xl px-4 pt-6 sm:px-6" aria-labelledby="ask-promo">
+          <div className="relative overflow-hidden rounded-3xl bg-[linear-gradient(150deg,#ffc4cf_0%,#ffe4e8_55%,#fff0ea_100%)] p-6 shadow-[8px_8px_0_var(--color-pink)] sm:p-8">
+            <div className="relative grid items-center gap-6 md:grid-cols-[1fr_auto_auto]">
+              <div>
+                <p className="font-hand text-xl text-rose">new ♡ romantic interactive websites</p>
+                <h2 id="ask-promo" className="font-display text-3xl font-semibold">Do You Love Me? — a question with only one answer</h2>
+                <p className="mt-2 max-w-prose text-ink-soft">Every “No” makes the YES button bigger, until it fills the screen. Then hearts, confetti and your love message. Sent as one sweet link.</p>
+              </div>
+              <div className="hidden w-28 overflow-hidden rounded-[1.3rem] border-[6px] border-ink bg-ink md:block" aria-hidden="true">
+                <AskMini screen={{ kind: "ask", step: 6 }} className="aspect-[390/760] text-[7px]" />
+              </div>
+              <div className="flex flex-wrap gap-3 md:flex-col">
+                <ButtonLink href="/products/do-you-love-me">See it · {askP}</ButtonLink>
+                <ButtonLink href="/demo/do-you-love-me" variant="secondary">
+                  Try it
                 </ButtonLink>
               </div>
             </div>

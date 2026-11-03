@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 /**
  * Edge of the app (Next 16 "proxy"):
  *  1. Host routing — the renderer origin serves ONLY /birthday/<slug>, /love/<slug>,
- *     /wedding/<slug> and their /api/r/* calls; the app origin serves everything else and never
+ *     /wedding/<slug>, /ask/<slug> and their /api/r/* calls; the app origin serves everything else and never
  *     serves those pages.
  *  2. Security headers + a per-request CSP nonce (Next applies it to its own scripts).
  *  3. Supabase session refresh on the app origin only. The renderer origin never sees or sets
@@ -19,7 +19,7 @@ const DEV = process.env.NODE_ENV === "development";
 const MAPS_FRAME = "https://www.google.com";
 const HTTPS = APP.protocol === "https:";
 
-const RENDERER_PATHS = /^\/((birthday|love|wedding)\/[A-Za-z0-9]{1,64}\/?|api\/r\/[a-z-]+|fonts\/[a-f0-9]{16}\.woff2|og\/[a-z-]{1,40}\.png|robots\.txt|favicon\.ico|icon\.svg)$/;
+const RENDERER_PATHS = /^\/((birthday|love|wedding|ask)\/[A-Za-z0-9]{1,64}\/?|api\/r\/[a-z-]+|fonts\/[a-f0-9]{16}\.woff2|og\/[a-z-]{1,40}\.png|robots\.txt|favicon\.ico|icon\.svg)$/;
 
 function csp(kind: "app" | "renderer", nonce: string) {
   const script = `'self' 'nonce-${nonce}' 'strict-dynamic'${DEV ? " 'unsafe-eval'" : ""}`;
@@ -97,7 +97,7 @@ export async function proxy(req: NextRequest) {
   else return new NextResponse("Unknown host", { status: 421 });
 
   if (kind === "renderer" && !RENDERER_PATHS.test(path)) return notFound("renderer");
-  if (kind === "app" && (path.startsWith("/birthday") || /^\/(love|wedding)(\/|$)/.test(path) || path.startsWith("/api/r/"))) return notFound("app");
+  if (kind === "app" && (path.startsWith("/birthday") || /^\/(love|wedding|ask)(\/|$)/.test(path) || path.startsWith("/api/r/"))) return notFound("app");
 
   // If Supabase falls back to the Site URL, the sign-in link lands on "/" — finish it at the callback.
   if (kind === "app" && path === "/" && ["code", "token_hash", "error_code"].some((k) => req.nextUrl.searchParams.has(k))) {

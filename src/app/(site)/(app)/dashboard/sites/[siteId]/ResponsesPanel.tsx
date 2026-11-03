@@ -7,10 +7,10 @@ import { api, ApiFailure } from "@/lib/api-client";
 
 type Row = { id: string; kind: string; label: string; value: string; created_at: string };
 
-const KIND: Record<string, string> = { text: "Answer", slider: "Love meter", coupon: "Coupon redeemed" };
+const KIND: Record<string, string> = { text: "Answer", slider: "Love meter", coupon: "Coupon redeemed", answer: "Their answer" };
 
 /** What the recipient sent back (only when "collect responses" is on in the studio). Owner-only. */
-export function ResponsesPanel({ siteId, responses }: { siteId: string; responses: Row[] }) {
+export function ResponsesPanel({ siteId, responses, variant = "love" }: { siteId: string; responses: Row[]; variant?: "love" | "ask" }) {
   const router = useRouter();
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -33,23 +33,29 @@ export function ResponsesPanel({ siteId, responses }: { siteId: string; response
     <div className="mt-5">
       <Card>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="text-lg font-extrabold">Their responses</h2>
+          <h2 className="text-lg font-extrabold">{variant === "ask" ? "Did they say yes?" : "Their responses"}</h2>
           {responses.length > 0 && (
             <Button variant="ghost" className="min-h-9 px-3 py-1.5 text-sm text-rose" disabled={busy !== null} onClick={() => void remove(null)}>
               Delete all
             </Button>
           )}
         </div>
-        <p className="mt-1 text-sm text-ink-soft">
-          Only you can see these. They&apos;re saved only if you switch on <b>Collect their responses</b> in the studio (Sections tab) and publish.
-        </p>
+        {variant === "ask" ? (
+          <p className="mt-1 text-sm text-ink-soft">
+            Only you can see this. It&apos;s saved only while <b>Tell me when they say YES</b> is on in the studio (Their answer tab).
+          </p>
+        ) : (
+          <p className="mt-1 text-sm text-ink-soft">
+            Only you can see these. They&apos;re saved only if you switch on <b>Collect their responses</b> in the studio (Sections tab) and publish.
+          </p>
+        )}
         {error && (
           <div className="mt-3">
             <Notice tone="error">{error}</Notice>
           </div>
         )}
         {responses.length === 0 ? (
-          <p className="mt-4 rounded-lg bg-baby px-3 py-3 text-sm text-ink-soft">No responses yet ♡</p>
+          <p className="mt-4 rounded-lg bg-baby px-3 py-3 text-sm text-ink-soft">{variant === "ask" ? "No answer yet — they haven’t pressed YES ♡" : "No responses yet ♡"}</p>
         ) : (
           <ul className="mt-4 space-y-2" data-testid="responses">
             {responses.map((r) => (

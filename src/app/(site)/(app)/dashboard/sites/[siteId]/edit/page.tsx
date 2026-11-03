@@ -3,12 +3,15 @@ import { notFound, redirect } from "next/navigation";
 import { requireUserPage } from "@/server/auth";
 import { ApiError, isUuid } from "@/server/http";
 import { getOwnedSite, siteUrl } from "@/server/sites";
+import { newSiteContent as newAsk } from "@/templates/doyouloveme/defaults";
+import { draftContentSchema as askDraftSchema } from "@/templates/doyouloveme/schema";
 import { newSiteContent as newLoveStory } from "@/templates/lovestory/defaults";
 import { draftContentSchema as loveDraftSchema } from "@/templates/lovestory/schema";
 import { newSiteContent } from "@/templates/scrapbook/defaults";
 import { draftContentSchema } from "@/templates/scrapbook/schema";
 import { newSiteContent as newWedding } from "@/templates/wedding/defaults";
 import { draftContentSchema as weddingDraftSchema } from "@/templates/wedding/schema";
+import { AskStudio } from "./ask/AskStudio";
 import { Editor } from "./Editor";
 import { LoveStudio } from "./love/LoveStudio";
 import { WeddingStudio } from "./wedding/WeddingStudio";
@@ -37,6 +40,20 @@ export default async function EditPage({ params }: { params: Promise<{ siteId: s
       <LoveStudio
         siteId={site.id}
         initial={parsed.success ? parsed.data : newLoveStory()}
+        initialRevision={site.draft_revision}
+        status={site.status}
+        publishedUrl={publishedUrl}
+        editUntil={site.edit_until}
+      />
+    );
+  }
+
+  if (site.template_key === "doyouloveme") {
+    const parsed = askDraftSchema.safeParse(site.draft_content);
+    return (
+      <AskStudio
+        siteId={site.id}
+        initial={parsed.success ? parsed.data : newAsk()}
         initialRevision={site.draft_revision}
         status={site.status}
         publishedUrl={publishedUrl}

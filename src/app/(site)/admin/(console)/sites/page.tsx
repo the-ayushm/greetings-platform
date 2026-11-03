@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Sites" };
 
 const STATUSES = ["all", "draft", "published", "unpublished", "disabled", "expired", "deleted"];
-const TEMPLATES = [["all", "All products"], ["scrapbook", "Birthday scrapbook"], ["lovestory", "Love story"], ["wedding", "Wedding invitation"]] as const;
+const TEMPLATES = [["all", "All products"], ["scrapbook", "Birthday scrapbook"], ["lovestory", "Love story"], ["wedding", "Wedding invitation"], ["doyouloveme", "Do You Love Me?"]] as const;
 
 /** Metadata only. Customer content is not shown here (see the audited "view content" action). */
 export default async function AdminSites({ searchParams }: { searchParams: Promise<{ status?: string; template?: string }> }) {
@@ -60,7 +60,7 @@ export default async function AdminSites({ searchParams }: { searchParams: Promi
                   </Link>
                 </td>
                 <td className="px-3 py-2">{(s.profiles as { email?: string } | null)?.email ?? "—"}</td>
-                <td className="px-3 py-2">{s.template_key === "lovestory" ? "Love story" : s.template_key === "wedding" ? "Wedding invitation" : "Scrapbook"}</td>
+                <td className="px-3 py-2">{s.template_key === "lovestory" ? "Love story" : s.template_key === "wedding" ? "Wedding invitation" : s.template_key === "doyouloveme" ? "Do You Love Me?" : "Scrapbook"}</td>
                 <td className="px-3 py-2">{s.status}</td>
                 <td className="px-3 py-2">{formatDate(s.published_at)}</td>
                 <td className="px-3 py-2">{s.view_count}</td>
