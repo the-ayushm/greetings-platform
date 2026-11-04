@@ -58,7 +58,15 @@ export async function updateProduct(
   productId: string,
   patch: { pricePaise?: number; isActive?: boolean; editDays?: number; liveDays?: number; name?: string; description?: string; isFeatured?: boolean; compareAtPaise?: number | null },
 ) {
-  const { data: before } = await db().from("products").select("price_paise, is_active, edit_days, live_days, name, description, is_featured, compare_at_paise").eq("id", productId).maybeSingle();
+  // Try with merchandising columns first; fall back if the store_merchandising migration hasn't landed yet.
+  let before: Record<string, unknown> | null;
+  const full = await db().from("products").select("price_paise, is_active, edit_days, live_days, name, description, is_featured, compare_at_paise").eq("id", productId).maybeSingle();
+  if (full.error) {
+    const fallback = await db().from("products").select("price_paise, is_active, edit_days, live_days, name, description").eq("id", productId).maybeSingle();
+    before = fallback.data;
+  } else {
+    before = full.data;
+  }
   if (!before) throw notFound();
   const upd: { price_paise?: number; is_active?: boolean; edit_days?: number; live_days?: number; name?: string; description?: string; is_featured?: boolean; compare_at_paise?: number | null } = {};
   if (patch.pricePaise !== undefined) upd.price_paise = patch.pricePaise;
