@@ -10,7 +10,7 @@ export default async function AdminHome() {
   await requireAdminPage();
   const s = await stats();
   const db = await userDb();
-  const { data: recent } = await db.from("orders").select("id, status, amount_paise, created_at, paid_at").order("created_at", { ascending: false }).limit(8);
+  const { data: recent } = await db.from("orders").select("id, status, amount_paise, created_at, paid_at, profiles(email)").order("created_at", { ascending: false }).limit(8);
   const tiles: [string, string, string?][] = [
     ["Revenue (7 days)", formatINR(s.revenue7)],
     ["Revenue (30 days)", formatINR(s.revenue30)],
@@ -36,18 +36,36 @@ export default async function AdminHome() {
         ))}
       </ul>
       <h2 className="mt-8 text-xl font-extrabold">Latest orders</h2>
-      <ul className="mt-3 divide-y divide-ink/10 rounded-xl border-2 border-ink/15 bg-white">
-        {(recent ?? []).map((o) => (
-          <li key={o.id} className="flex flex-wrap justify-between gap-2 px-4 py-2 text-sm">
-            <Link className="font-mono underline" href={`/admin/orders/${o.id}`}>
-              {o.id.slice(0, 8)}
-            </Link>
-            <span>{formatINR(o.amount_paise)}</span>
-            <span className="capitalize">{o.status.replace("_", " ")}</span>
-            <span className="text-ink-soft">{formatDateTime(o.paid_at ?? o.created_at)}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="mt-3 overflow-x-auto rounded-xl border-2 border-ink/15 bg-white">
+        <table className="w-full text-left text-sm" data-testid="latest-orders">
+          <thead className="bg-baby">
+            <tr>
+              <th className="px-4 py-2">Customer</th>
+              <th className="px-4 py-2">Amount</th>
+              <th className="px-4 py-2">Status</th>
+              <th className="px-4 py-2">Date (IST)</th>
+              <th className="px-4 py-2">
+                <span className="sr-only">Order</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {(recent ?? []).map((o) => (
+              <tr key={o.id} className="border-t border-ink/10">
+                <td className="px-4 py-2 break-all">{(o.profiles as { email?: string } | null)?.email ?? <em className="text-ink-soft">deleted account</em>}</td>
+                <td className="px-4 py-2 whitespace-nowrap">{formatINR(o.amount_paise)}</td>
+                <td className="px-4 py-2 capitalize">{o.status.replace("_", " ")}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-ink-soft">{formatDateTime(o.paid_at ?? o.created_at)}</td>
+                <td className="px-4 py-2 text-right whitespace-nowrap">
+                  <Link className="font-bold text-rose underline" href={`/admin/orders/${o.id}`} aria-label={`Open order ${o.id.slice(0, 8)}`}>
+                    Open order →
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

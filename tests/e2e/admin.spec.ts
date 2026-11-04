@@ -19,6 +19,8 @@ let siteId: string;
 let url: string;
 
 test.beforeAll(async ({ browser }) => {
+  // Two sign-ups, a purchase and a publish.
+  test.setTimeout(300_000);
   const c = await newCustomer(browser, "adm-cust");
   customer = c.page;
   siteId = await buySite(customer);
@@ -95,5 +97,18 @@ test("other admin pages render", async () => {
     const r = await adminPage.goto(`${APP}${p}`);
     expect(r!.status(), p).toBe(200);
     await expect(adminPage.locator("h1")).toBeVisible();
+  }
+});
+
+test("latest orders and the orders list lead with the customer's email and link to each order", async () => {
+  const { data: order } = await admin().from("orders").select("id, profiles(email)").eq("id", (await admin().from("sites").select("order_id").eq("id", siteId).single()).data!.order_id).single();
+  const email = (order!.profiles as { email?: string } | null)!.email!;
+  for (const p of ["/admin", "/admin/orders"]) {
+    await adminPage.goto(`${APP}${p}`);
+    const row = adminPage.locator("tbody tr", { hasText: email }).first();
+    await expect(row.locator("td").first()).toHaveText(email);
+    await row.getByRole("link", { name: `Open order ${order!.id.slice(0, 8)}` }).click();
+    await expect(adminPage).toHaveURL(`${APP}/admin/orders/${order!.id}`);
+    await expect(adminPage.getByRole("heading", { level: 1 })).toContainText(order!.id.slice(0, 8));
   }
 });

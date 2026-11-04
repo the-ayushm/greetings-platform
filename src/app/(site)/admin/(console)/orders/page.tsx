@@ -34,27 +34,29 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
         <table className="w-full text-left text-sm">
           <thead className="bg-baby">
             <tr>
-              <th className="px-3 py-2">Order</th>
               <th className="px-3 py-2">Customer</th>
               <th className="px-3 py-2">Product</th>
               <th className="px-3 py-2">Amount</th>
               <th className="px-3 py-2">Status</th>
-              <th className="px-3 py-2">Created</th>
+              <th className="px-3 py-2">Created (IST)</th>
+              <th className="px-3 py-2">
+                <span className="sr-only">Order</span>
+              </th>
             </tr>
           </thead>
           <tbody>
             {(data ?? []).map((o) => (
               <tr key={o.id} className="border-t border-ink/10">
-                <td className="px-3 py-2 font-mono">
-                  <Link className="underline" href={`/admin/orders/${o.id}`}>
-                    {o.id.slice(0, 8)}
-                  </Link>
-                </td>
                 <td className="px-3 py-2">{(o.profiles as { email?: string } | null)?.email ?? <em className="text-ink-soft">deleted account</em>}</td>
                 <td className="px-3 py-2">{o.template_key === "lovestory" ? "Love story" : o.template_key === "wedding" ? "Wedding invitation" : o.template_key === "doyouloveme" ? "Do You Love Me?" : "Scrapbook"}</td>
                 <td className="px-3 py-2">{formatINR(o.amount_paise)}</td>
                 <td className="px-3 py-2 capitalize">{o.status.replace("_", " ")}</td>
-                <td className="px-3 py-2">{formatDateTime(o.created_at)}</td>
+                <td className="px-3 py-2 whitespace-nowrap">{formatDateTime(o.created_at)}</td>
+                <td className="px-3 py-2 text-right whitespace-nowrap">
+                  <Link className="font-bold text-rose underline" href={`/admin/orders/${o.id}`} aria-label={`Open order ${o.id.slice(0, 8)}`}>
+                    Open order →
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>

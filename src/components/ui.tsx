@@ -60,8 +60,15 @@ export function Notice({ tone = "info", children }: { tone?: "info" | "error" | 
 
 export const formatINR = (paise: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", minimumFractionDigits: paise % 100 ? 2 : 0 }).format(paise / 100);
 
+/**
+ * Dates and times are always shown in India time. Servers (Vercel) run in UTC and browsers in
+ * whatever zone they're in, so without a fixed zone the same timestamp read 5½ hours early on
+ * server-rendered pages (and could differ between server and browser).
+ */
+export const TIME_ZONE = "Asia/Kolkata";
+
 export const formatDate = (iso: string | null | undefined) =>
-  iso ? new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", year: "numeric" }).format(new Date(iso)) : "—";
+  iso ? new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: TIME_ZONE }).format(new Date(iso)) : "—";
 
 export const formatDateTime = (iso: string | null | undefined) =>
-  iso ? new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }).format(new Date(iso)) : "—";
+  iso ? new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit", timeZone: TIME_ZONE }).format(new Date(iso)) : "—";
