@@ -10,7 +10,12 @@ import { CoupleBack, Heart, Skyline } from "@/templates/lovestory/art";
 export function ProductScreen({ art, priority = false }: { art: ArtKind; priority?: boolean }) {
   if (art === "scrapbook") return <Image src="/demo-poster.webp" alt="" fill sizes="(max-width: 640px) 40vw, 200px" priority={priority} unoptimized className="object-cover object-top" />;
   if (art === "wedding") return <Image src="/products/wedding/cover.webp" alt="" fill sizes="(max-width: 640px) 40vw, 200px" priority={priority} unoptimized className="object-cover object-top" />;
-  if (art === "ask") return <AskMini screen={{ kind: "ask", step: 3 }} className="absolute inset-0 text-[8px] sm:text-[9px]" />;
+  if (art === "ask")
+    return (
+      <span className="absolute inset-0 block">
+        <AskMini screen={{ kind: "ask", step: 3 }} className="size-full text-[8px] sm:text-[9px]" />
+      </span>
+    );
   return (
     <span className="absolute inset-0 overflow-hidden text-white">
       <span className="absolute inset-0 bg-[linear-gradient(180deg,#0d0b2a_0%,#3a1440_55%,#5c0f22_100%)]" />
