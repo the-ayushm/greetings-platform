@@ -6,6 +6,8 @@ import { newSiteContent as newWedding } from "./wedding/defaults";
 import * as wedding from "./wedding/schema";
 import { newSiteContent as newAsk } from "./doyouloveme/defaults";
 import * as ask from "./doyouloveme/schema";
+import { newSiteContent as newVivah } from "./vivah/defaults";
+import * as vivah from "./vivah/schema";
 
 /**
  * Every sellable template, keyed by `templates.key` / `sites.template_key`. Server code (drafts,
@@ -21,7 +23,7 @@ export type TemplateDef = {
   key: TemplateKey;
   schemaVersion: number;
   /** Recipient URL path prefix on the renderer origin. */
-  path: "birthday" | "love" | "wedding" | "ask";
+  path: "birthday" | "love" | "wedding" | "ask" | "vivah";
   /** Preview route (app origin) used by the editor iframe. */
   previewPath: (siteId: string) => string;
   /** Live (pending + ready) files a single site may hold. */
@@ -102,9 +104,26 @@ export const TEMPLATES = {
     recipientName: (d: unknown) => str((d as { people?: { partnerName?: unknown } } | null)?.people?.partnerName),
     shareText: "I have a little question for you ♡",
   },
+  vivah: {
+    key: "vivah",
+    schemaVersion: vivah.SCHEMA_VERSION,
+    path: "vivah",
+    previewPath: (id: string) => `/preview/vivah/${id}`,
+    limits: { image: 30, audio: 3 },
+    parseDraft: wrap(vivah.draftContentSchema),
+    parsePublish: wrap(vivah.publishContentSchema),
+    refs: (c: object) => vivah.referencedAssets(c as vivah.VivahContent),
+    newContent: newVivah,
+    recipientName: (d: unknown) => {
+      const c = (d as { couple?: { lead?: unknown; groom?: { first?: unknown }; bride?: { first?: unknown } } } | null)?.couple;
+      const names = [str(c?.groom?.first), str(c?.bride?.first)];
+      return (c?.lead === "bride" ? names.reverse() : names).filter(Boolean).join(" & ");
+    },
+    shareText: "You're invited to our wedding 🙏 Tap to open your invitation ♡",
+  },
 } satisfies Record<string, TemplateDef & { key: string }>;
 
-export type TemplateKey = "scrapbook" | "lovestory" | "wedding" | "doyouloveme";
+export type TemplateKey = "scrapbook" | "lovestory" | "wedding" | "doyouloveme" | "vivah";
 
 export function isTemplateKey(k: string): k is TemplateKey {
   return Object.hasOwn(TEMPLATES, k);

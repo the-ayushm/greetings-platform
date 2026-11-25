@@ -6,6 +6,7 @@ import { Phone } from "@/components/store/ProductArt";
 import { ProductCard } from "@/components/store/ProductCard";
 import { SectionHeading } from "@/components/store/SectionHeading";
 import { StoreSearch } from "@/components/store/StoreSearch";
+import { Spotlight } from "@/components/store/Spotlight";
 import { Testimonials } from "@/components/store/Testimonials";
 import { CATEGORIES, filterProducts, REVIEWS } from "@/lib/store";
 import { listStoreProducts } from "@/server/catalog";
@@ -53,9 +54,15 @@ const FAQ = [
   { q: "How long does my website remain active?", a: "Each gift stays live for the period shown on its product page (for example, one year). You can unpublish or delete it any time before that." },
 ];
 
+/** The product the homepage leads with (shown first everywhere on this page while it's on sale). */
+const SPOTLIGHT = "vivah";
+
 export default async function Home() {
   const products = await listStoreProducts();
-  const collection = filterProducts(products, { sort: "featured" });
+  const spotlight = products.find((p) => p.templateKey === SPOTLIGHT) ?? null;
+  const sorted = filterProducts(products, { sort: "featured" });
+  // The spotlight product leads the collection, the hero phones and the demo tabs too.
+  const collection = spotlight ? [spotlight, ...sorted.filter((p) => p !== spotlight)] : sorted;
   const trending = collection.filter((p) => p.featured);
   const categories = CATEGORIES.map((c) => ({ c, items: products.filter((p) => p.meta.categories.includes(c.id)) })).filter((x) => x.items.length > 0);
   const demos: DemoItem[] = collection.map((p) => ({ key: p.templateKey, label: p.meta.label, name: p.name, tagline: p.meta.tagline, highlights: p.meta.highlights, demo: p.meta.demo, href: p.meta.href, art: p.meta.art }));
@@ -65,6 +72,9 @@ export default async function Home() {
   return (
     <main>
       <RecoveryRedirect />
+
+      {/* ★ — spotlight (the product we lead with) */}
+      {spotlight && <Spotlight p={spotlight} />}
 
       {/* A — hero */}
       <section className="store-glow relative overflow-hidden" aria-labelledby="hero">

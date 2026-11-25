@@ -1,0 +1,19479 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([
+  "object" == typeof document ? document.currentScript : void 0,
+  49437,
+  99901,
+  63506,
+  8848,
+  87942,
+  52973,
+  72977,
+  47517,
+  (e) => {
+    "use strict";
+    let t,
+      a,
+      s,
+      i,
+      n,
+      l,
+      r = [
+        {
+          id: "scratch",
+          name: "Scratch to reveal the date",
+          note: "Guests scratch a foil to see the date, with a flower shower.",
+        },
+        {
+          id: "countdown",
+          name: "Countdown",
+          note: "Days, hours and minutes to the wedding.",
+        },
+        {
+          id: "gallery",
+          name: "Our moments",
+          note: "Your photos as polaroids guests can swipe through.",
+        },
+        {
+          id: "rsvp",
+          name: "RSVP",
+          note: "Guests reply on WhatsApp with their name and headcount.",
+        },
+        {
+          id: "laavan",
+          name: "The Four Laavan",
+          note: "The four laavan of Anand Karaj in Gurmukhi, with their meaning.",
+          only: ["sarovar"],
+        },
+      ],
+      c = (e, t) => !e.hide?.includes(t),
+      o = [
+        {
+          id: "romantic",
+          name: "Romantic",
+          note: "Fine calligraphy",
+          script: "var(--font-pinyon), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-marcellus), serif",
+        },
+        {
+          id: "graceful",
+          name: "Graceful",
+          note: "Flowing calligraphy, easy to read",
+          script: "var(--font-great-vibes), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-cinzel), serif",
+        },
+        {
+          id: "brush",
+          name: "Brush script",
+          note: "Hand-lettered and lively",
+          script: "var(--font-alex-brush), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-cinzel), serif",
+        },
+        {
+          id: "royal",
+          name: "Royal",
+          note: "Carved capitals, like a palace card",
+          script: "var(--font-cinzel), serif",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-cinzel), serif",
+        },
+        {
+          id: "modern",
+          name: "Modern",
+          note: "Light, tall and minimal",
+          script: "var(--font-italiana), serif",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-manrope), sans-serif",
+        },
+        {
+          id: "festive",
+          name: "Festive",
+          note: "Bold and celebratory",
+          script: "var(--font-rozha), serif",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-marcellus), serif",
+        },
+        {
+          id: "playful",
+          name: "Playful",
+          note: "Friendly handwriting",
+          script: "var(--font-dancing), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-manrope), sans-serif",
+        },
+      ],
+      d = (e) => o.find((t) => t.id === e),
+      x = {
+        pinyon: "Pinyon Script",
+        "great-vibes": "Great Vibes",
+        parisienne: "Parisienne",
+        rozha: "Rozha One",
+      };
+    e.s(
+      [
+        "x",
+        0,
+        o,
+        "l",
+        0,
+        function (e, t) {
+          let a = d(e);
+          return a
+            ? {
+                "--inv-script": a.script,
+                "--inv-serif": a.serif,
+                "--inv-label": a.label,
+                ...("string" == typeof t ? { "--inv-script-own": t } : {}),
+              }
+            : {};
+        },
+        "p",
+        0,
+        d,
+        "w",
+        0,
+        (e) => "string" == typeof e && e in x,
+        "X",
+        0,
+        (e) => r.filter((t) => !("only" in t) || t.only.includes(e)),
+        "A",
+        0,
+        c,
+      ],
+      49437,
+    );
+    var f = e.i(71645);
+    let m = null;
+    function p(e, t, a) {
+      if (!(m ??= document.createElement("canvas").getContext("2d"))) return 0;
+      let s = getComputedStyle(e);
+      return (
+        (m.font = `${s.fontStyle} ${s.fontWeight} ${s.fontSize} ${a ?? s.fontFamily}`),
+        m.measureText(t).width
+      );
+    }
+    let h = new Set();
+    function w(e, t) {
+      let a = 1 / 0;
+      for (let s = e; s && s !== t.parentElement; s = s.parentElement) {
+        if (!s.clientWidth) continue;
+        let e = getComputedStyle(s);
+        a = Math.min(
+          a,
+          s.clientWidth -
+            parseFloat(e.paddingLeft) -
+            parseFloat(e.paddingRight),
+        );
+      }
+      return a;
+    }
+    e.s(
+      [
+        "f",
+        0,
+        function (e, t) {
+          (0, f.useEffect)(() => {
+            let t = e.current;
+            if (!t) return;
+            let a = 0,
+              s = () => {
+                cancelAnimationFrame(a),
+                  (a = requestAnimationFrame(() => {
+                    !(function e(t) {
+                      t
+                        .querySelectorAll(".inv-label, .inv-script")
+                        .forEach((e) =>
+                          e.toggleAttribute(
+                            "data-deva",
+                            /[\u0900-\u097F]/.test(e.textContent ?? ""),
+                          ),
+                        ),
+                        t.querySelectorAll(".inv-script").forEach((a) => {
+                          (a.dataset.fitBase ??= a.style.fontSize),
+                            (a.style.fontSize = a.dataset.fitBase);
+                          let s = a.querySelector("[data-fit-aside]"),
+                            i = (
+                              s
+                                ? a.textContent?.replace(
+                                    s.textContent ?? "",
+                                    "",
+                                  )
+                                : a.textContent
+                            )?.trim();
+                          if (!i) return;
+                          let n = getComputedStyle(a)
+                            .getPropertyValue("--inv-script-own")
+                            .trim();
+                          if (
+                            n &&
+                            a.closest("[lang]")?.getAttribute("lang") !== "hi"
+                          ) {
+                            let s = n.replace(/var\((--[\w-]+)\)/g, (e, t) =>
+                              getComputedStyle(a).getPropertyValue(t).trim(),
+                            );
+                            !h.has(s) &&
+                              document.fonts &&
+                              (h.add(s),
+                              document.fonts.load(`16px ${s}`).then(
+                                () => e(t),
+                                () => {},
+                              ));
+                            let l = p(a, i) / p(a, i, s);
+                            l > 1.02 &&
+                              (a.style.fontSize = `${parseFloat(getComputedStyle(a).fontSize) / l ** 1.5}px`);
+                          }
+                          let l = Math.max(
+                              ...(getComputedStyle(a).whiteSpace.includes(
+                                "nowrap",
+                              )
+                                ? [i]
+                                : i.split(/\s+/)
+                              ).map((e) => p(a, e)),
+                            ),
+                            r = s
+                              ? Math.max(w(a, t), a.clientWidth) -
+                                s.offsetWidth -
+                                parseFloat(getComputedStyle(s).marginLeft)
+                              : w(a, t);
+                          l > r &&
+                            r > 0 &&
+                            (a.style.fontSize = `${(parseFloat(getComputedStyle(a).fontSize) * r * 0.96) / l}px`);
+                        });
+                    })(t),
+                      t.querySelectorAll("[data-fit-line]").forEach((e) => {
+                        e.style.fontSize = "";
+                        let t = e.clientWidth,
+                          a = e.scrollWidth;
+                        t > 0 &&
+                          a > t &&
+                          (e.style.fontSize = `${((t / a) * 0.98).toFixed(4)}em`);
+                      });
+                  }));
+              };
+            s(), document.fonts?.ready.then(s);
+            let i = new ResizeObserver(s);
+            return (
+              i.observe(t),
+              () => {
+                cancelAnimationFrame(a), i.disconnect();
+              }
+            );
+          }, t);
+        },
+      ],
+      99901,
+    );
+    let u = (0, f.createContext)(!0),
+      g = () => (0, f.useContext)(u),
+      b = (0, f.createContext)(!1),
+      j = () => (0, f.useContext)(b),
+      y = "240px",
+      q = "(max-width: 480px) 100vw, 480px";
+    e.s(
+      ["a", 0, q, "j", 0, u, "X", 0, y, "r", 0, b, "E", 0, g, "k", 0, j],
+      63506,
+    );
+    var v = e.i(43476),
+      N = e.i(9442),
+      k = e.i(22016),
+      $ = e.i(46932);
+    let C = (e, t = 1.6) => ({
+      initial: { pathLength: 0, opacity: 0 },
+      whileInView: { pathLength: 1, opacity: 1 },
+      viewport: { once: !0, amount: 0.3 },
+      transition: {
+        pathLength: { delay: e, duration: t, ease: [0.65, 0, 0.35, 1] },
+        opacity: { delay: e, duration: 0.2 },
+      },
+    });
+    function M({ className: e, color: t = "#c0502a", flame: a = "#e8973a" }) {
+      return (0, v.jsx)("svg", {
+        viewBox: "0 0 200 200",
+        className: e,
+        "aria-hidden": !0,
+        children: (0, v.jsxs)("g", {
+          fill: "none",
+          stroke: t,
+          strokeWidth: 1.4,
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          children: [
+            (0, v.jsx)($.f.path, { d: "M36 146 H164 V154 H36 Z", ...C(0.1) }),
+            (0, v.jsx)($.f.path, { d: "M46 154 H154 V163 H46 Z", ...C(0.3) }),
+            (0, v.jsx)($.f.path, { d: "M56 163 H144 V172 H56 Z", ...C(0.5) }),
+            (0, v.jsx)($.f.path, {
+              d: "M40 150 H160 M50 158.5 H150 M60 167.5 H140",
+              strokeOpacity: 0.35,
+              ...C(0.6),
+            }),
+            (0, v.jsx)($.f.path, {
+              d: "M62 146 L132 120 M138 146 L68 120 M80 146 L120 124",
+              ...C(0.8),
+            }),
+            (0, v.jsx)($.f.path, {
+              d: "M100 34 C112 56 136 70 132 100 C130 120 116 134 100 136 C84 134 70 120 68 100 C66 82 80 74 84 58 C90 72 96 74 98 66 C100 56 96 46 100 34 Z",
+              ...C(1.1, 2.2),
+            }),
+            (0, v.jsx)($.f.path, {
+              d: "M100 70 C106 84 120 92 116 110 C114 122 108 128 100 129 C92 128 86 122 84 110 C82 98 92 94 94 84 C97 90 100 88 100 82 Z",
+              fill: a,
+              initial: { pathLength: 0, fillOpacity: 0 },
+              whileInView: { pathLength: 1, fillOpacity: 0.28 },
+              viewport: { once: !0, amount: 0.3 },
+              transition: {
+                pathLength: { delay: 1.6, duration: 1.8 },
+                fillOpacity: { delay: 2.8, duration: 1.2 },
+              },
+            }),
+            (0, v.jsx)($.f.path, {
+              d: "M100 100 C104 108 106 114 100 122 C94 114 96 108 100 100 Z",
+              stroke: a,
+              ...C(2.2, 1),
+            }),
+            (0, v.jsx)($.f.path, {
+              d: "M60 112 C56 100 62 92 66 88 M140 112 C144 100 138 92 134 88",
+              ...C(2, 1.2),
+            }),
+            [
+              [78, 40],
+              [124, 46],
+              [110, 22],
+              [88, 18],
+            ].map(([e, t], s) =>
+              (0, v.jsx)(
+                $.f.circle,
+                {
+                  cx: e,
+                  cy: t,
+                  r: 1.6,
+                  fill: a,
+                  stroke: "none",
+                  animate: { y: [0, -14, 0], opacity: [0, 1, 0] },
+                  transition: {
+                    duration: 3 + 0.6 * s,
+                    repeat: 1 / 0,
+                    delay: 2.5 + 0.7 * s,
+                    ease: "easeInOut",
+                  },
+                },
+                s,
+              ),
+            ),
+          ],
+        }),
+      });
+    }
+    function S({ className: e, color: t = "#c0502a", children: a }) {
+      let s = Array.from({ length: 7 }, (e, t) => 56 + 7 * t);
+      return (0, v.jsxs)("div", {
+        className: `relative ${e ?? ""}`,
+        children: [
+          (0, v.jsxs)("svg", {
+            viewBox: "-110 -110 220 220",
+            className: "absolute inset-0 h-full w-full",
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)("g", {
+                fill: "none",
+                stroke: t,
+                strokeLinecap: "round",
+                children: s.map((e, t) =>
+                  (0, v.jsx)(
+                    $.f.circle,
+                    {
+                      r: e,
+                      strokeWidth: 6 === t ? 1.2 : 0.7,
+                      strokeOpacity: 0.25 + 0.1 * t,
+                      strokeDasharray: t % 2 ? "1 4" : void 0,
+                      transform: "rotate(-90)",
+                      initial: { pathLength: 0 },
+                      whileInView: { pathLength: 1 },
+                      viewport: { once: !0 },
+                      transition: {
+                        delay: 0.3 + 0.22 * t,
+                        duration: 1.4,
+                        ease: [0.65, 0, 0.35, 1],
+                      },
+                    },
+                    e,
+                  ),
+                ),
+              }),
+              (0, v.jsx)($.f.g, {
+                animate: { rotate: 360 },
+                transition: { duration: 28, repeat: 1 / 0, ease: "linear" },
+                children: (0, v.jsx)("circle", {
+                  cx: 0,
+                  cy: -98,
+                  r: 3,
+                  fill: t,
+                }),
+              }),
+              (0, v.jsx)($.f.g, {
+                animate: { rotate: -360 },
+                transition: { duration: 40, repeat: 1 / 0, ease: "linear" },
+                children: (0, v.jsx)("circle", {
+                  cx: 0,
+                  cy: 77,
+                  r: 2,
+                  fill: "#e8973a",
+                }),
+              }),
+            ],
+          }),
+          (0, v.jsx)("div", { className: "relative", children: a }),
+        ],
+      });
+    }
+    let _ = {
+      engagement: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("circle", { cx: "19", cy: "28", r: "10" }),
+          (0, v.jsx)("circle", { cx: "29", cy: "28", r: "10" }),
+          (0, v.jsx)("path", { d: "M17 18 L19 13 L21 18" }),
+          (0, v.jsx)("path", { d: "M16 13 H22" }),
+        ],
+      }),
+      haldi: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", {
+            d: "M8 24 H40 C40 33 33 39 24 39 C15 39 8 33 8 24 Z",
+          }),
+          (0, v.jsx)("path", {
+            d: "M14 24 C16 19 20 17 24 17 C28 17 32 19 34 24",
+          }),
+          (0, v.jsx)("circle", { cx: "20", cy: "21", r: "1.4" }),
+          (0, v.jsx)("circle", { cx: "27", cy: "20", r: "1.4" }),
+          (0, v.jsx)("path", { d: "M30 14 L38 6 M36 16 L42 12" }),
+          (0, v.jsx)("path", { d: "M17 43 H31" }),
+        ],
+      }),
+      mehndi: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", {
+            d: "M24 42 C14 42 8 35 8 27 C8 17 17 10 27 10 C34 10 40 15 40 21 C40 26 36 29 31 29 C27 29 24 26 25 22",
+          }),
+          (0, v.jsx)("path", { d: "M18 31 C20 26 24 25 27 26" }),
+          (0, v.jsx)("circle", { cx: "31", cy: "20", r: "1.6" }),
+          (0, v.jsx)("path", {
+            d: "M14 22 C15 19 17 17 20 16",
+            strokeDasharray: "1 3",
+          }),
+        ],
+      }),
+      sangeet: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("ellipse", { cx: "12", cy: "24", rx: "5", ry: "10" }),
+          (0, v.jsx)("ellipse", { cx: "36", cy: "24", rx: "5", ry: "10" }),
+          (0, v.jsx)("path", {
+            d: "M12 14 C20 11 28 11 36 14 M12 34 C20 37 28 37 36 34",
+          }),
+          (0, v.jsx)("path", {
+            d: "M16 15 L32 33 M32 15 L16 33",
+            strokeOpacity: 0.6,
+          }),
+        ],
+      }),
+      baraat: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", { d: "M6 22 L30 16 L30 32 L6 26 Z" }),
+          (0, v.jsx)("path", {
+            d: "M30 16 C36 12 42 14 42 24 C42 34 36 36 30 32",
+          }),
+          (0, v.jsx)("path", {
+            d: "M10 22 V26 M16 20.6 V27.4 M22 19.2 V28.8",
+            strokeOpacity: 0.6,
+          }),
+          (0, v.jsx)("path", { d: "M2 24 H6" }),
+        ],
+      }),
+      phere: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", {
+            d: "M24 6 C28 13 34 17 33 25 C32 31 28 34 24 34 C20 34 16 31 15 25 C14 19 19 17 20 12 C22 16 24 16 24 13 Z",
+          }),
+          (0, v.jsx)("path", {
+            d: "M24 22 C26 25 26 28 24 31 C22 28 22 25 24 22 Z",
+          }),
+          (0, v.jsx)("path", { d: "M8 38 H40 M12 42 H36" }),
+          (0, v.jsx)("path", { d: "M14 38 L22 34 M34 38 L26 34" }),
+        ],
+      }),
+      reception: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", {
+            d: "M14 8 H22 L21 18 C20.5 21 19.5 22 18 22 C16.5 22 15.5 21 15 18 Z",
+          }),
+          (0, v.jsx)("path", {
+            d: "M26 8 H34 L33 18 C32.5 21 31.5 22 30 22 C28.5 22 27.5 21 27 18 Z",
+          }),
+          (0, v.jsx)("path", {
+            d: "M18 22 V38 M30 22 V38 M13 38 H23 M25 38 H35",
+          }),
+          (0, v.jsx)("path", { d: "M24 4 L24 7 M19 3 L20 5 M29 3 L28 5" }),
+        ],
+      }),
+      nikah: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("circle", { cx: "18", cy: "28", r: "10" }),
+          (0, v.jsx)("circle", { cx: "30", cy: "28", r: "10" }),
+          (0, v.jsx)("path", {
+            d: "M28 8 C22 9 19 14 20 19 C24 15 30 14 34 16 C33 11 31 9 28 8 Z",
+          }),
+          (0, v.jsx)("path", {
+            d: "M36 6 l1 2.2 2.2 .6 -2.2 .6 -1 2.2 -1 -2.2 -2.2 -.6 2.2 -.6 Z",
+          }),
+        ],
+      }),
+      walima: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", {
+            d: "M8 32 C8 22 15 15 24 15 C33 15 40 22 40 32 Z",
+          }),
+          (0, v.jsx)("path", { d: "M5 32 H43 M24 15 V11 M21 11 H27" }),
+          (0, v.jsx)("path", { d: "M12 38 H36" }),
+          (0, v.jsx)("path", {
+            d: "M16 26 C17 22 20 20 23 19",
+            strokeOpacity: 0.6,
+          }),
+        ],
+      }),
+      jaggo: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", {
+            d: "M14 22 C14 32 18 40 24 40 C30 40 34 32 34 22 Z",
+          }),
+          (0, v.jsx)("path", { d: "M12 22 H36" }),
+          (0, v.jsx)("path", {
+            d: "M17 18 C18 15 18 13 17 11 M24 17 C25 13 25 10 24 7 M31 18 C30 15 30 13 31 11",
+          }),
+          (0, v.jsx)("path", {
+            d: "M18 28 L22 32 L26 28 L30 32",
+            strokeOpacity: 0.6,
+          }),
+        ],
+      }),
+      anandkaraj: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", { d: "M12 40 V24 H36 V40" }),
+          (0, v.jsx)("path", {
+            d: "M14 24 C14 16 19 11 24 11 C29 11 34 16 34 24",
+          }),
+          (0, v.jsx)("path", { d: "M24 11 V6 M22 7 H26" }),
+          (0, v.jsx)("path", {
+            d: "M21 40 V32 C21 30 22.5 29 24 29 C25.5 29 27 30 27 32 V40",
+          }),
+          (0, v.jsx)("path", { d: "M8 40 H40" }),
+        ],
+      }),
+      muhurtham: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", {
+            d: "M16 22 C12 26 12 34 16 38 H32 C36 34 36 26 32 22 Z",
+          }),
+          (0, v.jsx)("path", { d: "M18 22 H30" }),
+          (0, v.jsx)("circle", { cx: "24", cy: "15", r: "5" }),
+          (0, v.jsx)("path", {
+            d: "M19 16 C14 13 10 14 8 17 M29 16 C34 13 38 14 40 17",
+          }),
+          (0, v.jsx)("path", { d: "M18 30 H30", strokeOpacity: 0.6 }),
+        ],
+      }),
+      other: (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("path", {
+            d: "M10 30 C10 37 16 41 24 41 C32 41 38 37 38 30 Z",
+          }),
+          (0, v.jsx)("path", {
+            d: "M24 30 C20 26 20 21 24 15 C28 21 28 26 24 30 Z",
+          }),
+          (0, v.jsx)("path", { d: "M24 6 V9 M15 10 L17 12 M33 10 L31 12" }),
+          (0, v.jsx)("path", { d: "M18 45 H30" }),
+        ],
+      }),
+    };
+    function z({ kind: e, className: t }) {
+      return (0, v.jsx)("svg", {
+        viewBox: "0 0 48 48",
+        className: t,
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: 1.6,
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
+        "aria-hidden": !0,
+        children: _[e],
+      });
+    }
+    var F = e.i(9754),
+      T = e.i(75379),
+      B = e.i(50125),
+      L = e.i(67766);
+    let O = "#c0502a",
+      W = [0.22, 1, 0.36, 1],
+      I = (e) =>
+        (0, T.s)(e, {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+        }).replace(/\//g, ".");
+    function H({ kicker: e, children: t }) {
+      return (0, v.jsxs)("div", {
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className:
+                "text-[2.4cqw] font-semibold tracking-[0.3em] text-[#c0502a] uppercase",
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className: "inv-script mt-[2cqw] text-[12cqw] leading-none",
+            children: t,
+          }),
+        ],
+      });
+    }
+    let D = {
+      id: "agni",
+      tapHint: "tapCircle",
+      root: "bg-[#f5ede1] text-[#2a1c15]",
+      vars: {
+        "--inv-script": "var(--font-bodoni), serif",
+        "--inv-serif": "var(--font-bodoni), serif",
+        "--inv-label": "var(--font-manrope), sans-serif",
+      },
+      accent: O,
+      ui: {
+        section: "relative px-[8cqw] py-[14cqw]",
+        card: "rounded-[2cqw] border border-[#2a1c15]/15 bg-[#fbf6ee]",
+        input:
+          "w-full rounded-[1.5cqw] border border-[#2a1c15]/20 bg-transparent px-[4cqw] py-[3cqw] text-[3.8cqw] text-[#2a1c15] placeholder:text-[#2a1c15]/35 outline-none focus:border-[#c0502a]",
+        chip: "rounded-full border border-[#2a1c15]/25 text-[#2a1c15]/80 transition",
+        chipOn:
+          "rounded-full border border-[#2a1c15] bg-[#2a1c15] text-[#f5ede1] transition",
+        button:
+          "inline-flex items-center gap-[1.5cqw] rounded-full bg-[#c0502a] px-[5cqw] py-[2.6cqw] text-[3.4cqw] font-semibold text-[#f5ede1] active:scale-95 transition",
+        ghost:
+          "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#2a1c15]/40 px-[5cqw] py-[2.6cqw] text-[3.4cqw] active:scale-95 transition",
+        muted: "text-[#2a1c15]/60",
+        tile: "rounded-[2cqw] border border-[#2a1c15]/15 bg-[#fbf6ee] text-[#2a1c15]",
+      },
+      Opening: function ({ invite: e, opened: t, onOpen: a }) {
+        let [s, i] = (0, L.g)(e);
+        return (0, v.jsxs)($.f.div, {
+          className: "grain absolute inset-0 overflow-hidden bg-[#f5ede1]",
+          style: { pointerEvents: t ? "none" : "auto" },
+          animate: { opacity: +!t },
+          transition: { delay: 1.1 * !!t, duration: 0.6 },
+          children: [
+            (0, v.jsxs)("div", {
+              className:
+                "absolute inset-x-[8cqw] top-[12cqw] flex justify-between text-[2.4cqw] font-semibold tracking-[0.3em] text-[#2a1c15]/60 uppercase",
+              children: [
+                (0, v.jsx)("span", { children: "Vivah" }),
+                !e.hideHeroDate && (0, v.jsx)("span", { children: I(e.date) }),
+              ],
+            }),
+            (0, v.jsxs)($.f.div, {
+              className: "absolute inset-x-0 top-[26%] text-center",
+              animate: { opacity: +!t, y: t ? -16 : 0 },
+              transition: { duration: 0.4 },
+              children: [
+                (0, v.jsxs)("p", {
+                  className:
+                    "inv-script text-[11cqw] leading-none text-[#2a1c15]",
+                  children: [
+                    s.first,
+                    " ",
+                    (0, v.jsx)("span", {
+                      className: "text-[#c0502a]",
+                      children: e.joiner ?? "&",
+                    }),
+                    " ",
+                    i.first,
+                  ],
+                }),
+                (0, v.jsx)("p", {
+                  className:
+                    "mt-[3cqw] text-[2.6cqw] tracking-[0.3em] text-[#2a1c15]/60 uppercase",
+                  children: "invite you",
+                }),
+              ],
+            }),
+            (0, v.jsxs)("button", {
+              onClick: a,
+              "aria-label": "Open invitation",
+              className:
+                "absolute top-[56%] left-1/2 size-[40cqw] -translate-x-1/2 -translate-y-1/2",
+              children: [
+                (0, v.jsx)($.f.span, {
+                  className: "absolute inset-0 rounded-full bg-[#c0502a]",
+                  animate: t ? { scale: 7 } : { scale: [1, 1.04, 1] },
+                  transition: t
+                    ? { duration: 1.1, ease: [0.7, 0, 0.3, 1] }
+                    : { duration: 2.6, repeat: 1 / 0, ease: "easeInOut" },
+                }),
+                (0, v.jsx)($.f.span, {
+                  className:
+                    "absolute inset-[-4cqw] rounded-full border border-[#c0502a]/40",
+                  animate: { rotate: 360 },
+                  transition: { duration: 30, repeat: 1 / 0, ease: "linear" },
+                  style: { borderStyle: "dashed" },
+                }),
+                (0, v.jsx)($.f.span, {
+                  className:
+                    "relative flex h-full flex-col items-center justify-center text-[#f5ede1]",
+                  animate: { opacity: +!t },
+                  children: (0, v.jsx)("span", {
+                    className: "inv-deva text-[7cqw] leading-none",
+                    children: "ॐ",
+                  }),
+                }),
+              ],
+            }),
+            (0, v.jsxs)("div", {
+              className:
+                "absolute inset-x-[8cqw] bottom-[12cqw] flex justify-between text-[2.4cqw] tracking-[0.3em] text-[#2a1c15]/50 uppercase",
+              children: [
+                (0, v.jsx)("span", { children: "Saat Phere" }),
+                !e.hideHeroCity && (0, v.jsx)("span", { children: e.city }),
+              ],
+            }),
+          ],
+        });
+      },
+      Hero: function ({ invite: e }) {
+        let t = g(),
+          [a, s] = (0, L.g)(e),
+          i = (e) => ({
+            initial: { opacity: 0, y: 30 },
+            animate: t ? { opacity: 1, y: 0 } : {},
+            transition: { duration: 1.1, delay: e, ease: W },
+          }),
+          n = [
+            `${a.first} ${e.joiner ?? "&"} ${s.first}`,
+            !e.hideHeroDate &&
+              `${(0, T.v)(e.date)} ${(0, T.D)(e.date)} ${(0, T.X)(e.date)}`,
+            !e.hideHeroCity && e.city,
+            "",
+          ]
+            .filter((e) => !1 !== e)
+            .join(" · "),
+          l = e.heroKicker ?? "Together";
+        return (0, v.jsxs)("section", {
+          className:
+            "relative flex min-h-[var(--screen-h,100dvh)] flex-col overflow-hidden",
+          children: [
+            (0, v.jsxs)($.f.div, {
+              ...i(0.1),
+              className:
+                "flex justify-between px-[8cqw] pt-[12cqw] text-[2.4cqw] font-semibold tracking-[0.3em] text-[#2a1c15]/60 uppercase",
+              children: [
+                (0, v.jsx)("span", {
+                  className:
+                    "inv-deva text-[3.6cqw] tracking-normal text-[#c0502a]",
+                  children: e.invocation,
+                }),
+                (0, v.jsx)("span", { children: e.invocationMeaning }),
+              ],
+            }),
+            (0, v.jsx)("div", {
+              className: "flex flex-1 items-center justify-center px-[6cqw]",
+              children:
+                t &&
+                (0, v.jsx)(S, {
+                  className: "w-[88cqw]",
+                  color: O,
+                  children: (0, v.jsxs)("div", {
+                    className:
+                      "flex aspect-square flex-col items-center justify-center text-center",
+                    children: [
+                      l &&
+                        (0, v.jsx)($.f.p, {
+                          ...i(0.6),
+                          className:
+                            "text-[2.4cqw] font-semibold tracking-[0.3em] text-[#2a1c15]/60 uppercase",
+                          children: l,
+                        }),
+                      (0, v.jsxs)($.f.h1, {
+                        ...i(0.9),
+                        className: "mt-[2cqw] flex flex-col items-center",
+                        children: [
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-script text-[15cqw] leading-[0.95] text-[#2a1c15]",
+                            children: a.first,
+                          }),
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-serif text-[7cqw] leading-none text-[#c0502a] italic",
+                            children: e.joiner ?? "&",
+                          }),
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-script text-[15cqw] leading-[0.95] text-[#2a1c15]",
+                            children: s.first,
+                          }),
+                        ],
+                      }),
+                    ],
+                  }),
+                }),
+            }),
+            !e.hideHeroDate &&
+              (0, v.jsx)($.f.div, {
+                ...i(1.4),
+                className:
+                  "grid grid-cols-3 border-t border-[#2a1c15]/15 text-center",
+                children: [
+                  { k: "Date", v: I(e.date) },
+                  { k: "Day", v: (0, T.e)(e.date).slice(0, 3) },
+                  { k: "Time", v: (0, T.U)(e.date) },
+                ].map((e, t) =>
+                  (0, v.jsxs)(
+                    "div",
+                    {
+                      className: `py-[5cqw] ${t ? "border-l border-[#2a1c15]/15" : ""}`,
+                      children: [
+                        (0, v.jsx)("p", {
+                          className:
+                            "text-[2.2cqw] tracking-[0.3em] text-[#2a1c15]/50 uppercase",
+                          children: e.k,
+                        }),
+                        (0, v.jsx)("p", {
+                          className:
+                            "inv-serif mt-[1cqw] text-[6cqw] leading-none",
+                          children: e.v,
+                        }),
+                      ],
+                    },
+                    e.k,
+                  ),
+                ),
+              }),
+            (0, v.jsx)("div", {
+              className:
+                "overflow-hidden bg-[#2a1c15] py-[2.6cqw] text-[#f5ede1]",
+              children: (0, v.jsx)("div", {
+                className: "flex w-max animate-marquee",
+                children: [0, 1].map((e) =>
+                  (0, v.jsx)(
+                    "span",
+                    {
+                      className:
+                        "inv-serif shrink-0 pr-[2cqw] text-[4cqw] whitespace-nowrap italic",
+                      children: n.repeat(3),
+                    },
+                    e,
+                  ),
+                ),
+              }),
+            }),
+          ],
+        });
+      },
+      Blessing: function ({ invite: e }) {
+        let [t, a] = (0, L.g)(e);
+        return (0, v.jsxs)("section", {
+          className: "relative px-[8cqw] py-[16cqw]",
+          children: [
+            (0, v.jsx)(M, { className: "mx-auto w-[56cqw]" }),
+            (0, v.jsxs)(B.b, {
+              className: "mt-[4cqw] text-center",
+              children: [
+                (0, v.jsx)("p", {
+                  className:
+                    "text-[2.4cqw] font-semibold tracking-[0.3em] text-[#c0502a] uppercase",
+                  children: e.hosts,
+                }),
+                (0, v.jsx)("p", {
+                  className:
+                    "inv-serif mx-auto mt-[4cqw] max-w-[76cqw] text-[6cqw] leading-[1.25]",
+                  children: e.message,
+                }),
+              ],
+            }),
+            (0, v.jsx)("div", {
+              className:
+                "mt-[12cqw] grid grid-cols-2 border-y border-[#2a1c15]/15",
+              children: [t, a].map((t, a) =>
+                (0, v.jsxs)(
+                  B.b,
+                  {
+                    delay: 0.15 * a,
+                    className: `py-[6cqw] ${a ? "border-l border-[#2a1c15]/15 pl-[5cqw]" : "pr-[5cqw]"}`,
+                    children: [
+                      (0, v.jsx)("p", {
+                        className:
+                          "text-[2.2cqw] tracking-[0.3em] text-[#2a1c15]/50 uppercase",
+                        children: t === e.bride ? "The bride" : "The groom",
+                      }),
+                      (0, v.jsx)("p", {
+                        className:
+                          "inv-script mt-[2cqw] text-[10cqw] leading-none",
+                        children: t.first,
+                      }),
+                      (0, v.jsx)("p", {
+                        className: "mt-[2cqw] text-[3.2cqw] font-semibold",
+                        children: t.full,
+                      }),
+                      t.elders &&
+                        !t.eldersBelow &&
+                        (0, v.jsx)("p", {
+                          className:
+                            "mt-[1cqw] text-[3cqw] leading-snug whitespace-pre-line text-[#2a1c15]",
+                          children: t.elders,
+                        }),
+                      (0, v.jsx)("p", {
+                        className:
+                          "mt-[1cqw] text-[3cqw] leading-snug text-[#2a1c15]",
+                        children: t.parents,
+                      }),
+                      t.elders &&
+                        t.eldersBelow &&
+                        (0, v.jsx)("p", {
+                          className:
+                            "mt-[1cqw] text-[3cqw] leading-snug whitespace-pre-line text-[#2a1c15]",
+                          children: t.elders,
+                        }),
+                    ],
+                  },
+                  t === e.bride ? "bride" : "groom",
+                ),
+              ),
+            }),
+          ],
+        });
+      },
+      Events: function ({ invite: e }) {
+        let { t } = (0, N.G)();
+        return (0, v.jsxs)("section", {
+          className: "relative bg-[#efe4d4] px-[8cqw] py-[16cqw]",
+          children: [
+            (0, v.jsx)(B.b, {
+              children: (0, v.jsx)(H, {
+                kicker: e.words?.eventsKicker ?? `${e.events.length} occasions`,
+                children: t.eventsTitle,
+              }),
+            }),
+            (0, v.jsx)("ol", {
+              className: "mt-[10cqw]",
+              children: e.events.map((t, a) =>
+                (0, v.jsx)(
+                  B.b,
+                  {
+                    children: (0, v.jsxs)("li", {
+                      className: "border-t border-[#2a1c15]/20 py-[8cqw]",
+                      children: [
+                        (0, v.jsxs)("div", {
+                          className: "flex items-start justify-between",
+                          children: [
+                            (0, v.jsx)("span", {
+                              className:
+                                "inv-serif text-[16cqw] leading-[0.8] text-transparent [-webkit-text-stroke:1px_#c0502a]",
+                              children: String(a + 1).padStart(2, "0"),
+                            }),
+                            (0, v.jsx)(z, {
+                              kind: t.kind,
+                              className: "size-[11cqw] text-[#c0502a]",
+                            }),
+                          ],
+                        }),
+                        (0, v.jsx)("h3", {
+                          className:
+                            "inv-script mt-[4cqw] text-[11cqw] leading-none",
+                          children: t.name,
+                        }),
+                        t.devanagari &&
+                          (0, v.jsx)("p", {
+                            className:
+                              "inv-deva mt-[1.5cqw] text-[3.6cqw] text-[#c0502a]",
+                            children: t.devanagari,
+                          }),
+                        (0, v.jsxs)("dl", {
+                          className:
+                            "mt-[5cqw] grid grid-cols-[22cqw_1fr] gap-y-[2.5cqw] text-[3.5cqw]",
+                          children: [
+                            (0, v.jsx)("dt", {
+                              className:
+                                "text-[2.3cqw] tracking-[0.25em] text-[#2a1c15]/50 uppercase",
+                              children: "When",
+                            }),
+                            (0, v.jsxs)("dd", {
+                              children: [
+                                (0, T.e)(t.start),
+                                ", ",
+                                (0, T.v)(t.start),
+                                " ",
+                                (0, T.D)(t.start),
+                                !t.noTime &&
+                                  (0, v.jsxs)(v.Fragment, {
+                                    children: [
+                                      " · ",
+                                      t.timeText ?? (0, T.U)(t.start),
+                                    ],
+                                  }),
+                              ],
+                            }),
+                            (0, v.jsx)("dt", {
+                              className:
+                                "text-[2.3cqw] tracking-[0.25em] text-[#2a1c15]/50 uppercase",
+                              children: "Where",
+                            }),
+                            (0, v.jsxs)("dd", {
+                              children: [
+                                (0, v.jsx)("span", {
+                                  className: "font-semibold",
+                                  children: t.venue,
+                                }),
+                                t.address &&
+                                  (0, v.jsxs)(v.Fragment, {
+                                    children: [
+                                      (0, v.jsx)("br", {}),
+                                      (0, v.jsx)("span", {
+                                        className: "text-[#2a1c15]/60",
+                                        children: t.address,
+                                      }),
+                                    ],
+                                  }),
+                              ],
+                            }),
+                            t.dress &&
+                              (0, v.jsxs)(v.Fragment, {
+                                children: [
+                                  (0, v.jsx)("dt", {
+                                    className:
+                                      "text-[2.3cqw] tracking-[0.25em] text-[#2a1c15]/50 uppercase",
+                                    children: "Wear",
+                                  }),
+                                  (0, v.jsx)("dd", { children: t.dress }),
+                                ],
+                              }),
+                            t.note &&
+                              (0, v.jsxs)(v.Fragment, {
+                                children: [
+                                  (0, v.jsx)("dt", {
+                                    className:
+                                      "text-[2.3cqw] tracking-[0.25em] text-[#2a1c15]/50 uppercase",
+                                    children: "Note",
+                                  }),
+                                  (0, v.jsx)("dd", {
+                                    className:
+                                      "inv-serif text-[#c0502a] italic",
+                                    children: t.note,
+                                  }),
+                                ],
+                              }),
+                          ],
+                        }),
+                        (0, v.jsx)("div", {
+                          className: "[&>div]:justify-start",
+                          children: (0, v.jsx)(B.W, {
+                            event: t,
+                            invite: e,
+                            theme: D,
+                          }),
+                        }),
+                      ],
+                    }),
+                  },
+                  t.name,
+                ),
+              ),
+            }),
+          ],
+        });
+      },
+      Closing: function ({ invite: e }) {
+        let [t, a] = (0, L.g)(e);
+        return (0, v.jsxs)("section", {
+          className:
+            "relative overflow-hidden bg-[#c0502a] px-[8cqw] pt-[18cqw] pb-[24cqw] text-center text-[#f5ede1]",
+          children: [
+            (0, v.jsx)("div", {
+              className:
+                "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+              children: Array.from({ length: 7 }, (e, t) =>
+                (0, v.jsx)(
+                  "span",
+                  {
+                    className:
+                      "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#f5ede1]/15",
+                    style: {
+                      width: `${40 + 14 * t}cqw`,
+                      height: `${40 + 14 * t}cqw`,
+                    },
+                  },
+                  t,
+                ),
+              ),
+            }),
+            (0, v.jsxs)(B.b, {
+              className: "relative",
+              children: [
+                (0, v.jsx)("p", {
+                  className:
+                    "text-[2.4cqw] font-semibold tracking-[0.3em] uppercase opacity-70",
+                  children: "With love",
+                }),
+                (0, v.jsx)("p", {
+                  className:
+                    "inv-serif mx-auto mt-[5cqw] max-w-[72cqw] text-[7cqw] leading-[1.15]",
+                  children: e.closing,
+                }),
+                (0, v.jsxs)("p", {
+                  className: "inv-script mt-[8cqw] text-[13cqw] leading-none",
+                  children: [t.first, " ", e.joiner ?? "&", " ", a.first],
+                }),
+                (0, v.jsx)("p", {
+                  className:
+                    "mt-[4cqw] text-[2.6cqw] tracking-[0.3em] uppercase opacity-70",
+                  children: e.hosts,
+                }),
+                e.extras?.map((e, t) =>
+                  (0, v.jsxs)(
+                    "div",
+                    {
+                      className: "mt-[8cqw]",
+                      children: [
+                        (0, v.jsx)("p", {
+                          className:
+                            "text-[2.4cqw] font-semibold tracking-[0.3em] uppercase opacity-70",
+                          children: e.title,
+                        }),
+                        (0, v.jsx)("div", {
+                          className: "mt-[2cqw] space-y-[1cqw]",
+                          children: e.lines.map((e, t) =>
+                            (0, v.jsx)(
+                              "p",
+                              {
+                                className: "inv-serif text-[4cqw] leading-snug",
+                                children: e,
+                              },
+                              t,
+                            ),
+                          ),
+                        }),
+                      ],
+                    },
+                    e.title + t,
+                  ),
+                ),
+              ],
+            }),
+            !e.noBranding &&
+              (0, v.jsxs)(k.default, {
+                href: "/",
+                className:
+                  "absolute inset-x-0 bottom-[6cqw] text-[2.2cqw] tracking-[0.3em] uppercase opacity-50",
+                children: ["Crafted by ", F.B.name],
+              }),
+          ],
+        });
+      },
+      Backdrop: function () {
+        return (0, v.jsx)("div", {
+          className: "grain pointer-events-none absolute inset-0 bg-[#f5ede1]",
+        });
+      },
+      Divider: function ({ className: e }) {
+        return (0, v.jsx)("div", {
+          className: `flex items-center justify-center gap-[2cqw] ${e ?? ""}`,
+          children: Array.from({ length: 7 }, (e, t) =>
+            (0, v.jsx)(
+              "span",
+              {
+                className: "size-[1.6cqw] rounded-full border border-[#c0502a]",
+                style: { background: 3 === t ? O : "transparent" },
+              },
+              t,
+            ),
+          ),
+        });
+      },
+      Title: H,
+    };
+    var R = e.i(98194),
+      A = e.i(60140),
+      E = e.i(30551),
+      P = e.i(86427),
+      G = e.i(65566),
+      Z = e.i(60830),
+      K = e.i(61327),
+      V = e.i(87022),
+      Y = e.i(48940),
+      U = e.i(76959),
+      X = e.i(83920),
+      Q = e.i(25791);
+    let J = () => ({
+        current: 0,
+        offset: [],
+        progress: 0,
+        scrollLength: 0,
+        targetOffset: 0,
+        targetLength: 0,
+        containerLength: 0,
+        velocity: 0,
+      }),
+      ee = () => ({ time: 0, x: J(), y: J() }),
+      et = {
+        x: { length: "Width", position: "Left" },
+        y: { length: "Height", position: "Top" },
+      },
+      ea = new WeakMap(),
+      es = { start: 0, center: 0.5, end: 1 };
+    function ei(e, t, a = 0) {
+      let s = 0;
+      if ((e in es && (e = es[e]), "string" == typeof e)) {
+        let t = parseFloat(e);
+        e.endsWith("px")
+          ? (s = t)
+          : e.endsWith("%")
+            ? (e = t / 100)
+            : e.endsWith("vw")
+              ? (s = (t / 100) * document.documentElement.clientWidth)
+              : e.endsWith("vh")
+                ? (s = (t / 100) * document.documentElement.clientHeight)
+                : (e = t);
+      }
+      return "number" == typeof e && (s = t * e), a + s;
+    }
+    let en = [0, 0];
+    function el(e, t, a, s) {
+      let i = Array.isArray(e) ? e : en,
+        n = 0;
+      return (
+        "number" == typeof e
+          ? (i = [e, e])
+          : "string" == typeof e &&
+            (i = (e = e.trim()).includes(" ")
+              ? e.split(" ")
+              : [e, es[e] ? e : "0"]),
+        (n = ei(i[0], a, s)) - ei(i[1], t)
+      );
+    }
+    let er = [
+      [0, 0],
+      [1, 1],
+    ];
+    var ec = e.i(72846);
+    let eo = new WeakMap(),
+      ed = new WeakMap(),
+      ex = new WeakMap(),
+      ef = new WeakMap(),
+      em = (e) => (e === document.scrollingElement ? window : e);
+    function ep(
+      e,
+      {
+        container: t = document.scrollingElement,
+        trackContentSize: a = !1,
+        ...s
+      } = {},
+    ) {
+      if (!t) return Z.f;
+      let i = ex.get(t);
+      i || ((i = new Set()), ex.set(t, i));
+      let n = (function (e, t, a, s = {}) {
+        let { target: i } = s,
+          n = i || s.offset;
+        return {
+          measure: (t) => {
+            if (n) {
+              for (let e in ((a.time = t.time), et)) {
+                let { offset: s } = a[e];
+                Object.assign(a[e], t[e]), (a[e].offset = s);
+              }
+              if (i && i !== e) {
+                let t = (function (e, t) {
+                    let a = { x: 0, y: 0 },
+                      s = e;
+                    for (; s && s !== t; )
+                      if ((0, ec.f)(s))
+                        (a.x += s.offsetLeft),
+                          (a.y += s.offsetTop),
+                          (s = s.offsetParent);
+                      else if ("svg" === s.tagName) {
+                        let e = s.getBoundingClientRect(),
+                          t = (s = s.parentElement).getBoundingClientRect();
+                        (a.x += e.left - t.left), (a.y += e.top - t.top);
+                      } else if (s instanceof SVGGraphicsElement) {
+                        let { x: e, y: t } = s.getBBox();
+                        (a.x += e), (a.y += t);
+                        let i = null,
+                          n = s.parentNode;
+                        for (; !i; )
+                          "svg" === n.tagName && (i = n), (n = s.parentNode);
+                        s = i;
+                      } else break;
+                    return a;
+                  })(i, e),
+                  s =
+                    "getBBox" in i && "svg" !== i.tagName
+                      ? i.getBBox()
+                      : { width: i.clientWidth, height: i.clientHeight };
+                (a.x.targetOffset = t.x),
+                  (a.y.targetOffset = t.y),
+                  (a.x.targetLength = s.width),
+                  (a.y.targetLength = s.height);
+              }
+              !(function (e, t) {
+                let { offset: a = er, axis: s = "y" } = t,
+                  i = e[s];
+                i.offset.length = 0;
+                let n = a.length;
+                for (let e = 0; e < n; e++)
+                  i.offset[e] = el(
+                    a[e],
+                    i.containerLength,
+                    i.targetLength,
+                    i.targetOffset,
+                  );
+                i.progress = (0, U.f)(
+                  0,
+                  1,
+                  (function (e, t) {
+                    let a = e.length - 1;
+                    if (a < 1) return 0;
+                    let s = e[0] > e[a],
+                      i = (t) => e[s ? a - t : t];
+                    if (e[0] === e[1] && t < i(0)) return +!!s;
+                    let n = 0;
+                    for (; n < a - 1 && t >= i(n + 1); ) n++;
+                    let l = (n + (0, X.f)(i(n), i(n + 1), t)) / a;
+                    return s ? 1 - l : l;
+                  })(i.offset, i.current),
+                );
+              })(a, s);
+            }
+          },
+          notify: (e) => t(n ? a : e),
+        };
+      })(t, e, ee(), s);
+      if ((i.add(n), !eo.has(t))) {
+        let e = ee(),
+          a = () => {
+            var a = Y.f.timestamp;
+            for (let s in et)
+              !(function (e, t, a, s) {
+                let i = a[t],
+                  { length: n, position: l } = et[t],
+                  r = i.current,
+                  c = a.time,
+                  o = e[`scroll${l}`];
+                (i.current = !(function (e, t) {
+                  let a = e === document.scrollingElement,
+                    s = (a && document.body) || e,
+                    i = ea.get(s);
+                  i || ea.set(s, (i = getComputedStyle(s)));
+                  let { writingMode: n, flexDirection: l } = i,
+                    r = ("x" === t) !== /^[vs]/.test(n);
+                  return (
+                    (r
+                      ? ("rtl" === i.direction) != ("sideways-lr" === n)
+                      : n.endsWith("rl")) !==
+                    (!a &&
+                      i.display.includes("flex") &&
+                      (r !== ("c" === l[0]) ? l : i.flexWrap).endsWith(
+                        "reverse",
+                      ))
+                  );
+                })(e, t)
+                  ? o
+                  : -o || 0),
+                  (i.containerLength = e[`client${n}`]),
+                  (i.targetLength = e[`scroll${n}`]),
+                  (i.scrollLength = i.targetLength - i.containerLength),
+                  (i.offset.length = 0),
+                  (i.offset[0] = 0),
+                  (i.offset[1] = i.scrollLength),
+                  (i.progress = (0, U.f)(
+                    0,
+                    1,
+                    (0, X.f)(0, i.scrollLength, i.current),
+                  ));
+                let d = s - c;
+                i.velocity = d > 50 ? 0 : (0, Q.f)(i.current - r, d);
+              })(t, s, e, a);
+            for (let t of ((e.time = a), i)) t.measure(e);
+            V.y.preUpdate(s);
+          },
+          s = () => {
+            for (let t of i) t.notify(e);
+          },
+          n = () => V.y.read(a);
+        eo.set(t, n);
+        let l = em(t);
+        window.addEventListener("resize", n),
+          t !== document.documentElement && ed.set(t, (0, K.f)(t, n)),
+          l.addEventListener("scroll", n),
+          n();
+      }
+      if (a && !ef.has(t)) {
+        let e = eo.get(t),
+          a = { width: t.scrollWidth, height: t.scrollHeight },
+          s = V.y.read(() => {
+            let s = t.scrollWidth,
+              i = t.scrollHeight;
+            (a.width !== s || a.height !== i) &&
+              (e(), (a.width = s), (a.height = i));
+          }, !0);
+        ef.set(t, s);
+      }
+      let l = eo.get(t);
+      return (
+        V.y.read(l, !1, !0),
+        () => {
+          (0, V.Y)(l);
+          let e = ex.get(t);
+          if (!e || (e.delete(n), e.size)) return;
+          ex.delete(t);
+          let a = eo.get(t);
+          eo.delete(t),
+            a &&
+              (em(t).removeEventListener("scroll", a),
+              ed.get(t)?.(),
+              window.removeEventListener("resize", a));
+          let s = ef.get(t);
+          s && ((0, V.Y)(s), ef.delete(t));
+        }
+      );
+    }
+    let eh = new Map(),
+      ew = (e) => {
+        if (/v/u.test(e)) return [];
+        let t = el(e, 0, 0, 0);
+        return [el(e, 0, 1, 0) - t, t - el(e, 1, 0, 0), t];
+      },
+      eu = ([e, t, a]) =>
+        !a &&
+        (0 === t || 1 === t) &&
+        `${t ? "entry" : "exit"}-crossing ${100 * e}%`;
+    function eg(e = er) {
+      if (2 !== e.length) return;
+      let [t, a] = e.map(ew),
+        s = [eu(t), eu(a)],
+        i = a[0] - t[0],
+        n = t[1] - a[1];
+      if (s[0] && s[1] && (i || n))
+        return { points: s, a: i, b: n, cover: !t[0] && 1 === i && 1 === n };
+    }
+    function eb(
+      e,
+      {
+        axis: t = "y",
+        source: a,
+        container: s = document.scrollingElement,
+        ...i
+      } = {},
+    ) {
+      if (!s) return Z.f;
+      let n = { axis: t, container: a || s, ...i };
+      return "function" == typeof e
+        ? ep((a) => e(a[t].progress, a), n)
+        : (function (e, t) {
+            let a,
+              { target: s, container: i, axis: n } = t,
+              l = s && eg(t.offset),
+              r =
+                !("u" < typeof window) &&
+                (s ? (0, E.G)() : (0, E.a)()) &&
+                (s ? !!l : !t.offset),
+              c = new Map(),
+              o = new Set(),
+              d = !1,
+              x = (e, t) => {
+                let [a, s] = l.points;
+                t.effect.updateTiming({
+                  direction: d
+                    ? "normal" === e
+                      ? "reverse"
+                      : "alternate-reverse"
+                    : e,
+                }),
+                  Object.assign(t, {
+                    rangeStart: d ? s : a,
+                    rangeEnd: d ? a : s,
+                  }),
+                  t.play();
+              },
+              f = [
+                e.attachTimeline({
+                  get timeline() {
+                    return r
+                      ? (function ({ container: e, target: t, axis: a }) {
+                          let s = eh.get(e);
+                          s || ((s = new Map()), eh.set(e, s));
+                          let i = t ?? "self",
+                            n = s.get(i);
+                          return (
+                            n || ((n = {}), s.set(i, n)),
+                            n[a] ||
+                              (n[a] = t
+                                ? new ViewTimeline({ subject: t, axis: a })
+                                : new ScrollTimeline({ source: e, axis: a }))
+                          );
+                        })(t)
+                      : void 0;
+                  },
+                  onAttach:
+                    l &&
+                    ((e) => {
+                      let t = e.effect.getTiming().direction;
+                      c.set(e, t), x(t, e);
+                    }),
+                  observe: (e) => (
+                    e.pause(),
+                    o.add(e),
+                    a ||
+                      (a = ep((e) => {
+                        o.forEach((t) => {
+                          t.time = t.iterationDuration * e[n].progress;
+                        });
+                      }, t)),
+                    () => o.delete(e)
+                  ),
+                }),
+              ];
+            if (r && l) {
+              let { a: e, b: t } = l,
+                a = "y" === n ? "clientHeight" : "clientWidth",
+                r = () => {
+                  d !== (d = e * s[a] + t * i[a] < 0) && c.forEach(x);
+                };
+              r(), e * t < 0 && f.push((0, K.f)(r), (0, K.f)([s, i], r));
+            }
+            return () => {
+              f.forEach((e) => e()), a?.();
+            };
+          })(e, n);
+    }
+    var ej = e.i(47414),
+      ey = e.i(74008);
+    let eq = () => ({
+        scrollX: (0, P.o)(0),
+        scrollY: (0, P.o)(0),
+        scrollXProgress: (0, P.o)(0),
+        scrollYProgress: (0, P.o)(0),
+      }),
+      ev = (e) => !!e && !e.current;
+    function eN(e, t, a, s) {
+      return {
+        factory: (i) => {
+          let n,
+            l = () => {
+              ev(a) || ev(s)
+                ? A.t.read(l)
+                : (n = eb(i, {
+                    ...t,
+                    axis: e,
+                    container: a?.current || void 0,
+                    target: s?.current || void 0,
+                  }));
+            };
+          return (
+            A.t.read(l),
+            () => {
+              (0, A.w)(l), n?.();
+            }
+          );
+        },
+        times: [0, 1],
+        keyframes: [0, 1],
+        ease: (e) => e,
+        duration: 1,
+      };
+    }
+    let ek = (0, f.createContext)(null);
+    function e$(e = {}) {
+      let t = (0, f.useContext)(ek);
+      return (function ({ container: e, target: t, ...a } = {}) {
+        var s;
+        let i = (0, ej.f)(eq);
+        (s = a.offset),
+          !("u" < typeof window) &&
+            (t ? (0, E.G)() && !!eg(s) : (0, E.a)() && !s) &&
+            ((i.scrollXProgress.accelerate = eN("x", a, e, t)),
+            (i.scrollYProgress.accelerate = eN("y", a, e, t)));
+        let n = (0, f.useRef)(null),
+          l = (0, f.useRef)(!1),
+          r = (0, f.useCallback)(
+            () => (
+              (n.current = eb(
+                (e, { x: t, y: a }) => {
+                  i.scrollX.set(t.current),
+                    i.scrollXProgress.set(t.progress),
+                    i.scrollY.set(a.current),
+                    i.scrollYProgress.set(a.progress);
+                },
+                {
+                  ...a,
+                  container: e?.current || void 0,
+                  target: t?.current || void 0,
+                },
+              )),
+              () => {
+                n.current?.();
+              }
+            ),
+            [e, t, JSON.stringify(a.offset)],
+          );
+        return (
+          (0, ey.f)(() => {
+            if (((l.current = !1), !(ev(e) || ev(t)))) return r();
+            l.current = !0;
+          }, [r]),
+          (0, f.useEffect)(() => {
+            let a;
+            if (!l.current) return;
+            let s = () => {
+              let s = ev(e),
+                i = ev(t);
+              (0, G.k)(
+                !s,
+                "Container ref is defined but not hydrated",
+                "use-scroll-ref",
+              ),
+                (0, G.k)(
+                  !i,
+                  "Target ref is defined but not hydrated",
+                  "use-scroll-ref",
+                ),
+                s || i || (a = r());
+            };
+            return (
+              A.t.read(s),
+              () => {
+                (0, A.w)(s), a?.();
+              }
+            );
+          }, [r]),
+          i
+        );
+      })(t ? { ...e, container: t } : e);
+    }
+    function eC() {
+      return (0, f.useContext)(ek);
+    }
+    function eM(e) {
+      let t = () => e?.current ?? null;
+      return {
+        y: () => t()?.scrollTop ?? window.scrollY,
+        view: () => t()?.clientHeight ?? window.innerHeight,
+        height: () =>
+          t()?.scrollHeight ?? document.documentElement.scrollHeight,
+        by: (e) => (t() ?? window).scrollBy(e),
+        target: () => t() ?? window,
+      };
+    }
+    e.s(["h", 0, ek, "v", 0, eM, "i", 0, e$, "O", 0, eC], 8848);
+    var eS = e.i(95420);
+    let e_ = [0.22, 1, 0.36, 1],
+      ez = "864 / 1536";
+    function eF({
+      src: e,
+      alt: t = "",
+      pos: a,
+      priority: s,
+      className: i,
+      style: n,
+    }) {
+      let l = j();
+      return (0, v.jsx)(R.default, {
+        src: e,
+        alt: t,
+        fill: !0,
+        priority: s && !l,
+        sizes: l ? y : q,
+        className: `object-cover ${i ?? ""}`,
+        style: { objectPosition: a ?? "50% 50%", ...n },
+      });
+    }
+    let eT = {
+      "akshay-weds-vidhi": {
+        Myra: "wardrobe-myra",
+        "Sagai & Sangeet": "wardrobe-sangeet",
+        Nikashi: "wardrobe-traditional",
+        Pheras: "wardrobe-traditional",
+        Reception: "wardrobe-reception",
+      },
+      "akshay-weds-vidhi-reception": { Reception: "wardrobe-reception" },
+    };
+    function eB(e) {
+      let t = e.colors,
+        a = e.scriptScale ?? 1,
+        s = (e) => ({ fontSize: `${(e * a).toFixed(2)}cqw` });
+      function i({ invite: t, opened: a, onOpen: s, className: n }) {
+        return (0, v.jsxs)($.f.button, {
+          onClick: s,
+          "aria-label": "Open invitation",
+          className: `absolute z-10 grid size-[26cqw] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full ${n}`,
+          animate: { scale: a ? 0.6 : [1, 1.05, 1], opacity: +!a },
+          transition: a
+            ? { duration: 0.3 }
+            : { duration: 2.4, repeat: 1 / 0, ease: "easeInOut" },
+          children: [
+            (0, v.jsx)("span", {
+              className:
+                "absolute inset-0 animate-ping rounded-full bg-[#f3d98a]/30 [animation-duration:2.4s]",
+            }),
+            t.seal && t.sealFull
+              ? (0, v.jsx)("span", {
+                  className:
+                    "absolute -inset-[3cqw] drop-shadow-[0_10px_18px_rgba(0,0,0,.45)]",
+                  children: (0, v.jsx)(R.default, {
+                    src: t.seal,
+                    alt: (0, L.u)(t),
+                    fill: !0,
+                    sizes: "160px",
+                    className: "object-contain",
+                  }),
+                })
+              : (0, v.jsxs)(v.Fragment, {
+                  children: [
+                    (0, v.jsx)("span", {
+                      className:
+                        "absolute inset-0 rounded-full shadow-[0_10px_30px_-6px_rgba(0,0,0,.6)]",
+                      style: {
+                        background:
+                          "radial-gradient(circle at 35% 30%, #f9e7ad, #d9aa4c 50%, #946a1f)",
+                      },
+                    }),
+                    (0, v.jsx)("span", {
+                      className:
+                        "absolute inset-[2cqw] rounded-full border border-[#7a5414]/40",
+                    }),
+                    t.seal
+                      ? (0, v.jsx)("span", {
+                          className: "absolute inset-[3.6cqw]",
+                          children: (0, v.jsx)(R.default, {
+                            src: t.seal,
+                            alt: (0, L.u)(t),
+                            fill: !0,
+                            sizes: "120px",
+                            className: "object-contain",
+                          }),
+                        })
+                      : e.sealImage &&
+                          (!e.sealImageFor || e.sealImageFor.includes(t.slug))
+                        ? (0, v.jsx)("span", {
+                            className:
+                              "absolute inset-[3.2cqw] overflow-hidden rounded-full",
+                            children: (0, v.jsx)(R.default, {
+                              src: e.sealImage,
+                              alt: (0, L.u)(t),
+                              fill: !0,
+                              sizes: "120px",
+                              className: "object-cover mix-blend-multiply",
+                            }),
+                          })
+                        : (0, v.jsx)("span", {
+                            className:
+                              "inv-script relative px-[3cqw] py-[2cqw] text-[9cqw] leading-none text-[#4a2c08]",
+                            children: (0, L.u)(t),
+                          }),
+                  ],
+                }),
+          ],
+        });
+      }
+      let n =
+        "doors" === e.opening
+          ? function ({ invite: a, opened: s, onOpen: n }) {
+              return (0, v.jsxs)("div", {
+                className: "absolute inset-0 overflow-hidden",
+                style: {
+                  pointerEvents: s ? "none" : "auto",
+                  perspective: "140cqw",
+                  background: e.frameOverHero
+                    ? "transparent"
+                    : !1 === e.doorShade
+                      ? t.paper
+                      : "#000",
+                },
+                children: [
+                  !e.frameOverHero &&
+                    (0, v.jsx)($.f.div, {
+                      className: "absolute inset-0",
+                      initial: { scale: 1.15 },
+                      animate: { scale: s ? 1 : 1.15 },
+                      transition: { duration: 1.6, ease: e_ },
+                      children: (0, v.jsx)(eF, {
+                        src: a.memorial ? e.images.card : e.images.hero,
+                        priority: !0,
+                      }),
+                    }),
+                  (0, v.jsx)($.f.div, {
+                    className: "absolute inset-0",
+                    animate: { opacity: +!s },
+                    transition: { delay: 0.9 * !!s, duration: 0.7 },
+                    children: ["left", "right"].map((t) =>
+                      (0, v.jsxs)(
+                        $.f.div,
+                        {
+                          className: `absolute inset-y-0 w-[calc(50%+1px)] overflow-hidden ${"left" === t ? "left-0" : "right-0"}`,
+                          style: {
+                            transformOrigin:
+                              "left" === t ? "left center" : "right center",
+                            transformStyle: "preserve-3d",
+                          },
+                          animate: {
+                            rotateY: s ? ("left" === t ? -95 : 95) : 0,
+                          },
+                          transition: {
+                            duration: 1.25,
+                            ease: [0.7, 0, 0.3, 1],
+                          },
+                          children: [
+                            (0, v.jsx)("div", {
+                              className:
+                                "absolute inset-y-0 w-[calc(200%-2px)]",
+                              style: {
+                                left: "left" === t ? 0 : "calc(-100% + 2px)",
+                              },
+                              children: (0, v.jsx)(eF, {
+                                src: e.images.opening,
+                                priority: !0,
+                              }),
+                            }),
+                            !1 !== e.doorShade &&
+                              (0, v.jsx)("div", {
+                                className: `absolute inset-y-0 w-[6%] ${"left" === t ? "right-0 bg-gradient-to-l" : "left-0 bg-gradient-to-r"} from-black/35 to-transparent`,
+                              }),
+                          ],
+                        },
+                        t,
+                      ),
+                    ),
+                  }),
+                  a.tapAnywhere &&
+                    !s &&
+                    (0, v.jsx)("button", {
+                      type: "button",
+                      onClick: n,
+                      "aria-label": "Open invitation",
+                      className: "absolute inset-0 z-[5] cursor-pointer",
+                    }),
+                  e.openingTitle &&
+                    (0, v.jsxs)($.f.div, {
+                      className:
+                        "pointer-events-none absolute inset-x-0 z-10 text-center",
+                      style: { top: `${e.openingTitleTop ?? 8}%` },
+                      animate: { opacity: +!s, y: s ? -20 : 0 },
+                      transition: { duration: 0.4 },
+                      children: [
+                        (0, v.jsx)("p", {
+                          className: "inv-script text-[11cqw] leading-none",
+                          style: { color: t.ink },
+                          children: "You’re invited",
+                        }),
+                        (0, v.jsxs)("p", {
+                          className: "inv-label mt-[2.5cqw] text-[2.7cqw]",
+                          style: { color: t.ink },
+                          children: [
+                            (0, L.g)(a)[0].first,
+                            " & ",
+                            (0, L.g)(a)[1].first,
+                          ],
+                        }),
+                      ],
+                    }),
+                  (0, v.jsx)(i, {
+                    invite: a,
+                    opened: s,
+                    onOpen: n,
+                    className: "top-1/2 left-1/2",
+                  }),
+                ],
+              });
+            }
+          : function ({ invite: a, opened: s, onOpen: i }) {
+              let n = e.sealAt ?? { x: 50, y: 50 };
+              return (0, v.jsxs)("div", {
+                className: "absolute inset-0 overflow-hidden bg-[#fbf3e8]",
+                style: { pointerEvents: s ? "none" : "auto" },
+                children: [
+                  (0, v.jsx)($.f.div, {
+                    className: "absolute inset-0",
+                    style: { transformOrigin: `${n.x}% ${n.y}%` },
+                    animate: s
+                      ? { scale: 2.6, opacity: 0 }
+                      : { scale: [1, 1.025, 1], opacity: 1 },
+                    transition: s
+                      ? { duration: 1.2, ease: [0.6, 0, 0.3, 1] }
+                      : { duration: 6, repeat: 1 / 0, ease: "easeInOut" },
+                    children: (0, v.jsx)(eF, {
+                      src: e.images.opening,
+                      priority: !0,
+                    }),
+                  }),
+                  (0, v.jsxs)($.f.div, {
+                    className:
+                      "pointer-events-none absolute inset-x-0 top-[9%] text-center",
+                    animate: { opacity: +!s, y: s ? -20 : 0 },
+                    transition: { duration: 0.4 },
+                    children: [
+                      (0, v.jsx)("p", {
+                        className: `inv-script text-[10cqw] leading-none ${e.openingInk ? "[text-shadow:0_2px_14px_rgba(0,0,0,.45)]" : ""}`,
+                        style: { color: e.openingInk ?? t.ink },
+                        children: "You’re invited",
+                      }),
+                      (0, v.jsxs)("p", {
+                        className: `inv-label mt-[2cqw] text-[2.6cqw] ${e.openingInk ? "[text-shadow:0_1px_8px_rgba(0,0,0,.5)]" : ""}`,
+                        style: { color: e.openingInk ?? t.ink },
+                        children: [
+                          (0, L.g)(a)[0].first,
+                          " & ",
+                          (0, L.g)(a)[1].first,
+                        ],
+                      }),
+                    ],
+                  }),
+                  (0, v.jsx)($.f.button, {
+                    onClick: i,
+                    "aria-label": "Open invitation",
+                    className:
+                      "absolute size-[22cqw] -translate-x-1/2 -translate-y-1/2 rounded-full",
+                    style: { left: `${n.x}%`, top: `${n.y}%` },
+                    animate: { opacity: +!s },
+                    children: (0, v.jsx)("span", {
+                      className:
+                        "absolute inset-0 animate-ping rounded-full bg-white/40 [animation-duration:2.2s]",
+                    }),
+                  }),
+                ],
+              });
+            };
+      function l({ photo: e, alt: t, className: a }) {
+        return (0, v.jsx)("span", {
+          className: `block rounded-[1cqw] bg-[linear-gradient(135deg,#f6e3a1,#c99a3c_35%,#f3d98a_60%,#a9782a)] p-[1.2cqw] shadow-[0_1.5cqw_4cqw_-1.5cqw_rgba(60,35,10,.45)] ${a}`,
+          children: (0, v.jsx)("img", {
+            src: e,
+            alt: t,
+            className: "block aspect-square w-full object-cover",
+          }),
+        });
+      }
+      function r({ invite: a }) {
+        let i = g(),
+          n = (0, f.useRef)(null),
+          c = a.memorial;
+        if (!c) return null;
+        let [d, x] = (0, L.g)(a),
+          m = (e) => ({
+            initial: { opacity: 0, y: 14 },
+            animate: i ? { opacity: 1, y: 0 } : {},
+            transition: { duration: 1, delay: e, ease: e_ },
+          });
+        return (0, v.jsxs)("section", {
+          ref: n,
+          className: "relative w-full overflow-hidden",
+          style: {
+            aspectRatio: ez,
+            minHeight: "var(--screen-h, 100dvh)",
+            background: t.paper,
+          },
+          children: [
+            (0, v.jsx)(eF, { src: e.images.card }),
+            (0, v.jsxs)("div", {
+              className:
+                "absolute inset-x-[12%] top-[21%] flex flex-col items-center text-center",
+              children: [
+                (0, v.jsx)($.f.p, {
+                  ...m(0.4),
+                  className: "inv-script leading-tight whitespace-nowrap",
+                  style: { color: t.ink, ...s(8.6) },
+                  children: "In her loving presence",
+                }),
+                (0, v.jsx)($.f.div, {
+                  ...m(0.5),
+                  className: "mt-[2cqw] w-full",
+                  children: (0, v.jsx)(o, {}),
+                }),
+                (0, v.jsx)($.f.div, {
+                  ...m(0.6),
+                  className: "mt-[5cqw]",
+                  children: (0, v.jsx)(l, {
+                    photo: c.photo,
+                    alt: c.name ?? "",
+                    className: "w-[38cqw]",
+                  }),
+                }),
+                (0, v.jsx)($.f.p, {
+                  ...m(0.9),
+                  className:
+                    "inv-serif mt-[5cqw] text-[4.2cqw] leading-snug italic",
+                  style: { color: t.ink },
+                  children: "With the blessings of our beloved",
+                }),
+                c.name &&
+                  (0, v.jsx)($.f.p, {
+                    ...m(1),
+                    className: "inv-script mt-[1.5cqw] leading-tight",
+                    style: { color: t.ink, ...s(7.4) },
+                    children: c.name,
+                  }),
+                (0, v.jsxs)($.f.p, {
+                  ...m(1.1),
+                  className:
+                    "inv-serif mt-[1.5cqw] text-[4.2cqw] leading-snug italic",
+                  style: { color: t.ink },
+                  children: [
+                    "we invite you to bless ",
+                    d.first,
+                    " & ",
+                    x.first,
+                    ".",
+                  ],
+                }),
+              ],
+            }),
+          ],
+        });
+      }
+      function c({ kicker: e, children: a }) {
+        return (0, v.jsxs)("div", {
+          className: "text-center",
+          children: [
+            e &&
+              (0, v.jsx)("p", {
+                className: "inv-label text-[2.6cqw]",
+                style: { color: t.accent },
+                children: e,
+              }),
+            (0, v.jsx)("h2", {
+              className: "inv-script mt-[1cqw] leading-tight",
+              style: { color: t.ink, ...s(11) },
+              children: a,
+            }),
+            (0, v.jsx)(o, { className: "mt-[1cqw]" }),
+          ],
+        });
+      }
+      function o({ className: e }) {
+        return (0, v.jsxs)("div", {
+          className: `flex items-center justify-center gap-[2.5cqw] ${e ?? ""}`,
+          children: [
+            (0, v.jsx)("span", {
+              className: "h-px w-[18cqw]",
+              style: {
+                background: `linear-gradient(to right, transparent, ${t.accent})`,
+              },
+            }),
+            (0, v.jsx)("svg", {
+              viewBox: "0 0 20 20",
+              className: "w-[4cqw]",
+              "aria-hidden": !0,
+              children: (0, v.jsx)("path", {
+                d: "M10 1 C11.5 6.5 13.5 8.5 19 10 C13.5 11.5 11.5 13.5 10 19 C8.5 13.5 6.5 11.5 1 10 C6.5 8.5 8.5 6.5 10 1 Z",
+                fill: t.accent,
+              }),
+            }),
+            (0, v.jsx)("span", {
+              className: "h-px w-[18cqw]",
+              style: {
+                background: `linear-gradient(to left, transparent, ${t.accent})`,
+              },
+            }),
+          ],
+        });
+      }
+      let d = {
+        id: e.id,
+        tapHint: "doors" === e.opening ? "tapDoors" : "tapSeal",
+        largeText: e.largeText,
+        root: "",
+        vars: {
+          "--inv-script": e.fonts.script,
+          "--inv-serif": e.fonts.serif,
+          "--inv-label": e.fonts.label,
+          background: t.paper,
+          color: t.ink,
+        },
+        accent: t.accent,
+        ui: {
+          section: "relative px-[12cqw] py-[14cqw]",
+          card: "rounded-[4cqw] border border-black/10 bg-white/80 backdrop-blur-sm",
+          input:
+            "w-full rounded-[2.5cqw] border border-black/15 bg-white/90 px-[4cqw] py-[3cqw] text-[3.8cqw] outline-none placeholder:opacity-40",
+          chip: "rounded-full border border-black/15 bg-white/70 transition",
+          chipOn:
+            "rounded-full border border-transparent font-semibold text-white transition [background:var(--inv-accent)]",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full px-[4.5cqw] py-[2.4cqw] text-[3.2cqw] font-semibold text-white active:scale-95 transition [background:var(--inv-accent)]",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border border-current/30 px-[4.5cqw] py-[2.4cqw] text-[3.2cqw] active:scale-95 transition",
+          muted: "opacity-70",
+          tile: "rounded-[3cqw] border border-black/10 bg-white/80 backdrop-blur-sm",
+        },
+        Opening: n,
+        Hero: function ({ invite: a }) {
+          let i = g(),
+            [n, l] = (0, L.g)(a),
+            c = (e.heroLead ?? 0) / 100,
+            o = (0, f.useRef)(null),
+            { scrollYProgress: d } = e$({
+              target: o,
+              offset: ["start start", "end start"],
+            }),
+            x = (0, eS.f)(d, [0, 1], ["0%", "8%"]),
+            m = (0, eS.f)(d, [0, 1], [1, 1.04]),
+            p = (0, eS.f)(d, [0, 1], ["0%", "-30%"]),
+            h = (0, eS.f)(d, [0, 0.4], [1, 0]),
+            w = (e) => ({
+              initial: { opacity: 0, y: 14 },
+              animate: i ? { opacity: 1, y: 0 } : {},
+              transition: { duration: 1, delay: e, ease: e_ },
+            });
+          return (0, v.jsxs)(v.Fragment, {
+            children: [
+              (0, v.jsx)(r, { invite: a }),
+              (0, v.jsxs)("section", {
+                ref: o,
+                "data-hero": !0,
+                className: "relative w-full overflow-hidden",
+                style: {
+                  aspectRatio: c ? `864 / ${1536 * (1 + c)}` : ez,
+                  minHeight: "var(--screen-h, 100dvh)",
+                  background: t.paper,
+                },
+                children: [
+                  (0, v.jsxs)($.f.div, {
+                    className: "absolute inset-x-0 bottom-0",
+                    style: { y: x, scale: m, height: `${100 / (1 + c)}%` },
+                    children: [
+                      (0, v.jsx)(eF, {
+                        src: e.images.hero,
+                        alt: `Illustration of a couple for ${n.first} and ${l.first}'s ${a.occasion ?? "wedding"}`,
+                        priority: !0,
+                      }),
+                      c > 0 &&
+                        (0, v.jsx)("div", {
+                          className: "absolute inset-x-0 top-0 h-[12%]",
+                          style: {
+                            background: `linear-gradient(${t.paper}, transparent)`,
+                          },
+                        }),
+                    ],
+                  }),
+                  (0, v.jsxs)($.f.div, {
+                    className:
+                      "absolute inset-x-[10%] flex flex-col items-center text-center",
+                    style: { top: `${e.heroTextTop}%`, y: p, opacity: h },
+                    children: [
+                      e.heroGlow &&
+                        (0, v.jsx)("div", {
+                          className:
+                            "absolute -inset-x-[8%] -inset-y-[18%] -z-0 rounded-[50%] bg-[radial-gradient(closest-side,rgba(255,250,240,.85),rgba(255,250,240,0))]",
+                        }),
+                      (0, v.jsx)($.f.p, {
+                        ...w(0.3),
+                        className:
+                          "relative text-[3.2cqw] leading-relaxed whitespace-pre-line",
+                        style: {
+                          color: t.accent,
+                          fontFamily:
+                            "gopuram" === a.template
+                              ? "var(--font-tamil)"
+                              : "var(--font-deva)",
+                        },
+                        children: a.invocation,
+                      }),
+                      (0, v.jsx)($.f.p, {
+                        ...w(0.45),
+                        className: "inv-label relative mt-[2cqw] text-[2.5cqw]",
+                        style: { color: t.ink },
+                        children:
+                          a.heroKicker ??
+                          ("engagement" === a.occasion
+                            ? "The engagement of"
+                            : "The wedding of"),
+                      }),
+                      (a.stackNames ?? e.stackNames)
+                        ? (0, v.jsxs)($.f.h1, {
+                            ...w(0.7),
+                            className:
+                              "relative mt-[1.5cqw] flex flex-col items-center leading-[0.95] [text-shadow:0_1px_14px_rgba(255,250,240,.7)]",
+                            style: { color: t.ink, ...s(12) },
+                            children: [
+                              (0, v.jsx)("span", {
+                                className: "inv-script",
+                                children: n.first,
+                              }),
+                              (0, v.jsx)("span", {
+                                className: "inv-script my-[0.6cqw] text-[7cqw]",
+                                style: { color: t.accent },
+                                children: a.joiner ?? "&",
+                              }),
+                              (0, v.jsx)("span", {
+                                className: "inv-script",
+                                children: l.first,
+                              }),
+                            ],
+                          })
+                        : (0, v.jsxs)($.f.h1, {
+                            ...w(0.7),
+                            className:
+                              "inv-script relative mt-[1cqw] leading-[1] [text-shadow:0_1px_14px_rgba(255,250,240,.7)]",
+                            style: { color: t.ink, ...s(14) },
+                            children: [
+                              n.first,
+                              (0, v.jsx)("span", {
+                                className: "mx-[2cqw] text-[8cqw]",
+                                style: { color: t.accent },
+                                children: a.joiner ?? "&",
+                              }),
+                              l.first,
+                            ],
+                          }),
+                      !a.hideHeroDate &&
+                        (0, v.jsxs)($.f.div, {
+                          ...w(1),
+                          className:
+                            "relative mt-[3cqw] flex items-center gap-[3cqw]",
+                          style: { color: t.ink },
+                          children: [
+                            (0, v.jsx)("span", {
+                              className:
+                                "inv-label border-y px-[1cqw] py-[1cqw] text-[2.6cqw]",
+                              style: { borderColor: `${t.ink}66` },
+                              children: (0, T.e)(a.date),
+                            }),
+                            (0, v.jsx)("span", {
+                              className: "inv-serif text-[9cqw] leading-none",
+                              children: (0, T.v)(a.date).replace(/^0/, ""),
+                            }),
+                            (0, v.jsxs)("span", {
+                              className:
+                                "inv-label border-y px-[1cqw] py-[1cqw] text-[2.6cqw]",
+                              style: { borderColor: `${t.ink}66` },
+                              children: [
+                                (0, T.D)(a.date),
+                                " ",
+                                (0, T.X)(a.date),
+                              ],
+                            }),
+                          ],
+                        }),
+                      !a.hideHeroCity &&
+                        (0, v.jsx)($.f.p, {
+                          ...w(1.15),
+                          className:
+                            "inv-serif relative mt-[2cqw] text-[3.8cqw] italic",
+                          style: { color: t.ink },
+                          children: a.city,
+                        }),
+                    ],
+                  }),
+                  (0, v.jsx)("div", {
+                    className:
+                      "pointer-events-none absolute inset-x-0 bottom-0 h-[10%] bg-gradient-to-b from-transparent",
+                    style: {
+                      backgroundImage: `linear-gradient(to bottom, transparent, ${t.paper})`,
+                    },
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+        Blessing: function ({ invite: a }) {
+          let i = a.largeText ?? e.largeText,
+            [n, l] = (0, L.g)(a);
+          return (0, v.jsxs)("section", {
+            className: "relative px-[14cqw] pt-[16cqw] pb-[14cqw] text-center",
+            children: [
+              (0, v.jsxs)(B.b, {
+                children: [
+                  a.showMeaning &&
+                    a.invocationMeaning &&
+                    (0, v.jsx)("p", {
+                      className: `inv-serif mb-[3cqw] italic ${i ? "text-[4.2cqw]" : "text-[3.6cqw]"}`,
+                      style: { color: t.ink, opacity: 0.9 },
+                      children: a.invocationMeaning,
+                    }),
+                  !(n.elders || l.elders) || a.hosts
+                    ? (0, v.jsx)("div", {
+                        className: `inv-label mb-[4cqw] space-y-[1.8cqw] leading-relaxed ${i ? "text-[3.4cqw] font-semibold" : "text-[2.8cqw]"}`,
+                        style: { color: t.accent },
+                        children: (a.hosts || "Together with their families")
+                          .split("\n")
+                          .map((e, t) => (0, v.jsx)("p", { children: e }, t)),
+                      })
+                    : null,
+                  (0, v.jsx)("p", {
+                    className: `inv-serif mx-auto leading-snug italic ${i ? "text-[5.4cqw] font-medium" : "text-[4.8cqw]"}`,
+                    style: { color: t.ink },
+                    children: a.message,
+                  }),
+                ],
+              }),
+              (0, v.jsx)("div", {
+                className: "mt-[8cqw] space-y-[6cqw]",
+                children: [n, l]
+                  .map((e, n) =>
+                    (0, v.jsxs)(
+                      B.b,
+                      {
+                        delay: 0.1 + 0.12 * n,
+                        children: [
+                          e.elders &&
+                            !e.eldersBelow &&
+                            !e.eldersPlain &&
+                            (0, v.jsx)("p", {
+                              className: `inv-label mb-[3cqw] leading-relaxed ${i ? "text-[3.4cqw] font-semibold" : "text-[2.8cqw]"}`,
+                              style: { color: t.accent },
+                              children: e.elders,
+                            }),
+                          e.elders &&
+                            !e.eldersBelow &&
+                            e.eldersPlain &&
+                            (0, v.jsx)("p", {
+                              className: `inv-serif mb-[2cqw] whitespace-pre-line italic ${i ? "text-[4.4cqw] font-semibold" : "text-[3.6cqw] font-medium"}`,
+                              style: { color: i ? t.ink : t.soft },
+                              children: e.elders,
+                            }),
+                          (0, v.jsx)("p", {
+                            className: "inv-script leading-none",
+                            style: { color: t.ink, ...s(10) },
+                            children: e.full || e.first,
+                          }),
+                          e.parents &&
+                            (0, v.jsx)("p", {
+                              className: `inv-serif mt-[1.5cqw] whitespace-pre-line italic ${i ? "text-[4.4cqw] font-semibold" : "text-[3.6cqw] font-medium"} ${a.parentsWide ? "-mx-[8cqw]" : ""}`,
+                              style: { color: i ? t.ink : t.soft },
+                              children: e.parents,
+                            }),
+                          e.elders &&
+                            e.eldersBelow &&
+                            e.eldersPlain &&
+                            (0, v.jsx)("p", {
+                              className: `inv-serif mt-[1.5cqw] italic ${i ? "text-[4.4cqw] font-semibold" : "text-[3.6cqw] font-medium"}`,
+                              style: { color: i ? t.ink : t.soft },
+                              children: e.elders,
+                            }),
+                          e.elders &&
+                            e.eldersBelow &&
+                            !e.eldersPlain &&
+                            (0, v.jsx)("p", {
+                              className: `inv-label mt-[3cqw] leading-relaxed ${i ? "text-[3.4cqw] font-semibold" : "text-[2.8cqw]"}`,
+                              style: { color: t.accent },
+                              children: e.elders,
+                            }),
+                        ],
+                      },
+                      e === a.bride ? "bride" : "groom",
+                    ),
+                  )
+                  .flatMap((e, n) =>
+                    0 === n
+                      ? [
+                          e,
+                          (0, v.jsx)(
+                            B.b,
+                            {
+                              delay: 0.16,
+                              children: (0, v.jsx)("p", {
+                                className: "inv-script leading-none",
+                                style: { color: t.accent, ...s(i ? 7 : 6) },
+                                children:
+                                  a.joiner ??
+                                  ("engagement" === a.occasion ? "&" : "weds"),
+                              }),
+                            },
+                            "joiner",
+                          ),
+                        ]
+                      : [e],
+                  ),
+              }),
+            ],
+          });
+        },
+        Events: function ({ invite: a }) {
+          let i = a.largeText ?? e.largeText,
+            n = a.boldEvents,
+            l = a.words ?? {};
+          return (0, v.jsxs)("section", {
+            className: "relative px-[12cqw] py-[14cqw]",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(c, {
+                  kicker: l.eventsKicker ?? "Join us for",
+                  children: l.eventsTitle || "The celebrations",
+                }),
+              }),
+              (0, v.jsx)("ol", {
+                className: "mt-[8cqw] space-y-[5cqw]",
+                children: a.events.map((e, l) => {
+                  var r;
+                  let c,
+                    o,
+                    x =
+                      ((r = e.start),
+                      (o =
+                        (c = Number((0, T.s)(r, { day: "numeric" }))) % 10 ==
+                          1 && 11 !== c
+                          ? "st"
+                          : c % 10 == 2 && 12 !== c
+                            ? "nd"
+                            : c % 10 == 3 && 13 !== c
+                              ? "rd"
+                              : "th"),
+                      { d: c, s: o, m: (0, T.s)(r, { month: "short" }) });
+                  return (0, v.jsxs)(
+                    $.f.li,
+                    {
+                      initial: { opacity: 0, y: 18 },
+                      whileInView: { opacity: 1, y: 0 },
+                      viewport: { once: !0, amount: 0.35 },
+                      transition: { duration: 0.8, delay: 0.05 * l, ease: e_ },
+                      className:
+                        "rounded-[4cqw] border px-[5cqw] py-[5cqw] text-center backdrop-blur-[2px]",
+                      style: {
+                        borderColor: `${t.accent}55`,
+                        background: `${t.paper}d9`,
+                      },
+                      children: [
+                        (0, v.jsxs)("p", {
+                          className: `inv-label ${i ? "text-[3.2cqw] font-semibold" : n ? "text-[3cqw] font-semibold" : "text-[2.6cqw]"}`,
+                          style: {
+                            color: n ? t.ink : t.accent,
+                            ...(i
+                              ? { letterSpacing: "0.08em" }
+                              : n
+                                ? { letterSpacing: "0.14em" }
+                                : {}),
+                          },
+                          children: [
+                            (0, T.e)(e.start),
+                            " · ",
+                            x.d,
+                            (0, v.jsx)("sup", { children: x.s }),
+                            " ",
+                            x.m,
+                            " · ",
+                            e.timeText ?? (0, T.U)(e.start),
+                          ],
+                        }),
+                        (0, v.jsx)("h3", {
+                          className: "inv-script mt-[1.5cqw] leading-none",
+                          style: { color: t.ink, ...s(9) },
+                          children: e.name,
+                        }),
+                        (0, v.jsx)("p", {
+                          className: `inv-serif mt-[2.5cqw] leading-tight ${i ? "text-[5cqw] font-semibold" : n ? "text-[4.4cqw] font-semibold" : "text-[4.2cqw]"}`,
+                          style: { color: t.ink },
+                          children: e.venue,
+                        }),
+                        e.address &&
+                          (0, v.jsx)("p", {
+                            className: `mt-[1cqw] ${i ? "text-[3.8cqw] font-medium" : "text-[3cqw]"}`,
+                            style: { color: i ? t.ink : t.soft },
+                            children: e.address,
+                          }),
+                        ((e.dress && !a.wardrobe) || e.note) &&
+                          (0, v.jsx)("p", {
+                            className: `inv-serif mt-[2cqw] italic ${i ? "text-[4.4cqw] font-semibold" : "text-[3.4cqw]"}`,
+                            style: { color: i ? t.ink : t.accent },
+                            children: [
+                              !a.wardrobe && e.dress && `Dress: ${e.dress}`,
+                              e.note,
+                            ]
+                              .filter(Boolean)
+                              .join(" · "),
+                          }),
+                        (0, v.jsx)(B.W, { event: e, invite: a, theme: d }),
+                      ],
+                    },
+                    e.name + l,
+                  );
+                }),
+              }),
+              a.wardrobe &&
+                a.events.some((e) => e.dress) &&
+                (0, v.jsxs)("div", {
+                  className: "mt-[16cqw]",
+                  children: [
+                    (0, v.jsx)(B.b, {
+                      children: (0, v.jsx)(c, {
+                        kicker: "What to wear",
+                        children: "Wardrobe",
+                      }),
+                    }),
+                    (0, v.jsx)("ul", {
+                      className: "mt-[7cqw] space-y-[4cqw]",
+                      children: a.events
+                        .filter((e) => e.dress)
+                        .map((e, n) =>
+                          (0, v.jsx)(
+                            B.b,
+                            {
+                              delay: 0.05 * n,
+                              children: (0, v.jsxs)("li", {
+                                className: "text-center",
+                                children: [
+                                  eT[a.slug]?.[e.name] &&
+                                    (0, v.jsx)(R.default, {
+                                      src: `/art/illus/${eT[a.slug][e.name]}.webp`,
+                                      alt: `${e.name} outfits`,
+                                      width: 500,
+                                      height: 720,
+                                      sizes: "60vw",
+                                      className:
+                                        "mx-auto mb-[3cqw] h-auto w-[40cqw]",
+                                    }),
+                                  (0, v.jsx)("p", {
+                                    className: "inv-script leading-none",
+                                    style: { color: t.ink, ...s(7.5) },
+                                    children: e.name,
+                                  }),
+                                  (0, v.jsx)("p", {
+                                    className: `inv-serif mt-[1.5cqw] italic ${i ? "text-[4.8cqw] font-semibold" : "text-[4.2cqw]"}`,
+                                    style: { color: i ? t.ink : t.accent },
+                                    children: e.dress,
+                                  }),
+                                ],
+                              }),
+                            },
+                            e.name + n,
+                          ),
+                        ),
+                    }),
+                  ],
+                }),
+            ],
+          });
+        },
+        Closing: function ({ invite: a }) {
+          let i = a.largeText ?? e.largeText,
+            [n, r] = (0, L.g)(a),
+            c = (e) =>
+              a.memorial &&
+              (0, v.jsxs)(B.b, {
+                className: `flex flex-col items-center ${e}`,
+                children: [
+                  (0, v.jsx)(l, {
+                    photo: a.memorial.photo,
+                    alt: a.memorial.name ?? "",
+                    className: a.memorial.large ? "w-[38cqw]" : "w-[24cqw]",
+                  }),
+                  a.memorial.name &&
+                    (0, v.jsx)("p", {
+                      className: `inv-script mt-[4cqw] leading-tight ${a.memorial.large ? "text-[7.4cqw]" : "text-[6.4cqw]"}`,
+                      style: { color: t.ink },
+                      children: a.memorial.name,
+                    }),
+                  (0, v.jsx)("p", {
+                    className: `inv-serif mt-[2cqw] italic ${a.memorial.large ? "text-[4.6cqw] font-semibold" : "text-[3.8cqw]"}`,
+                    style: { color: a.memorial.large ? t.ink : t.soft },
+                    children: "Her blessings are always with us.",
+                  }),
+                ],
+              });
+          return (0, v.jsxs)("section", {
+            className: "relative px-[14cqw] pt-[12cqw] text-center",
+            style: { paddingBottom: `calc(${e.frame.bottom}vh + 18cqw)` },
+            children: [
+              !a.memorial?.last && c("mb-[14cqw]"),
+              a.extras?.length
+                ? (0, v.jsxs)("div", {
+                    className: "mb-[14cqw] space-y-[9cqw]",
+                    children: [
+                      a.extras.map((e, a) =>
+                        (0, v.jsxs)(
+                          B.b,
+                          {
+                            children: [
+                              (0, v.jsx)("p", {
+                                className: "text-[4.6cqw] font-semibold",
+                                style: {
+                                  color: t.accent,
+                                  fontFamily:
+                                    "var(--inv-serif), var(--font-deva)",
+                                },
+                                children: e.title,
+                              }),
+                              (0, v.jsx)("div", {
+                                className: "mt-[2.5cqw] space-y-[1.2cqw]",
+                                children: e.lines.map((e, a) => {
+                                  let s = e.match(/(\+?\d[\d\s-]{8,}\d)/)?.[1],
+                                    i = (0, v.jsx)("span", {
+                                      className: "text-[4cqw] leading-snug",
+                                      style: {
+                                        color: t.ink,
+                                        fontFamily:
+                                          "var(--inv-serif), var(--font-deva)",
+                                      },
+                                      children: e,
+                                    });
+                                  return (0, v.jsx)(
+                                    "p",
+                                    {
+                                      children: s
+                                        ? (0, v.jsx)("a", {
+                                            href: `tel:+91${s.replace(/\D/g, "").slice(-10)}`,
+                                            className:
+                                              "underline decoration-1 underline-offset-4",
+                                            style: {
+                                              textDecorationColor: `${t.accent}66`,
+                                            },
+                                            children: i,
+                                          })
+                                        : i,
+                                    },
+                                    a,
+                                  );
+                                }),
+                              }),
+                            ],
+                          },
+                          e.title + a,
+                        ),
+                      ),
+                      a.welcome &&
+                        (0, v.jsx)(B.b, {
+                          children: (0, v.jsx)("p", {
+                            className:
+                              "text-[4.4cqw] font-medium whitespace-pre-line",
+                            style: {
+                              color: t.ink,
+                              fontFamily: "var(--inv-serif), var(--font-deva)",
+                            },
+                            children: a.welcome,
+                          }),
+                        }),
+                    ],
+                  })
+                : null,
+              (0, v.jsxs)(B.b, {
+                children: [
+                  (0, v.jsx)(o, {}),
+                  (0, v.jsx)("p", {
+                    className: `inv-serif mt-[6cqw] leading-snug italic ${i ? "text-[5.6cqw] font-medium" : "text-[5cqw]"}`,
+                    style: { color: t.ink },
+                    children: a.closing,
+                  }),
+                  a.closingNote
+                    ? (0, v.jsxs)(v.Fragment, {
+                        children: [
+                          (0, v.jsx)("div", {
+                            className: "mt-[7cqw]",
+                            children: (0, v.jsx)(o, {}),
+                          }),
+                          (0, v.jsx)("p", {
+                            className: `inv-serif mt-[6cqw] leading-snug font-semibold ${i ? "text-[5.6cqw]" : "text-[5cqw]"}`,
+                            style: { color: t.ink },
+                            children: a.closingNote,
+                          }),
+                        ],
+                      })
+                    : a.hideClosingNames
+                      ? null
+                      : (a.stackNames ?? e.stackNames)
+                        ? (0, v.jsxs)("p", {
+                            className:
+                              "mt-[4cqw] flex flex-col items-center leading-[0.95]",
+                            style: { color: t.ink, ...s(10.5) },
+                            children: [
+                              (0, v.jsx)("span", {
+                                className: "inv-script",
+                                children: n.first,
+                              }),
+                              (0, v.jsx)("span", {
+                                className:
+                                  "inv-script my-[0.6cqw] text-[6.5cqw]",
+                                style: { color: t.accent },
+                                children: a.joiner ?? "&",
+                              }),
+                              (0, v.jsx)("span", {
+                                className: "inv-script",
+                                children: r.first,
+                              }),
+                            ],
+                          })
+                        : (0, v.jsxs)("p", {
+                            className: "inv-script mt-[4cqw] leading-none",
+                            style: { color: t.ink, ...s(12) },
+                            children: [n.first, " & ", r.first],
+                          }),
+                  a.hashtag &&
+                    (0, v.jsx)("p", {
+                      className: `inv-label !normal-case mt-[3cqw] ${i ? "text-[3.4cqw] font-semibold" : "text-[2.8cqw]"}`,
+                      style: { color: t.accent },
+                      children: a.hashtag,
+                    }),
+                ],
+              }),
+              a.memorial?.last && c("mt-[12cqw]"),
+              (0, v.jsxs)(B.b, {
+                children: [
+                  a.signoff &&
+                    (0, v.jsx)("p", {
+                      className: `inv-serif mt-[10cqw] leading-snug whitespace-pre-line italic ${i ? "text-[5.4cqw] font-semibold" : "text-[4.8cqw] font-medium"}`,
+                      style: { color: t.ink },
+                      children: a.signoff,
+                    }),
+                  !a.noBranding &&
+                    (0, v.jsxs)(k.default, {
+                      href: "/",
+                      className: `inv-label ${a.signoff ? "mt-[6cqw]" : "mt-[10cqw]"} inline-block text-[2.2cqw] opacity-60`,
+                      style: { color: t.ink },
+                      children: ["Crafted with love by ", F.B.name],
+                    }),
+                ],
+              }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          return (0, v.jsx)("div", {
+            className: "pointer-events-none absolute inset-0",
+            style: { background: t.paper },
+            children: (0, v.jsx)("div", {
+              className: "sticky top-0 h-[var(--screen-h,100dvh)] w-full",
+              children: (0, v.jsx)(eF, { src: e.images.card }),
+            }),
+          });
+        },
+        Frame: function () {
+          let { scrollY: a } = e$(),
+            [s, i] = (0, f.useState)(800),
+            [n, l] = (0, f.useState)(0);
+          (0, f.useEffect)(() => {
+            let e = () => {
+              i((1536 * Math.min(window.innerWidth, 480)) / 864),
+                l(document.querySelector("[data-hero]")?.offsetTop ?? 0);
+            };
+            return (
+              e(),
+              window.addEventListener("resize", e),
+              () => window.removeEventListener("resize", e)
+            );
+          }, []);
+          let r = (0, eS.f)(a, [n + 0.35 * s, n + 0.75 * s], [0, 1]),
+            c = e.frameOverHero ? 1 : r,
+            o = e.frame,
+            d = `linear-gradient(to bottom, #000 0%, #000 ${o.top}%, transparent ${o.top + 4}%, transparent ${100 - o.bottom - 4}%, #000 ${100 - o.bottom}%, #000 100%), linear-gradient(to right, #000 0%, #000 ${o.side}%, transparent ${o.side + 2}%, transparent ${100 - o.side - 2}%, #000 ${100 - o.side}%, #000 100%)`;
+          return (0, v.jsxs)($.f.div, {
+            className: "absolute inset-0",
+            style: { opacity: c },
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)("div", {
+                className: "absolute inset-x-0 bottom-full h-[50vh]",
+                style: { background: t.paper },
+              }),
+              e.images.frame
+                ? (0, v.jsx)("div", {
+                    className: "absolute inset-0",
+                    children: (0, v.jsx)(eF, { src: e.images.frame }),
+                  })
+                : (0, v.jsx)("div", {
+                    className: "absolute inset-0",
+                    style: { WebkitMaskImage: d, maskImage: d },
+                    children: (0, v.jsx)(eF, { src: e.images.card }),
+                  }),
+              (0, v.jsx)("div", {
+                className: "absolute inset-x-0 top-full h-[50vh]",
+                style: { background: t.paper },
+              }),
+            ],
+          });
+        },
+        Divider: o,
+        Title: c,
+      };
+      return (d.vars["--inv-accent"] = t.accent), d;
+    }
+    let eL = (e) => Math.round(100 * e) / 100;
+    function eO(e) {
+      return e.replace(/[^a-zA-Z0-9_-]/g, "");
+    }
+    function eW(e, t, a, s = 1) {
+      let i = -e;
+      return `M0 ${eL(i)} C ${eL(a)} ${eL(i - 0.25 * t)} ${eL(0.7 * a * s)} ${eL(i - 0.8 * t)} 0 ${eL(-e - t)} C ${eL(-(0.7 * a) * s)} ${eL(i - 0.8 * t)} ${eL(-a)} ${eL(i - 0.25 * t)} 0 ${eL(i)} Z`;
+    }
+    function eI(e, t, a) {
+      let s = "";
+      for (let i = 0; i < t; i++) {
+        let n = (i / t) * Math.PI * 2,
+          l = ((i + 1) / t) * Math.PI * 2,
+          r = (n + l) / 2,
+          c = [Math.cos(n) * e, Math.sin(n) * e],
+          o = [Math.cos(l) * e, Math.sin(l) * e],
+          d = [Math.cos(r) * (e + a), Math.sin(r) * (e + a)];
+        0 === i && (s += `M${eL(c[0])} ${eL(c[1])}`),
+          (s += ` Q${eL(d[0])} ${eL(d[1])} ${eL(o[0])} ${eL(o[1])}`);
+      }
+      return s + " Z";
+    }
+    function eH(e, t, a, s, i) {
+      let n = 1 - i;
+      return [0, 1].map(
+        (l) =>
+          n * n * n * e[l] +
+          3 * n * n * i * t[l] +
+          3 * n * i * i * a[l] +
+          i * i * i * s[l],
+      );
+    }
+    function eD(e, t, a, s = 4, i = 0.35) {
+      let n = [
+          [0, a],
+          [0, 0.42 * a],
+          [0.24 * e, 0.06 * a],
+          [e / 2, 0],
+        ],
+        l = [
+          [e / 2, 0],
+          [0.76 * e, 0.06 * a],
+          [e, 0.42 * a],
+          [e, a],
+        ],
+        r = [e / 2, a],
+        c = [];
+      for (let e = 0; e <= s; e++) c.push(eH(n[0], n[1], n[2], n[3], e / s));
+      for (let e = 1; e <= s; e++) c.push(eH(l[0], l[1], l[2], l[3], e / s));
+      let o = `M0 ${t} L${c[0][0]} ${eL(c[0][1])}`;
+      for (let e = 1; e < c.length; e++) {
+        let t = c[e - 1],
+          a = c[e],
+          s = [(t[0] + a[0]) / 2, (t[1] + a[1]) / 2],
+          n = s[0] - r[0],
+          l = s[1] - r[1],
+          d = Math.hypot(n, l) || 1,
+          x = Math.hypot(a[0] - t[0], a[1] - t[1]),
+          f = [s[0] + (n / d) * x * i, s[1] + (l / d) * x * i];
+        o += ` Q${eL(f[0])} ${eL(f[1])} ${eL(a[0])} ${eL(a[1])}`;
+      }
+      return o + ` L${e} ${t} Z`;
+    }
+    function eR(e) {
+      let t = e % 0x7fffffff;
+      return (
+        t <= 0 && (t += 0x7ffffffe),
+        () => ((t = (16807 * t) % 0x7fffffff) - 1) / 0x7ffffffe
+      );
+    }
+    e.s(
+      ["a", 0, eO, "z", 0, eD, "W", 0, eW, "t", 0, eL, "Y", 0, eI, "I", 0, eR],
+      87942,
+    );
+    let eA = [
+      { r: 6, count: 8, len: 10, width: 4, fill: !0 },
+      { r: 18, count: 16, len: 2, width: 2, kind: "dot" },
+      { r: 22, count: 12, len: 16, width: 7 },
+      { r: 40, count: 24, len: 3, width: 1.4, kind: "dot" },
+      { r: 44, count: 16, len: 18, width: 8, fill: !0 },
+      { r: 64, count: 32, len: 6, width: 1, kind: "line" },
+      { r: 72, count: 24, len: 16, width: 6 },
+      { r: 90, count: 48, len: 2, width: 1.2, kind: "dot" },
+    ];
+    function eE({
+      className: e,
+      style: t,
+      color: a = "currentColor",
+      rings: s = eA,
+      stroke: i = 1,
+    }) {
+      return (0, v.jsx)("svg", {
+        viewBox: "-100 -100 200 200",
+        className: e,
+        style: t,
+        "aria-hidden": !0,
+        children: (0, v.jsx)("g", {
+          fill: "none",
+          stroke: a,
+          strokeWidth: i,
+          strokeLinejoin: "round",
+          children: s.map((e, t) =>
+            (0, v.jsxs)(
+              "g",
+              {
+                children: [
+                  "dot" !== e.kind &&
+                    "line" !== e.kind &&
+                    (0, v.jsx)("circle", {
+                      r: e.r,
+                      strokeOpacity: 0.55,
+                      strokeWidth: 0.6 * i,
+                    }),
+                  Array.from({ length: e.count }, (s, i) => {
+                    let n = (360 / e.count) * i + (t % 2 ? 180 / e.count : 0);
+                    return "dot" === e.kind
+                      ? (0, v.jsx)(
+                          "circle",
+                          {
+                            cx: 0,
+                            cy: -e.r,
+                            r: e.width,
+                            fill: a,
+                            stroke: "none",
+                            transform: `rotate(${eL(n)})`,
+                          },
+                          i,
+                        )
+                      : "line" === e.kind
+                        ? (0, v.jsx)(
+                            "line",
+                            {
+                              x1: 0,
+                              y1: -e.r,
+                              x2: 0,
+                              y2: -e.r - e.len,
+                              transform: `rotate(${eL(n)})`,
+                            },
+                            i,
+                          )
+                        : (0, v.jsx)(
+                            "path",
+                            {
+                              d: eW(e.r, e.len, e.width),
+                              transform: `rotate(${eL(n)})`,
+                              fill: e.fill ? a : "none",
+                              fillOpacity: 0.18 * !!e.fill,
+                            },
+                            i,
+                          );
+                  }),
+                ],
+              },
+              t,
+            ),
+          ),
+        }),
+      });
+    }
+    function eP({ cx: e = 0, cy: t = 0, r: a = 10, hue: s = "orange" }) {
+      let i =
+        "orange" === s
+          ? ["#d9620b", "#f08419", "#f9a531"]
+          : ["#e59a07", "#f6b819", "#fdd54a"];
+      return (0, v.jsxs)("g", {
+        transform: `translate(${eL(e)} ${eL(t)})`,
+        children: [
+          (0, v.jsx)("path", { d: eI(0.85 * a, 14, 0.22 * a), fill: i[0] }),
+          (0, v.jsx)("path", {
+            d: eI(0.62 * a, 12, 0.2 * a),
+            fill: i[1],
+            transform: "rotate(12)",
+          }),
+          (0, v.jsx)("path", {
+            d: eI(0.38 * a, 9, 0.16 * a),
+            fill: i[2],
+            transform: "rotate(5)",
+          }),
+          (0, v.jsx)("circle", { r: 0.14 * a, fill: i[0], opacity: 0.6 }),
+        ],
+      });
+    }
+    function eG({ x: e, y: t, rot: a, s = 1 }) {
+      return (0, v.jsxs)("g", {
+        transform: `translate(${e} ${t}) rotate(${a}) scale(${s})`,
+        children: [
+          (0, v.jsx)("path", {
+            d: "M0 0 C6 6 6 20 0 30 C-6 20 -6 6 0 0 Z",
+            fill: "#3f7a3a",
+          }),
+          (0, v.jsx)("path", {
+            d: "M0 2 L0 28",
+            stroke: "#9bc27a",
+            strokeWidth: 0.8,
+          }),
+        ],
+      });
+    }
+    function eZ({ count: e = 6, r: t = 7, tassel: a = !0 }) {
+      return (0, v.jsxs)("g", {
+        children: [
+          (0, v.jsx)("line", {
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: e * t * 1.7,
+            stroke: "#8a5a1c",
+            strokeWidth: 0.8,
+          }),
+          Array.from({ length: e }, (e, a) =>
+            (0, v.jsx)(
+              eP,
+              { cy: t + a * t * 1.7, r: t, hue: a % 2 ? "yellow" : "orange" },
+              a,
+            ),
+          ),
+          a &&
+            (0, v.jsx)(eG, { x: 0, y: e * t * 1.7 + 0.4 * t, rot: 0, s: 0.55 }),
+        ],
+      });
+    }
+    function eK({ className: e, style: t, strands: a = 9, width: s = 400 }) {
+      let i = s / (a - 1);
+      return (0, v.jsxs)("svg", {
+        viewBox: `0 0 ${s} 120`,
+        className: e,
+        style: t,
+        preserveAspectRatio: "xMidYMin slice",
+        "aria-hidden": !0,
+        children: [
+          Array.from({ length: a - 1 }, (e, t) => {
+            let a = t * i,
+              s = a + i;
+            return (0, v.jsx)(
+              "g",
+              {
+                children: Array.from({ length: 6 }, (e, t) => {
+                  let i = (t + 0.5) / 6,
+                    n = 8 + 18 * Math.sin(Math.PI * i);
+                  return (0, v.jsx)(
+                    eP,
+                    {
+                      cx: a + (s - a) * i,
+                      cy: n,
+                      r: 6.2,
+                      hue: t % 2 ? "orange" : "yellow",
+                    },
+                    t,
+                  );
+                }),
+              },
+              `s${t}`,
+            );
+          }),
+          (0, v.jsx)("rect", {
+            x: 0,
+            y: 0,
+            width: s,
+            height: 6,
+            fill: "#b8324a",
+          }),
+          (0, v.jsx)("rect", {
+            x: 0,
+            y: 5,
+            width: s,
+            height: 1.5,
+            fill: "#e9bf62",
+          }),
+          Array.from({ length: a }, (e, t) =>
+            (0, v.jsxs)(
+              "g",
+              {
+                transform: `translate(${eL(t * i)} 6)`,
+                children: [
+                  (0, v.jsx)("g", {
+                    className: "animate-sway",
+                    style: {
+                      transformOrigin: "0px 0px",
+                      transformBox: "view-box",
+                      animationDelay: `${-(0.37 * t)}s`,
+                    },
+                    children: (0, v.jsx)(eZ, { count: t % 2 ? 5 : 7, r: 6.5 }),
+                  }),
+                  (0, v.jsx)(eG, { x: -3, y: -2, rot: 25, s: 0.45 }),
+                  (0, v.jsx)(eG, { x: 3, y: -2, rot: -25, s: 0.45 }),
+                ],
+              },
+              t,
+            ),
+          ),
+        ],
+      });
+    }
+    function eV({ className: e, style: t, glow: a = !0 }) {
+      let s = eO((0, f.useId)());
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 100 100",
+        className: e,
+        style: t,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsxs)("defs", {
+            children: [
+              (0, v.jsxs)("radialGradient", {
+                id: `${s}g`,
+                cx: "50%",
+                cy: "40%",
+                r: "50%",
+                children: [
+                  (0, v.jsx)("stop", {
+                    offset: "0%",
+                    stopColor: "#ffe9a8",
+                    stopOpacity: 0.9,
+                  }),
+                  (0, v.jsx)("stop", {
+                    offset: "60%",
+                    stopColor: "#ffb347",
+                    stopOpacity: 0.25,
+                  }),
+                  (0, v.jsx)("stop", {
+                    offset: "100%",
+                    stopColor: "#ff9a2e",
+                    stopOpacity: 0,
+                  }),
+                ],
+              }),
+              (0, v.jsxs)("radialGradient", {
+                id: `${s}f`,
+                cx: "50%",
+                cy: "75%",
+                r: "70%",
+                children: [
+                  (0, v.jsx)("stop", { offset: "0%", stopColor: "#fffbe6" }),
+                  (0, v.jsx)("stop", { offset: "35%", stopColor: "#ffd54a" }),
+                  (0, v.jsx)("stop", { offset: "75%", stopColor: "#ff8a1e" }),
+                  (0, v.jsx)("stop", { offset: "100%", stopColor: "#e8521a" }),
+                ],
+              }),
+              (0, v.jsxs)("linearGradient", {
+                id: `${s}b`,
+                x1: "0",
+                y1: "0",
+                x2: "0",
+                y2: "1",
+                children: [
+                  (0, v.jsx)("stop", { offset: "0%", stopColor: "#e7a44a" }),
+                  (0, v.jsx)("stop", { offset: "100%", stopColor: "#8f3d14" }),
+                ],
+              }),
+            ],
+          }),
+          a &&
+            (0, v.jsx)("circle", {
+              cx: 50,
+              cy: 40,
+              r: 40,
+              fill: `url(#${s}g)`,
+            }),
+          (0, v.jsxs)("g", {
+            className: "animate-flicker",
+            style: { transformOrigin: "50px 62px", transformBox: "view-box" },
+            children: [
+              (0, v.jsx)("path", {
+                d: "M50 26 C58 38 60 48 56 56 C54 61 46 61 44 56 C40 48 42 38 50 26 Z",
+                fill: `url(#${s}f)`,
+              }),
+              (0, v.jsx)("path", {
+                d: "M50 42 C53 48 53 53 51 57 C50 59 49 59 48.5 57 C47 53 47.5 48 50 42 Z",
+                fill: "#fffef5",
+                opacity: 0.85,
+              }),
+            ],
+          }),
+          (0, v.jsx)("path", {
+            d: "M14 62 C22 60 78 60 88 58 L96 54 C92 66 82 80 50 80 C22 80 12 70 14 62 Z",
+            fill: `url(#${s}b)`,
+          }),
+          (0, v.jsx)("path", {
+            d: "M18 64 C30 63 74 63 86 61",
+            stroke: "#ffd58a",
+            strokeWidth: 1.4,
+            fill: "none",
+            opacity: 0.8,
+          }),
+          (0, v.jsx)("g", {
+            fill: "#ffd58a",
+            opacity: 0.85,
+            children: [30, 40, 50, 60, 70].map((e) =>
+              (0, v.jsx)("circle", { cx: e, cy: 71, r: 1.6 }, e),
+            ),
+          }),
+        ],
+      });
+    }
+    function eY({ className: e, style: t, chain: a = 60, delay: s = 0 }) {
+      return (0, v.jsx)("div", {
+        className: e,
+        style: t,
+        children: (0, v.jsxs)("div", {
+          className: "animate-sway",
+          style: { transformOrigin: "top center", animationDelay: `${s}s` },
+          children: [
+            (0, v.jsx)("div", {
+              className:
+                "mx-auto w-px bg-gradient-to-b from-transparent via-[#e9bf62] to-[#e9bf62]",
+              style: { height: a },
+            }),
+            (0, v.jsx)(eV, { className: "-mt-3 w-full" }),
+          ],
+        }),
+      });
+    }
+    function eU({ className: e, style: t, glow: a = !0 }) {
+      let s = eO((0, f.useId)());
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 100 100",
+        className: e,
+        style: t,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsxs)("defs", {
+            children: [
+              (0, v.jsxs)("radialGradient", {
+                id: `${s}g`,
+                cx: "50%",
+                cy: "55%",
+                r: "50%",
+                children: [
+                  (0, v.jsx)("stop", {
+                    offset: "0%",
+                    stopColor: "#ffe9a8",
+                    stopOpacity: 0.55,
+                  }),
+                  (0, v.jsx)("stop", {
+                    offset: "100%",
+                    stopColor: "#ffb347",
+                    stopOpacity: 0,
+                  }),
+                ],
+              }),
+              (0, v.jsxs)("linearGradient", {
+                id: `${s}r`,
+                x1: "0",
+                y1: "0",
+                x2: "1",
+                y2: "1",
+                children: [
+                  (0, v.jsx)("stop", { offset: "0%", stopColor: "#fff1c2" }),
+                  (0, v.jsx)("stop", { offset: "45%", stopColor: "#e9bf62" }),
+                  (0, v.jsx)("stop", { offset: "100%", stopColor: "#9a6a1f" }),
+                ],
+              }),
+              (0, v.jsxs)("linearGradient", {
+                id: `${s}d`,
+                x1: "0",
+                y1: "0",
+                x2: "0",
+                y2: "1",
+                children: [
+                  (0, v.jsx)("stop", { offset: "0%", stopColor: "#ffffff" }),
+                  (0, v.jsx)("stop", { offset: "100%", stopColor: "#cfe8ff" }),
+                ],
+              }),
+            ],
+          }),
+          a &&
+            (0, v.jsx)("circle", {
+              cx: 50,
+              cy: 58,
+              r: 44,
+              fill: `url(#${s}g)`,
+            }),
+          (0, v.jsx)("ellipse", {
+            cx: 60,
+            cy: 62,
+            rx: 20,
+            ry: 20,
+            fill: "none",
+            stroke: `url(#${s}r)`,
+            strokeWidth: 5,
+          }),
+          (0, v.jsx)("ellipse", {
+            cx: 40,
+            cy: 62,
+            rx: 20,
+            ry: 20,
+            fill: "none",
+            stroke: `url(#${s}r)`,
+            strokeWidth: 5.5,
+          }),
+          (0, v.jsx)("path", {
+            d: "M58.5 45 A20 20 0 0 1 72 52",
+            fill: "none",
+            stroke: `url(#${s}r)`,
+            strokeWidth: 5,
+          }),
+          (0, v.jsx)("path", {
+            d: "M34 43 L46 43 L44 39 L36 39 Z",
+            fill: "#c99a3c",
+          }),
+          (0, v.jsx)("path", {
+            d: "M40 22 L48 31 L40 40 L32 31 Z",
+            fill: `url(#${s}d)`,
+            stroke: "#e9bf62",
+            strokeWidth: 1.2,
+          }),
+          (0, v.jsx)("path", {
+            d: "M32 31 H48 M36 31 L40 22 L44 31 L40 40",
+            fill: "none",
+            stroke: "#9fc3e6",
+            strokeWidth: 0.8,
+            opacity: 0.8,
+          }),
+          (0, v.jsx)("g", {
+            className: "animate-flicker",
+            style: { transformOrigin: "52px 22px", transformBox: "view-box" },
+            children: (0, v.jsx)("path", {
+              d: "M52 14 L53.5 20 L59 21.5 L53.5 23 L52 29 L50.5 23 L45 21.5 L50.5 20 Z",
+              fill: "#fffef5",
+              opacity: 0.9,
+            }),
+          }),
+        ],
+      });
+    }
+    function eX({ className: e, style: t, chain: a = 60, delay: s = 0 }) {
+      return (0, v.jsx)("div", {
+        className: e,
+        style: t,
+        children: (0, v.jsxs)("div", {
+          className: "animate-sway",
+          style: { transformOrigin: "top center", animationDelay: `${s}s` },
+          children: [
+            (0, v.jsx)("div", {
+              className:
+                "mx-auto w-px bg-gradient-to-b from-transparent via-[#e9bf62] to-[#e9bf62]",
+              style: { height: a },
+            }),
+            (0, v.jsx)(eU, { className: "-mt-2 w-full" }),
+          ],
+        }),
+      });
+    }
+    function eQ({
+      className: e,
+      style: t,
+      stroke: a = "#e9bf62",
+      fill: s = "none",
+      w: i = 300,
+      h: n = 420,
+    }) {
+      let l = 0.62 * i;
+      return (0, v.jsxs)("svg", {
+        viewBox: `-12 -40 ${i + 24} ${n + 52}`,
+        className: e,
+        style: t,
+        preserveAspectRatio: "xMidYMid meet",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsxs)("g", {
+            transform: `translate(${i / 2} -10)`,
+            fill: a,
+            children: [
+              (0, v.jsx)("path", {
+                d: "M0 -28 C4 -20 6 -14 0 -6 C-6 -14 -4 -20 0 -28 Z",
+              }),
+              (0, v.jsx)("circle", { cy: -2, r: 4 }),
+            ],
+          }),
+          (0, v.jsx)("path", {
+            d: eD(i, n, l, 5),
+            fill: s,
+            stroke: a,
+            strokeWidth: 2.2,
+          }),
+          (0, v.jsx)("g", {
+            transform: `translate(${0.04 * i} ${0.04 * i}) scale(0.92)`,
+            children: (0, v.jsx)("path", {
+              d: eD(i, n - 0.02 * i, l, 5),
+              fill: "none",
+              stroke: a,
+              strokeWidth: 1,
+              strokeOpacity: 0.7,
+              strokeDasharray: "1 5",
+              strokeLinecap: "round",
+            }),
+          }),
+          [0, i].map((e) =>
+            (0, v.jsxs)(
+              "g",
+              {
+                transform: `translate(${e} ${l})`,
+                fill: a,
+                children: [
+                  (0, v.jsx)("rect", {
+                    x: -6,
+                    y: 0,
+                    width: 12,
+                    height: 4,
+                    rx: 1,
+                  }),
+                  (0, v.jsx)("rect", {
+                    x: -3,
+                    y: 4,
+                    width: 6,
+                    height: n - l - 8,
+                    opacity: 0.35,
+                  }),
+                  (0, v.jsx)("rect", {
+                    x: -6,
+                    y: n - l - 4,
+                    width: 12,
+                    height: 4,
+                    rx: 1,
+                  }),
+                ],
+              },
+              e,
+            ),
+          ),
+        ],
+      });
+    }
+    function eJ({
+      x: e = 0,
+      y: t = 0,
+      r: a = 20,
+      rot: s = 0,
+      petals: i = 5,
+      tone: n = "rose",
+      gid: l,
+    }) {
+      return (0, v.jsxs)("g", {
+        transform: `translate(${eL(e)} ${eL(t)}) rotate(${s})`,
+        children: [
+          Array.from({ length: i }, (e, t) =>
+            (0, v.jsx)(
+              "path",
+              {
+                d: `M0 0 C ${eL(0.55 * a)} ${eL(-(0.2 * a))} ${eL(0.7 * a)} ${eL(-(0.85 * a))} ${eL(0.18 * a)} ${eL(-a)} Q0 ${eL(-(0.86 * a))} ${eL(-(0.18 * a))} ${eL(-a)} C ${eL(-(0.7 * a))} ${eL(-(0.85 * a))} ${eL(-(0.55 * a))} ${eL(-(0.2 * a))} 0 0 Z`,
+                fill: `url(#${l}-${n})`,
+                stroke: "#ffffff",
+                strokeOpacity: 0.5,
+                strokeWidth: 0.6,
+                transform: `rotate(${(360 / i) * t})`,
+              },
+              t,
+            ),
+          ),
+          (0, v.jsx)("circle", {
+            r: 0.2 * a,
+            fill: {
+              rose: "#d98aa0",
+              blush: "#e7aab4",
+              peach: "#eda98a",
+              white: "#e9d8cc",
+            }[n],
+          }),
+          Array.from({ length: 7 }, (e, t) => {
+            let s = (t / 7) * Math.PI * 2;
+            return (0, v.jsx)(
+              "circle",
+              {
+                cx: eL(Math.cos(s) * a * 0.28),
+                cy: eL(Math.sin(s) * a * 0.28),
+                r: 0.045 * a,
+                fill: "#b9873f",
+              },
+              t,
+            );
+          }),
+        ],
+      });
+    }
+    function e0({ gid: e }) {
+      return (0, v.jsx)("defs", {
+        children: Object.entries({
+          rose: ["#c45a7a", "#f5c6cf"],
+          blush: ["#e59aa8", "#fde8e6"],
+          peach: ["#ee9b78", "#fde3d3"],
+          white: ["#e8d3c8", "#fffdfa"],
+        }).map(([t, [a, s]]) =>
+          (0, v.jsxs)(
+            "radialGradient",
+            {
+              id: `${e}-${t}`,
+              cx: "0.5",
+              cy: "1",
+              r: "1",
+              gradientUnits: "objectBoundingBox",
+              fx: "0.5",
+              fy: "1",
+              children: [
+                (0, v.jsx)("stop", { offset: "0%", stopColor: a }),
+                (0, v.jsx)("stop", { offset: "100%", stopColor: s }),
+              ],
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function e1({ x: e, y: t, rot: a, s = 1, tone: i = "#869d7a" }) {
+      return (0, v.jsxs)("g", {
+        transform: `translate(${eL(e)} ${eL(t)}) rotate(${a}) scale(${s})`,
+        children: [
+          (0, v.jsx)("path", {
+            d: "M0 0 C10 -8 26 -8 40 0 C26 8 10 8 0 0 Z",
+            fill: i,
+            opacity: 0.9,
+          }),
+          (0, v.jsx)("path", {
+            d: "M2 0 L38 0",
+            stroke: "#ffffff",
+            strokeOpacity: 0.45,
+            strokeWidth: 0.8,
+          }),
+        ],
+      });
+    }
+    function e2({ x: e, y: t, rot: a, s = 1 }) {
+      return (0, v.jsxs)("g", {
+        transform: `translate(${e} ${t}) rotate(${a}) scale(${s})`,
+        children: [
+          (0, v.jsx)("path", {
+            d: "M0 0 C20 -10 40 -12 70 -6",
+            stroke: "#869d7a",
+            strokeWidth: 1.2,
+            fill: "none",
+          }),
+          [12, 26, 40, 54].map((e, t) =>
+            (0, v.jsxs)(
+              "g",
+              {
+                children: [
+                  (0, v.jsx)("ellipse", {
+                    cx: e,
+                    cy: -6 - 0.5 * t,
+                    rx: 5,
+                    ry: 2.6,
+                    fill: "#a9bb98",
+                    transform: `rotate(-35 ${e} ${-6 - 0.5 * t})`,
+                  }),
+                  (0, v.jsx)("ellipse", {
+                    cx: e + 4,
+                    cy: -2 - t,
+                    rx: 5,
+                    ry: 2.6,
+                    fill: "#97ad88",
+                    transform: `rotate(30 ${e + 4} ${-2 - t})`,
+                  }),
+                ],
+              },
+              e,
+            ),
+          ),
+        ],
+      });
+    }
+    function e5({ className: e, style: t }) {
+      let a = eO((0, f.useId)());
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 220 220",
+        className: e,
+        style: t,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)(e0, { gid: a }),
+          (0, v.jsx)(e2, { x: 10, y: 120, rot: -35, s: 1.4 }),
+          (0, v.jsx)(e2, { x: 120, y: 12, rot: 10, s: 1.2 }),
+          (0, v.jsx)(e1, { x: 20, y: 70, rot: -20, s: 1.4 }),
+          (0, v.jsx)(e1, { x: 70, y: 22, rot: -60, s: 1.3, tone: "#9aae8c" }),
+          (0, v.jsx)(e1, { x: 95, y: 95, rot: 40, s: 1.1 }),
+          (0, v.jsx)(eJ, {
+            gid: a,
+            x: 52,
+            y: 52,
+            r: 38,
+            rot: 10,
+            tone: "rose",
+          }),
+          (0, v.jsx)(eJ, {
+            gid: a,
+            x: 112,
+            y: 40,
+            r: 24,
+            rot: 30,
+            tone: "blush",
+          }),
+          (0, v.jsx)(eJ, {
+            gid: a,
+            x: 36,
+            y: 118,
+            r: 22,
+            rot: -15,
+            tone: "peach",
+          }),
+          (0, v.jsx)(eJ, {
+            gid: a,
+            x: 150,
+            y: 20,
+            r: 12,
+            rot: 0,
+            tone: "white",
+          }),
+          (0, v.jsx)(eJ, {
+            gid: a,
+            x: 14,
+            y: 160,
+            r: 12,
+            rot: 0,
+            tone: "blush",
+          }),
+          (0, v.jsx)("circle", { cx: 92, cy: 74, r: 4, fill: "#c45a7a" }),
+          (0, v.jsx)("circle", { cx: 130, cy: 70, r: 3, fill: "#e59aa8" }),
+          (0, v.jsx)("circle", { cx: 70, cy: 140, r: 3, fill: "#e59aa8" }),
+        ],
+      });
+    }
+    function e4({ className: e, style: t, color: a = "#f2b8c0" }) {
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 20 20",
+        className: e,
+        style: t,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("path", {
+            d: "M10 1 C16 4 18 12 10 19 C2 12 4 4 10 1 Z",
+            fill: a,
+          }),
+          (0, v.jsx)("path", {
+            d: "M10 3 C11 8 11 13 10 17",
+            stroke: "#ffffff",
+            strokeOpacity: 0.5,
+            strokeWidth: 0.6,
+            fill: "none",
+          }),
+        ],
+      });
+    }
+    function e3({ className: e, color: t = "currentColor" }) {
+      return (0, v.jsx)("svg", {
+        viewBox: "0 0 240 24",
+        className: e,
+        "aria-hidden": !0,
+        children: (0, v.jsxs)("g", {
+          fill: "none",
+          stroke: t,
+          strokeWidth: 1,
+          strokeLinecap: "round",
+          children: [
+            (0, v.jsx)("path", { d: "M4 12 H92" }),
+            (0, v.jsx)("path", { d: "M148 12 H236" }),
+            (0, v.jsx)("circle", { cx: 98, cy: 12, r: 1.6, fill: t }),
+            (0, v.jsx)("circle", { cx: 142, cy: 12, r: 1.6, fill: t }),
+            (0, v.jsx)("path", {
+              d: "M120 3 C126 8 126 14 120 20 C114 14 114 8 120 3 Z",
+              fill: t,
+              fillOpacity: 0.2,
+            }),
+            (0, v.jsx)("path", {
+              d: "M120 20 C112 18 106 14 104 8 C111 9 116 13 120 20 Z",
+            }),
+            (0, v.jsx)("path", {
+              d: "M120 20 C128 18 134 14 136 8 C129 9 124 13 120 20 Z",
+            }),
+          ],
+        }),
+      });
+    }
+    e.s(
+      [
+        "Q",
+        0,
+        eV,
+        "E",
+        0,
+        e5,
+        "g",
+        0,
+        eY,
+        "I",
+        0,
+        eX,
+        "o",
+        0,
+        eQ,
+        "F",
+        0,
+        e3,
+        "k",
+        0,
+        eE,
+        "b",
+        0,
+        eP,
+        "n",
+        0,
+        e4,
+        "v",
+        0,
+        eU,
+        "m",
+        0,
+        eK,
+      ],
+      52973,
+    );
+    let e6 = "#e9bf62",
+      e8 = [0.22, 1, 0.36, 1];
+    function e9({ side: e }) {
+      let t = {
+        backgroundImage:
+          "radial-gradient(circle at center, #f6d987 0 1.6px, #9c6d22 2.2px, transparent 2.8px)",
+        backgroundSize: "9cqw 9cqw",
+        backgroundPosition: "center",
+      };
+      return (0, v.jsxs)("div", {
+        className: "relative h-full w-full overflow-hidden",
+        style: {
+          background:
+            "linear-gradient(180deg,#6d1328 0%,#4f0c1d 55%,#3a0815 100%)",
+          boxShadow:
+            "left" === e
+              ? "inset -10px 0 30px #0008"
+              : "inset 10px 0 30px #0008",
+        },
+        children: [
+          (0, v.jsx)("div", {
+            className:
+              "absolute inset-[3cqw] rounded-t-[22cqw] border-2 border-[#e9bf62]/80",
+          }),
+          (0, v.jsx)("div", {
+            className:
+              "absolute inset-[5cqw] rounded-t-[20cqw] border border-[#e9bf62]/40",
+          }),
+          (0, v.jsx)("div", {
+            className:
+              "absolute inset-x-[7cqw] top-[26cqw] bottom-[42%] rounded-t-full border border-[#e9bf62]/60 opacity-80",
+            style: t,
+          }),
+          (0, v.jsx)("div", {
+            className:
+              "absolute inset-x-[7cqw] bottom-[7cqw] h-[34%] border border-[#e9bf62]/60",
+            style: t,
+          }),
+          (0, v.jsx)(eE, {
+            color: e6,
+            className:
+              "absolute top-[8cqw] left-1/2 w-[22cqw] -translate-x-1/2 opacity-70",
+          }),
+          (0, v.jsx)("div", {
+            className: `absolute top-0 bottom-0 w-[2.4cqw] ${"left" === e ? "right-0" : "left-0"}`,
+            style: {
+              background: "linear-gradient(90deg,#9c6d22,#f6d987,#9c6d22)",
+            },
+          }),
+          (0, v.jsx)("div", {
+            className: `absolute top-[54%] size-[9cqw] rounded-full border-[0.8cqw] border-[#e9bf62] ${"left" === e ? "right-[5cqw]" : "left-[5cqw]"}`,
+          }),
+        ],
+      });
+    }
+    function e7({ kicker: e, children: t }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.6cqw] text-[#f6d987]/80",
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className:
+              "inv-script text-gold-shimmer mt-[2cqw] text-[12cqw] leading-tight",
+            children: t,
+          }),
+          (0, v.jsx)(e3, {
+            color: e6,
+            className: "mx-auto mt-[2cqw] w-[44cqw]",
+          }),
+        ],
+      });
+    }
+    let te = {
+        id: "rajwada",
+        tapHint: "tapSeal",
+        root: "bg-[#4a0b1b] text-[#fbf1dc]",
+        vars: {
+          "--inv-script": "var(--font-parisienne), cursive",
+          "--inv-serif": "var(--font-cormorant), serif",
+          "--inv-label": "var(--font-cinzel), serif",
+        },
+        accent: e6,
+        ui: {
+          section: "relative px-[7cqw] py-[14cqw]",
+          card: "rounded-[5cqw] border border-[#e9bf62]/40 bg-[#3a0815]/70 backdrop-blur-sm",
+          input:
+            "w-full rounded-[3cqw] border border-[#e9bf62]/35 bg-[#2c0510]/50 px-[4cqw] py-[3cqw] text-[3.8cqw] text-[#fbf1dc] placeholder:text-[#fbf1dc]/35 outline-none focus:border-[#e9bf62]",
+          chip: "rounded-full border border-[#e9bf62]/40 text-[#fbf1dc]/80 transition",
+          chipOn:
+            "rounded-full border border-[#e9bf62] bg-[#e9bf62] font-semibold text-[#4a0b1b] transition",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full bg-gradient-to-b from-[#f6d987] to-[#c99a3c] px-[5cqw] py-[2.6cqw] text-[3.4cqw] font-semibold text-[#3a0815] shadow-[0_8px_24px_-8px_#e9bf62] active:scale-95 transition",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#e9bf62]/60 px-[5cqw] py-[2.6cqw] text-[3.4cqw] text-[#f6d987] active:scale-95 transition",
+          muted: "text-[#fbf1dc]/70",
+          tile: "rounded-[3cqw] border border-[#e9bf62]/40 bg-[#3a0815]/60 text-[#f6d987]",
+        },
+        Opening: function ({ invite: e, opened: t, onOpen: a }) {
+          return (0, v.jsxs)("div", {
+            className: "absolute inset-0 overflow-hidden",
+            style: {
+              perspective: "140cqw",
+              pointerEvents: t ? "none" : "auto",
+            },
+            children: [
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-0",
+                style: {
+                  background:
+                    "radial-gradient(circle at 50% 50%, #ffe7a3 0%, #f3a93b 30%, #6d1328 75%)",
+                },
+                initial: { opacity: 0 },
+                animate: { opacity: t ? [0, 1, 0] : 0 },
+                transition: { duration: 2.2, times: [0, 0.35, 1] },
+              }),
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-y-0 left-0 w-1/2",
+                style: {
+                  transformOrigin: "left center",
+                  transformStyle: "preserve-3d",
+                },
+                animate: { rotateY: t ? -105 : 0 },
+                transition: { duration: 1.8, ease: [0.7, 0, 0.3, 1] },
+                children: (0, v.jsx)(e9, { side: "left" }),
+              }),
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-y-0 right-0 w-1/2",
+                style: {
+                  transformOrigin: "right center",
+                  transformStyle: "preserve-3d",
+                },
+                animate: { rotateY: 105 * !!t },
+                transition: { duration: 1.8, ease: [0.7, 0, 0.3, 1] },
+                children: (0, v.jsx)(e9, { side: "right" }),
+              }),
+              (0, v.jsx)($.f.div, {
+                animate: { opacity: +!t, y: t ? -40 : 0 },
+                transition: { duration: 0.6 },
+                children: (0, v.jsx)(eK, {
+                  className: "absolute inset-x-0 top-0 h-[28cqw] w-full",
+                }),
+              }),
+              (0, v.jsxs)($.f.button, {
+                onClick: a,
+                "aria-label": "Open invitation",
+                className:
+                  "absolute top-1/2 left-1/2 z-10 grid size-[34cqw] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full",
+                animate: { scale: t ? 0.4 : 1, opacity: +!t },
+                transition: { duration: 0.5 },
+                children: [
+                  (0, v.jsx)("span", {
+                    className:
+                      "absolute inset-0 animate-ping rounded-full bg-[#e9bf62]/25 [animation-duration:2.4s]",
+                  }),
+                  (0, v.jsx)("span", {
+                    className:
+                      "absolute inset-0 rounded-full shadow-[0_10px_40px_-5px_#000a]",
+                    style: {
+                      background:
+                        "radial-gradient(circle at 35% 30%, #fff1b8, #e0ae4c 45%, #9c6d22 100%)",
+                    },
+                  }),
+                  (0, v.jsx)(eE, {
+                    color: "#6d1328",
+                    className:
+                      "absolute inset-[2cqw] animate-spin-slow opacity-50",
+                    stroke: 1.4,
+                  }),
+                  (0, v.jsx)("span", {
+                    className:
+                      "inv-script relative px-[3cqw] py-[2cqw] text-[12cqw] leading-none text-[#4f0c1d]",
+                    children: (0, L.u)(e),
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+        Hero: function ({ invite: e }) {
+          let t = g(),
+            [a, s] = (0, L.g)(e),
+            i = (e) => ({
+              initial: { opacity: 0, y: 24, filter: "blur(6px)" },
+              animate: t ? { opacity: 1, y: 0, filter: "blur(0px)" } : {},
+              transition: { duration: 1.2, delay: e, ease: e8 },
+            });
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex min-h-[var(--screen-h,100dvh)] flex-col items-center justify-center overflow-hidden px-[6cqw] pt-[30cqw] pb-[18cqw]",
+            children: [
+              (0, v.jsx)(eK, {
+                className: "absolute inset-x-0 top-0 h-[28cqw] w-full",
+              }),
+              "engagement" === e.occasion
+                ? (0, v.jsxs)(v.Fragment, {
+                    children: [
+                      (0, v.jsx)(eX, {
+                        className: "absolute top-[22cqw] left-[3cqw] w-[14cqw]",
+                        chain: 70,
+                      }),
+                      (0, v.jsx)(eX, {
+                        className:
+                          "absolute top-[22cqw] right-[3cqw] w-[14cqw]",
+                        chain: 110,
+                        delay: -1.6,
+                      }),
+                    ],
+                  })
+                : (0, v.jsxs)(v.Fragment, {
+                    children: [
+                      (0, v.jsx)(eY, {
+                        className: "absolute top-[22cqw] left-[3cqw] w-[13cqw]",
+                        chain: 70,
+                      }),
+                      (0, v.jsx)(eY, {
+                        className:
+                          "absolute top-[22cqw] right-[3cqw] w-[13cqw]",
+                        chain: 110,
+                        delay: -1.6,
+                      }),
+                    ],
+                  }),
+              (0, v.jsxs)("div", {
+                className: "relative w-[80cqw]",
+                children: [
+                  (0, v.jsx)(eE, {
+                    color: e6,
+                    className:
+                      "absolute top-[18cqw] left-1/2 w-[110cqw] -translate-x-1/2 animate-spin-slow opacity-[0.13]",
+                  }),
+                  (0, v.jsx)(eQ, {
+                    className: "absolute inset-0 h-full w-full",
+                  }),
+                  (0, v.jsxs)("div", {
+                    className:
+                      "relative flex min-h-[118cqw] flex-col items-center px-[8cqw] pt-[26cqw] pb-[10cqw] text-center",
+                    children: [
+                      e.invocationArt &&
+                        (0, v.jsx)($.f.div, {
+                          ...i(0.3),
+                          className:
+                            "relative -mt-[6cqw] mb-[2cqw] h-[20cqw] w-[16cqw]",
+                          children: (0, v.jsx)(R.default, {
+                            src: e.invocationArt,
+                            alt: "",
+                            fill: !0,
+                            sizes: "120px",
+                            className:
+                              "object-contain drop-shadow-[0_2px_10px_rgba(0,0,0,.35)]",
+                          }),
+                        }),
+                      (0, v.jsx)($.f.p, {
+                        ...i(0.4),
+                        className: "inv-deva text-[4.6cqw] text-[#f6d987]",
+                        children: e.invocation,
+                      }),
+                      "" !== e.heroKicker &&
+                        (0, v.jsx)($.f.p, {
+                          ...i(0.6),
+                          className:
+                            "inv-label mt-[3cqw] text-[2.3cqw] text-[#fbf1dc]/70",
+                          children:
+                            e.heroKicker ??
+                            ("engagement" === e.occasion
+                              ? "The engagement of"
+                              : "The wedding of"),
+                        }),
+                      (0, v.jsxs)($.f.h1, {
+                        ...i(0.9),
+                        className:
+                          "mt-[3cqw] flex flex-col items-center leading-[0.9]",
+                        children: [
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-script text-gold-shimmer text-[17cqw] data-[deva]:!leading-[0.95]",
+                            children: a.first,
+                          }),
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-serif my-[1cqw] text-[6cqw] text-[#f6d987] italic",
+                            children:
+                              e.joiner ??
+                              ("engagement" === e.occasion ? "&" : "weds"),
+                          }),
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-script text-gold-shimmer text-[17cqw] data-[deva]:!leading-[0.95]",
+                            children: s.first,
+                          }),
+                        ],
+                      }),
+                      (0, v.jsxs)($.f.div, {
+                        ...i(1.3),
+                        className: "mt-[5cqw] w-full",
+                        children: [
+                          (0, v.jsx)(e3, {
+                            color: e6,
+                            className: "mx-auto w-[50cqw]",
+                          }),
+                          !e.hideHeroDate &&
+                            (0, v.jsxs)("div", {
+                              className:
+                                "inv-label mt-[3cqw] flex items-center justify-center gap-[3cqw] text-[#fbf1dc]",
+                              children: [
+                                (0, v.jsx)("span", {
+                                  className: "text-[2.6cqw]",
+                                  children: (0, T.D)(e.date),
+                                }),
+                                (0, v.jsx)("span", {
+                                  className:
+                                    "inv-serif text-[9cqw] leading-none tracking-normal text-[#f6d987]",
+                                  children: (0, T.v)(e.date),
+                                }),
+                                (0, v.jsx)("span", {
+                                  className: "text-[2.6cqw]",
+                                  children: (0, T.X)(e.date),
+                                }),
+                              ],
+                            }),
+                          !e.hideHeroCity &&
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-serif mt-[2cqw] text-[3.8cqw] text-[#fbf1dc]/75 italic",
+                              children: e.city,
+                            }),
+                        ],
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+        Blessing: function ({ invite: e }) {
+          let t,
+            [a, s] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw] text-center",
+            children: [
+              (0, v.jsxs)(B.b, {
+                children: [
+                  e.showMeaning &&
+                    e.invocationMeaning &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-serif mb-[3cqw] text-[3.6cqw] text-[#fbf1dc]/75 italic",
+                      children: e.invocationMeaning,
+                    }),
+                  (0, v.jsx)("p", {
+                    className: `inv-label text-[#f6d987] ${e.hostsLarge ? "text-[4cqw]" : "text-[2.6cqw]"}`,
+                    children: e.hosts,
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mx-auto mt-[4cqw] max-w-[78cqw] text-[5cqw] leading-snug whitespace-pre-line text-[#fbf1dc]/90 italic",
+                    children: e.message,
+                  }),
+                ],
+              }),
+              (0, v.jsxs)("div", {
+                className: e.stackNames
+                  ? "mx-auto mt-[10cqw] grid max-w-[72cqw] gap-[4cqw]"
+                  : "mt-[10cqw] grid grid-cols-[1fr_auto_1fr] items-center gap-[2cqw]",
+                children: [
+                  [a, s].map((t, a) =>
+                    (0, v.jsx)(
+                      B.b,
+                      {
+                        delay: 0.2 * a,
+                        className: e.stackNames
+                          ? 1 === a
+                            ? "row-start-3"
+                            : ""
+                          : 1 === a
+                            ? "col-start-3"
+                            : "",
+                        children: (0, v.jsxs)("div", {
+                          className:
+                            "relative overflow-hidden rounded-t-full border border-[#e9bf62]/60 bg-[#3a0815]/60 px-[3cqw] pt-[10cqw] pb-[5cqw]",
+                          children: [
+                            (0, v.jsx)(eE, {
+                              color: e6,
+                              className:
+                                "absolute -top-[10cqw] left-1/2 w-[40cqw] -translate-x-1/2 opacity-20",
+                            }),
+                            (0, v.jsx)("p", {
+                              className: `inv-script relative leading-none text-[#f6d987] ${e.stackNames ? "text-[12cqw]" : "text-[10cqw]"}`,
+                              children: t.cardName ?? t.first,
+                            }),
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-label relative mt-[3cqw] text-[2cqw] leading-relaxed text-[#fbf1dc]",
+                              children: t.full,
+                            }),
+                            t.elders &&
+                              !t.eldersBelow &&
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-serif relative mt-[2cqw] text-[3.2cqw] leading-snug whitespace-pre-line text-[#fbf1dc] italic",
+                                children: t.elders,
+                              }),
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-serif relative mt-[2cqw] text-[3.2cqw] leading-snug text-[#fbf1dc] italic",
+                              children: t.parents,
+                            }),
+                            t.elders &&
+                              t.eldersBelow &&
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-serif relative mt-[2cqw] text-[3.2cqw] leading-snug whitespace-pre-line text-[#fbf1dc] italic",
+                                children: t.elders,
+                              }),
+                          ],
+                        }),
+                      },
+                      t === e.bride ? "bride" : "groom",
+                    ),
+                  ),
+                  ((t = e.stackNames
+                    ? "row-start-2 mx-auto w-[10cqw]"
+                    : "col-start-2 row-start-1 w-[10cqw]"),
+                  "engagement" === e.occasion
+                    ? (0, v.jsx)(eU, { className: t })
+                    : (0, v.jsx)(eV, { className: t })),
+                ],
+              }),
+            ],
+          });
+        },
+        Events: function ({ invite: e }) {
+          let { t } = (0, N.G)();
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw]",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(e7, {
+                  kicker: t.eventsKicker,
+                  children:
+                    "engagement" !== e.occasion || e.words?.eventsTitle
+                      ? t.eventsTitle
+                      : "Engagement festivities",
+                }),
+              }),
+              (0, v.jsx)("div", {
+                className: "mt-[10cqw] space-y-[8cqw]",
+                children: e.events.map((t, a) =>
+                  (0, v.jsx)(
+                    B.b,
+                    {
+                      delay: 0.05,
+                      children: (0, v.jsxs)("article", {
+                        className:
+                          "relative overflow-hidden rounded-t-[40cqw] rounded-b-[4cqw] border border-[#e9bf62]/60 bg-gradient-to-b from-[#6d1328]/80 to-[#3a0815]/90 px-[7cqw] pt-[14cqw] pb-[8cqw] text-center shadow-[0_20px_50px_-20px_#000]",
+                        children: [
+                          (0, v.jsx)("div", {
+                            className:
+                              "pointer-events-none absolute inset-[2cqw] rounded-t-[38cqw] rounded-b-[3cqw] border border-dashed border-[#e9bf62]/30",
+                          }),
+                          (0, v.jsx)(eE, {
+                            color: e6,
+                            className:
+                              "absolute -top-[22cqw] left-1/2 w-[70cqw] -translate-x-1/2 opacity-15",
+                          }),
+                          (0, v.jsx)("span", {
+                            className:
+                              "relative mx-auto grid size-[16cqw] place-items-center rounded-full border border-[#e9bf62]/70 bg-[#4f0c1d] text-[#f6d987]",
+                            children: (0, v.jsx)(z, {
+                              kind: t.kind,
+                              className: "size-[9cqw]",
+                            }),
+                          }),
+                          (0, v.jsxs)("p", {
+                            className:
+                              "inv-label relative mt-[4cqw] text-[2.4cqw] text-[#f6d987]/80",
+                            children: [
+                              String(a + 1).padStart(2, "0"),
+                              " · ",
+                              t.devanagari &&
+                                (0, v.jsx)("span", {
+                                  className:
+                                    "inv-deva tracking-normal normal-case",
+                                  children: t.devanagari,
+                                }),
+                            ],
+                          }),
+                          (0, v.jsx)("h3", {
+                            className:
+                              "inv-script text-gold-shimmer relative mt-[1cqw] text-[13cqw] leading-tight",
+                            children: t.name,
+                          }),
+                          (0, v.jsxs)("div", {
+                            className:
+                              "relative mx-auto mt-[3cqw] flex w-fit items-stretch divide-x divide-[#e9bf62]/40 border-y border-[#e9bf62]/40 text-[#fbf1dc]",
+                            children: [
+                              (0, v.jsx)("span", {
+                                className:
+                                  "inv-label px-[3cqw] py-[2cqw] text-[2.4cqw]",
+                                children: (0, T.e)(t.start),
+                              }),
+                              (0, v.jsxs)("span", {
+                                className:
+                                  "inv-label px-[3cqw] py-[2cqw] text-[2.4cqw]",
+                                children: [
+                                  (0, T.v)(t.start),
+                                  " ",
+                                  (0, T.D)(t.start).slice(0, 3),
+                                ],
+                              }),
+                              !t.noTime &&
+                                (0, v.jsx)("span", {
+                                  className:
+                                    "inv-label px-[3cqw] py-[2cqw] text-[2.4cqw]",
+                                  children: t.timeText ?? (0, T.U)(t.start),
+                                }),
+                            ],
+                          }),
+                          (0, v.jsx)("p", {
+                            className:
+                              "inv-serif relative mt-[5cqw] text-[5.2cqw] leading-tight text-[#fbf1dc]",
+                            children: t.venue,
+                          }),
+                          t.address &&
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-serif relative mt-[1cqw] text-[3.4cqw] text-[#fbf1dc]/65",
+                              children: t.address,
+                            }),
+                          (t.dress || t.note) &&
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-serif relative mt-[3cqw] text-[3.6cqw] text-[#f6d987] italic",
+                              children: [t.dress && `Dress: ${t.dress}`, t.note]
+                                .filter(Boolean)
+                                .join(" · "),
+                            }),
+                          (0, v.jsx)("div", {
+                            className: "relative",
+                            children: (0, v.jsx)(B.W, {
+                              event: t,
+                              invite: e,
+                              theme: te,
+                            }),
+                          }),
+                        ],
+                      }),
+                    },
+                    t.name,
+                  ),
+                ),
+              }),
+            ],
+          });
+        },
+        Closing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className:
+              "relative overflow-hidden px-[7cqw] pt-[16cqw] pb-[24cqw] text-center",
+            children: [
+              (0, v.jsx)(eE, {
+                color: e6,
+                className:
+                  "absolute top-[4cqw] left-1/2 w-[120cqw] -translate-x-1/2 animate-spin-slow opacity-10",
+              }),
+              (0, v.jsxs)(B.b, {
+                className: "relative",
+                children: [
+                  "engagement" === e.occasion
+                    ? (0, v.jsx)(eU, { className: "mx-auto w-[24cqw]" })
+                    : (0, v.jsx)(eV, { className: "mx-auto w-[22cqw]" }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mx-auto mt-[4cqw] max-w-[70cqw] text-[5.4cqw] leading-snug text-[#fbf1dc]/90 italic",
+                    children: e.closing,
+                  }),
+                  (0, v.jsxs)("p", {
+                    className:
+                      "inv-script text-gold-shimmer mt-[6cqw] text-[13cqw] leading-none data-[deva]:mt-[9cqw]",
+                    children: [t.first, " ", e.joiner ?? "&", " ", a.first],
+                  }),
+                  e.hashtag &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-label !normal-case mt-[5cqw] text-[2.8cqw] text-[#f6d987]",
+                      children: e.hashtag,
+                    }),
+                  !e.noSignoff &&
+                    (0, v.jsxs)("p", {
+                      className:
+                        "inv-label mt-[3cqw] text-[2.2cqw] text-[#fbf1dc]/60",
+                      children: ["With love · ", e.hosts],
+                    }),
+                  e.extras?.map((e, t) =>
+                    (0, v.jsxs)(
+                      "div",
+                      {
+                        className: "mt-[8cqw]",
+                        children: [
+                          (0, v.jsx)("p", {
+                            className: "inv-label text-[2.6cqw] text-[#f6d987]",
+                            children: e.title,
+                          }),
+                          (0, v.jsx)("div", {
+                            className: "mt-[2cqw] space-y-[1cqw]",
+                            children: e.lines.map((e, t) =>
+                              (0, v.jsx)(
+                                "p",
+                                {
+                                  className:
+                                    "inv-serif text-[3.8cqw] leading-snug text-[#fbf1dc]/85 italic",
+                                  children: e,
+                                },
+                                t,
+                              ),
+                            ),
+                          }),
+                        ],
+                      },
+                      e.title + t,
+                    ),
+                  ),
+                ],
+              }),
+              !e.noBranding &&
+                (0, v.jsxs)(k.default, {
+                  href: "/",
+                  className:
+                    "inv-label absolute inset-x-0 bottom-[6cqw] text-[2cqw] text-[#fbf1dc]/40",
+                  children: ["Crafted by ", F.B.name],
+                }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          return (0, v.jsxs)("div", {
+            className: "pointer-events-none absolute inset-0 overflow-hidden",
+            children: [
+              (0, v.jsx)("div", {
+                className: "absolute inset-0",
+                style: {
+                  background:
+                    "radial-gradient(120% 60% at 50% 0%, #7a1730 0%, #4a0b1b 45%, #2c0510 100%)",
+                },
+              }),
+              (0, v.jsx)("div", {
+                className: "absolute inset-0 opacity-[0.07]",
+                style: {
+                  backgroundImage:
+                    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23e9bf62' stroke-width='1'%3E%3Cpath d='M30 6 C36 16 36 24 30 30 C24 24 24 16 30 6Z M30 54 C24 44 24 36 30 30 C36 36 36 44 30 54Z M6 30 C16 24 24 24 30 30 C24 36 16 36 6 30Z M54 30 C44 36 36 36 30 30 C36 24 44 24 54 30Z'/%3E%3Ccircle cx='0' cy='0' r='3'/%3E%3Ccircle cx='60' cy='0' r='3'/%3E%3Ccircle cx='0' cy='60' r='3'/%3E%3Ccircle cx='60' cy='60' r='3'/%3E%3C/g%3E%3C/svg%3E\")",
+                  backgroundSize: "15cqw 15cqw",
+                },
+              }),
+            ],
+          });
+        },
+        Divider: function ({ className: e }) {
+          return (0, v.jsx)(e3, {
+            color: e6,
+            className: `mx-auto w-[56cqw] ${e ?? ""}`,
+          });
+        },
+        Title: e7,
+      },
+      tt = "/art/illus",
+      ta = eB({
+        id: "mahal",
+        images: {
+          opening: `${tt}/mahal-doors.jpg`,
+          hero: `${tt}/mahal-hero.jpg`,
+          card: `${tt}/mahal-card.jpg`,
+        },
+        opening: "doors",
+        heroTextTop: 10,
+        frame: { top: 9, bottom: 9, side: 5 },
+        colors: {
+          ink: "#4a1426",
+          accent: "#a8462c",
+          soft: "#6e4a3a",
+          paper: "#f7ecd9",
+          onAccent: "#fff",
+        },
+        fonts: {
+          script: "var(--font-parisienne), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-cinzel), serif",
+        },
+      }),
+      ts = eB({
+        id: "khat",
+        images: {
+          opening: `${tt}/khat-envelope.jpg`,
+          hero: `${tt}/khat-hero.jpg`,
+          card: `${tt}/khat-card.jpg`,
+        },
+        opening: "envelope",
+        sealAt: { x: 50.5, y: 49.5 },
+        heroTextTop: 12,
+        frame: { top: 15, bottom: 15, side: 3 },
+        colors: {
+          ink: "#5b2a3a",
+          accent: "#b2566c",
+          soft: "#7e5a62",
+          paper: "#fbf3ea",
+          onAccent: "#fff",
+        },
+        fonts: {
+          script: "var(--font-pinyon), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-manrope), sans-serif",
+        },
+      }),
+      ti = {
+        ...eB({
+          id: "mudrika",
+          images: {
+            opening: `${tt}/khat-envelope.jpg`,
+            hero: `${tt}/khat-hero.jpg`,
+            card: `${tt}/khat-card.jpg`,
+          },
+          opening: "envelope",
+          sealAt: { x: 50.5, y: 49.5 },
+          heroTextTop: 12,
+          frame: { top: 15, bottom: 15, side: 3 },
+          colors: {
+            ink: "#5b2a3a",
+            accent: "#b2566c",
+            soft: "#7e5a62",
+            paper: "#fbf3ea",
+            onAccent: "#fff",
+          },
+          fonts: {
+            script: "var(--font-pinyon), cursive",
+            serif: "var(--font-cormorant), serif",
+            label: "var(--font-manrope), sans-serif",
+          },
+        }),
+        countdownTitle: "Until the ring ceremony",
+      },
+      tn = eB({
+        id: "khatred",
+        images: {
+          opening: `${tt}/khat-envelope.jpg`,
+          hero: `${tt}/khat-red-hero.jpg`,
+          card: `${tt}/khat-red-card.jpg`,
+        },
+        opening: "envelope",
+        sealAt: { x: 50.5, y: 49.5 },
+        heroTextTop: 8,
+        frame: { top: 15, bottom: 15, side: 3 },
+        colors: {
+          ink: "#6e1320",
+          accent: "#a3192b",
+          soft: "#7a4741",
+          paper: "#fbf1ec",
+          onAccent: "#fff",
+        },
+        fonts: {
+          script: "var(--font-pinyon), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-manrope), sans-serif",
+        },
+      }),
+      tl = eB({
+        id: "gopuram",
+        images: {
+          opening: `${tt}/gopuram-doors.jpg`,
+          hero: `${tt}/gopuram-hero.jpg`,
+          card: `${tt}/gopuram-card.jpg`,
+        },
+        opening: "doors",
+        heroTextTop: 4,
+        frame: { top: 13, bottom: 12, side: 8 },
+        heroGlow: !0,
+        scriptScale: 0.68,
+        colors: {
+          ink: "#5a0d2b",
+          accent: "#a6175a",
+          soft: "#6b4a3a",
+          paper: "#fbf5e8",
+          onAccent: "#fff",
+        },
+        fonts: {
+          script: "var(--font-yeseva), serif",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-marcellus), serif",
+        },
+      }),
+      tr = eB({
+        id: "bagh",
+        images: {
+          opening: `${tt}/bagh-gate.jpg`,
+          hero: `${tt}/bagh-hero.jpg`,
+          card: `${tt}/bagh-card.jpg`,
+        },
+        opening: "doors",
+        heroTextTop: 7,
+        frame: { top: 14, bottom: 21, side: 3 },
+        colors: {
+          ink: "#2e0f27",
+          accent: "#a14f2c",
+          soft: "#4f3434",
+          paper: "#f3eadb",
+          onAccent: "#fff",
+        },
+        fonts: {
+          script: "var(--font-dancing), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-cinzel), serif",
+        },
+        largeText: !0,
+      }),
+      tc = eB({
+        id: "haveli",
+        images: {
+          opening: `${tt}/haveli-arrival.jpg`,
+          hero: `${tt}/haveli-gate.jpg`,
+          card: `${tt}/haveli-card.jpg`,
+          frame: `${tt}/haveli-frame.png`,
+        },
+        opening: "doors",
+        openingTitle: !0,
+        openingTitleTop: 15,
+        frameOverHero: !0,
+        doorShade: !1,
+        sealImage: `${tt}/haveli-monogram.jpg`,
+        sealImageFor: ["akshay-weds-vidhi", "akshay-weds-vidhi-reception"],
+        heroTextTop: 18,
+        heroLead: 25,
+        stackNames: !0,
+        frame: { top: 12, bottom: 11, side: 6 },
+        colors: {
+          ink: "#5a1f2b",
+          accent: "#9c4a3c",
+          soft: "#6e564a",
+          paper: "#f8f3e8",
+          onAccent: "#fff",
+        },
+        fonts: {
+          script: "var(--font-pinyon), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-cinzel), serif",
+        },
+      }),
+      to = (e) => ({ ...e, countdownTitle: "Until the ring ceremony" }),
+      td = to(
+        eB({
+          id: "angoothi",
+          images: {
+            opening: `${tt}/angoothi-box.jpg`,
+            hero: `${tt}/angoothi-hero.jpg`,
+            card: `${tt}/angoothi-card.jpg`,
+          },
+          opening: "envelope",
+          sealAt: { x: 50, y: 47 },
+          heroTextTop: 9,
+          heroGlow: !0,
+          frame: { top: 14, bottom: 14, side: 3 },
+          colors: {
+            ink: "#5a2414",
+            accent: "#b5482a",
+            soft: "#7a4b36",
+            paper: "#fbf3e6",
+            onAccent: "#fff",
+          },
+          fonts: {
+            script: "var(--font-pinyon), cursive",
+            serif: "var(--font-cormorant), serif",
+            label: "var(--font-cinzel), serif",
+          },
+        }),
+      ),
+      tx = to(
+        eB({
+          id: "chandni",
+          images: {
+            opening: `${tt}/chandni-doors.jpg`,
+            hero: `${tt}/chandni-hero.jpg`,
+            card: `${tt}/chandni-card.jpg`,
+          },
+          opening: "doors",
+          heroTextTop: 10,
+          heroGlow: !0,
+          frame: { top: 14, bottom: 14, side: 3 },
+          colors: {
+            ink: "#3d2b4f",
+            accent: "#9a4f7c",
+            soft: "#6d5a73",
+            paper: "#f8f1f4",
+            onAccent: "#fff",
+          },
+          fonts: {
+            script: "var(--font-parisienne), cursive",
+            serif: "var(--font-cormorant), serif",
+            label: "var(--font-manrope), sans-serif",
+          },
+        }),
+      ),
+      tf = to(
+        eB({
+          id: "roka",
+          images: {
+            opening: `${tt}/roka-envelope.jpg`,
+            hero: `${tt}/roka-hero.jpg`,
+            card: `${tt}/roka-card.jpg`,
+          },
+          opening: "envelope",
+          sealAt: { x: 49.5, y: 48 },
+          openingInk: "#fff1d0",
+          heroTextTop: 10,
+          heroGlow: !0,
+          frame: { top: 14, bottom: 14, side: 3 },
+          colors: {
+            ink: "#6e1320",
+            accent: "#b3261e",
+            soft: "#7a4741",
+            paper: "#fbf3e6",
+            onAccent: "#fff",
+          },
+          fonts: {
+            script: "var(--font-yeseva), serif",
+            serif: "var(--font-cormorant), serif",
+            label: "var(--font-marcellus), serif",
+          },
+          scriptScale: 0.8,
+        }),
+      ),
+      tm = eB({
+        id: "rajwadasagai",
+        images: {
+          opening: `${tt}/rajwada-envelope.jpg`,
+          hero: `${tt}/khat-hero.jpg`,
+          card: `${tt}/khat-card.jpg`,
+        },
+        opening: "envelope",
+        sealAt: { x: 51.4, y: 49.9 },
+        openingInk: "#f6d987",
+        heroTextTop: 12,
+        frame: { top: 15, bottom: 15, side: 3 },
+        colors: {
+          ink: "#4a0b1b",
+          accent: "#e9bf62",
+          soft: "#7a4741",
+          paper: "#fbf1dc",
+          onAccent: "#4a0b1b",
+        },
+        fonts: {
+          script: "var(--font-parisienne), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-cinzel), serif",
+        },
+      }),
+      tp = {
+        ...te,
+        id: "rajwadasagai",
+        Opening: tm.Opening,
+        tapHint: "tapSeal",
+        countdownTitle: "Until the ring ceremony",
+      };
+    var th = e.i(72328);
+    function tw({
+      children: e,
+      className: t,
+      style: a,
+      nudge: s = 0,
+      vertical: i = !1,
+    }) {
+      let n = (0, f.useRef)(null),
+        [l, r] = (0, f.useState)(0),
+        [c, o] = (0, f.useState)(0),
+        d = "string" == typeof e ? e : "";
+      return (
+        (0, f.useLayoutEffect)(() => {
+          let e = n.current;
+          if (!e || !d) return;
+          let t = !1,
+            a = () => {
+              if (t) return;
+              let a = getComputedStyle(e),
+                s = document.createElement("canvas").getContext("2d");
+              if (!s) return;
+              s.font = `${a.fontStyle} ${a.fontWeight} ${a.fontSize} ${a.fontFamily}`;
+              let n = s.measureText(d),
+                l = (n.actualBoundingBoxRight - n.actualBoundingBoxLeft) / 2,
+                c = n.width / 2 - l;
+              if ((r(0.5 > Math.abs(c) ? 0 : c), i)) {
+                let e = parseFloat(a.lineHeight) || parseFloat(a.fontSize),
+                  t =
+                    (e - n.fontBoundingBoxAscent - n.fontBoundingBoxDescent) /
+                      2 +
+                    n.fontBoundingBoxAscent -
+                    (n.actualBoundingBoxAscent - n.actualBoundingBoxDescent) /
+                      2,
+                  s = e / 2 - t;
+                o(0.5 > Math.abs(s) ? 0 : s);
+              }
+            };
+          a(), document.fonts?.ready.then(a);
+          let s = new ResizeObserver(a);
+          return (
+            s.observe(e),
+            () => {
+              (t = !0), s.disconnect();
+            }
+          );
+        }, [d, i]),
+        (0, v.jsx)("span", {
+          ref: n,
+          className: t,
+          style: {
+            ...a,
+            display: a?.display ?? "inline-block",
+            transform:
+              l || s || c
+                ? `translate(calc(${l.toFixed(1)}px + ${s}em), ${c.toFixed(1)}px)`
+                : void 0,
+          },
+          children: e,
+        })
+      );
+    }
+    let tu = "/art/illus",
+      tg = "#36101c",
+      tb = "#9a1d45",
+      tj = "#741225",
+      ty = "#6c4a0c",
+      tq = "#b8862f",
+      tv = "#55303b",
+      tN = "0 0 14px rgba(255,250,252,.95), 0 0 3px rgba(255,250,252,.9)",
+      tk = "#f3dce4",
+      t$ = [0.22, 1, 0.36, 1],
+      tC = eB({
+        id: "gaurishankar",
+        images: {
+          opening: `${tu}/shiv-sky.jpg`,
+          hero: `${tu}/shiv-kailash.jpg`,
+          card: `${tu}/shiv-sky.jpg`,
+        },
+        opening: "envelope",
+        heroTextTop: 6,
+        frame: { top: 0, bottom: 0, side: 0 },
+        colors: {
+          ink: tg,
+          accent: tb,
+          soft: tv,
+          paper: "#fbf4f1",
+          onAccent: "#fff",
+        },
+        fonts: {
+          script: "var(--font-great-vibes), cursive",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-cinzel), serif",
+        },
+      });
+    function tM({ src: e, alt: t = "", priority: a, contain: s }) {
+      let i = j();
+      return (0, v.jsx)(R.default, {
+        src: e,
+        alt: t,
+        fill: !0,
+        priority: a && !i,
+        sizes: i ? y : q,
+        className: s ? "object-contain" : "object-cover",
+      });
+    }
+    function tS({ className: e }) {
+      return (0, v.jsxs)("div", {
+        className: `flex items-center justify-center gap-[2.5cqw] ${e ?? ""}`,
+        children: [
+          (0, v.jsx)("span", {
+            className: "h-px w-[16cqw]",
+            style: {
+              background: `linear-gradient(to right, transparent, ${tq})`,
+            },
+          }),
+          (0, v.jsx)("svg", {
+            viewBox: "0 0 24 24",
+            className: "w-[5cqw]",
+            fill: "none",
+            stroke: tq,
+            strokeWidth: 1.3,
+            "aria-hidden": !0,
+            children: (0, v.jsx)("path", {
+              d: "M12 19c-3-1.5-5-4-5-7 2 0 4 1 5 3 1-2 3-3 5-3 0 3-2 5.5-5 7zM12 15c-1.6-2-1.6-5 0-8 1.6 3 1.6 6 0 8zM4 13c1.5 0 3 .6 4 2M20 13c-1.5 0-3 .6-4 2",
+            }),
+          }),
+          (0, v.jsx)("span", {
+            className: "h-px w-[16cqw]",
+            style: {
+              background: `linear-gradient(to left, transparent, ${tq})`,
+            },
+          }),
+        ],
+      });
+    }
+    function t_({ kicker: e, children: t }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.8cqw] font-semibold",
+              style: { color: ty, textShadow: tN },
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className: "inv-script mt-[1cqw] text-[11cqw] leading-[1.1]",
+            style: { color: tb, textShadow: tN },
+            children: t,
+          }),
+          (0, v.jsx)(tS, { className: "mt-[1.5cqw]" }),
+        ],
+      });
+    }
+    let tz = [
+      { x: 8, d: 0, s: 1, t: 9 },
+      { x: 22, d: 2.4, s: 0.8, t: 11 },
+      { x: 37, d: 1.1, s: 1.15, t: 10 },
+      { x: 51, d: 3.6, s: 0.7, t: 12 },
+      { x: 64, d: 0.6, s: 0.95, t: 9.5 },
+      { x: 78, d: 2.9, s: 1.1, t: 10.5 },
+      { x: 90, d: 1.7, s: 0.85, t: 11.5 },
+      { x: 15, d: 5.2, s: 0.75, t: 12.5 },
+      { x: 45, d: 6.1, s: 1, t: 10 },
+      { x: 71, d: 4.4, s: 0.9, t: 11 },
+    ];
+    function tF({ burst: e = !1 }) {
+      return (0, th.f)()
+        ? null
+        : (0, v.jsx)("div", {
+            "aria-hidden": !0,
+            className: "pointer-events-none absolute inset-0 overflow-hidden",
+            children: tz.map((t, a) =>
+              (0, v.jsx)(
+                $.f.svg,
+                {
+                  viewBox: "0 0 20 14",
+                  className: "absolute -top-[6%]",
+                  style: { left: `${t.x}%`, width: `${3.4 * t.s}cqw` },
+                  initial: { y: "-10%", opacity: 0 },
+                  animate: {
+                    y: ["0vh", "112vh"],
+                    x: ["0cqw", "5cqw", "-3cqw", "4cqw"],
+                    rotate: [0, 120, 220, 340],
+                    opacity: [0, 0.9, 0.9, 0],
+                  },
+                  transition: {
+                    duration: e ? 0.6 * t.t : t.t,
+                    delay: e ? 0.15 * t.d : t.d,
+                    repeat: 1 / 0,
+                    ease: "linear",
+                  },
+                  children: (0, v.jsx)("path", {
+                    d: "M1 7C4 1 13 0 19 7 13 14 4 13 1 7z",
+                    fill: a % 3 ? "#f2a3b5" : "#e77f98",
+                    opacity: 0.85,
+                  }),
+                },
+                a,
+              ),
+            ),
+          });
+    }
+    let tT = ["Written by destiny,", "blessed by Mahadev"],
+      tB = ["विधि ने लिखा,", "महादेव ने आशीष दिया"],
+      tL = (e) => `calc(min(1cqw, 0.5svh) * ${e})`,
+      tO = (e) => (t) => ({
+        initial: { opacity: 0, y: 12 },
+        animate: e ? { opacity: 1, y: 0 } : {},
+        transition: { duration: 1, delay: t, ease: t$ },
+      });
+    function tW({ invite: e, show: t }) {
+      let [a, s] = (0, L.g)(e),
+        { lang: i, d: n } = (0, N.G)(),
+        l = "hi" === i;
+      return (0, v.jsxs)("div", {
+        className: "relative flex flex-col items-center text-center",
+        children: [
+          (0, v.jsx)("div", {
+            className:
+              "absolute -inset-x-[10%] -inset-y-[18%] rounded-[50%] bg-[radial-gradient(closest-side,rgba(255,250,248,.9),rgba(255,250,248,0))]",
+          }),
+          (0, v.jsx)($.f.p, {
+            ...t(0.2),
+            className: "relative text-[3.6cqw] leading-snug font-semibold",
+            style: {
+              color: tj,
+              fontFamily: "var(--font-deva)",
+              textShadow: tN,
+            },
+            children: e.invocationLines
+              ? (0, T.B)(e.invocation, /([।|])(?!\s*$)\s*/g).map((e, t) =>
+                  (0, v.jsx)(
+                    "span",
+                    { className: "block whitespace-nowrap", children: e },
+                    t,
+                  ),
+                )
+              : e.invocation,
+          }),
+          e.invocationMeaning &&
+            (0, v.jsx)($.f.p, {
+              ...t(0.35),
+              className:
+                "inv-serif relative mt-[1cqw] text-[4cqw] font-semibold italic",
+              style: { color: tv, textShadow: tN },
+              children: e.invocationMeaning,
+            }),
+          "reception" === e.occasion
+            ? (0, v.jsxs)($.f.div, {
+                ...t(0.5),
+                className: "relative mt-[4cqw] flex flex-col items-center",
+                children: [
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif text-[4.6cqw] leading-snug font-semibold",
+                    style: { color: tg, textShadow: tN },
+                    children: "You are cordially invited to the",
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-script mt-[1.5cqw] text-[9.5cqw] leading-[1.05]",
+                    style: { color: "#1c1414", textShadow: tN },
+                    children: "Reception",
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mt-[1.5cqw] -mb-[1cqw] text-[4.6cqw] leading-none font-semibold italic",
+                    style: { color: tg, textShadow: tN },
+                    children: "of",
+                  }),
+                ],
+              })
+            : (0, v.jsx)($.f.p, {
+                ...t(0.5),
+                className:
+                  "inv-label relative mt-[3cqw] text-[2.8cqw] leading-relaxed font-semibold",
+                style: { color: tg, textShadow: tN },
+                children:
+                  e.heroKicker ??
+                  (l
+                    ? "आप सपरिवार सादर आमंत्रित हैं"
+                    : "We cordially invite you to the wedding of"),
+              }),
+          "reception" === e.occasion
+            ? (0, v.jsxs)($.f.h1, {
+                ...t(0.75),
+                className:
+                  "inv-script relative mt-[1cqw] text-[11.5cqw] leading-[1.05] whitespace-nowrap",
+                style: { color: tb, textShadow: tN },
+                children: [
+                  a.first,
+                  (0, v.jsx)("span", {
+                    className: "mx-[2cqw] text-[8cqw]",
+                    children: e.joiner ?? "&",
+                  }),
+                  s.first,
+                ],
+              })
+            : (0, v.jsxs)($.f.h1, {
+                ...t(0.75),
+                className:
+                  "inv-script relative mt-[1.5cqw] text-[14cqw] leading-[1.05]",
+                style: { color: tb, textShadow: tN },
+                children: [
+                  a.first,
+                  (0, v.jsx)("span", {
+                    className: "mx-[2cqw] text-[9cqw]",
+                    children: e.joiner ?? (l ? "एवं" : "&"),
+                  }),
+                  s.first,
+                ],
+              }),
+          "reception" === e.occasion
+            ? (0, v.jsxs)($.f.p, {
+                ...t(1),
+                className:
+                  "inv-serif relative mt-[3cqw] text-[4.6cqw] font-semibold",
+                style: { color: tj, textShadow: tN },
+                children: [
+                  (0, T.e)(e.date),
+                  ", ",
+                  (0, T.s)(e.date, { day: "numeric" }),
+                  " ",
+                  (0, T.D)(e.date),
+                  " ",
+                  (0, T.X)(e.date),
+                  " · ",
+                  e.city,
+                ],
+              })
+            : (0, v.jsxs)(v.Fragment, {
+                children: [
+                  !e.hideHeroDate &&
+                    (0, v.jsx)($.f.p, {
+                      ...t(1),
+                      className:
+                        "inv-label relative mt-[3cqw] text-[3.4cqw] font-bold",
+                      style: {
+                        color: tj,
+                        letterSpacing: "0.1em",
+                        textShadow: tN,
+                      },
+                      children: l
+                        ? `${n.weekday(e.date)} \xb7 ${n.day(e.date)} ${n.month(e.date)} ${n.year(e.date)}`
+                        : `${(0, T.e)(e.date)} \xb7 ${(0, T.s)(e.date, { day: "numeric" })} ${(0, T.D)(e.date)} ${(0, T.X)(e.date)}`,
+                    }),
+                  !e.hideHeroCity &&
+                    (0, v.jsx)($.f.p, {
+                      ...t(1.15),
+                      className:
+                        "inv-serif relative mt-[1.5cqw] text-[4.8cqw] font-semibold italic",
+                      style: { color: tg, textShadow: tN },
+                      children: e.city,
+                    }),
+                ],
+              }),
+        ],
+      });
+    }
+    function tI({ invite: e }) {
+      let t = g(),
+        [a, s] = (0, L.g)(e),
+        i = (0, f.useRef)(null),
+        { scrollYProgress: n } = e$({
+          target: i,
+          offset: ["start start", "end end"],
+        }),
+        l = (0, eS.f)(n, [0, 0.95], [1, 1.8]),
+        r = (0, eS.f)(n, [0, 0.3], ["0%", "-40%"]),
+        c = (0, eS.f)(n, [0.03, 0.26], [1, 0]),
+        o = (0, eS.f)(n, [0.66, 0.98], [1, 0]);
+      return (0, v.jsx)("section", {
+        ref: i,
+        className: "relative",
+        style: { height: "210dvh" },
+        children: (0, v.jsxs)($.f.div, {
+          className: "sticky top-0 h-[100dvh] w-full overflow-hidden",
+          style: { opacity: o },
+          children: [
+            (0, v.jsx)($.f.div, {
+              className: "absolute inset-0",
+              style: { scale: l, transformOrigin: "50% 66%" },
+              children: (0, v.jsx)(tM, {
+                src: `${tu}/shiv-kailash.jpg`,
+                alt: `Shiv and Parvati seated together on Kailash, for ${a.first} and ${s.first}`,
+                priority: !0,
+              }),
+            }),
+            (0, v.jsx)(tF, {}),
+            (0, v.jsx)(tH, {}),
+            (0, v.jsx)($.f.div, {
+              className: "absolute inset-x-[7%] top-[6%]",
+              style: { y: r, opacity: c },
+              children: (0, v.jsx)(tW, { invite: e, show: tO(t) }),
+            }),
+          ],
+        }),
+      });
+    }
+    function tH() {
+      return (0, v.jsx)($.f.div, {
+        "aria-hidden": !0,
+        className:
+          "pointer-events-none absolute inset-x-[-20%] bottom-0 h-[20%]",
+        style: {
+          background:
+            "radial-gradient(60% 70% at 30% 100%, rgba(255,255,255,.8), transparent 70%), radial-gradient(60% 70% at 75% 100%, rgba(255,255,255,.7), transparent 70%)",
+        },
+        animate: { x: ["-4%", "4%", "-4%"] },
+        transition: { duration: 14, repeat: 1 / 0, ease: "easeInOut" },
+      });
+    }
+    function tD({ e, invite: t }) {
+      let { lang: a, t: s, d: i } = (0, N.G)(),
+        n = "hi" === a,
+        l = e.timeText ?? (n ? i.time(e.start) : (0, T.U)(e.start)),
+        r =
+          "gold" === t.eventOm
+            ? `${tu}/shiv-om-gold.webp`
+            : `${tu}/shiv-om-maroon.webp`;
+      return (0, v.jsxs)("div", {
+        children: [
+          (0, v.jsxs)("div", {
+            className:
+              "relative mx-auto w-[78cqw] drop-shadow-[0_12px_20px_rgba(140,40,70,.14)]",
+            style: { aspectRatio: "774 / 1442" },
+            children: [
+              (0, v.jsx)(tM, { src: `${tu}/shiv-card.webp`, contain: !0 }),
+              t.eventOm &&
+                (0, v.jsx)("div", {
+                  className:
+                    "pointer-events-none absolute inset-x-0 top-[14.5%] flex justify-center",
+                  children: (0, v.jsx)("div", {
+                    className: "relative aspect-[653/573] w-[12%]",
+                    children: (0, v.jsx)(R.default, {
+                      src: r,
+                      alt: "Om",
+                      fill: !0,
+                      sizes: "15vw",
+                      className: "object-contain",
+                    }),
+                  }),
+                }),
+              (0, v.jsxs)("div", {
+                className:
+                  "absolute inset-x-[15%] top-[25%] bottom-[15%] flex flex-col items-center justify-center text-center",
+                children: [
+                  (0, v.jsx)("h3", {
+                    className: "inv-script text-[13cqw] leading-[1.05]",
+                    style: { color: tb },
+                    children: e.name,
+                  }),
+                  e.note &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-serif mt-[1.5cqw] text-[3.9cqw] leading-snug font-semibold italic",
+                      style: { color: tv },
+                      children: e.note,
+                    }),
+                  (0, v.jsx)(tS, { className: "my-[4cqw]" }),
+                  (0, v.jsx)("p", {
+                    className: "inv-label text-[3.6cqw] leading-snug font-bold",
+                    style: { color: tj, letterSpacing: "0.08em" },
+                    children: n ? i.weekday(e.start) : (0, T.e)(e.start),
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "mt-[1cqw] text-[10cqw] leading-none font-semibold",
+                    style: {
+                      color: tg,
+                      fontFamily: "var(--font-cormorant), serif",
+                    },
+                    children: (0, T.s)(e.start, { day: "numeric" }),
+                  }),
+                  (0, v.jsxs)("p", {
+                    className:
+                      "inv-label mt-[1cqw] text-[3.4cqw] leading-snug font-bold",
+                    style: { color: tj, letterSpacing: "0.08em" },
+                    children: [
+                      n
+                        ? `${i.month(e.start)} ${i.year(e.start)}`
+                        : (0, T.s)(e.start, { month: "long", year: "numeric" }),
+                      !e.noTime &&
+                        (0, v.jsxs)(v.Fragment, { children: [" · ", l] }),
+                    ],
+                  }),
+                  t.venueLines
+                    ? (0, v.jsx)("div", {
+                        className: "mt-[5cqw]",
+                        children: e.venue
+                          .split(/\s*,\s*/)
+                          .map((e, t) =>
+                            (0, v.jsx)(
+                              "p",
+                              {
+                                className: `inv-serif text-[4.4cqw] leading-tight font-bold whitespace-nowrap ${t ? "mt-[1cqw]" : ""}`,
+                                style: { color: tg },
+                                children: e,
+                              },
+                              t,
+                            ),
+                          ),
+                      })
+                    : (0, v.jsx)("p", {
+                        className:
+                          "inv-serif mt-[5cqw] text-[4.8cqw] leading-tight font-bold",
+                        style: { color: tg },
+                        children: e.venue,
+                      }),
+                  e.address &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-serif mt-[1cqw] line-clamp-3 text-[3.6cqw] leading-snug font-medium",
+                      style: { color: tv, textWrap: "balance" },
+                      children: e.address,
+                    }),
+                  e.dress &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-serif mt-[2.5cqw] text-[3.8cqw] font-semibold italic",
+                      style: { color: tb },
+                      children: s.dress(e.dress),
+                    }),
+                ],
+              }),
+            ],
+          }),
+          (0, v.jsx)("div", {
+            className: "mt-[3cqw] flex justify-center",
+            children: (0, v.jsx)(B.W, { event: e, invite: t, theme: tR }),
+          }),
+        ],
+      });
+    }
+    let tR = {
+      ...tC,
+      id: "gaurishankar",
+      tapHint: "tapAnywhere",
+      tapHintDelay: 7.5,
+      vars: { ...tC.vars, "--inv-accent": tb },
+      accent: tb,
+      root: `${tC.root} [&_.opacity-70]:!opacity-95 [&_.opacity-80]:!opacity-100`,
+      ui: {
+        ...tC.ui,
+        section: "relative px-[10cqw] py-[12cqw]",
+        muted: "font-medium",
+        input: `${tC.ui.input} placeholder:!opacity-60`,
+      },
+      Opening: function ({ invite: e, opened: t, onOpen: a }) {
+        let s = (0, th.f)(),
+          [i, n] = (0, L.g)(e),
+          l = "hi" === (0, N.H)(e),
+          r = (e) => (s ? 0 : e),
+          c = e.openingLine ? e.openingLine.split("\n") : l ? tB : tT;
+        return (0, v.jsxs)($.f.button, {
+          type: "button",
+          onClick: a,
+          "aria-label": "Open invitation",
+          className:
+            "absolute inset-0 block cursor-pointer overflow-hidden text-left",
+          style: { background: tk, pointerEvents: t ? "none" : "auto" },
+          animate: t ? { opacity: 0, scale: 1.06 } : { opacity: 1, scale: 1 },
+          transition: { duration: t ? 1.3 : 0.4, ease: t$ },
+          children: [
+            (0, v.jsx)(tM, { src: `${tu}/shiv-sky.jpg`, priority: !0 }),
+            (0, v.jsx)(tF, {}),
+            (0, v.jsx)($.f.div, {
+              className: "absolute",
+              style: {
+                left: tL(-12),
+                top: tL(68),
+                width: tL(112),
+                aspectRatio: "1100 / 618",
+              },
+              initial: !s && { x: "-100%", opacity: 0 },
+              animate: { x: "0%", opacity: 1 },
+              transition: { duration: 2, delay: r(0.2), ease: "easeOut" },
+              children: (0, v.jsx)(tM, {
+                src: `${tu}/shiv-hand.webp`,
+                alt: "",
+                priority: !0,
+                contain: !0,
+              }),
+            }),
+            (0, v.jsx)($.f.div, {
+              className: "absolute",
+              style: {
+                top: tL(-8),
+                right: `min(calc(100cqw - ${tL(130)}), 0px)`,
+                width: tL(90),
+                aspectRatio: "788 / 890",
+              },
+              initial: !s && { x: "35%", y: "-35%", opacity: 0 },
+              animate: { x: "0%", y: "0%", opacity: 1 },
+              transition: {
+                duration: 2.6,
+                delay: r(1),
+                ease: [0.25, 0.8, 0.3, 1],
+              },
+              children: (0, v.jsx)(tM, {
+                src: `${tu}/shiv-parvati-step.webp`,
+                alt: "",
+                priority: !0,
+                contain: !0,
+              }),
+            }),
+            (0, v.jsx)($.f.div, {
+              "aria-hidden": !0,
+              className:
+                "pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
+              style: {
+                left: tL(62),
+                top: tL(78),
+                width: tL(54),
+                height: tL(54),
+                background:
+                  "radial-gradient(closest-side, rgba(255,240,230,.9), rgba(255,220,225,0))",
+              },
+              initial: { opacity: 0, scale: 0.4 },
+              animate: { opacity: [0, 0.95, 0.4], scale: [0.4, 1.2, 1] },
+              transition: { duration: 2.2, delay: r(3.4), ease: t$ },
+            }),
+            (0, v.jsxs)("div", {
+              className: "absolute inset-x-[4%] text-center",
+              style: { top: tL(132) },
+              children: [
+                (0, v.jsx)("div", {
+                  "aria-hidden": !0,
+                  className:
+                    "absolute -inset-x-[6%] -inset-y-[18%] rounded-[50%] bg-[radial-gradient(closest-side,rgba(255,248,250,.78),rgba(255,248,250,0))]",
+                }),
+                (0, v.jsxs)($.f.p, {
+                  className: `${l ? "" : "inv-label"} relative leading-snug font-bold`,
+                  style: {
+                    fontSize: tL(4.8),
+                    color: tj,
+                    textShadow: tN,
+                    fontFamily: l ? "var(--font-deva)" : void 0,
+                    letterSpacing: l ? void 0 : "0.06em",
+                  },
+                  initial: { opacity: 0, y: 12 },
+                  animate: { opacity: 1, y: 0 },
+                  transition: { duration: 1.1, delay: r(4), ease: t$ },
+                  children: [c[0], (0, v.jsx)("br", {}), c[1]],
+                }),
+                (0, v.jsx)($.f.p, {
+                  className: "inv-script relative leading-[1.15]",
+                  style: {
+                    fontSize: tL(15),
+                    marginTop: tL(2),
+                    color: tb,
+                    textShadow: tN,
+                  },
+                  initial: { opacity: 0, y: 14, filter: "blur(6px)" },
+                  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+                  transition: { duration: 1.4, delay: r(4.8), ease: t$ },
+                  children: e.stackNames
+                    ? (0, v.jsxs)(v.Fragment, {
+                        children: [
+                          (0, v.jsx)(tw, {
+                            className: "block",
+                            style: { fontSize: tL(13), display: "block" },
+                            nudge:
+                              e.nameNudge?.[
+                                i === e.bride ? "bride" : "groom"
+                              ] ?? 0,
+                            children: i.first,
+                          }),
+                          (0, v.jsx)("span", {
+                            className: "block leading-none",
+                            style: { fontSize: tL(9) },
+                            children: e.joiner ?? "&",
+                          }),
+                          (0, v.jsx)(tw, {
+                            className: "block",
+                            style: { fontSize: tL(13), display: "block" },
+                            nudge:
+                              e.nameNudge?.[
+                                n === e.bride ? "bride" : "groom"
+                              ] ?? 0,
+                            children: n.first,
+                          }),
+                        ],
+                      })
+                    : (0, v.jsxs)(v.Fragment, {
+                        children: [
+                          i.first,
+                          " ",
+                          (0, v.jsx)("span", {
+                            style: { fontSize: tL(10) },
+                            children: e.joiner ?? (l ? "एवं" : "&"),
+                          }),
+                          " ",
+                          n.first,
+                        ],
+                      }),
+                }),
+              ],
+            }),
+          ],
+        });
+      },
+      Hero: function ({ invite: e }) {
+        let t = g();
+        return j()
+          ? (0, v.jsxs)("section", {
+              className: "relative h-full w-full overflow-hidden",
+              children: [
+                (0, v.jsx)(tM, { src: `${tu}/shiv-kailash.jpg` }),
+                (0, v.jsx)("div", {
+                  className: "absolute inset-x-[8%] top-[7%]",
+                  children: (0, v.jsx)(tW, { invite: e, show: tO(t) }),
+                }),
+              ],
+            })
+          : (0, v.jsx)(tI, { invite: e });
+      },
+      Blessing: function ({ invite: e }) {
+        let [t, a] = (0, L.g)(e),
+          { lang: s, t: i } = (0, N.G)(),
+          n = "hi" === s,
+          l = (0, f.useRef)(null),
+          { scrollYProgress: r } = e$({
+            target: l,
+            offset: ["start end", "start 15%"],
+          }),
+          c = (0, eS.f)(r, [0, 1], [0.5, 1]),
+          o = (0, eS.f)(r, [0, 0.45], [0, 1]),
+          d = j(),
+          x = (e) =>
+            (e.eldersPlain ?? !!e.eldersBelow)
+              ? (0, v.jsx)("p", {
+                  className:
+                    "inv-serif mx-auto mt-[1cqw] max-w-[70cqw] text-[4cqw] leading-snug font-semibold whitespace-pre-line italic",
+                  style: { color: tv, textShadow: tN },
+                  children: e.elders,
+                })
+              : (0, v.jsx)("p", {
+                  className:
+                    "inv-label mx-auto mt-[1cqw] max-w-[70cqw] text-[2.9cqw] leading-relaxed font-semibold whitespace-pre-line",
+                  style: { color: ty, textShadow: tN },
+                  children: e.elders,
+                }),
+          m = (t) =>
+            (0, v.jsxs)("div", {
+              children: [
+                (0, v.jsx)("p", {
+                  className:
+                    "inv-script mt-[1.5cqw] text-[14cqw] leading-[1.05]",
+                  style: { color: tb, textShadow: tN },
+                  children: (0, v.jsx)(tw, {
+                    nudge:
+                      e.nameNudge?.[t === e.bride ? "bride" : "groom"] ?? 0,
+                    children: t.full || t.first,
+                  }),
+                }),
+                t.elders && !t.eldersBelow && x(t),
+                t.parents &&
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mx-auto mt-[1cqw] max-w-[70cqw] text-[4.2cqw] leading-snug font-semibold italic",
+                    style: { color: tv, textShadow: tN },
+                    children: t.parents,
+                  }),
+                t.elders && t.eldersBelow && x(t),
+              ],
+            });
+        return (0, v.jsx)("section", {
+          ref: l,
+          className: `relative z-10 px-[11cqw] pb-[10cqw] text-center ${d ? "pt-[14cqw]" : "-mt-[55dvh] pt-[20cqw]"}`,
+          children: (0, v.jsxs)($.f.div, {
+            style: d
+              ? void 0
+              : { scale: c, opacity: o, transformOrigin: "50% 30%" },
+            children: [
+              (0, v.jsx)("p", {
+                className: "text-[9cqw] leading-none",
+                style: {
+                  color: ty,
+                  fontFamily: "var(--font-deva)",
+                  textShadow: tN,
+                },
+                children: "ॐ",
+              }),
+              (0, v.jsx)("p", {
+                className:
+                  "inv-label mt-[4cqw] text-[3cqw] leading-relaxed font-semibold",
+                style: { color: ty, textShadow: tN },
+                children:
+                  e.hosts ||
+                  (n ? i.togetherWithFamilies : "Together with their families"),
+              }),
+              (0, v.jsx)("p", {
+                className:
+                  "inv-serif mt-[2.5cqw] text-[5cqw] leading-snug font-semibold italic",
+                style: {
+                  color: tg,
+                  textShadow: tN,
+                  ...(e.justifyMessage
+                    ? {
+                        textAlign: "justify",
+                        textAlignLast: "center",
+                        hyphens: "none",
+                      }
+                    : {}),
+                },
+                children: e.message,
+              }),
+              (0, v.jsx)(tS, { className: "my-[6cqw]" }),
+              m(t),
+              (0, v.jsx)("p", {
+                className: "my-[3cqw] text-[9cqw] leading-none",
+                style: {
+                  color: ty,
+                  fontFamily: "var(--font-parisienne), cursive",
+                  textShadow: tN,
+                },
+                children: e.stackNames
+                  ? (e.joiner ?? "&")
+                  : n
+                    ? i.weds
+                    : "with",
+              }),
+              m(a),
+            ],
+          }),
+        });
+      },
+      Events: function ({ invite: e }) {
+        let { lang: t, t: a } = (0, N.G)(),
+          s = (0, f.useContext)(N.s);
+        return (0, v.jsxs)("section", {
+          className: "relative px-[11cqw] py-[12cqw]",
+          children: [
+            (0, v.jsx)(B.b, {
+              children:
+                "hi" === t
+                  ? (0, v.jsx)(t_, {
+                      kicker: a.eventsKicker,
+                      children: a.eventsTitle,
+                    })
+                  : (0, v.jsx)(t_, {
+                      kicker: s.eventsKicker ?? "Join us for",
+                      children: s.eventsTitle || "The celebrations",
+                    }),
+            }),
+            (0, v.jsx)("ol", {
+              className: "mt-[8cqw] space-y-[9cqw]",
+              children: e.events.map((t, a) =>
+                (0, v.jsx)(
+                  $.f.li,
+                  {
+                    initial: { opacity: 0, y: 30, scale: 0.94 },
+                    whileInView: { opacity: 1, y: 0, scale: 1 },
+                    viewport: { once: !0, amount: 0.3 },
+                    transition: { duration: 0.9, ease: t$ },
+                    children: (0, v.jsx)(tD, { e: t, invite: e }),
+                  },
+                  t.name + a,
+                ),
+              ),
+            }),
+          ],
+        });
+      },
+      Closing: function ({ invite: e }) {
+        let [t, a] = (0, L.g)(e),
+          { lang: s, t: i } = (0, N.G)();
+        return (0, v.jsx)("section", {
+          className:
+            "relative overflow-hidden px-[11cqw] pt-[8cqw] pb-[16cqw] text-center",
+          children: (0, v.jsxs)(B.b, {
+            children: [
+              (0, v.jsxs)("div", {
+                "aria-hidden": !0,
+                className:
+                  "relative mx-auto w-[70cqw] overflow-hidden border border-[#d9b97a]",
+                style: {
+                  aspectRatio: "100 / 142",
+                  borderRadius: "50% 50% 6px 6px / 30% 30% 6px 6px",
+                },
+                children: [
+                  (0, v.jsx)(tM, { src: `${tu}/shiv-sky.jpg` }),
+                  (0, v.jsx)("div", {
+                    className: "absolute",
+                    style: {
+                      left: "-12%",
+                      top: "53.5%",
+                      width: "112%",
+                      aspectRatio: "1100 / 618",
+                    },
+                    children: (0, v.jsx)(tM, {
+                      src: `${tu}/shiv-hand.webp`,
+                      contain: !0,
+                    }),
+                  }),
+                  (0, v.jsx)("div", {
+                    className: "absolute top-0",
+                    style: {
+                      left: "40%",
+                      width: "90%",
+                      aspectRatio: "788 / 890",
+                    },
+                    children: (0, v.jsx)(tM, {
+                      src: `${tu}/shiv-parvati-step.webp`,
+                      contain: !0,
+                    }),
+                  }),
+                ],
+              }),
+              (0, v.jsx)(tS, { className: "mt-[4cqw]" }),
+              (0, v.jsx)("p", {
+                className:
+                  "inv-serif mt-[4cqw] text-[5.2cqw] leading-snug font-semibold italic",
+                style: { color: tg, textShadow: tN },
+                children: e.closingLines
+                  ? (0, T.B)(e.closing, /([.!?])\s+/g).map((e, t) =>
+                      (0, v.jsx)(
+                        "span",
+                        {
+                          className: "block text-[4.3cqw] whitespace-nowrap",
+                          children: e.replace(/\.$/, ""),
+                        },
+                        t,
+                      ),
+                    )
+                  : e.closing,
+              }),
+              (0, v.jsx)("p", {
+                className: "inv-script mt-[3cqw] text-[14cqw] leading-[1.1]",
+                style: { color: tb, textShadow: tN },
+                children: e.stackNames
+                  ? (0, v.jsxs)(v.Fragment, {
+                      children: [
+                        (0, v.jsx)(tw, {
+                          style: { display: "block" },
+                          nudge:
+                            e.nameNudge?.[t === e.bride ? "bride" : "groom"] ??
+                            0,
+                          children: t.first,
+                        }),
+                        (0, v.jsx)("span", {
+                          className: "block text-[9cqw] leading-none",
+                          children: e.joiner ?? "&",
+                        }),
+                        (0, v.jsx)(tw, {
+                          style: { display: "block" },
+                          nudge:
+                            e.nameNudge?.[a === e.bride ? "bride" : "groom"] ??
+                            0,
+                          children: a.first,
+                        }),
+                      ],
+                    })
+                  : `${t.first} ${e.joiner ?? ("hi" === s ? "एवं" : "&")} ${a.first}`,
+              }),
+              e.hashtagImage
+                ? (0, v.jsx)("div", {
+                    className:
+                      "relative mx-auto mt-[4cqw] h-[46cqw] w-[56cqw] drop-shadow-[0_0_10px_rgba(255,250,240,.9)]",
+                    children: (0, v.jsx)(R.default, {
+                      src: e.hashtagImage,
+                      alt: e.hashtag ?? "Monogram",
+                      fill: !0,
+                      sizes: "260px",
+                      className: "object-contain",
+                    }),
+                  })
+                : e.hashtag &&
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-label !normal-case mt-[3cqw] text-[4.6cqw] font-bold tracking-[0.06em]",
+                    style: { color: tj, textShadow: tN },
+                    children: e.hashtag,
+                  }),
+              e.extras?.map((e, t) =>
+                (0, v.jsxs)(
+                  "div",
+                  {
+                    className: "mt-[8cqw]",
+                    children: [
+                      (0, v.jsx)("p", {
+                        className:
+                          "inv-serif text-[5cqw] leading-snug font-bold",
+                        style: { color: tb, textShadow: tN },
+                        children: e.title,
+                      }),
+                      (0, v.jsx)("div", {
+                        className: "mt-[2cqw] space-y-[1cqw]",
+                        children: e.lines.map((e, t) =>
+                          (0, v.jsx)(
+                            "p",
+                            {
+                              className:
+                                "inv-serif text-[4.4cqw] leading-snug font-semibold",
+                              style: { color: tg, textShadow: tN },
+                              children: e,
+                            },
+                            t,
+                          ),
+                        ),
+                      }),
+                    ],
+                  },
+                  e.title + t,
+                ),
+              ),
+              e.welcome &&
+                (0, v.jsx)("p", {
+                  className:
+                    "inv-serif mx-auto mt-[8cqw] max-w-[72cqw] text-[4.6cqw] leading-snug font-semibold italic whitespace-pre-line",
+                  style: { color: tb, textShadow: tN },
+                  children: e.welcome,
+                }),
+              !e.noBranding &&
+                (0, v.jsx)(k.default, {
+                  href: "/",
+                  className:
+                    "inv-label mt-[6cqw] inline-block text-[2.4cqw] font-semibold",
+                  style: { color: tv, textShadow: tN },
+                  children: i.craftedBy(F.B.name),
+                }),
+            ],
+          }),
+        });
+      },
+      Backdrop: function () {
+        return (0, v.jsx)("div", {
+          className: "pointer-events-none absolute inset-0",
+          style: { background: tk },
+          children: (0, v.jsxs)("div", {
+            className: "sticky top-0 h-[var(--screen-h,100dvh)] w-full",
+            children: [
+              (0, v.jsx)(tM, { src: `${tu}/shiv-sky.jpg` }),
+              (0, v.jsx)("div", {
+                className: "absolute inset-0",
+                style: {
+                  background:
+                    "radial-gradient(80% 65% at 50% 45%, rgba(255,252,250,.74), rgba(255,252,250,.36) 85%)",
+                },
+              }),
+            ],
+          }),
+        });
+      },
+      Divider: tS,
+      Title: t_,
+    };
+    var tA = e.i(88653),
+      tE = e.i(87652);
+    let tP = {
+        maroon: "#6e1423",
+        ink: "#3b2418",
+        gold: "#8f6220",
+        goldLight: "#f7dc95",
+        blue: "#8ea7c8",
+        paper: "#f5e9d2",
+      },
+      tG = "var(--font-cinzel)",
+      tZ = "var(--font-cormorant)",
+      tK = "var(--font-great-vibes)",
+      tV = "var(--font-telugu), var(--font-deva), var(--font-cormorant), serif",
+      tY = [0.22, 1, 0.36, 1],
+      tU = "0 0 16px rgba(255,250,245,.95), 0 0 4px rgba(255,250,245,.9)";
+    function tX(e) {
+      let t = e;
+      return () => ((t = (16807 * t) % 0x7fffffff) - 1) / 0x7ffffffe;
+    }
+    let tQ = (e) => (0, T.s)(e, { weekday: "long" }),
+      tJ = (e) =>
+        (0, T.s)(e, { day: "numeric", month: "long", year: "numeric" }),
+      t0 = (e) =>
+        (0, T.s)(e, { hour: "numeric", minute: "2-digit", hour12: !0 })
+          .replace(/\s?([ap])\.?m\.?/i, " $1m")
+          .toLowerCase(),
+      t1 = new Set(["phere", "muhurtham", "nikah", "anandkaraj"]);
+    function t2({ src: e, alt: t, fade: a, className: s, priority: i }) {
+      return (0, v.jsx)("div", {
+        className: `absolute inset-x-0 aspect-[2/3] ${s ?? ""}`,
+        style: { maskImage: a, WebkitMaskImage: a },
+        children: (0, v.jsx)(R.default, {
+          src: `/art/illus/telugu-${e}.webp`,
+          alt: t,
+          fill: !0,
+          priority: i,
+          sizes: "480px",
+          className: "object-cover",
+        }),
+      });
+    }
+    function t5({ className: e, glow: t }) {
+      return (0, v.jsxs)("div", {
+        className: `relative aspect-[270/346] ${e ?? ""}`,
+        children: [
+          (0, v.jsx)(R.default, {
+            src: "/art/seals/srinita-ganesha.png",
+            alt: "Shri Ganesha",
+            fill: !0,
+            sizes: "120px",
+            className:
+              "object-contain drop-shadow-[0_0_6px_rgba(255,250,240,.9)]",
+          }),
+          t &&
+            (0, v.jsx)($.f.div, {
+              className: "absolute inset-[-40%] rounded-full mix-blend-screen",
+              style: {
+                background:
+                  "radial-gradient(closest-side, rgba(255,226,150,.9), rgba(255,210,120,.3) 50%, transparent)",
+              },
+              initial: { opacity: 0, scale: 0.6 },
+              animate: { opacity: [0, 1, 0.5], scale: [0.6, 1.2, 1] },
+              transition: { duration: 1.6, ease: "easeOut" },
+            }),
+        ],
+      });
+    }
+    function t4({ text: e, delay: t, style: a }) {
+      return (0, v.jsx)($.f.span, {
+        className: "inline-block whitespace-pre",
+        style: a,
+        initial: { clipPath: "inset(-30% 100% -30% 0)", opacity: 0.4 },
+        animate: { clipPath: "inset(-30% -8% -30% 0)", opacity: 1 },
+        transition: { delay: t, duration: 1.3, ease: [0.45, 0, 0.25, 1] },
+        children: e,
+      });
+    }
+    function t3({ children: e, delay: t = 0, className: a = "" }) {
+      return (0, v.jsx)($.f.div, {
+        initial: { opacity: 0, y: 18, filter: "blur(4px)" },
+        whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+        viewport: { once: !0, amount: 0.4 },
+        transition: { duration: 0.9, delay: t, ease: tY },
+        className: `flex flex-col items-center ${a}`,
+        children: e,
+      });
+    }
+    let t6 = ({ children: e, color: t = tP.ink, className: a = "" }) =>
+      (0, v.jsx)("p", {
+        className: `text-[2.5cqw] tracking-[0.26em] uppercase ${a}`,
+        style: { fontFamily: tG, color: t },
+        children: e,
+      });
+    function t8({ color: e = tP.gold }) {
+      return (0, v.jsxs)("div", {
+        className: "my-[5cqw] flex w-[46%] items-center gap-[2cqw]",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: { background: `linear-gradient(90deg, transparent, ${e})` },
+          }),
+          (0, v.jsx)("svg", {
+            viewBox: "0 0 20 20",
+            className: "size-[3.4cqw]",
+            fill: e,
+            children: (0, v.jsx)("path", {
+              d: "M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z",
+            }),
+          }),
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: { background: `linear-gradient(90deg, ${e}, transparent)` },
+          }),
+        ],
+      });
+    }
+    function t9({ count: e = 7, seed: t = 3 }) {
+      let a = (0, f.useMemo)(() => {
+        let a = tX(t);
+        return Array.from({ length: e }, () => ({
+          x: 92 * a(),
+          d: 8 * a(),
+          t: 9 + 6 * a(),
+          sway: 6 + 10 * a(),
+          rot: 360 * a(),
+          s: 1.8 + 1.4 * a(),
+        }));
+      }, [e, t]);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0 overflow-hidden",
+        children: a.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute -top-[5cqw] rounded-[70%_0_70%_0]",
+              style: {
+                left: `${e.x}%`,
+                width: `${e.s}cqw`,
+                height: `${1.5 * e.s}cqw`,
+                background: "linear-gradient(135deg, #e9a7b2, #a8384f)",
+                opacity: 0.8,
+              },
+              animate: {
+                y: ["0cqw", "180cqw"],
+                x: [
+                  "0cqw",
+                  `${e.sway}cqw`,
+                  `${-e.sway / 2}cqw`,
+                  `${e.sway / 2}cqw`,
+                ],
+                rotate: [e.rot, e.rot + 260],
+              },
+              transition: {
+                duration: e.t,
+                delay: e.d,
+                repeat: 1 / 0,
+                ease: "linear",
+              },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function t7({ opened: e }) {
+      return (0, v.jsx)($.f.div, {
+        className:
+          "col-start-1 row-start-1 flex flex-col items-center px-[6cqw]",
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: +!e, y: 0 },
+        transition: { duration: e ? 0.5 : 1.2, delay: 0.35 * !e },
+        children: (0, v.jsx)("p", {
+          className: "text-[3.6cqw] tracking-[0.4em] uppercase",
+          style: { fontFamily: tG, color: tP.maroon, textShadow: tU },
+          children: "You’re invited",
+        }),
+      });
+    }
+    function ae() {
+      let e = (e, t, a, s = tP.maroon) =>
+        (0, v.jsx)($.f.p, {
+          className: `leading-[1.5] font-semibold ${a}`,
+          style: { fontFamily: tV, color: s },
+          initial: { opacity: 0, y: "0.3em", filter: "blur(6px)" },
+          animate: { opacity: 1, y: "0em", filter: "blur(0px)" },
+          transition: { delay: t, duration: 0.8, ease: tY },
+          children: e,
+        });
+      return (0, v.jsxs)("div", {
+        className: "col-start-1 row-start-1 flex flex-col items-center",
+        style: { textShadow: tU },
+        children: [
+          e("శ్రీరస్తు", 0.25, "text-[7cqw]"),
+          e("శుభమస్తు", 0.65, "text-[11cqw]"),
+          e("అవిఘ్నమస్తు", 1.05, "text-[6cqw]", tP.gold),
+        ],
+      });
+    }
+    function at({ opened: e }) {
+      let t = {
+        left: "50%",
+        bottom: "90.75cqw",
+        width: "22cqw",
+        height: "22cqw",
+        translate: "-50% 50%",
+      };
+      return (0, v.jsxs)("div", {
+        className: "pointer-events-none absolute",
+        style: t,
+        children: [
+          (0, v.jsx)($.f.div, {
+            className: "absolute inset-[-40%] rounded-full mix-blend-screen",
+            style: {
+              background:
+                "radial-gradient(closest-side, rgba(255,252,235,.95), rgba(255,226,160,.55) 45%, transparent)",
+            },
+            animate: e
+              ? { opacity: 1, scale: 2.2 }
+              : { opacity: [0.55, 0.95, 0.55], scale: [1, 1.12, 1] },
+            transition: e
+              ? { duration: 1.6, delay: 0.4, ease: "easeOut" }
+              : { duration: 3.2, repeat: 1 / 0, ease: "easeInOut" },
+          }),
+          e &&
+            (0, v.jsx)($.f.div, {
+              className: "absolute inset-[-260%] rounded-full mix-blend-screen",
+              style: {
+                background:
+                  "repeating-conic-gradient(from 0deg, rgba(255,240,200,.6) 0deg 2.5deg, transparent 2.5deg 11deg)",
+                maskImage:
+                  "radial-gradient(closest-side, #000 8%, rgba(0,0,0,.5) 40%, transparent 75%)",
+                WebkitMaskImage:
+                  "radial-gradient(closest-side, #000 8%, rgba(0,0,0,.5) 40%, transparent 75%)",
+              },
+              initial: { opacity: 0, rotate: 0, scale: 0.5 },
+              animate: { opacity: [0, 1, 1], rotate: 30, scale: 1 },
+              transition: {
+                opacity: { delay: 0.4 + 0.2, duration: 1.2 },
+                scale: { delay: 0.4, duration: 2, ease: tY },
+                rotate: { duration: 6, ease: "linear" },
+              },
+            }),
+        ],
+      });
+    }
+    function aa() {
+      let e = (0, f.useMemo)(() => {
+        let e = tX(11);
+        return Array.from({ length: 16 }, () => ({
+          x: 6 + 88 * e(),
+          y: 35 + 60 * e(),
+          s: 0.5 + 0.9 * e(),
+          d: 5 * e(),
+          t: 5 + 4 * e(),
+        }));
+      }, []);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0",
+        children: e.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className:
+                "absolute rounded-full bg-[#fff8e6] shadow-[0_0_6px_2px_rgba(255,230,180,.8)]",
+              style: {
+                left: `${e.x}%`,
+                top: `${e.y}%`,
+                width: `${e.s}cqw`,
+                height: `${e.s}cqw`,
+              },
+              animate: { y: ["0cqw", "-26cqw"], opacity: [0, 1, 0] },
+              transition: {
+                duration: e.t,
+                delay: e.d,
+                repeat: 1 / 0,
+                ease: "easeOut",
+              },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function as() {
+      return (0, v.jsx)($.f.div, {
+        className: "pointer-events-none absolute rounded-full",
+        style: {
+          left: "50%",
+          bottom: "90.75cqw",
+          width: "80cqw",
+          height: "80cqw",
+          translate: "-50% 50%",
+          background:
+            "radial-gradient(closest-side, #fffdf6, #fff0d4 40%, rgba(255,226,190,.55) 68%, transparent)",
+        },
+        initial: { scale: 0.2, opacity: 0 },
+        animate: { scale: [0.2, 1.4, 5], opacity: [0, 1, 0] },
+        transition: {
+          delay: 1.8,
+          duration: 2.6,
+          times: [0, 0.38, 1],
+          ease: "easeOut",
+        },
+      });
+    }
+    function ai() {
+      let e = (0, f.useMemo)(() => {
+        let e = tX(23);
+        return Array.from({ length: 60 }, (t, a) => ({
+          x: 3 + 94 * e(),
+          d: 1.7 + 1.4 * e(),
+          t: 2.6 + 1.6 * e(),
+          sway: (e() - 0.5) * 12,
+          rot: 360 * e(),
+          kind:
+            a % 3 == 0
+              ? "pearl"
+              : a % 7 == 0
+                ? "petal"
+                : a % 11 == 0
+                  ? "kumkum"
+                  : "rice",
+          s: 0.8 + 0.6 * e(),
+        }));
+      }, []);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0 overflow-hidden",
+        children: e.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute -top-[4cqw]",
+              style: {
+                left: `${e.x}%`,
+                width:
+                  "pearl" === e.kind
+                    ? `${1.5 * e.s}cqw`
+                    : "kumkum" === e.kind
+                      ? "1cqw"
+                      : "petal" === e.kind
+                        ? "2.2cqw"
+                        : `${2.1 * e.s}cqw`,
+                height:
+                  "pearl" === e.kind
+                    ? `${1.5 * e.s}cqw`
+                    : "kumkum" === e.kind
+                      ? "1cqw"
+                      : "petal" === e.kind
+                        ? "3cqw"
+                        : `${0.85 * e.s}cqw`,
+                borderRadius: "petal" === e.kind ? "70% 0 70% 0" : 999,
+                background:
+                  "pearl" === e.kind
+                    ? "radial-gradient(circle at 32% 30%, #ffffff, #f4ecdc 45%, #cdbb9a)"
+                    : "kumkum" === e.kind
+                      ? "#a3121f"
+                      : "petal" === e.kind
+                        ? "linear-gradient(135deg, #ffd6e0, #ec8fa8)"
+                        : "linear-gradient(180deg, #ffd45a, #e8a317)",
+                boxShadow:
+                  "pearl" === e.kind ? "0 0 4px rgba(255,255,240,.9)" : "none",
+              },
+              initial: { y: 0, x: 0, rotate: e.rot, opacity: 0 },
+              animate: {
+                y: "205cqw",
+                x: ["0cqw", `${e.sway}cqw`, `${-e.sway / 2}cqw`],
+                rotate: e.rot + 360,
+                opacity: [0, 1, 1, 0],
+              },
+              transition: {
+                duration: e.t,
+                delay: e.d,
+                ease: [0.35, 0, 0.8, 1],
+                times: [0, 0.08, 0.85, 1],
+              },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    let an = (e) => `calc(min(1cqw, 0.5svh) * ${e})`;
+    function al({ className: e = "" }) {
+      return (0, v.jsxs)("div", {
+        className: `flex w-[56%] items-center gap-[2cqw] ${e}`,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: {
+              background: `linear-gradient(90deg, transparent, ${tP.blue})`,
+            },
+          }),
+          (0, v.jsxs)("svg", {
+            viewBox: "0 0 40 22",
+            className: "w-[9cqw]",
+            children: [
+              (0, v.jsx)("path", {
+                d: "M20 2 C24 8 24 14 20 20 C16 14 16 8 20 2 Z",
+                fill: tP.maroon,
+              }),
+              (0, v.jsx)("path", {
+                d: "M20 20 C13 18 9 13 8 7 C14 9 18 13 20 20 Z",
+                fill: tP.maroon,
+                opacity: ".8",
+              }),
+              (0, v.jsx)("path", {
+                d: "M20 20 C27 18 31 13 32 7 C26 9 22 13 20 20 Z",
+                fill: tP.maroon,
+                opacity: ".8",
+              }),
+              (0, v.jsx)("path", {
+                d: "M20 20 C11 21 5 18 2 13 C9 13 15 15 20 20 Z",
+                fill: tP.gold,
+                opacity: ".9",
+              }),
+              (0, v.jsx)("path", {
+                d: "M20 20 C29 21 35 18 38 13 C31 13 25 15 20 20 Z",
+                fill: tP.gold,
+                opacity: ".9",
+              }),
+            ],
+          }),
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: {
+              background: `linear-gradient(90deg, ${tP.blue}, transparent)`,
+            },
+          }),
+        ],
+      });
+    }
+    let ar = `radial-gradient(120% 80% at 50% 30%, #8a1f30, ${tP.maroon} 55%, #520d1a)`;
+    function ac({ w: e, flip: t = !1, color: a = tP.gold, className: s = "" }) {
+      let i = Math.round(e / 3.2),
+        n = e / i;
+      return (0, v.jsxs)("svg", {
+        viewBox: `0 0 ${e} 4.6`,
+        className: s,
+        style: {
+          width: `${e}cqw`,
+          height: "4.6cqw",
+          transform: t ? "scaleY(-1)" : void 0,
+        },
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("line", {
+            x1: "0",
+            x2: e,
+            y1: "0.4",
+            y2: "0.4",
+            stroke: a,
+            strokeWidth: "0.3",
+          }),
+          (0, v.jsx)("line", {
+            x1: "0",
+            x2: e,
+            y1: "1.2",
+            y2: "1.2",
+            stroke: a,
+            strokeWidth: "0.15",
+          }),
+          Array.from({ length: i }, (e, t) => {
+            let s = t * n,
+              i = s + n / 2;
+            return (0, v.jsxs)(
+              "g",
+              {
+                children: [
+                  (0, v.jsx)("path", {
+                    d: `M${s + 0.12 * n} 1.2 L${i} 4.2 L${s + 0.88 * n} 1.2`,
+                    fill: "none",
+                    stroke: a,
+                    strokeWidth: "0.22",
+                    strokeLinejoin: "round",
+                  }),
+                  (0, v.jsx)("circle", { cx: i, cy: "2", r: "0.3", fill: a }),
+                ],
+              },
+              t,
+            );
+          }),
+        ],
+      });
+    }
+    function ao({ from: e }) {
+      let [t] = (0, f.useState)(() => window.innerHeight),
+        a = (0, f.useMemo)(() => {
+          let e = tX(31);
+          return Array.from({ length: 46 }, (t, a) => {
+            let s = e() * Math.PI * 2,
+              i = 70 + 170 * e();
+            return {
+              kind: a % 3 == 0 ? "pearl" : a % 4 == 0 ? "rice" : "petal",
+              bx: Math.cos(s) * i,
+              by: Math.sin(s) * i * 0.7 - 120 - 120 * e(),
+              fx: (e() - 0.5) * 140,
+              spin: (e() > 0.5 ? 1 : -1) * (200 + 400 * e()),
+              delay: 0.2 * e(),
+              dur: 3 + 2 * e(),
+              s: 0.8 + 0.7 * e(),
+            };
+          });
+        }, []);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none fixed inset-0 z-[80] overflow-hidden",
+        "aria-hidden": !0,
+        children: a.map((a, s) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute",
+              style: {
+                left: e.x,
+                top: e.y,
+                width:
+                  "petal" === a.kind
+                    ? 12 * a.s
+                    : "pearl" === a.kind
+                      ? 8 * a.s
+                      : 10 * a.s,
+                height:
+                  "petal" === a.kind
+                    ? 17 * a.s
+                    : "pearl" === a.kind
+                      ? 8 * a.s
+                      : 4 * a.s,
+                borderRadius: "petal" === a.kind ? "70% 0 70% 0" : 999,
+                background:
+                  "petal" === a.kind
+                    ? s % 2
+                      ? "linear-gradient(135deg, #e9a7b2, #a8384f)"
+                      : "linear-gradient(135deg, #ffd27a, #f08a1c)"
+                    : "pearl" === a.kind
+                      ? "radial-gradient(circle at 32% 30%, #fff, #e9dcc0)"
+                      : "linear-gradient(180deg, #ffd45a, #e8a317)",
+              },
+              initial: { x: 0, y: 0, opacity: 0, rotate: 0 },
+              animate: {
+                x: [0, a.bx, a.bx + a.fx],
+                y: [0, a.by, t - e.y + 60],
+                opacity: [0, 1, 1],
+                rotate: [0, 0.3 * a.spin, a.spin],
+              },
+              transition: {
+                duration: a.dur,
+                delay: a.delay,
+                times: [0, 0.2, 1],
+                ease: ["easeOut", "easeIn"],
+              },
+            },
+            s,
+          ),
+        ),
+      });
+    }
+    function ad({ value: e, label: t }) {
+      return (0, v.jsxs)("div", {
+        className: "flex w-[15cqw] flex-col items-center",
+        children: [
+          (0, v.jsx)("div", {
+            className:
+              "relative grid h-[11cqw] w-full place-items-center overflow-hidden",
+            style: { perspective: "300px" },
+            children: (0, v.jsx)(tA.f, {
+              mode: "popLayout",
+              initial: !1,
+              children: (0, v.jsx)(
+                $.f.span,
+                {
+                  className:
+                    "text-[9cqw] leading-none font-medium tabular-nums",
+                  style: { fontFamily: tZ, color: tP.maroon },
+                  initial: { rotateX: 80, opacity: 0 },
+                  animate: { rotateX: 0, opacity: 1 },
+                  exit: { rotateX: -80, opacity: 0 },
+                  transition: { duration: 0.45, ease: tY },
+                  children: e,
+                },
+                e,
+              ),
+            }),
+          }),
+          (0, v.jsx)("span", {
+            className: "mt-[1cqw] h-px w-[8cqw]",
+            style: { background: `${tP.gold}88` },
+          }),
+          (0, v.jsx)("p", {
+            className: "mt-[1.5cqw] text-[2cqw] tracking-[0.24em] uppercase",
+            style: { fontFamily: t, color: tP.gold },
+            children: t,
+          }),
+        ],
+      });
+    }
+    function ax({ side: e, on: t }) {
+      let a = "left" === e;
+      return (0, v.jsxs)($.f.div, {
+        className: "absolute inset-y-0 w-1/2",
+        style: {
+          [e]: 0,
+          transformOrigin: a ? "0% 50%" : "100% 50%",
+          background:
+            "linear-gradient(90deg, #8a6420, #c9a04a 25%, #ecd08c 50%, #c49340 78%, #7a5418)",
+          boxShadow: "inset 0 0 0 0.4cqw rgba(90,55,15,.45)",
+          backfaceVisibility: "hidden",
+        },
+        initial: { rotateY: 0, opacity: 1 },
+        animate: t ? { rotateY: a ? -104 : 104, opacity: [1, 1, 0] } : {},
+        transition: {
+          rotateY: { delay: 0.5, duration: 1.8, ease: [0.6, 0, 0.3, 1] },
+          opacity: { delay: 0.5, duration: 1.8, times: [0, 0.8, 1] },
+        },
+        children: [
+          [
+            ["8%", "53%"],
+            ["53%", "8%"],
+          ].map(([e, t]) =>
+            (0, v.jsx)(
+              "div",
+              {
+                className: "absolute inset-x-[16%] rounded-[0.8cqw]",
+                style: {
+                  top: e,
+                  bottom: t,
+                  boxShadow: "inset 0 0 0 0.3cqw rgba(110,70,20,.45)",
+                  backgroundImage:
+                    "radial-gradient(circle, rgba(255,243,207,.9) 0 0.35cqw, transparent 0.5cqw)",
+                  backgroundSize: "5.6cqw 5.6cqw",
+                  backgroundPosition: "center",
+                },
+              },
+              e,
+            ),
+          ),
+          (0, v.jsx)("div", {
+            className:
+              "absolute top-[47%] size-[4cqw] rounded-full border-[0.5cqw]",
+            style: { [a ? "right" : "left"]: "3cqw", borderColor: "#8a5f1c" },
+          }),
+        ],
+      });
+    }
+    function af({ e }) {
+      let t = (0, f.useRef)(null),
+        a = (0, tE.f)(t, { once: !0, amount: 0.6 }),
+        s = (e) => ({
+          initial: { opacity: 0, y: 10 },
+          animate: a ? { opacity: 1, y: 0 } : {},
+          transition: { duration: 0.9, delay: e, ease: tY },
+        }),
+        i =
+          e.mapUrl ||
+          `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([e.venue, e.address].filter(Boolean).join(", "))}`;
+      return (0, v.jsxs)("div", {
+        ref: t,
+        className:
+          "relative min-h-[112cqw] w-[74cqw] p-[0.8cqw] shadow-[0_2cqw_6cqw_rgba(90,30,20,.22)]",
+        style: {
+          background:
+            "linear-gradient(135deg, #c99a3e, #f8e2a6 30%, #b8862e 55%, #f3d68d 80%, #a87a28)",
+          perspective: "1400px",
+        },
+        children: [
+          (0, v.jsxs)("div", {
+            className:
+              "relative flex min-h-[110.4cqw] w-full flex-col items-center justify-between overflow-hidden px-[3cqw] py-[3cqw]",
+            style: { background: ar },
+            children: [
+              (0, v.jsx)(ac, { w: 66, color: "#e9c77e" }),
+              (0, v.jsxs)("div", {
+                className: "flex flex-col items-center px-[3cqw] py-[4cqw]",
+                children: [
+                  (0, v.jsx)($.f.p, {
+                    ...s(1.5),
+                    className: `leading-none ${e.name.length > 12 ? "text-[11cqw]" : "text-[15cqw]"}`,
+                    style: {
+                      fontFamily: tK,
+                      color: tP.goldLight,
+                      textWrap: "balance",
+                    },
+                    children: e.name,
+                  }),
+                  (0, v.jsxs)($.f.p, {
+                    ...s(1.8),
+                    className: "mt-[5cqw] text-[5.2cqw] font-semibold",
+                    style: { fontFamily: tZ, color: "#fff3dc" },
+                    children: [tQ(e.start), ", ", tJ(e.start)],
+                  }),
+                  (0, v.jsxs)($.f.div, {
+                    ...s(2),
+                    className: "mt-[4cqw] flex flex-col items-center",
+                    children: [
+                      (0, v.jsx)("p", {
+                        className: "text-[2.4cqw] tracking-[0.3em] uppercase",
+                        style: { fontFamily: tG, color: "#e9c77e" },
+                        children: t1.has(e.kind) ? "Sumuhurtham" : "Time",
+                      }),
+                      (0, v.jsx)("p", {
+                        className: "text-[11cqw] leading-tight",
+                        style: { fontFamily: tK, color: tP.goldLight },
+                        children: t0(e.start),
+                      }),
+                    ],
+                  }),
+                  (0, v.jsxs)($.f.div, {
+                    ...s(2.2),
+                    className: "mt-[3cqw] flex flex-col items-center",
+                    children: [
+                      (0, v.jsx)("p", {
+                        className: "text-[4.5cqw] leading-snug font-semibold",
+                        style: {
+                          fontFamily: tZ,
+                          color: "#fff3dc",
+                          textWrap: "balance",
+                        },
+                        children: e.venue,
+                      }),
+                      e.address &&
+                        (0, v.jsx)("p", {
+                          className: "text-[3.9cqw] leading-snug",
+                          style: {
+                            fontFamily: tZ,
+                            color: "#f0dcc0",
+                            textWrap: "balance",
+                          },
+                          children: e.address,
+                        }),
+                      e.dress &&
+                        (0, v.jsxs)("p", {
+                          className: "mt-[2.5cqw] text-[3.6cqw] italic",
+                          style: { fontFamily: tZ, color: "#e9c77e" },
+                          children: ["Dress: ", e.dress],
+                        }),
+                      e.note &&
+                        (0, v.jsx)("p", {
+                          className: "mt-[2.5cqw] text-[3.6cqw] italic",
+                          style: { fontFamily: tZ, color: "#e9c77e" },
+                          children: e.note,
+                        }),
+                      (0, v.jsx)("a", {
+                        href: i,
+                        target: "_blank",
+                        rel: "noreferrer",
+                        className:
+                          "mt-[5cqw] inline-block rounded-full border px-[5cqw] py-[1.8cqw] text-[2.5cqw] tracking-[0.14em] whitespace-nowrap",
+                        style: {
+                          borderColor: "#e9c77e",
+                          color: tP.goldLight,
+                          fontFamily: tG,
+                        },
+                        children: "DIRECTIONS →",
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+              (0, v.jsx)(ac, { w: 66, flip: !0, color: "#e9c77e" }),
+            ],
+          }),
+          (0, v.jsxs)("div", {
+            className: "pointer-events-none absolute inset-[0.8cqw]",
+            style: { perspective: "1400px" },
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)(ax, { side: "left", on: a }),
+              (0, v.jsx)(ax, { side: "right", on: a }),
+            ],
+          }),
+        ],
+      });
+    }
+    function am({ names: e }) {
+      return (0, v.jsx)("section", {
+        className:
+          "relative flex w-full flex-col items-center px-[12%] pt-[6cqw] pb-[14cqw] text-center",
+        children: (0, v.jsx)(t3, {
+          className: "relative w-full",
+          children: (0, v.jsxs)("div", {
+            className: "relative w-full rounded-[3cqw] px-[7cqw] py-[9cqw]",
+            style: {
+              background:
+                "linear-gradient(180deg, rgba(255,252,245,.75), rgba(250,240,222,.6))",
+              boxShadow: `inset 0 0 0 1px ${tP.gold}55, 0 2cqw 6cqw rgba(90,60,30,.1)`,
+            },
+            children: [
+              (0, v.jsx)("div", {
+                className:
+                  "pointer-events-none absolute inset-[1.6cqw] rounded-[2cqw] border",
+                style: { borderColor: `${tP.blue}88` },
+              }),
+              (0, v.jsx)(t6, { color: tP.gold, children: "With" }),
+              (0, v.jsx)("p", {
+                className: "text-[11cqw] leading-tight",
+                style: { fontFamily: tK, color: tP.maroon },
+                children: "Best Compliments",
+              }),
+              (0, v.jsx)(al, { className: "mx-auto my-[5cqw]" }),
+              (0, v.jsx)("div", {
+                className: "flex flex-col gap-[2cqw]",
+                children: e.map((e, t) =>
+                  (0, v.jsx)(
+                    $.f.p,
+                    {
+                      className: `text-[4.4cqw] ${/^and\b/i.test(e) ? "italic" : "font-semibold"}`,
+                      style: { fontFamily: tZ, color: tP.ink },
+                      initial: { opacity: 0, y: 10 },
+                      whileInView: { opacity: 1, y: 0 },
+                      viewport: { once: !0 },
+                      transition: {
+                        delay: 0.2 + 0.12 * t,
+                        duration: 0.7,
+                        ease: tY,
+                      },
+                      children: e,
+                    },
+                    `${e}-${t}`,
+                  ),
+                ),
+              }),
+            ],
+          }),
+        }),
+      });
+    }
+    let ap = {
+      id: "shivakalyanam",
+      root: "",
+      vars: {
+        "--inv-script": tK,
+        "--inv-serif": tZ,
+        "--inv-label": tG,
+        "--inv-accent": tP.maroon,
+        background: tP.paper,
+        color: tP.ink,
+      },
+      accent: tP.maroon,
+      ui: {
+        section: "relative px-[11cqw] py-[12cqw]",
+        card: "rounded-[3cqw] border border-[#8f6220]/40 bg-[#fffaf0]/90",
+        input:
+          "w-full rounded-[2cqw] border border-black/15 bg-white/90 px-[4cqw] py-[3cqw] text-[3.8cqw] outline-none",
+        chip: "rounded-full border border-[#8f6220]/50 px-[3.5cqw] py-[1.6cqw] text-[3.2cqw]",
+        chipOn:
+          "rounded-full border border-[#6e1423] bg-[#6e1423] px-[3.5cqw] py-[1.6cqw] text-[3.2cqw] text-[#fff3dc]",
+        button:
+          "inline-flex items-center gap-[1.5cqw] rounded-full px-[4.5cqw] py-[2.2cqw] text-[3.2cqw] font-medium text-[#fff3dc] active:scale-95 transition [background:var(--inv-accent)]",
+        ghost:
+          "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#8f6220] bg-[#fffaf0] px-[4.5cqw] py-[2.2cqw] text-[3.2cqw] font-medium active:scale-95 transition",
+        muted: "opacity-70",
+        tile: "rounded-[3cqw] border border-[#8f6220]/60 bg-[#fffaf0]/95 text-[#6e1423]",
+      },
+      Opening: function ({ opened: e, onOpen: t }) {
+        return (0, v.jsx)("div", {
+          className: "absolute inset-0 overflow-hidden",
+          style: { pointerEvents: e ? "none" : "auto" },
+          children: (0, v.jsxs)("div", {
+            className: "@container absolute inset-0",
+            children: [
+              (0, v.jsxs)($.f.div, {
+                className: "absolute inset-0",
+                style: { background: "#d6d2d3" },
+                animate: { opacity: +!e },
+                transition: {
+                  duration: 1,
+                  delay: 2.4 * !!e,
+                  ease: "easeInOut",
+                },
+                children: [
+                  (0, v.jsxs)($.f.div, {
+                    className: "absolute inset-0",
+                    style: { transformOrigin: "50% calc(100% - 90.75cqw)" },
+                    animate: e ? { scale: 1.35 } : { scale: [1, 1.025, 1] },
+                    transition: e
+                      ? { duration: 3, delay: 0.5, ease: [0.5, 0, 0.3, 1] }
+                      : { duration: 9, repeat: 1 / 0, ease: "easeInOut" },
+                    children: [
+                      (0, v.jsx)(t2, {
+                        src: "v4-opening",
+                        alt: "Shiva and Parvati walk hand in hand up a lotus path towards the rising sun",
+                        fade: "linear-gradient(180deg, transparent, #000 14%)",
+                        className: "bottom-0",
+                        priority: !0,
+                      }),
+                      (0, v.jsx)(at, { opened: e }),
+                    ],
+                  }),
+                  (0, v.jsx)(aa, {}),
+                  (0, v.jsxs)("div", {
+                    className:
+                      "absolute inset-x-0 top-0 flex flex-col items-center justify-center text-center",
+                    style: { bottom: "100cqw" },
+                    children: [
+                      (0, v.jsx)($.f.div, {
+                        initial: { opacity: 0, y: -8 },
+                        animate: { opacity: 1, y: 0 },
+                        transition: { duration: 1, delay: 0.1 },
+                        children: (0, v.jsx)(t5, {
+                          className: "w-[17cqw]",
+                          glow: e,
+                        }),
+                      }),
+                      (0, v.jsxs)("div", {
+                        className:
+                          "relative mt-[3cqw] grid w-full place-items-center",
+                        children: [
+                          (0, v.jsx)(t7, { opened: e }),
+                          e && (0, v.jsx)(ae, {}),
+                        ],
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+              e && (0, v.jsx)(as, {}),
+              e && (0, v.jsx)(ai, {}),
+              !e &&
+                (0, v.jsx)("button", {
+                  type: "button",
+                  onClick: t,
+                  "aria-label": "Open the invitation",
+                  className: "absolute inset-0 cursor-pointer",
+                }),
+            ],
+          }),
+        });
+      },
+      Hero: function ({ invite: e }) {
+        let t = g(),
+          [a, s] = (0, L.g)(e),
+          i = (e) => ({
+            initial: { opacity: 0, y: 12, filter: "blur(6px)" },
+            animate: t ? { opacity: 1, y: 0, filter: "blur(0px)" } : {},
+            transition: { duration: 1, delay: e, ease: tY },
+          });
+        return (0, v.jsxs)("section", {
+          className: "relative h-dvh min-h-[200cqw] w-full overflow-hidden",
+          children: [
+            (0, v.jsx)("div", {
+              className: "absolute inset-0",
+              style: {
+                background:
+                  "linear-gradient(180deg, #cfd9e6, #e3e4e2 30%, #f3e8d4 60%, transparent)",
+              },
+            }),
+            (0, v.jsx)(t9, {}),
+            (0, v.jsx)($.f.div, {
+              className: "absolute",
+              style: {
+                left: an(-12),
+                top: an(68),
+                width: an(112),
+                aspectRatio: "1100 / 618",
+              },
+              initial: { x: "-100%", opacity: 0 },
+              animate: t ? { x: "0%", opacity: 1 } : {},
+              transition: { duration: 2, delay: 2.3, ease: "easeOut" },
+              children: (0, v.jsx)(R.default, {
+                src: "/art/illus/shiv-hand.webp",
+                alt: "",
+                fill: !0,
+                priority: !0,
+                sizes: "480px",
+                className: "object-contain",
+              }),
+            }),
+            (0, v.jsx)($.f.div, {
+              className: "absolute",
+              style: {
+                top: an(-8),
+                right: `min(calc(100cqw - ${an(130)}), 0px)`,
+                width: an(90),
+                aspectRatio: "788 / 890",
+              },
+              initial: { x: "35%", y: "-35%", opacity: 0 },
+              animate: t ? { x: "0%", y: "0%", opacity: 1 } : {},
+              transition: {
+                duration: 2.6,
+                delay: 2.8,
+                ease: [0.25, 0.8, 0.3, 1],
+              },
+              children: (0, v.jsx)(R.default, {
+                src: "/art/illus/shiv-parvati-step.webp",
+                alt: "",
+                fill: !0,
+                priority: !0,
+                sizes: "480px",
+                className: "object-contain",
+              }),
+            }),
+            (0, v.jsx)($.f.div, {
+              "aria-hidden": !0,
+              className:
+                "pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
+              style: {
+                left: an(62),
+                top: an(78),
+                width: an(54),
+                height: an(54),
+                background:
+                  "radial-gradient(closest-side, rgba(255,246,225,.95), rgba(255,236,200,0))",
+              },
+              initial: { opacity: 0, scale: 0.4 },
+              animate: t
+                ? { opacity: [0, 0.95, 0.45], scale: [0.4, 1.2, 1] }
+                : {},
+              transition: { duration: 2.2, delay: 4.5, ease: tY },
+            }),
+            (0, v.jsxs)("div", {
+              className:
+                "absolute inset-x-[8%] flex flex-col items-center text-center",
+              style: { top: an(134) },
+              children: [
+                (0, v.jsx)($.f.p, {
+                  ...i(4.4),
+                  className: "max-w-[72cqw] text-[4.6cqw] leading-snug italic",
+                  style: { fontFamily: tZ, color: tP.ink, textWrap: "balance" },
+                  children: "Join us as we celebrate the union of a lifetime",
+                }),
+                t &&
+                  (0, v.jsxs)("p", {
+                    className:
+                      "mt-[1cqw] flex flex-col items-center leading-[1.1]",
+                    style: {
+                      fontFamily: tK,
+                      color: tP.maroon,
+                      fontSize: an(12.5),
+                    },
+                    children: [
+                      (0, v.jsx)(t4, { text: a.first, delay: 4.9 }),
+                      (0, v.jsx)(t4, {
+                        text: e.joiner ?? "&",
+                        delay: 5.5,
+                        style: {
+                          color: tP.gold,
+                          fontSize: an(9),
+                          lineHeight: 1,
+                        },
+                      }),
+                      (0, v.jsx)(t4, { text: s.first, delay: 4.9 + 0.9 }),
+                    ],
+                  }),
+                (0, v.jsxs)($.f.div, {
+                  ...i(6.4),
+                  className: "mt-[2cqw] flex flex-col items-center",
+                  children: [
+                    (0, v.jsx)(t8, {}),
+                    (0, v.jsxs)("p", {
+                      className:
+                        "-mt-[1cqw] text-[2.7cqw] tracking-[0.24em] uppercase",
+                      style: { fontFamily: tG, color: tP.ink },
+                      children: [tQ(e.date), " · ", tJ(e.date)],
+                    }),
+                    (0, v.jsx)("p", {
+                      className:
+                        "mt-[1.5cqw] text-[4.4cqw] font-semibold italic",
+                      style: { fontFamily: tZ, color: tP.maroon },
+                      children: e.city,
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        });
+      },
+      Blessing: function ({ invite: e }) {
+        let t,
+          [a, s] = (0, L.g)(e),
+          i = (t, a) =>
+            (0, v.jsxs)(t3, {
+              delay: a,
+              children: [
+                (0, v.jsx)(t6, {
+                  color: tP.gold,
+                  children: t === e.bride ? "Chi. Sow." : "Chi.",
+                }),
+                (0, v.jsx)("p", {
+                  className: `mt-[1cqw] leading-tight ${(t.full || t.first).length > 14 ? "text-[11cqw]" : "text-[13cqw]"}`,
+                  style: { fontFamily: tK, color: tP.maroon },
+                  children: t.full || t.first,
+                }),
+                t.parents &&
+                  (0, v.jsx)("p", {
+                    className: "mt-[1cqw] text-[3.8cqw] italic",
+                    style: { fontFamily: tZ, color: tP.ink },
+                    children: t.parents,
+                  }),
+              ],
+            });
+        return (0, v.jsxs)("section", {
+          className:
+            "relative flex w-full flex-col items-center px-[11%] pt-[20cqw] pb-[16cqw] text-center",
+          children: [
+            (0, v.jsxs)(t3, {
+              children: [
+                e.invocation &&
+                  (0, v.jsx)("p", {
+                    className: "text-[4.2cqw] leading-[1.8] font-semibold",
+                    style: { fontFamily: tV, color: tP.maroon },
+                    children: ((t = e.invocation),
+                    (0, T.B)(t, /([|।])(?!\s*[॥|।]?\s*$)\s*/g).filter(
+                      Boolean,
+                    )).map((e, t) =>
+                      (0, v.jsx)(
+                        "span",
+                        { className: "block", children: e },
+                        t,
+                      ),
+                    ),
+                  }),
+                (0, v.jsx)(t5, { className: "mt-[4cqw] w-[13cqw]" }),
+                e.hosts &&
+                  (0, v.jsx)("p", {
+                    className:
+                      "mt-[5cqw] text-[4.8cqw] leading-snug font-semibold",
+                    style: {
+                      fontFamily: tZ,
+                      color: tP.maroon,
+                      textWrap: "balance",
+                    },
+                    children: e.hosts,
+                  }),
+                (0, v.jsx)("p", {
+                  className: "mt-[2cqw] text-[4.2cqw] leading-snug",
+                  style: { fontFamily: tZ, color: tP.ink },
+                  children: e.message,
+                }),
+              ],
+            }),
+            (0, v.jsx)(al, { className: "my-[7cqw]" }),
+            i(a, 0.1),
+            (0, v.jsx)("p", {
+              className: "my-[4cqw] text-[8cqw] leading-none",
+              style: { fontFamily: tK, color: tP.gold },
+              children: "with",
+            }),
+            i(s, 0.2),
+          ],
+        });
+      },
+      Events: function ({ invite: e }) {
+        let t = [...e.events].sort((e, t) => e.start.localeCompare(t.start));
+        return (0, v.jsx)("section", {
+          className:
+            "relative flex w-full flex-col items-center gap-[12cqw] pt-[8cqw] pb-[18cqw] text-center",
+          children: t.map((e, t) => (0, v.jsx)(af, { e: e }, `${e.name}-${t}`)),
+        });
+      },
+      Closing: function ({ invite: e }) {
+        let t = (0, T.B)(e.closing, /([.!?])\s+/g).filter(Boolean);
+        return (0, v.jsxs)(v.Fragment, {
+          children: [
+            !!e.compliments?.length && (0, v.jsx)(am, { names: e.compliments }),
+            (0, v.jsxs)("section", {
+              className: "relative w-full overflow-hidden pb-[22cqw]",
+              children: [
+                (0, v.jsx)(t2, {
+                  src: "v4-cover",
+                  alt: "On snowy Kailash, Shiva tucks a jasmine flower into Parvati's hair",
+                  fade: "linear-gradient(180deg, transparent, #000 8%, #000 58%, transparent 84%)",
+                  className: "top-0",
+                }),
+                (0, v.jsx)(t9, { count: 5, seed: 21 }),
+                (0, v.jsx)("div", {
+                  className:
+                    "relative flex flex-col items-center px-[5%] pt-[112cqw] text-center",
+                  children: (0, v.jsxs)(t3, {
+                    children: [
+                      e.closing &&
+                        (0, v.jsx)("p", {
+                          className:
+                            "text-[3.9cqw] leading-relaxed font-semibold italic",
+                          style: { fontFamily: tZ, color: tP.ink },
+                          children: t.map((e, t) =>
+                            (0, v.jsx)(
+                              "span",
+                              {
+                                className: "block",
+                                style: { textWrap: "balance" },
+                                children: e,
+                              },
+                              t,
+                            ),
+                          ),
+                        }),
+                      (0, v.jsx)("p", {
+                        className:
+                          "mt-[5cqw] text-[6cqw] leading-[1.6] font-semibold",
+                        style: { fontFamily: tV, color: tP.maroon },
+                        children: "ఓం ఉమామహేశ్వరాభ్యాం నమః",
+                      }),
+                      e.hashtag &&
+                        (0, v.jsx)("p", {
+                          className: "mt-[3cqw] text-[9cqw] leading-tight",
+                          style: { fontFamily: tK, color: tP.gold },
+                          children: e.hashtag,
+                        }),
+                      e.signoff &&
+                        (0, v.jsx)(t6, {
+                          className: "mt-[2cqw]",
+                          color: tP.maroon,
+                          children: e.signoff,
+                        }),
+                      !e.noBranding &&
+                        (0, v.jsxs)(k.default, {
+                          href: "/",
+                          className:
+                            "mt-[8cqw] inline-block text-[2.3cqw] tracking-[0.24em] uppercase",
+                          style: { fontFamily: tG, color: tP.gold },
+                          children: ["Crafted with love by ", F.B.name],
+                        }),
+                    ],
+                  }),
+                }),
+              ],
+            }),
+          ],
+        });
+      },
+      Backdrop: function () {
+        return (0, v.jsx)("div", {
+          className: "absolute inset-0",
+          style: {
+            background: `linear-gradient(180deg, #f3e4c8, ${tP.paper} 25%, #f8eedb 55%, ${tP.paper} 80%, #efe0c4)`,
+          },
+        });
+      },
+      Frame: function () {
+        let e = (e, t) =>
+          (0, v.jsxs)("svg", {
+            viewBox: "0 0 40 40",
+            className: `absolute size-[9cqw] ${e}`,
+            style: { rotate: `${t}deg` },
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)("path", {
+                d: "M2 38 V2 H38",
+                fill: "none",
+                stroke: tP.gold,
+                strokeWidth: "1.2",
+              }),
+              (0, v.jsx)("path", {
+                d: "M6 38 V6 H38",
+                fill: "none",
+                stroke: tP.gold,
+                strokeWidth: "0.6",
+              }),
+              (0, v.jsx)("path", {
+                d: "M6 6 L14 10 L10 14 Z",
+                fill: tP.maroon,
+              }),
+              (0, v.jsx)("circle", {
+                cx: "6",
+                cy: "6",
+                r: "2.6",
+                fill: tP.gold,
+              }),
+              (0, v.jsx)("circle", {
+                cx: "18",
+                cy: "6",
+                r: "1.1",
+                fill: tP.gold,
+              }),
+              (0, v.jsx)("circle", {
+                cx: "6",
+                cy: "18",
+                r: "1.1",
+                fill: tP.gold,
+              }),
+            ],
+          });
+        return (0, v.jsx)($.f.div, {
+          className: "pointer-events-none absolute inset-0",
+          initial: { opacity: 0, scale: 1.03 },
+          animate: { opacity: 1, scale: 1 },
+          transition: { duration: 1.4, delay: 3, ease: tY },
+          children: (0, v.jsxs)("div", {
+            className: "@container absolute inset-[2.5cqw]",
+            children: [
+              (0, v.jsx)("div", {
+                className: "absolute inset-0 border",
+                style: { borderColor: `${tP.gold}bb` },
+              }),
+              (0, v.jsx)("div", {
+                className: "absolute inset-[1.2cqw] border",
+                style: { borderColor: `${tP.blue}99` },
+              }),
+              e("top-[-0.5cqw] left-[-0.5cqw]", 0),
+              e("top-[-0.5cqw] right-[-0.5cqw]", 90),
+              e("right-[-0.5cqw] bottom-[-0.5cqw]", 180),
+              e("bottom-[-0.5cqw] left-[-0.5cqw]", 270),
+            ],
+          }),
+        });
+      },
+      Divider: function ({ className: e }) {
+        return (0, v.jsx)(al, { className: `mx-auto ${e ?? ""}` });
+      },
+      Title: function ({ kicker: e, children: t }) {
+        return (0, v.jsxs)("div", {
+          className: "flex flex-col items-center text-center",
+          children: [
+            e && (0, v.jsx)(t6, { color: tP.gold, children: e }),
+            (0, v.jsx)("p", {
+              className: "text-[11cqw] leading-tight",
+              style: { fontFamily: tK, color: tP.maroon },
+              children: t,
+            }),
+            (0, v.jsx)(t8, {}),
+          ],
+        });
+      },
+      ScratchSection: function ({ invite: e }) {
+        let t = (0, f.useRef)(null),
+          a = (0, f.useRef)(null),
+          s = (0, f.useRef)(!1),
+          i = (0, f.useRef)(null),
+          [n, l] = (0, f.useState)(!1),
+          [r, c] = (0, f.useState)(null);
+        function o() {
+          let e = t.current?.getBoundingClientRect();
+          c(
+            e
+              ? { x: e.left + e.width / 2, y: e.top + e.height / 2 }
+              : { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+          ),
+            l(!0),
+            window.setTimeout(() => c(null), 5500);
+        }
+        function d(e) {
+          if (!s.current || n) return;
+          let t = a.current,
+            l = t.getContext("2d"),
+            r = t.getBoundingClientRect(),
+            c = t.width / r.width,
+            o = { x: (e.clientX - r.left) * c, y: (e.clientY - r.top) * c };
+          (l.globalCompositeOperation = "destination-out"),
+            (l.strokeStyle = "#000"),
+            (l.lineCap = "round"),
+            (l.lineJoin = "round"),
+            (l.lineWidth = 34 * c),
+            l.beginPath();
+          let d = i.current ?? o;
+          l.moveTo(d.x, d.y), l.lineTo(o.x, o.y), l.stroke(), (i.current = o);
+        }
+        function x() {
+          (s.current = !1),
+            (i.current = null),
+            !n &&
+              (function () {
+                let e = a.current,
+                  t = e?.getContext("2d");
+                if (!e || !t) return 0;
+                let { data: s } = t.getImageData(0, 0, e.width, e.height),
+                  i = 0,
+                  n = 0;
+                for (let e = 3; e < s.length; e += 96) n++, s[e] < 40 && i++;
+                return i / n;
+              })() > 0.5 &&
+              o();
+        }
+        return (
+          (0, f.useEffect)(() => {
+            let e = t.current,
+              s = a.current;
+            if (!e || !s) return;
+            let i = () => {
+              let t = Math.min(window.devicePixelRatio || 1, 2);
+              (s.width = e.clientWidth * t), (s.height = e.clientHeight * t);
+              let a = s.getContext("2d");
+              a &&
+                (function (e, t, a, s) {
+                  let i = e.createLinearGradient(0, 0, t, a);
+                  i.addColorStop(0, "#b8862e"),
+                    i.addColorStop(0.3, "#f3d98a"),
+                    i.addColorStop(0.5, "#c99a3c"),
+                    i.addColorStop(0.72, "#f7e3a3"),
+                    i.addColorStop(1, "#a9782a"),
+                    (e.globalCompositeOperation = "source-over"),
+                    (e.fillStyle = i),
+                    e.fillRect(0, 0, t, a);
+                  let n = tX(7);
+                  for (let i = 0; i < 260; i++)
+                    (e.fillStyle = `rgba(255,255,255,${0.15 + 0.45 * n()})`),
+                      e.fillRect(
+                        n() * t,
+                        n() * a,
+                        s * (0.6 + n()),
+                        s * (0.6 + n()),
+                      );
+                  (e.strokeStyle = "rgba(110,20,35,.35)"),
+                    (e.lineWidth = s),
+                    e.setLineDash([4 * s, 4 * s]),
+                    e.strokeRect(10 * s, 10 * s, t - 20 * s, a - 20 * s),
+                    e.setLineDash([]),
+                    (e.fillStyle = "rgba(110,20,35,.85)"),
+                    (e.textAlign = "center"),
+                    (e.textBaseline = "middle"),
+                    (e.font = `600 ${Math.round(14 * s)}px Georgia, serif`),
+                    e.fillText("Scratch to reveal the date", t / 2, a / 2);
+                })(a, s.width, s.height, t);
+            };
+            i();
+            let l = new ResizeObserver(() => !n && i());
+            return l.observe(e), () => l.disconnect();
+          }, [n]),
+          (0, v.jsxs)("section", {
+            className:
+              "relative flex w-full flex-col items-center pt-[6cqw] pb-[10cqw] text-center",
+            children: [
+              (0, v.jsxs)(t3, {
+                children: [
+                  (0, v.jsx)(t6, {
+                    color: tP.gold,
+                    children: "A little surprise",
+                  }),
+                  (0, v.jsx)("p", {
+                    className: "text-[12cqw] leading-tight",
+                    style: { fontFamily: tK, color: tP.maroon },
+                    children: "Save the date",
+                  }),
+                ],
+              }),
+              (0, v.jsxs)(t3, {
+                delay: 0.1,
+                className: "mt-[6cqw]",
+                children: [
+                  (0, v.jsxs)("div", {
+                    ref: t,
+                    className:
+                      "relative w-[74cqw] border shadow-[0_2cqw_5cqw_rgba(90,60,30,.12)]",
+                    style: {
+                      borderColor: `${tP.gold}77`,
+                      background: "rgba(255,251,242,.85)",
+                    },
+                    children: [
+                      (0, v.jsxs)("div", {
+                        className:
+                          "flex flex-col items-center px-[6cqw] py-[5cqw]",
+                        children: [
+                          (0, v.jsx)(ac, { w: 60 }),
+                          (0, v.jsx)("p", {
+                            className:
+                              "mt-[5cqw] text-[2.8cqw] tracking-[0.3em] uppercase",
+                            style: { fontFamily: tG, color: tP.gold },
+                            children: tQ(e.date),
+                          }),
+                          (0, v.jsx)("p", {
+                            className:
+                              "mt-[1cqw] text-[20cqw] leading-none font-medium",
+                            style: { fontFamily: tZ, color: tP.maroon },
+                            children: (0, T.s)(e.date, { day: "2-digit" }),
+                          }),
+                          (0, v.jsxs)("p", {
+                            className:
+                              "mt-[1cqw] text-[3.4cqw] tracking-[0.28em] uppercase",
+                            style: { fontFamily: tG, color: tP.ink },
+                            children: [
+                              (0, T.s)(e.date, { month: "long" }),
+                              " · ",
+                              (0, T.s)(e.date, { year: "numeric" }),
+                            ],
+                          }),
+                          (0, v.jsxs)("p", {
+                            className: "mt-[3cqw] mb-[5cqw] text-[4cqw] italic",
+                            style: { fontFamily: tZ, color: tP.maroon },
+                            children: [
+                              "Sumuhurtham ",
+                              t0(e.date),
+                              " · ",
+                              e.city,
+                            ],
+                          }),
+                          (0, v.jsx)(ac, { w: 60, flip: !0 }),
+                        ],
+                      }),
+                      (0, v.jsx)(tA.f, {
+                        children:
+                          !n &&
+                          (0, v.jsx)(
+                            $.f.canvas,
+                            {
+                              ref: a,
+                              exit: { opacity: 0, scale: 1.04 },
+                              transition: { duration: 0.6 },
+                              className:
+                                "absolute inset-0 h-full w-full cursor-grab touch-none active:cursor-grabbing",
+                              onPointerDown: (e) => {
+                                (s.current = !0),
+                                  e.currentTarget.setPointerCapture(
+                                    e.pointerId,
+                                  ),
+                                  d(e);
+                              },
+                              onPointerMove: d,
+                              onPointerUp: x,
+                              onPointerCancel: x,
+                              "aria-label":
+                                "Scratch to reveal the wedding date",
+                              role: "img",
+                            },
+                            "foil",
+                          ),
+                      }),
+                    ],
+                  }),
+                  !n &&
+                    (0, v.jsx)("button", {
+                      type: "button",
+                      onClick: o,
+                      className:
+                        "mx-auto mt-[4cqw] block text-[3.2cqw] underline underline-offset-4",
+                      style: { fontFamily: tZ, color: tP.ink },
+                      children: "Tap here to reveal instead",
+                    }),
+                ],
+              }),
+              r && (0, v.jsx)(ao, { from: r }),
+            ],
+          })
+        );
+      },
+      CountdownSection: function ({ invite: e }) {
+        let {
+            days: t,
+            hours: a,
+            mins: s,
+            secs: i,
+            ready: n,
+          } = (function (e) {
+            let [t, a] = (0, f.useState)(null);
+            (0, f.useEffect)(() => {
+              let e = () => a(Date.now()),
+                t = window.setTimeout(e, 0),
+                s = window.setInterval(e, 1e3);
+              return () => {
+                window.clearTimeout(t), window.clearInterval(s);
+              };
+            }, []);
+            let s = Math.floor(
+              Math.max(0, e.getTime() - (t ?? e.getTime())) / 1e3,
+            );
+            return {
+              days: Math.floor(s / 86400),
+              hours: Math.floor(s / 3600) % 24,
+              mins: Math.floor(s / 60) % 60,
+              secs: s % 60,
+              ready: null !== t,
+            };
+          })((0, f.useMemo)(() => new Date(e.date), [e.date])),
+          l = (e) => (n ? String(e).padStart(2, "0") : "--");
+        return (0, v.jsxs)("section", {
+          className:
+            "relative flex w-full flex-col items-center pt-[10cqw] pb-[16cqw] text-center",
+          children: [
+            (0, v.jsxs)(t3, {
+              children: [
+                (0, v.jsx)(t6, {
+                  color: tP.gold,
+                  children: "Counting the days",
+                }),
+                (0, v.jsx)("p", {
+                  className: "text-[10.5cqw] leading-tight whitespace-nowrap",
+                  style: { fontFamily: tK, color: tP.maroon },
+                  children: e.countdownTitle ?? "Until the Sumuhurtham",
+                }),
+              ],
+            }),
+            (0, v.jsx)(t3, {
+              delay: 0.15,
+              className: "mt-[6cqw]",
+              children: (0, v.jsxs)("div", {
+                className: "relative w-[84cqw] border px-[3cqw] py-[3cqw]",
+                style: {
+                  borderColor: `${tP.gold}66`,
+                  background: "rgba(255,251,242,.55)",
+                },
+                children: [
+                  (0, v.jsx)(ac, { w: 78, className: "mx-auto block" }),
+                  (0, v.jsxs)("div", {
+                    className:
+                      "flex items-start justify-center gap-[3cqw] py-[5cqw]",
+                    children: [
+                      (0, v.jsx)(ad, {
+                        value: n ? String(t) : "--",
+                        label: "Days",
+                      }),
+                      (0, v.jsx)(ad, { value: l(a), label: "Hours" }),
+                      (0, v.jsx)(ad, { value: l(s), label: "Mins" }),
+                      (0, v.jsx)(ad, { value: l(i), label: "Secs" }),
+                    ],
+                  }),
+                  (0, v.jsx)(ac, {
+                    w: 78,
+                    flip: !0,
+                    className: "mx-auto block",
+                  }),
+                ],
+              }),
+            }),
+            (0, v.jsxs)(t6, {
+              color: tP.ink,
+              className: "mt-[6cqw]",
+              children: [tQ(e.date), " · ", tJ(e.date), " · ", t0(e.date)],
+            }),
+          ],
+        });
+      },
+      GallerySection: function ({ invite: e }) {
+        let t = e.gallery ?? [],
+          a = t.length > 0,
+          [s, i] = (0, f.useState)(null),
+          [n, l] = (0, f.useState)(0),
+          r = (0, f.useRef)(null);
+        return a
+          ? (0, v.jsxs)("section", {
+              className: "relative w-full pt-[6cqw] pb-[16cqw] text-center",
+              children: [
+                (0, v.jsxs)(t3, {
+                  children: [
+                    (0, v.jsx)(t6, { color: tP.gold, children: "Our moments" }),
+                    (0, v.jsx)("p", {
+                      className: "text-[12cqw] leading-tight",
+                      style: { fontFamily: tK, color: tP.maroon },
+                      children: "Photo album",
+                    }),
+                  ],
+                }),
+                (0, v.jsxs)(t3, {
+                  delay: 0.15,
+                  className: "w-full",
+                  children: [
+                    (0, v.jsx)("div", {
+                      ref: r,
+                      onScroll: () => {
+                        let e = r.current,
+                          t = e?.firstElementChild;
+                        e &&
+                          t &&
+                          l(Math.round(e.scrollLeft / (t.offsetWidth + 16)));
+                      },
+                      className:
+                        "no-scrollbar mt-[6cqw] flex w-full snap-x snap-mandatory gap-4 overflow-x-auto px-[19cqw] pt-[3cqw] pb-[6cqw]",
+                      children: t.map((e, t) =>
+                        (0, v.jsx)(
+                          $.f.button,
+                          {
+                            type: "button",
+                            onClick: () => i(t),
+                            className:
+                              "relative aspect-[2/3] w-[62cqw] shrink-0 snap-center p-[1.2cqw] shadow-[0_2cqw_5cqw_rgba(80,40,20,.22)]",
+                            style: {
+                              borderRadius: "32cqw 32cqw 2cqw 2cqw",
+                              background:
+                                "linear-gradient(135deg, #c99a3e, #f8e2a6 35%, #b8862e 65%, #f3d68d)",
+                            },
+                            animate: {
+                              scale: n === t ? 1 : 0.92,
+                              rotate: n === t ? 0 : t % 2 ? 1.5 : -1.5,
+                            },
+                            transition: { duration: 0.5, ease: tY },
+                            "aria-label": `Open photo ${t + 1}`,
+                            children: (0, v.jsxs)("div", {
+                              className: "relative size-full overflow-hidden",
+                              style: {
+                                borderRadius: "31cqw 31cqw 1.4cqw 1.4cqw",
+                              },
+                              children: [
+                                (0, v.jsx)(R.default, {
+                                  src: e,
+                                  alt: "",
+                                  fill: !0,
+                                  unoptimized: !0,
+                                  className: "object-cover",
+                                }),
+                                (0, v.jsx)("div", {
+                                  className:
+                                    "pointer-events-none absolute inset-0",
+                                  style: {
+                                    boxShadow:
+                                      "inset 0 0 0 0.6cqw rgba(255,240,210,.45)",
+                                    borderRadius: "inherit",
+                                  },
+                                }),
+                              ],
+                            }),
+                          },
+                          e,
+                        ),
+                      ),
+                    }),
+                    (0, v.jsx)("div", {
+                      className: "flex justify-center gap-[2cqw]",
+                      children: t.map((e, t) =>
+                        (0, v.jsx)(
+                          "span",
+                          {
+                            className: "h-[1.6cqw] rounded-full transition-all",
+                            style: {
+                              width: n === t ? "5cqw" : "1.6cqw",
+                              background: n === t ? tP.maroon : `${tP.gold}66`,
+                            },
+                          },
+                          e,
+                        ),
+                      ),
+                    }),
+                  ],
+                }),
+                (0, v.jsx)(tA.f, {
+                  children:
+                    null !== s &&
+                    (0, v.jsx)($.f.button, {
+                      type: "button",
+                      className:
+                        "fixed inset-0 z-[80] grid place-items-center bg-[rgba(30,15,10,.88)] p-6",
+                      initial: { opacity: 0 },
+                      animate: { opacity: 1 },
+                      exit: { opacity: 0 },
+                      onClick: () => i(null),
+                      "aria-label": "Close photo",
+                      children: (0, v.jsx)($.f.div, {
+                        className: "relative h-[80svh] w-full max-w-[440px]",
+                        initial: { scale: 0.92 },
+                        animate: { scale: 1 },
+                        children: (0, v.jsx)(R.default, {
+                          src: t[s],
+                          alt: "",
+                          fill: !0,
+                          unoptimized: !0,
+                          className: "object-contain",
+                        }),
+                      }),
+                    }),
+                }),
+              ],
+            })
+          : null;
+      },
+      tapHint: "tapHere",
+      tapHintDelay: 0.8,
+      scrollHint: "scrollToSeeMore",
+      openingMs: 6200,
+      countdownTitle: "Until the Sumuhurtham",
+    };
+    function ah(e) {
+      let t = e.trim();
+      return "&" === t
+        ? { kind: "and", text: "&" }
+        : "~" === t
+          ? { kind: "gap", text: "" }
+          : t.startsWith("## ")
+            ? { kind: "sub", text: t.slice(3).trim() }
+            : t.startsWith("# ")
+              ? { kind: "big", text: t.slice(2).trim() }
+              : { kind: "line", text: t };
+    }
+    let aw = {
+        maroon: "#6e1423",
+        ink: "#3b2418",
+        gold: "#8f6220",
+        goldLight: "#f7dc95",
+        blue: "#8ea7c8",
+        paper: "#f5e9d2",
+      },
+      au = "var(--inv-label)",
+      ag = "var(--inv-serif)",
+      ab = "var(--inv-script)",
+      aj = "var(--inv-serif), var(--font-deva), serif",
+      ay = [0.22, 1, 0.36, 1],
+      aq = "0 0 16px rgba(255,250,245,.95), 0 0 4px rgba(255,250,245,.9)";
+    function av(e) {
+      let t = e;
+      return () => ((t = (16807 * t) % 0x7fffffff) - 1) / 0x7ffffffe;
+    }
+    let aN = (e) => (0, T.s)(e, { weekday: "long" }),
+      ak = (e) =>
+        (0, T.s)(e, { day: "numeric", month: "long", year: "numeric" }),
+      a$ = (e) =>
+        (0, T.s)(e, { hour: "numeric", minute: "2-digit", hour12: !0 })
+          .replace(/\s?([ap])\.?m\.?/i, " $1m")
+          .toLowerCase(),
+      aC = (e) => {
+        let t = e.events.find((t) => t.start === e.date);
+        return t?.noTime ? "" : (t?.timeText ?? a$(e.date));
+      };
+    function aM({ src: e, alt: t, fade: a, className: s, priority: i }) {
+      return (0, v.jsx)("div", {
+        className: `absolute inset-x-0 aspect-[2/3] ${s ?? ""}`,
+        style: { maskImage: a, WebkitMaskImage: a },
+        children: (0, v.jsx)(R.default, {
+          src: `/art/illus/telugu-${e}.webp`,
+          alt: t,
+          fill: !0,
+          priority: i,
+          sizes: "480px",
+          className: "object-cover",
+        }),
+      });
+    }
+    function aS({ className: e, glow: t }) {
+      return (0, v.jsxs)("div", {
+        className: `relative aspect-[270/346] ${e ?? ""}`,
+        children: [
+          (0, v.jsx)(R.default, {
+            src: "/art/seals/srinita-ganesha.png",
+            alt: "Shri Ganesha",
+            fill: !0,
+            sizes: "120px",
+            className:
+              "object-contain drop-shadow-[0_0_6px_rgba(255,250,240,.9)]",
+          }),
+          t &&
+            (0, v.jsx)($.f.div, {
+              className: "absolute inset-[-40%] rounded-full mix-blend-screen",
+              style: {
+                background:
+                  "radial-gradient(closest-side, rgba(255,226,150,.9), rgba(255,210,120,.3) 50%, transparent)",
+              },
+              initial: { opacity: 0, scale: 0.6 },
+              animate: { opacity: [0, 1, 0.5], scale: [0.6, 1.2, 1] },
+              transition: { duration: 1.6, ease: "easeOut" },
+            }),
+        ],
+      });
+    }
+    function a_({ text: e, delay: t, style: a }) {
+      return (0, v.jsx)($.f.span, {
+        className: "inline-block max-w-full whitespace-pre-wrap",
+        style: a,
+        initial: { clipPath: "inset(-30% 100% -30% 0)", opacity: 0.4 },
+        animate: { clipPath: "inset(-30% -8% -30% 0)", opacity: 1 },
+        transition: { delay: t, duration: 1.3, ease: [0.45, 0, 0.25, 1] },
+        children: e,
+      });
+    }
+    function az({ children: e, delay: t = 0, className: a = "" }) {
+      return (0, v.jsx)($.f.div, {
+        initial: { opacity: 0, y: 18, filter: "blur(4px)" },
+        whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+        viewport: { once: !0, amount: 0.4 },
+        transition: { duration: 0.9, delay: t, ease: ay },
+        className: `flex flex-col items-center ${a}`,
+        children: e,
+      });
+    }
+    let aF = ({ children: e, color: t = aw.ink, className: a = "" }) =>
+      (0, v.jsx)("p", {
+        className: `text-[2.5cqw] tracking-[0.26em] uppercase ${a}`,
+        style: { fontFamily: au, color: t },
+        children: e,
+      });
+    function aT({ color: e = aw.gold }) {
+      return (0, v.jsxs)("div", {
+        className: "my-[5cqw] flex w-[46%] items-center gap-[2cqw]",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: { background: `linear-gradient(90deg, transparent, ${e})` },
+          }),
+          (0, v.jsx)("svg", {
+            viewBox: "0 0 20 20",
+            className: "size-[3.4cqw]",
+            fill: e,
+            children: (0, v.jsx)("path", {
+              d: "M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z",
+            }),
+          }),
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: { background: `linear-gradient(90deg, ${e}, transparent)` },
+          }),
+        ],
+      });
+    }
+    function aB({ count: e = 7, seed: t = 3 }) {
+      let a = (0, f.useMemo)(() => {
+        let a = av(t);
+        return Array.from({ length: e }, () => ({
+          x: 92 * a(),
+          d: 8 * a(),
+          t: 9 + 6 * a(),
+          sway: 6 + 10 * a(),
+          rot: 360 * a(),
+          s: 1.8 + 1.4 * a(),
+        }));
+      }, [e, t]);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0 overflow-hidden",
+        children: a.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute -top-[5cqw] rounded-[70%_0_70%_0]",
+              style: {
+                left: `${e.x}%`,
+                width: `${e.s}cqw`,
+                height: `${1.5 * e.s}cqw`,
+                background: "linear-gradient(135deg, #e9a7b2, #a8384f)",
+                opacity: 0.8,
+              },
+              animate: {
+                y: ["0cqw", "180cqw"],
+                x: [
+                  "0cqw",
+                  `${e.sway}cqw`,
+                  `${-e.sway / 2}cqw`,
+                  `${e.sway / 2}cqw`,
+                ],
+                rotate: [e.rot, e.rot + 260],
+              },
+              transition: {
+                duration: e.t,
+                delay: e.d,
+                repeat: 1 / 0,
+                ease: "linear",
+              },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function aL({ invite: e, opened: t, hide: a }) {
+      let [s, i] = (0, L.g)(e);
+      return (0, v.jsxs)($.f.p, {
+        className:
+          "col-start-1 row-start-1 px-[8cqw] text-[11cqw] leading-[1.15]",
+        style: {
+          fontFamily: ab,
+          color: aw.maroon,
+          textShadow: aq,
+          textWrap: "balance",
+        },
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: +!a, y: 0 },
+        transition: { duration: t ? 0.5 : 1.2, delay: 0.35 * !t },
+        children: [
+          s.first,
+          " ",
+          (0, v.jsx)("span", {
+            style: { color: aw.gold, fontSize: "0.7em" },
+            children: e.joiner ?? "&",
+          }),
+          " ",
+          i.first,
+        ],
+      });
+    }
+    function aO({ text: e }) {
+      let t = e.split("\n").filter((e) => e.trim()),
+        a =
+          e.length > 60
+            ? "text-[5cqw]"
+            : e.length > 30
+              ? "text-[6cqw]"
+              : "text-[8cqw]";
+      return (0, v.jsx)("div", {
+        className:
+          "col-start-1 row-start-1 flex flex-col items-center px-[8cqw]",
+        style: { textShadow: aq },
+        children: t.map((e, t) =>
+          (0, v.jsx)(
+            $.f.p,
+            {
+              className: `leading-[1.5] font-semibold ${a}`,
+              style: {
+                fontFamily: aj,
+                color: t % 2 ? aw.gold : aw.maroon,
+                textWrap: "balance",
+              },
+              initial: { opacity: 0, y: "0.3em", filter: "blur(6px)" },
+              animate: { opacity: 1, y: "0em", filter: "blur(0px)" },
+              transition: { delay: 0.25 + 0.4 * t, duration: 0.8, ease: ay },
+              children: e,
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function aW({ opened: e }) {
+      let t = {
+        left: "50%",
+        bottom: "90.75cqw",
+        width: "22cqw",
+        height: "22cqw",
+        translate: "-50% 50%",
+      };
+      return (0, v.jsxs)("div", {
+        className: "pointer-events-none absolute",
+        style: t,
+        children: [
+          (0, v.jsx)($.f.div, {
+            className: "absolute inset-[-40%] rounded-full mix-blend-screen",
+            style: {
+              background:
+                "radial-gradient(closest-side, rgba(255,252,235,.95), rgba(255,226,160,.55) 45%, transparent)",
+            },
+            animate: e
+              ? { opacity: 1, scale: 2.2 }
+              : { opacity: [0.55, 0.95, 0.55], scale: [1, 1.12, 1] },
+            transition: e
+              ? { duration: 1.6, delay: 0.4, ease: "easeOut" }
+              : { duration: 3.2, repeat: 1 / 0, ease: "easeInOut" },
+          }),
+          e &&
+            (0, v.jsx)($.f.div, {
+              className: "absolute inset-[-260%] rounded-full mix-blend-screen",
+              style: {
+                background:
+                  "repeating-conic-gradient(from 0deg, rgba(255,240,200,.6) 0deg 2.5deg, transparent 2.5deg 11deg)",
+                maskImage:
+                  "radial-gradient(closest-side, #000 8%, rgba(0,0,0,.5) 40%, transparent 75%)",
+                WebkitMaskImage:
+                  "radial-gradient(closest-side, #000 8%, rgba(0,0,0,.5) 40%, transparent 75%)",
+              },
+              initial: { opacity: 0, rotate: 0, scale: 0.5 },
+              animate: { opacity: [0, 1, 1], rotate: 30, scale: 1 },
+              transition: {
+                opacity: { delay: 0.4 + 0.2, duration: 1.2 },
+                scale: { delay: 0.4, duration: 2, ease: ay },
+                rotate: { duration: 6, ease: "linear" },
+              },
+            }),
+        ],
+      });
+    }
+    function aI() {
+      let e = (0, f.useMemo)(() => {
+        let e = av(11);
+        return Array.from({ length: 16 }, () => ({
+          x: 6 + 88 * e(),
+          y: 35 + 60 * e(),
+          s: 0.5 + 0.9 * e(),
+          d: 5 * e(),
+          t: 5 + 4 * e(),
+        }));
+      }, []);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0",
+        children: e.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className:
+                "absolute rounded-full bg-[#fff8e6] shadow-[0_0_6px_2px_rgba(255,230,180,.8)]",
+              style: {
+                left: `${e.x}%`,
+                top: `${e.y}%`,
+                width: `${e.s}cqw`,
+                height: `${e.s}cqw`,
+              },
+              animate: { y: ["0cqw", "-26cqw"], opacity: [0, 1, 0] },
+              transition: {
+                duration: e.t,
+                delay: e.d,
+                repeat: 1 / 0,
+                ease: "easeOut",
+              },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function aH() {
+      return (0, v.jsx)($.f.div, {
+        className: "pointer-events-none absolute rounded-full",
+        style: {
+          left: "50%",
+          bottom: "90.75cqw",
+          width: "80cqw",
+          height: "80cqw",
+          translate: "-50% 50%",
+          background:
+            "radial-gradient(closest-side, #fffdf6, #fff0d4 40%, rgba(255,226,190,.55) 68%, transparent)",
+        },
+        initial: { scale: 0.2, opacity: 0 },
+        animate: { scale: [0.2, 1.4, 5], opacity: [0, 1, 0] },
+        transition: {
+          delay: 1.8,
+          duration: 2.6,
+          times: [0, 0.38, 1],
+          ease: "easeOut",
+        },
+      });
+    }
+    function aD() {
+      let e = (0, f.useMemo)(() => {
+        let e = av(23);
+        return Array.from({ length: 60 }, (t, a) => ({
+          x: 3 + 94 * e(),
+          d: 1.7 + 1.4 * e(),
+          t: 2.6 + 1.6 * e(),
+          sway: (e() - 0.5) * 12,
+          rot: 360 * e(),
+          kind:
+            a % 3 == 0
+              ? "pearl"
+              : a % 7 == 0
+                ? "petal"
+                : a % 11 == 0
+                  ? "kumkum"
+                  : "rice",
+          s: 0.8 + 0.6 * e(),
+        }));
+      }, []);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0 overflow-hidden",
+        children: e.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute -top-[4cqw]",
+              style: {
+                left: `${e.x}%`,
+                width:
+                  "pearl" === e.kind
+                    ? `${1.5 * e.s}cqw`
+                    : "kumkum" === e.kind
+                      ? "1cqw"
+                      : "petal" === e.kind
+                        ? "2.2cqw"
+                        : `${2.1 * e.s}cqw`,
+                height:
+                  "pearl" === e.kind
+                    ? `${1.5 * e.s}cqw`
+                    : "kumkum" === e.kind
+                      ? "1cqw"
+                      : "petal" === e.kind
+                        ? "3cqw"
+                        : `${0.85 * e.s}cqw`,
+                borderRadius: "petal" === e.kind ? "70% 0 70% 0" : 999,
+                background:
+                  "pearl" === e.kind
+                    ? "radial-gradient(circle at 32% 30%, #ffffff, #f4ecdc 45%, #cdbb9a)"
+                    : "kumkum" === e.kind
+                      ? "#a3121f"
+                      : "petal" === e.kind
+                        ? "linear-gradient(135deg, #ffd6e0, #ec8fa8)"
+                        : "linear-gradient(180deg, #ffd45a, #e8a317)",
+                boxShadow:
+                  "pearl" === e.kind ? "0 0 4px rgba(255,255,240,.9)" : "none",
+              },
+              initial: { y: 0, x: 0, rotate: e.rot, opacity: 0 },
+              animate: {
+                y: "205cqw",
+                x: ["0cqw", `${e.sway}cqw`, `${-e.sway / 2}cqw`],
+                rotate: e.rot + 360,
+                opacity: [0, 1, 1, 0],
+              },
+              transition: {
+                duration: e.t,
+                delay: e.d,
+                ease: [0.35, 0, 0.8, 1],
+                times: [0, 0.08, 0.85, 1],
+              },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    let aR = (e) => `calc(min(1cqw, 0.5svh) * ${e})`;
+    function aA({ className: e = "" }) {
+      return (0, v.jsxs)("div", {
+        className: `flex w-[56%] items-center gap-[2cqw] ${e}`,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: {
+              background: `linear-gradient(90deg, transparent, ${aw.blue})`,
+            },
+          }),
+          (0, v.jsxs)("svg", {
+            viewBox: "0 0 40 22",
+            className: "w-[9cqw]",
+            children: [
+              (0, v.jsx)("path", {
+                d: "M20 2 C24 8 24 14 20 20 C16 14 16 8 20 2 Z",
+                fill: aw.maroon,
+              }),
+              (0, v.jsx)("path", {
+                d: "M20 20 C13 18 9 13 8 7 C14 9 18 13 20 20 Z",
+                fill: aw.maroon,
+                opacity: ".8",
+              }),
+              (0, v.jsx)("path", {
+                d: "M20 20 C27 18 31 13 32 7 C26 9 22 13 20 20 Z",
+                fill: aw.maroon,
+                opacity: ".8",
+              }),
+              (0, v.jsx)("path", {
+                d: "M20 20 C11 21 5 18 2 13 C9 13 15 15 20 20 Z",
+                fill: aw.gold,
+                opacity: ".9",
+              }),
+              (0, v.jsx)("path", {
+                d: "M20 20 C29 21 35 18 38 13 C31 13 25 15 20 20 Z",
+                fill: aw.gold,
+                opacity: ".9",
+              }),
+            ],
+          }),
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: {
+              background: `linear-gradient(90deg, ${aw.blue}, transparent)`,
+            },
+          }),
+        ],
+      });
+    }
+    let aE = `radial-gradient(120% 80% at 50% 30%, #8a1f30, ${aw.maroon} 55%, #520d1a)`;
+    function aP({ w: e, flip: t = !1, color: a = aw.gold, className: s = "" }) {
+      let i = Math.round(e / 3.2),
+        n = e / i;
+      return (0, v.jsxs)("svg", {
+        viewBox: `0 0 ${e} 4.6`,
+        className: s,
+        style: {
+          width: `${e}cqw`,
+          height: "4.6cqw",
+          transform: t ? "scaleY(-1)" : void 0,
+        },
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("line", {
+            x1: "0",
+            x2: e,
+            y1: "0.4",
+            y2: "0.4",
+            stroke: a,
+            strokeWidth: "0.3",
+          }),
+          (0, v.jsx)("line", {
+            x1: "0",
+            x2: e,
+            y1: "1.2",
+            y2: "1.2",
+            stroke: a,
+            strokeWidth: "0.15",
+          }),
+          Array.from({ length: i }, (e, t) => {
+            let s = t * n,
+              i = s + n / 2;
+            return (0, v.jsxs)(
+              "g",
+              {
+                children: [
+                  (0, v.jsx)("path", {
+                    d: `M${s + 0.12 * n} 1.2 L${i} 4.2 L${s + 0.88 * n} 1.2`,
+                    fill: "none",
+                    stroke: a,
+                    strokeWidth: "0.22",
+                    strokeLinejoin: "round",
+                  }),
+                  (0, v.jsx)("circle", { cx: i, cy: "2", r: "0.3", fill: a }),
+                ],
+              },
+              t,
+            );
+          }),
+        ],
+      });
+    }
+    function aG({ from: e }) {
+      let [t] = (0, f.useState)(() => window.innerHeight),
+        a = (0, f.useMemo)(() => {
+          let e = av(31);
+          return Array.from({ length: 46 }, (t, a) => {
+            let s = e() * Math.PI * 2,
+              i = 70 + 170 * e();
+            return {
+              kind: a % 3 == 0 ? "pearl" : a % 4 == 0 ? "rice" : "petal",
+              bx: Math.cos(s) * i,
+              by: Math.sin(s) * i * 0.7 - 120 - 120 * e(),
+              fx: (e() - 0.5) * 140,
+              spin: (e() > 0.5 ? 1 : -1) * (200 + 400 * e()),
+              delay: 0.2 * e(),
+              dur: 3 + 2 * e(),
+              s: 0.8 + 0.7 * e(),
+            };
+          });
+        }, []);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none fixed inset-0 z-[80] overflow-hidden",
+        "aria-hidden": !0,
+        children: a.map((a, s) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute",
+              style: {
+                left: e.x,
+                top: e.y,
+                width:
+                  "petal" === a.kind
+                    ? 12 * a.s
+                    : "pearl" === a.kind
+                      ? 8 * a.s
+                      : 10 * a.s,
+                height:
+                  "petal" === a.kind
+                    ? 17 * a.s
+                    : "pearl" === a.kind
+                      ? 8 * a.s
+                      : 4 * a.s,
+                borderRadius: "petal" === a.kind ? "70% 0 70% 0" : 999,
+                background:
+                  "petal" === a.kind
+                    ? s % 2
+                      ? "linear-gradient(135deg, #e9a7b2, #a8384f)"
+                      : "linear-gradient(135deg, #ffd27a, #f08a1c)"
+                    : "pearl" === a.kind
+                      ? "radial-gradient(circle at 32% 30%, #fff, #e9dcc0)"
+                      : "linear-gradient(180deg, #ffd45a, #e8a317)",
+              },
+              initial: { x: 0, y: 0, opacity: 0, rotate: 0 },
+              animate: {
+                x: [0, a.bx, a.bx + a.fx],
+                y: [0, a.by, t - e.y + 60],
+                opacity: [0, 1, 1],
+                rotate: [0, 0.3 * a.spin, a.spin],
+              },
+              transition: {
+                duration: a.dur,
+                delay: a.delay,
+                times: [0, 0.2, 1],
+                ease: ["easeOut", "easeIn"],
+              },
+            },
+            s,
+          ),
+        ),
+      });
+    }
+    function aZ({ value: e, label: t }) {
+      return (0, v.jsxs)("div", {
+        className: "flex w-[15cqw] flex-col items-center",
+        children: [
+          (0, v.jsx)("div", {
+            className:
+              "relative grid h-[11cqw] w-full place-items-center overflow-hidden",
+            style: { perspective: "300px" },
+            children: (0, v.jsx)(tA.f, {
+              mode: "popLayout",
+              initial: !1,
+              children: (0, v.jsx)(
+                $.f.span,
+                {
+                  className:
+                    "text-[9cqw] leading-none font-medium tabular-nums",
+                  style: { fontFamily: ag, color: aw.maroon },
+                  initial: { rotateX: 80, opacity: 0 },
+                  animate: { rotateX: 0, opacity: 1 },
+                  exit: { rotateX: -80, opacity: 0 },
+                  transition: { duration: 0.45, ease: ay },
+                  children: e,
+                },
+                e,
+              ),
+            }),
+          }),
+          (0, v.jsx)("span", {
+            className: "mt-[1cqw] h-px w-[8cqw]",
+            style: { background: `${aw.gold}88` },
+          }),
+          (0, v.jsx)("p", {
+            className: "mt-[1.5cqw] text-[2cqw] tracking-[0.16em] uppercase",
+            style: { fontFamily: au, color: aw.gold },
+            children: t,
+          }),
+        ],
+      });
+    }
+    let aK =
+        "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#e9c77e] px-[4.5cqw] py-[2cqw] text-[3cqw] font-semibold active:scale-95 transition",
+      aV = {
+        button: `${aK} bg-[#e9c77e] text-[#520d1a]`,
+        ghost: `${aK} text-[#f7dc95]`,
+      };
+    function aY({ e, invite: t }) {
+      let { t: a } = (0, N.G)(),
+        s = e.noTime ? "" : (e.timeText ?? a$(e.start));
+      return (0, v.jsx)("div", {
+        className:
+          "relative mx-auto min-h-[112cqw] w-[74cqw] p-[0.8cqw] shadow-[0_2cqw_6cqw_rgba(90,30,20,.22)]",
+        style: {
+          background:
+            "linear-gradient(135deg, #c99a3e, #f8e2a6 30%, #b8862e 55%, #f3d68d 80%, #a87a28)",
+        },
+        children: (0, v.jsxs)("div", {
+          className:
+            "relative flex min-h-[110.4cqw] w-full flex-col items-center justify-between overflow-hidden px-[3cqw] py-[3cqw]",
+          style: { background: aE },
+          children: [
+            (0, v.jsx)(aP, { w: 66, color: "#e9c77e" }),
+            (0, v.jsxs)("div", {
+              className: "flex flex-col items-center px-[3cqw] py-[4cqw]",
+              children: [
+                e.image &&
+                  (0, v.jsx)($.f.div, {
+                    className:
+                      "relative mb-[5cqw] aspect-[4/5] w-[36cqw] overflow-hidden border-[0.45cqw]",
+                    style: {
+                      borderColor: "#e9c77e",
+                      borderRadius: "50% 50% 1cqw 1cqw / 30% 30% 1cqw 1cqw",
+                    },
+                    children: (0, v.jsx)(R.default, {
+                      src: e.image,
+                      alt: "",
+                      fill: !0,
+                      sizes: "240px",
+                      className: "object-cover",
+                    }),
+                  }),
+                (0, v.jsx)($.f.p, {
+                  className: `leading-none ${e.name.length > 12 ? "text-[11cqw]" : "text-[15cqw]"}`,
+                  style: {
+                    fontFamily: ab,
+                    color: aw.goldLight,
+                    textWrap: "balance",
+                  },
+                  children: e.name,
+                }),
+                (0, v.jsxs)($.f.p, {
+                  className: "mt-[5cqw] text-[5.2cqw] font-semibold",
+                  style: { fontFamily: ag, color: "#fff3dc" },
+                  children: [aN(e.start), ", ", ak(e.start)],
+                }),
+                e.schedule?.length
+                  ? (0, v.jsx)($.f.div, {
+                      className:
+                        "mt-[4cqw] flex flex-col items-center gap-[1.5cqw]",
+                      children: e.schedule.map((e, t) =>
+                        (0, v.jsxs)(
+                          "p",
+                          {
+                            className: "text-[4.4cqw] leading-snug",
+                            style: { fontFamily: ag, color: "#fff3dc" },
+                            children: [
+                              (0, v.jsx)("span", {
+                                className: "font-bold",
+                                style: { color: aw.goldLight },
+                                children: a$(e.at),
+                              }),
+                              " ",
+                              "· ",
+                              e.text,
+                            ],
+                          },
+                          e.at + t,
+                        ),
+                      ),
+                    })
+                  : s &&
+                    (0, v.jsx)($.f.p, {
+                      className: `mt-[4cqw] leading-tight ${s.length > 10 ? "text-[7.5cqw]" : "text-[11cqw]"}`,
+                      style: {
+                        fontFamily: ab,
+                        color: aw.goldLight,
+                        textWrap: "balance",
+                      },
+                      children: s,
+                    }),
+                (0, v.jsxs)($.f.div, {
+                  className: "mt-[3cqw] flex flex-col items-center",
+                  children: [
+                    (0, v.jsx)("p", {
+                      className: "text-[4.5cqw] leading-snug font-semibold",
+                      style: {
+                        fontFamily: ag,
+                        color: "#fff3dc",
+                        textWrap: "balance",
+                      },
+                      children: e.venue,
+                    }),
+                    e.address &&
+                      (0, v.jsx)("p", {
+                        className: "text-[3.9cqw] leading-snug",
+                        style: {
+                          fontFamily: ag,
+                          color: "#f0dcc0",
+                          textWrap: "balance",
+                        },
+                        children: e.address,
+                      }),
+                    e.dress &&
+                      (0, v.jsx)("p", {
+                        className: "mt-[2.5cqw] text-[3.6cqw] italic",
+                        style: { fontFamily: ag, color: "#e9c77e" },
+                        children: a.dress(e.dress),
+                      }),
+                    e.note &&
+                      (0, v.jsx)("p", {
+                        className: "mt-[2.5cqw] text-[3.6cqw] italic",
+                        style: { fontFamily: ag, color: "#e9c77e" },
+                        children: e.note,
+                      }),
+                    (0, v.jsx)("div", {
+                      style: { fontFamily: au },
+                      children: (0, v.jsx)(B.W, {
+                        event: e,
+                        invite: t,
+                        theme: { ...a0, ui: { ...a0.ui, ...aV } },
+                      }),
+                    }),
+                  ],
+                }),
+              ],
+            }),
+            (0, v.jsx)(aP, { w: 66, flip: !0, color: "#e9c77e" }),
+          ],
+        }),
+      });
+    }
+    function aU({ e, invite: t, i: a, next: s, self: i }) {
+      let [n, l] = (0, f.useState)(0),
+        r = (0, f.useRef)(null);
+      (0, f.useEffect)(() => {
+        let e = r.current;
+        if (!e) return;
+        let t = new ResizeObserver(() => l(e.offsetHeight));
+        return t.observe(e), () => t.disconnect();
+      }, []);
+      let { scrollYProgress: c } = e$({
+          target: s ?? i,
+          offset: ["start end", "start 34%"],
+        }),
+        o = (0, eS.f)(c, [0, 1], [1, s ? 0.94 : 1]),
+        d = (0, eS.f)(c, [0.3, 1], [0, 0.18 * !!s]),
+        x = `${(1.6 * a).toFixed(1)}cqw`;
+      return (0, v.jsx)("li", {
+        ref: i,
+        className: "sticky w-full",
+        style: {
+          top: n
+            ? `max(calc(16% + ${x}), calc(50% - ${Math.round(n / 2)}px + ${x}))`
+            : "16%",
+        },
+        children: (0, v.jsxs)($.f.div, {
+          ref: r,
+          className: "relative mx-auto w-fit",
+          style: { scale: o, transformOrigin: "50% 0%" },
+          children: [
+            (0, v.jsx)(aY, { e: e, invite: t }),
+            (0, v.jsx)($.f.div, {
+              "aria-hidden": !0,
+              className: "pointer-events-none absolute inset-0",
+              style: { opacity: d, background: "#2a0a10" },
+            }),
+          ],
+        }),
+      });
+    }
+    function aX({ invite: e }) {
+      let t = e.events.length,
+        a = (0, f.useMemo)(
+          () => Array.from({ length: t }, () => (0, f.createRef)()),
+          [t],
+        );
+      return (0, v.jsx)("ol", {
+        className: "mt-[6cqw] flex w-full flex-col gap-[28cqw] pb-[36cqw]",
+        children: e.events.map((t, s) =>
+          (0, v.jsx)(
+            aU,
+            { e: t, invite: e, i: s, self: a[s], next: a[s + 1] ?? null },
+            t.name + s,
+          ),
+        ),
+      });
+    }
+    function aQ({ invite: e }) {
+      return e.extras?.length
+        ? (0, v.jsx)("section", {
+            className:
+              "relative flex w-full flex-col items-center gap-[10cqw] px-[12%] pt-[6cqw] pb-[14cqw] text-center",
+            children: e.extras.map((e, t) =>
+              (0, v.jsx)(
+                az,
+                {
+                  className: "relative w-full",
+                  children: (0, v.jsxs)("div", {
+                    className:
+                      "relative w-full rounded-[3cqw] px-[7cqw] py-[9cqw]",
+                    style: {
+                      background:
+                        "linear-gradient(180deg, rgba(255,252,245,.75), rgba(250,240,222,.6))",
+                      boxShadow: `inset 0 0 0 1px ${aw.gold}55, 0 2cqw 6cqw rgba(90,60,30,.1)`,
+                    },
+                    children: [
+                      (0, v.jsx)("div", {
+                        className:
+                          "pointer-events-none absolute inset-[1.6cqw] rounded-[2cqw] border",
+                        style: { borderColor: `${aw.blue}88` },
+                      }),
+                      e.title &&
+                        (0, v.jsx)("p", {
+                          className: "text-[11cqw] leading-tight",
+                          style: {
+                            fontFamily: ab,
+                            color: aw.maroon,
+                            textWrap: "balance",
+                          },
+                          children: e.title,
+                        }),
+                      (0, v.jsx)(aA, { className: "mx-auto my-[5cqw]" }),
+                      (0, v.jsx)("div", {
+                        className: "flex flex-col gap-[2cqw]",
+                        children: e.lines.map((e, t) => {
+                          let a = ah(e),
+                            s = {
+                              initial: { opacity: 0, y: 10 },
+                              whileInView: { opacity: 1, y: 0 },
+                              viewport: { once: !0 },
+                              transition: {
+                                delay: 0.2 + 0.12 * t,
+                                duration: 0.7,
+                                ease: ay,
+                              },
+                            };
+                          return "gap" === a.kind
+                            ? (0, v.jsx)("div", { className: "h-[2cqw]" }, t)
+                            : "and" === a.kind
+                              ? (0, v.jsx)(
+                                  $.f.p,
+                                  {
+                                    ...s,
+                                    className: "text-[4cqw] leading-none",
+                                    style: { fontFamily: ag, color: aw.gold },
+                                    children: "&",
+                                  },
+                                  t,
+                                )
+                              : "sub" === a.kind
+                                ? (0, v.jsx)(
+                                    $.f.p,
+                                    {
+                                      ...s,
+                                      className:
+                                        "mt-[2cqw] text-[2.6cqw] tracking-[0.22em] uppercase",
+                                      style: { fontFamily: au, color: aw.gold },
+                                      children: a.text,
+                                    },
+                                    t,
+                                  )
+                                : "big" === a.kind
+                                  ? (0, v.jsx)(
+                                      $.f.p,
+                                      {
+                                        ...s,
+                                        className: "text-[9cqw] leading-tight",
+                                        style: {
+                                          fontFamily: ab,
+                                          color: aw.maroon,
+                                        },
+                                        children: a.text,
+                                      },
+                                      t,
+                                    )
+                                  : (0, v.jsx)(
+                                      $.f.p,
+                                      {
+                                        ...s,
+                                        className:
+                                          "text-[4.4cqw] font-semibold",
+                                        style: {
+                                          fontFamily: ag,
+                                          color: aw.ink,
+                                        },
+                                        children: a.text,
+                                      },
+                                      t,
+                                    );
+                        }),
+                      }),
+                    ],
+                  }),
+                },
+                e.title + t,
+              ),
+            ),
+          })
+        : null;
+    }
+    function aJ({ kicker: e, children: t }) {
+      return (0, v.jsxs)("div", {
+        className: "flex flex-col items-center text-center",
+        children: [
+          e && (0, v.jsx)(aF, { color: aw.gold, children: e }),
+          (0, v.jsx)("p", {
+            className: "text-[11cqw] leading-tight",
+            style: { fontFamily: ab, color: aw.maroon, textWrap: "balance" },
+            children: t,
+          }),
+          (0, v.jsx)(aT, {}),
+        ],
+      });
+    }
+    let a0 = {
+        id: "shivshakti",
+        root: "",
+        vars: {
+          "--inv-script": "var(--font-great-vibes)",
+          "--inv-serif": "var(--font-cormorant)",
+          "--inv-label": "var(--font-cinzel)",
+          "--inv-accent": aw.maroon,
+          background: aw.paper,
+          color: aw.ink,
+        },
+        accent: aw.maroon,
+        ui: {
+          section: "relative px-[11cqw] py-[12cqw]",
+          card: "rounded-[3cqw] border border-[#8f6220]/40 bg-[#fffaf0]/90",
+          input:
+            "w-full rounded-[2cqw] border border-black/15 bg-white/90 px-[4cqw] py-[3cqw] text-[3.8cqw] outline-none",
+          chip: "rounded-full border border-[#8f6220]/50 px-[3.5cqw] py-[1.6cqw] text-[3.2cqw]",
+          chipOn:
+            "rounded-full border border-[#6e1423] bg-[#6e1423] px-[3.5cqw] py-[1.6cqw] text-[3.2cqw] text-[#fff3dc]",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full px-[4.5cqw] py-[2.2cqw] text-[3.2cqw] font-medium text-[#fff3dc] active:scale-95 transition [background:var(--inv-accent)]",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#8f6220] bg-[#fffaf0] px-[4.5cqw] py-[2.2cqw] text-[3.2cqw] font-medium active:scale-95 transition",
+          muted: "opacity-70",
+          tile: "rounded-[3cqw] border border-[#8f6220]/60 bg-[#fffaf0]/95 text-[#6e1423]",
+        },
+        Opening: function ({ invite: e, opened: t, onOpen: a }) {
+          return (0, v.jsx)("div", {
+            className: "absolute inset-0 overflow-hidden",
+            style: { pointerEvents: t ? "none" : "auto" },
+            children: (0, v.jsxs)("div", {
+              className: "@container absolute inset-0",
+              children: [
+                (0, v.jsxs)($.f.div, {
+                  className: "absolute inset-0",
+                  style: { background: "#d6d2d3" },
+                  animate: { opacity: +!t },
+                  transition: {
+                    duration: 1,
+                    delay: 2.4 * !!t,
+                    ease: "easeInOut",
+                  },
+                  children: [
+                    (0, v.jsxs)($.f.div, {
+                      className: "absolute inset-0",
+                      style: { transformOrigin: "50% calc(100% - 90.75cqw)" },
+                      animate: t ? { scale: 1.35 } : { scale: [1, 1.025, 1] },
+                      transition: t
+                        ? { duration: 3, delay: 0.5, ease: [0.5, 0, 0.3, 1] }
+                        : { duration: 9, repeat: 1 / 0, ease: "easeInOut" },
+                      children: [
+                        (0, v.jsx)(aM, {
+                          src: "v4-opening",
+                          alt: "Shiva and Parvati walk hand in hand up a lotus path towards the rising sun",
+                          fade: "linear-gradient(180deg, transparent, #000 14%)",
+                          className: "bottom-0",
+                          priority: !0,
+                        }),
+                        (0, v.jsx)(aW, { opened: t }),
+                      ],
+                    }),
+                    (0, v.jsx)(aI, {}),
+                    (0, v.jsxs)("div", {
+                      className:
+                        "absolute inset-x-0 top-0 flex flex-col items-center justify-center text-center",
+                      style: { bottom: "100cqw" },
+                      children: [
+                        (0, v.jsx)($.f.div, {
+                          initial: { opacity: 0, y: -8 },
+                          animate: { opacity: 1, y: 0 },
+                          transition: { duration: 1, delay: 0.1 },
+                          children: (0, v.jsx)(aS, {
+                            className: "w-[17cqw]",
+                            glow: t,
+                          }),
+                        }),
+                        (0, v.jsxs)("div", {
+                          className:
+                            "relative mt-[3cqw] grid w-full place-items-center",
+                          children: [
+                            (0, v.jsx)(aL, {
+                              invite: e,
+                              opened: t,
+                              hide: t && !!e.invocation,
+                            }),
+                            t &&
+                              e.invocation &&
+                              (0, v.jsx)(aO, { text: e.invocation }),
+                          ],
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+                t && (0, v.jsx)(aH, {}),
+                t && (0, v.jsx)(aD, {}),
+                !t &&
+                  (0, v.jsx)("button", {
+                    type: "button",
+                    onClick: a,
+                    "aria-label": "Open the invitation",
+                    className: "absolute inset-0 cursor-pointer",
+                  }),
+              ],
+            }),
+          });
+        },
+        Hero: function ({ invite: e }) {
+          let t,
+            a = g(),
+            [s, i] = (0, L.g)(e),
+            n = (e) => ({
+              initial: { opacity: 0, y: 12, filter: "blur(6px)" },
+              animate: a ? { opacity: 1, y: 0, filter: "blur(0px)" } : {},
+              transition: { duration: 1, delay: e, ease: ay },
+            }),
+            l =
+              e.heroKicker ??
+              ("engagement" === (t = e.occasion)
+                ? "Join us as we celebrate the engagement of"
+                : "reception" === t
+                  ? "Join us as we celebrate the wedding reception of"
+                  : "Join us as we celebrate the union of a lifetime"),
+            r = !e.hideHeroDate,
+            c = !e.hideHeroCity && !!e.city;
+          return (0, v.jsxs)("section", {
+            className:
+              "relative h-[var(--screen-h,100dvh)] min-h-[200cqw] w-full overflow-hidden",
+            children: [
+              (0, v.jsx)("div", {
+                className: "absolute inset-0",
+                style: {
+                  background:
+                    "linear-gradient(180deg, #cfd9e6, #e3e4e2 30%, #f3e8d4 60%, transparent)",
+                },
+              }),
+              (0, v.jsx)(aB, {}),
+              (0, v.jsx)($.f.div, {
+                className: "absolute",
+                style: {
+                  left: aR(-12),
+                  top: aR(68),
+                  width: aR(112),
+                  aspectRatio: "1100 / 618",
+                },
+                initial: { x: "-100%", opacity: 0 },
+                animate: a ? { x: "0%", opacity: 1 } : {},
+                transition: { duration: 2, delay: 2.3, ease: "easeOut" },
+                children: (0, v.jsx)(R.default, {
+                  src: "/art/illus/shiv-hand.webp",
+                  alt: "",
+                  fill: !0,
+                  priority: !0,
+                  sizes: "480px",
+                  className: "object-contain",
+                }),
+              }),
+              (0, v.jsx)($.f.div, {
+                className: "absolute",
+                style: {
+                  top: aR(-8),
+                  right: `min(calc(100cqw - ${aR(130)}), 0px)`,
+                  width: aR(90),
+                  aspectRatio: "788 / 890",
+                },
+                initial: { x: "35%", y: "-35%", opacity: 0 },
+                animate: a ? { x: "0%", y: "0%", opacity: 1 } : {},
+                transition: {
+                  duration: 2.6,
+                  delay: 2.8,
+                  ease: [0.25, 0.8, 0.3, 1],
+                },
+                children: (0, v.jsx)(R.default, {
+                  src: "/art/illus/shiv-parvati-step.webp",
+                  alt: "",
+                  fill: !0,
+                  priority: !0,
+                  sizes: "480px",
+                  className: "object-contain",
+                }),
+              }),
+              (0, v.jsx)($.f.div, {
+                "aria-hidden": !0,
+                className:
+                  "pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
+                style: {
+                  left: aR(62),
+                  top: aR(78),
+                  width: aR(54),
+                  height: aR(54),
+                  background:
+                    "radial-gradient(closest-side, rgba(255,246,225,.95), rgba(255,236,200,0))",
+                },
+                initial: { opacity: 0, scale: 0.4 },
+                animate: a
+                  ? { opacity: [0, 0.95, 0.45], scale: [0.4, 1.2, 1] }
+                  : {},
+                transition: { duration: 2.2, delay: 4.5, ease: ay },
+              }),
+              (0, v.jsxs)("div", {
+                className:
+                  "absolute inset-x-[8%] flex flex-col items-center text-center",
+                style: { top: aR(134) },
+                children: [
+                  l &&
+                    (0, v.jsx)($.f.p, {
+                      ...n(4.4),
+                      className:
+                        "max-w-[72cqw] text-[4.6cqw] leading-snug italic",
+                      style: {
+                        fontFamily: ag,
+                        color: aw.ink,
+                        textWrap: "balance",
+                      },
+                      children: l,
+                    }),
+                  a &&
+                    (0, v.jsxs)("p", {
+                      className:
+                        "mt-[1cqw] flex flex-col items-center leading-[1.1]",
+                      style: {
+                        fontFamily: ab,
+                        color: aw.maroon,
+                        fontSize: aR(12.5),
+                      },
+                      children: [
+                        (0, v.jsx)(a_, { text: s.first, delay: 4.9 }),
+                        (0, v.jsx)(a_, {
+                          text: e.joiner ?? "&",
+                          delay: 5.5,
+                          style: {
+                            color: aw.gold,
+                            fontSize: aR(9),
+                            lineHeight: 1,
+                          },
+                        }),
+                        (0, v.jsx)(a_, { text: i.first, delay: 4.9 + 0.9 }),
+                      ],
+                    }),
+                  (r || c) &&
+                    (0, v.jsxs)($.f.div, {
+                      ...n(6.4),
+                      className: "mt-[2cqw] flex flex-col items-center",
+                      children: [
+                        (0, v.jsx)(aT, {}),
+                        r &&
+                          (0, v.jsxs)("p", {
+                            className:
+                              "-mt-[1cqw] text-[2.7cqw] tracking-[0.24em] uppercase",
+                            style: { fontFamily: au, color: aw.ink },
+                            children: [aN(e.date), " · ", ak(e.date)],
+                          }),
+                        c &&
+                          (0, v.jsx)("p", {
+                            className: `${r ? "mt-[1.5cqw]" : "-mt-[1cqw]"} text-[4.4cqw] font-semibold italic`,
+                            style: { fontFamily: ag, color: aw.maroon },
+                            children: e.city,
+                          }),
+                      ],
+                    }),
+                ],
+              }),
+            ],
+          });
+        },
+        Blessing: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            [a, s] = (0, L.g)(e),
+            i = (e) =>
+              (0, v.jsx)("p", {
+                className: "mt-[1cqw] text-[3.8cqw] leading-snug italic",
+                style: { fontFamily: ag, color: aw.ink },
+                children: e,
+              }),
+            n = (e, t) =>
+              (0, v.jsxs)(az, {
+                delay: t,
+                children: [
+                  (0, v.jsx)("p", {
+                    className: `leading-tight ${(e.full || e.first).length > 14 ? "text-[11cqw]" : "text-[13cqw]"}`,
+                    style: { fontFamily: ab, color: aw.maroon },
+                    children: e.full || e.first,
+                  }),
+                  e.elders && !e.eldersBelow && i(e.elders),
+                  e.parents && i(e.parents),
+                  e.elders && e.eldersBelow && i(e.elders),
+                ],
+              });
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex w-full flex-col items-center px-[11%] pt-[20cqw] pb-[16cqw] text-center",
+            children: [
+              (0, v.jsxs)(az, {
+                children: [
+                  e.invocation &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "text-[4.2cqw] leading-[1.8] font-semibold whitespace-pre-line",
+                      style: { fontFamily: aj, color: aw.maroon },
+                      children: e.invocation,
+                    }),
+                  (0, v.jsx)(aS, { className: "mt-[4cqw] w-[13cqw]" }),
+                  e.invocationMeaning &&
+                    (0, v.jsx)("p", {
+                      className: "mt-[4cqw] text-[3.8cqw] leading-snug italic",
+                      style: { fontFamily: ag, color: aw.ink },
+                      children: e.invocationMeaning,
+                    }),
+                  (0, v.jsx)("p", {
+                    className: `${e.invocationMeaning ? "mt-[3cqw]" : "mt-[5cqw]"} text-[4.8cqw] leading-snug font-semibold`,
+                    style: {
+                      fontFamily: ag,
+                      color: aw.maroon,
+                      textWrap: "balance",
+                    },
+                    children: e.hosts || t.togetherWithFamilies,
+                  }),
+                  e.message &&
+                    (0, v.jsx)("p", {
+                      className: "mt-[2cqw] text-[4.2cqw] leading-snug",
+                      style: { fontFamily: ag, color: aw.ink },
+                      children: e.message,
+                    }),
+                ],
+              }),
+              (0, v.jsx)(aA, { className: "my-[7cqw]" }),
+              n(a, 0.1),
+              (0, v.jsx)("p", {
+                className: "my-[4cqw] text-[8cqw] leading-none",
+                style: { fontFamily: ab, color: aw.gold },
+                children: e.joiner ?? "&",
+              }),
+              n(s, 0.2),
+            ],
+          });
+        },
+        Events: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            a = j(),
+            s = (0, th.f)(),
+            i = e.events.length > 1 && !s && !a;
+          return (0, v.jsxs)("section", {
+            className: `relative flex w-full flex-col items-center px-[10%] pt-[8cqw] text-center ${i ? "pb-[4cqw]" : "pb-[18cqw]"}`,
+            children: [
+              (0, v.jsx)(az, {
+                children: (0, v.jsx)(aJ, {
+                  kicker: t.eventsKicker,
+                  children: t.eventsTitle,
+                }),
+              }),
+              i
+                ? (0, v.jsx)(aX, { invite: e })
+                : (0, v.jsx)("div", {
+                    className:
+                      "mt-[6cqw] flex w-full flex-col items-center gap-[12cqw]",
+                    children: e.events.map((t, a) =>
+                      (0, v.jsx)(
+                        $.f.div,
+                        {
+                          initial: { opacity: 0, y: 36, scale: 0.97 },
+                          whileInView: { opacity: 1, y: 0, scale: 1 },
+                          viewport: { once: !0, amount: 0.25 },
+                          transition: { duration: 1, ease: ay },
+                          children: (0, v.jsx)(aY, { e: t, invite: e }),
+                        },
+                        `${t.name}-${a}`,
+                      ),
+                    ),
+                  }),
+            ],
+          });
+        },
+        Closing: function ({ invite: e }) {
+          let { t } = (0, N.G)();
+          return (0, v.jsxs)(v.Fragment, {
+            children: [
+              (0, v.jsx)(aQ, { invite: e }),
+              (0, v.jsxs)("section", {
+                className: "relative w-full overflow-hidden pb-[22cqw]",
+                children: [
+                  (0, v.jsx)(aM, {
+                    src: "v4-cover",
+                    alt: "On snowy Kailash, Shiva tucks a jasmine flower into Parvati's hair",
+                    fade: "linear-gradient(180deg, transparent, #000 8%, #000 58%, transparent 84%)",
+                    className: "top-0",
+                  }),
+                  (0, v.jsx)(aB, { count: 5, seed: 21 }),
+                  (0, v.jsx)("div", {
+                    className:
+                      "relative flex flex-col items-center px-[8%] pt-[112cqw] text-center",
+                    children: (0, v.jsxs)(az, {
+                      children: [
+                        e.closing &&
+                          (0, v.jsx)("p", {
+                            className:
+                              "text-[3.9cqw] leading-relaxed font-semibold italic",
+                            style: {
+                              fontFamily: ag,
+                              color: aw.ink,
+                              textWrap: "balance",
+                            },
+                            children: e.closing,
+                          }),
+                        e.hashtag &&
+                          (0, v.jsx)("p", {
+                            className: "mt-[3cqw] text-[9cqw] leading-tight",
+                            style: { fontFamily: ab, color: aw.gold },
+                            children: e.hashtag,
+                          }),
+                        !e.noBranding &&
+                          (0, v.jsx)(k.default, {
+                            href: "/",
+                            className:
+                              "mt-[8cqw] inline-block text-[2.3cqw] tracking-[0.24em] uppercase",
+                            style: { fontFamily: au, color: aw.gold },
+                            children: e.brandLine ?? t.craftedBy(F.B.name),
+                          }),
+                      ],
+                    }),
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          return (0, v.jsx)("div", {
+            className: "absolute inset-0",
+            style: {
+              background: `linear-gradient(180deg, #f3e4c8, ${aw.paper} 25%, #f8eedb 55%, ${aw.paper} 80%, #efe0c4)`,
+            },
+          });
+        },
+        Frame: function () {
+          let e = (e, t) =>
+            (0, v.jsxs)("svg", {
+              viewBox: "0 0 40 40",
+              className: `absolute size-[9cqw] ${e}`,
+              style: { rotate: `${t}deg` },
+              "aria-hidden": !0,
+              children: [
+                (0, v.jsx)("path", {
+                  d: "M2 38 V2 H38",
+                  fill: "none",
+                  stroke: aw.gold,
+                  strokeWidth: "1.2",
+                }),
+                (0, v.jsx)("path", {
+                  d: "M6 38 V6 H38",
+                  fill: "none",
+                  stroke: aw.gold,
+                  strokeWidth: "0.6",
+                }),
+                (0, v.jsx)("path", {
+                  d: "M6 6 L14 10 L10 14 Z",
+                  fill: aw.maroon,
+                }),
+                (0, v.jsx)("circle", {
+                  cx: "6",
+                  cy: "6",
+                  r: "2.6",
+                  fill: aw.gold,
+                }),
+                (0, v.jsx)("circle", {
+                  cx: "18",
+                  cy: "6",
+                  r: "1.1",
+                  fill: aw.gold,
+                }),
+                (0, v.jsx)("circle", {
+                  cx: "6",
+                  cy: "18",
+                  r: "1.1",
+                  fill: aw.gold,
+                }),
+              ],
+            });
+          return (0, v.jsx)($.f.div, {
+            className: "pointer-events-none absolute inset-0",
+            initial: { opacity: 0, scale: 1.03 },
+            animate: { opacity: 1, scale: 1 },
+            transition: { duration: 1.4, delay: 3, ease: ay },
+            children: (0, v.jsxs)("div", {
+              className: "@container absolute inset-[2.5cqw]",
+              children: [
+                (0, v.jsx)("div", {
+                  className: "absolute inset-0 border",
+                  style: { borderColor: `${aw.gold}bb` },
+                }),
+                (0, v.jsx)("div", {
+                  className: "absolute inset-[1.2cqw] border",
+                  style: { borderColor: `${aw.blue}99` },
+                }),
+                e("top-[-0.5cqw] left-[-0.5cqw]", 0),
+                e("top-[-0.5cqw] right-[-0.5cqw]", 90),
+                e("right-[-0.5cqw] bottom-[-0.5cqw]", 180),
+                e("bottom-[-0.5cqw] left-[-0.5cqw]", 270),
+              ],
+            }),
+          });
+        },
+        Divider: function ({ className: e }) {
+          return (0, v.jsx)(aA, { className: `mx-auto ${e ?? ""}` });
+        },
+        Title: aJ,
+        ScratchSection: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            a = (0, f.useRef)(null),
+            s = (0, f.useRef)(null),
+            i = (0, f.useRef)(!1),
+            n = (0, f.useRef)(null),
+            [l, r] = (0, f.useState)(!1),
+            [c, o] = (0, f.useState)(null);
+          function d() {
+            let e = a.current?.getBoundingClientRect();
+            o(
+              e
+                ? { x: e.left + e.width / 2, y: e.top + e.height / 2 }
+                : { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+            ),
+              r(!0),
+              window.setTimeout(() => o(null), 5500);
+          }
+          function x(e) {
+            if (!i.current || l) return;
+            let t = s.current,
+              a = t.getContext("2d"),
+              r = t.getBoundingClientRect(),
+              c = t.width / r.width,
+              o = { x: (e.clientX - r.left) * c, y: (e.clientY - r.top) * c };
+            (a.globalCompositeOperation = "destination-out"),
+              (a.strokeStyle = "#000"),
+              (a.lineCap = "round"),
+              (a.lineJoin = "round"),
+              (a.lineWidth = 34 * c),
+              a.beginPath();
+            let d = n.current ?? o;
+            a.moveTo(d.x, d.y), a.lineTo(o.x, o.y), a.stroke(), (n.current = o);
+          }
+          function m() {
+            (i.current = !1),
+              (n.current = null),
+              !l &&
+                (function () {
+                  let e = s.current,
+                    t = e?.getContext("2d");
+                  if (!e || !t) return 0;
+                  let { data: a } = t.getImageData(0, 0, e.width, e.height),
+                    i = 0,
+                    n = 0;
+                  for (let e = 3; e < a.length; e += 96) n++, a[e] < 40 && i++;
+                  return i / n;
+                })() > 0.5 &&
+                d();
+          }
+          (0, f.useEffect)(() => {
+            let e = a.current,
+              t = s.current;
+            if (!e || !t) return;
+            let i = () => {
+              let a = Math.min(window.devicePixelRatio || 1, 2);
+              (t.width = e.clientWidth * a), (t.height = e.clientHeight * a);
+              let s = t.getContext("2d");
+              s &&
+                (function (e, t, a, s) {
+                  let i = e.createLinearGradient(0, 0, t, a);
+                  i.addColorStop(0, "#b8862e"),
+                    i.addColorStop(0.3, "#f3d98a"),
+                    i.addColorStop(0.5, "#c99a3c"),
+                    i.addColorStop(0.72, "#f7e3a3"),
+                    i.addColorStop(1, "#a9782a"),
+                    (e.globalCompositeOperation = "source-over"),
+                    (e.fillStyle = i),
+                    e.fillRect(0, 0, t, a);
+                  let n = av(7);
+                  for (let i = 0; i < 260; i++)
+                    (e.fillStyle = `rgba(255,255,255,${0.15 + 0.45 * n()})`),
+                      e.fillRect(
+                        n() * t,
+                        n() * a,
+                        s * (0.6 + n()),
+                        s * (0.6 + n()),
+                      );
+                  (e.strokeStyle = "rgba(110,20,35,.35)"),
+                    (e.lineWidth = s),
+                    e.setLineDash([4 * s, 4 * s]),
+                    e.strokeRect(10 * s, 10 * s, t - 20 * s, a - 20 * s),
+                    e.setLineDash([]),
+                    (e.fillStyle = "rgba(110,20,35,.85)"),
+                    (e.textAlign = "center"),
+                    (e.textBaseline = "middle"),
+                    (e.font = `600 ${Math.round(14 * s)}px Georgia, serif`),
+                    e.fillText("Scratch to reveal the date", t / 2, a / 2);
+                })(s, t.width, t.height, a);
+            };
+            i();
+            let n = new ResizeObserver(() => !l && i());
+            return n.observe(e), () => n.disconnect();
+          }, [l]);
+          let p = [aC(e), e.city].filter(Boolean).join(" · ");
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex w-full flex-col items-center px-[12%] pt-[6cqw] pb-[10cqw] text-center",
+            children: [
+              (0, v.jsxs)(az, {
+                children: [
+                  t.scratchKicker &&
+                    (0, v.jsx)(aF, {
+                      color: aw.gold,
+                      children: t.scratchKicker,
+                    }),
+                  (0, v.jsx)("p", {
+                    className: "text-[12cqw] leading-tight",
+                    style: {
+                      fontFamily: ab,
+                      color: aw.maroon,
+                      textWrap: "balance",
+                    },
+                    children: t.scratchTitle,
+                  }),
+                ],
+              }),
+              (0, v.jsxs)(az, {
+                delay: 0.1,
+                className: "mt-[6cqw]",
+                children: [
+                  (0, v.jsxs)("div", {
+                    ref: a,
+                    className:
+                      "relative w-[74cqw] border shadow-[0_2cqw_5cqw_rgba(90,60,30,.12)]",
+                    style: {
+                      borderColor: `${aw.gold}77`,
+                      background: "rgba(255,251,242,.85)",
+                    },
+                    children: [
+                      (0, v.jsxs)("div", {
+                        className:
+                          "flex flex-col items-center px-[6cqw] py-[5cqw]",
+                        children: [
+                          (0, v.jsx)(aP, { w: 60 }),
+                          (0, v.jsx)("p", {
+                            className:
+                              "mt-[5cqw] text-[2.8cqw] tracking-[0.3em] uppercase",
+                            style: { fontFamily: au, color: aw.gold },
+                            children: aN(e.date),
+                          }),
+                          (0, v.jsx)("p", {
+                            className:
+                              "mt-[1cqw] text-[20cqw] leading-none font-medium",
+                            style: { fontFamily: ag, color: aw.maroon },
+                            children: e.padDay
+                              ? (0, T.s)(e.date, { day: "2-digit" })
+                              : (0, T.s)(e.date, { day: "numeric" }),
+                          }),
+                          (0, v.jsxs)("p", {
+                            className:
+                              "mt-[1cqw] text-[3.4cqw] tracking-[0.28em] uppercase",
+                            style: { fontFamily: au, color: aw.ink },
+                            children: [
+                              (0, T.s)(e.date, { month: "long" }),
+                              " · ",
+                              (0, T.s)(e.date, { year: "numeric" }),
+                            ],
+                          }),
+                          p &&
+                            (0, v.jsx)("p", {
+                              className: "mt-[3cqw] text-[4cqw] italic",
+                              style: { fontFamily: ag, color: aw.maroon },
+                              children: p,
+                            }),
+                          (0, v.jsx)(aP, {
+                            w: 60,
+                            flip: !0,
+                            className: "mt-[5cqw] block",
+                          }),
+                        ],
+                      }),
+                      (0, v.jsx)(tA.f, {
+                        children:
+                          !l &&
+                          (0, v.jsx)(
+                            $.f.canvas,
+                            {
+                              ref: s,
+                              exit: { opacity: 0, scale: 1.04 },
+                              transition: { duration: 0.6 },
+                              className:
+                                "absolute inset-0 h-full w-full cursor-grab touch-none active:cursor-grabbing",
+                              onPointerDown: (e) => {
+                                (i.current = !0),
+                                  e.currentTarget.setPointerCapture(
+                                    e.pointerId,
+                                  ),
+                                  x(e);
+                              },
+                              onPointerMove: x,
+                              onPointerUp: m,
+                              onPointerCancel: m,
+                              "aria-label": t.scratchAria,
+                              role: "img",
+                            },
+                            "foil",
+                          ),
+                      }),
+                    ],
+                  }),
+                  !l &&
+                    (0, v.jsx)("button", {
+                      type: "button",
+                      onClick: d,
+                      className:
+                        "mx-auto mt-[4cqw] block text-[3.2cqw] underline underline-offset-4",
+                      style: { fontFamily: ag, color: aw.ink },
+                      children: t.revealInstead,
+                    }),
+                ],
+              }),
+              c && (0, v.jsx)(aG, { from: c }),
+            ],
+          });
+        },
+        CountdownSection: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            {
+              days: a,
+              hours: s,
+              mins: i,
+              secs: n,
+              ready: l,
+              done: r,
+            } = (function (e) {
+              let [t, a] = (0, f.useState)(null);
+              (0, f.useEffect)(() => {
+                let e = () => a(Date.now()),
+                  t = window.setTimeout(e, 0),
+                  s = window.setInterval(e, 1e3);
+                return () => {
+                  window.clearTimeout(t), window.clearInterval(s);
+                };
+              }, []);
+              let s = Math.max(0, e.getTime() - (t ?? e.getTime())),
+                i = Math.floor(s / 1e3);
+              return {
+                days: Math.floor(i / 86400),
+                hours: Math.floor(i / 3600) % 24,
+                mins: Math.floor(i / 60) % 60,
+                secs: i % 60,
+                ready: null !== t,
+                done: null !== t && 0 === s,
+              };
+            })((0, f.useMemo)(() => new Date(e.date), [e.date])),
+            c = (e) => (l ? String(e).padStart(2, "0") : "--"),
+            o = e.countdownTitle ?? t.countdownTitle,
+            d = [aN(e.date), ak(e.date), aC(e)].filter(Boolean).join(" · ");
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex w-full flex-col items-center px-[8%] pt-[10cqw] pb-[16cqw] text-center",
+            children: [
+              (0, v.jsxs)(az, {
+                children: [
+                  t.countdownKicker &&
+                    (0, v.jsx)(aF, {
+                      color: aw.gold,
+                      children: t.countdownKicker,
+                    }),
+                  (0, v.jsx)("p", {
+                    className: `${o.length > 20 ? "text-[9cqw]" : "text-[10.5cqw]"} leading-tight`,
+                    style: {
+                      fontFamily: ab,
+                      color: aw.maroon,
+                      textWrap: "balance",
+                    },
+                    children: o,
+                  }),
+                ],
+              }),
+              (0, v.jsx)(az, {
+                delay: 0.15,
+                className: "mt-[6cqw]",
+                children: (0, v.jsxs)("div", {
+                  className: "relative w-[84cqw] border px-[3cqw] py-[3cqw]",
+                  style: {
+                    borderColor: `${aw.gold}66`,
+                    background: "rgba(255,251,242,.55)",
+                  },
+                  children: [
+                    (0, v.jsx)(aP, { w: 78, className: "mx-auto block" }),
+                    r
+                      ? (0, v.jsx)("p", {
+                          className: "py-[6cqw] text-[10cqw] leading-tight",
+                          style: { fontFamily: ab, color: aw.maroon },
+                          children: t.justMarried,
+                        })
+                      : (0, v.jsxs)("div", {
+                          className:
+                            "flex items-start justify-center gap-[3cqw] py-[5cqw]",
+                          children: [
+                            (0, v.jsx)(aZ, {
+                              value: l ? String(a) : "--",
+                              label: t.units[0],
+                            }),
+                            (0, v.jsx)(aZ, { value: c(s), label: t.units[1] }),
+                            (0, v.jsx)(aZ, { value: c(i), label: t.units[2] }),
+                            (0, v.jsx)(aZ, { value: c(n), label: t.units[3] }),
+                          ],
+                        }),
+                    (0, v.jsx)(aP, {
+                      w: 78,
+                      flip: !0,
+                      className: "mx-auto block",
+                    }),
+                  ],
+                }),
+              }),
+              (0, v.jsx)(aF, {
+                color: aw.ink,
+                className: "mt-[6cqw]",
+                children: d,
+              }),
+            ],
+          });
+        },
+        GallerySection: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            a = e.gallery ?? [],
+            s = a.length > 0,
+            [i, n] = (0, f.useState)(null),
+            [l, r] = (0, f.useState)(0),
+            c = (0, f.useRef)(null);
+          return s
+            ? (0, v.jsxs)("section", {
+                className: "relative w-full pt-[6cqw] pb-[16cqw] text-center",
+                children: [
+                  (0, v.jsxs)(az, {
+                    className: "px-[12%]",
+                    children: [
+                      t.momentsKicker &&
+                        (0, v.jsx)(aF, {
+                          color: aw.gold,
+                          children: t.momentsKicker,
+                        }),
+                      (0, v.jsx)("p", {
+                        className: "text-[12cqw] leading-tight",
+                        style: {
+                          fontFamily: ab,
+                          color: aw.maroon,
+                          textWrap: "balance",
+                        },
+                        children: t.momentsTitle,
+                      }),
+                    ],
+                  }),
+                  (0, v.jsxs)(az, {
+                    delay: 0.15,
+                    className: "w-full",
+                    children: [
+                      (0, v.jsx)("div", {
+                        ref: c,
+                        onScroll: () => {
+                          let e = c.current,
+                            t = e?.firstElementChild;
+                          e &&
+                            t &&
+                            r(Math.round(e.scrollLeft / (t.offsetWidth + 16)));
+                        },
+                        className:
+                          "no-scrollbar mt-[6cqw] flex w-full snap-x snap-mandatory gap-4 overflow-x-auto px-[19cqw] pt-[3cqw] pb-[6cqw]",
+                        children: a.map((e, s) =>
+                          (0, v.jsx)(
+                            $.f.button,
+                            {
+                              type: "button",
+                              onClick: () => n(s),
+                              className:
+                                "relative aspect-[2/3] w-[62cqw] shrink-0 snap-center p-[1.2cqw] shadow-[0_2cqw_5cqw_rgba(80,40,20,.22)]",
+                              style: {
+                                borderRadius: "32cqw 32cqw 2cqw 2cqw",
+                                background:
+                                  "linear-gradient(135deg, #c99a3e, #f8e2a6 35%, #b8862e 65%, #f3d68d)",
+                              },
+                              animate: {
+                                scale: l === s ? 1 : 0.92,
+                                rotate: l === s ? 0 : s % 2 ? 1.5 : -1.5,
+                              },
+                              transition: { duration: 0.5, ease: ay },
+                              "aria-label": t.photoOf(s + 1, a.length),
+                              children: (0, v.jsxs)("div", {
+                                className: "relative size-full overflow-hidden",
+                                style: {
+                                  borderRadius: "31cqw 31cqw 1.4cqw 1.4cqw",
+                                },
+                                children: [
+                                  (0, v.jsx)(R.default, {
+                                    src: e,
+                                    alt: "",
+                                    fill: !0,
+                                    unoptimized: !0,
+                                    className: "object-cover",
+                                  }),
+                                  (0, v.jsx)("div", {
+                                    className:
+                                      "pointer-events-none absolute inset-0",
+                                    style: {
+                                      boxShadow:
+                                        "inset 0 0 0 0.6cqw rgba(255,240,210,.45)",
+                                      borderRadius: "inherit",
+                                    },
+                                  }),
+                                ],
+                              }),
+                            },
+                            e,
+                          ),
+                        ),
+                      }),
+                      (0, v.jsx)("div", {
+                        className: "flex justify-center gap-[2cqw]",
+                        children: a.map((e, t) =>
+                          (0, v.jsx)(
+                            "span",
+                            {
+                              className:
+                                "h-[1.6cqw] rounded-full transition-all",
+                              style: {
+                                width: l === t ? "5cqw" : "1.6cqw",
+                                background:
+                                  l === t ? aw.maroon : `${aw.gold}66`,
+                              },
+                            },
+                            e,
+                          ),
+                        ),
+                      }),
+                    ],
+                  }),
+                  (0, v.jsx)(tA.f, {
+                    children:
+                      null !== i &&
+                      (0, v.jsx)($.f.button, {
+                        type: "button",
+                        className:
+                          "fixed inset-0 z-[80] grid place-items-center bg-[rgba(30,15,10,.88)] p-6",
+                        initial: { opacity: 0 },
+                        animate: { opacity: 1 },
+                        exit: { opacity: 0 },
+                        onClick: () => n(null),
+                        "aria-label": t.tapOutside,
+                        children: (0, v.jsx)($.f.div, {
+                          className: "relative h-[80svh] w-full max-w-[440px]",
+                          initial: { scale: 0.92 },
+                          animate: { scale: 1 },
+                          children: (0, v.jsx)(R.default, {
+                            src: a[i],
+                            alt: "",
+                            fill: !0,
+                            unoptimized: !0,
+                            className: "object-contain",
+                          }),
+                        }),
+                      }),
+                  }),
+                ],
+              })
+            : null;
+        },
+        tapHint: "tapHere",
+        tapHintDelay: 0.8,
+        scrollHint: "scrollToSeeMore",
+        openingMs: 6200,
+        countdownTitle: "Until the big day",
+      },
+      a1 = "#a2405f",
+      a2 = [0.22, 1, 0.36, 1];
+    function a5({ count: e = 14, seed: t = 7 }) {
+      let a = (0, f.useMemo)(() => {
+        let a = eR(t),
+          s = ["#f2b8c0", "#f7cdd0", "#e89aa9", "#fbe1dc", "#f0a8a0"];
+        return Array.from({ length: e }, (e, t) => ({
+          left: 100 * a(),
+          size: 3 + 4 * a(),
+          dur: 9 + 9 * a(),
+          delay: -(18 * a()),
+          drift: (a() - 0.5) * 30,
+          spin: (a() > 0.5 ? 1 : -1) * (180 + 360 * a()),
+          color: s[t % s.length],
+        }));
+      }, [e, t]);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0 overflow-hidden",
+        children: a.map((e, t) =>
+          (0, v.jsx)(
+            $.f.div,
+            {
+              className: "absolute",
+              style: { left: `${e.left}%`, width: `${e.size}cqw` },
+              initial: { top: "-6%" },
+              animate: {
+                top: ["-6%", "106%"],
+                x: [0, e.drift, -e.drift / 2, e.drift],
+                rotate: [0, e.spin],
+              },
+              transition: {
+                duration: e.dur,
+                delay: e.delay,
+                repeat: 1 / 0,
+                ease: "linear",
+              },
+              children: (0, v.jsx)(e4, {
+                color: e.color,
+                className: "w-full opacity-90",
+              }),
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function a4() {
+      return (0, v.jsxs)("div", {
+        className: "pointer-events-none absolute inset-0 overflow-hidden",
+        children: [
+          (0, v.jsx)($.f.div, {
+            className:
+              "absolute -top-[20cqw] -left-[30cqw] size-[100cqw] rounded-full bg-[#f7cfd3] opacity-70 blur-[14cqw]",
+            animate: { x: [0, 20, 0], y: [0, 30, 0] },
+            transition: { duration: 14, repeat: 1 / 0, ease: "easeInOut" },
+          }),
+          (0, v.jsx)($.f.div, {
+            className:
+              "absolute top-[40%] -right-[40cqw] size-[90cqw] rounded-full bg-[#dfe6d3] opacity-80 blur-[14cqw]",
+            animate: { x: [0, -25, 0], y: [0, -20, 0] },
+            transition: { duration: 16, repeat: 1 / 0, ease: "easeInOut" },
+          }),
+          (0, v.jsx)($.f.div, {
+            className:
+              "absolute -bottom-[30cqw] left-[10cqw] size-[80cqw] rounded-full bg-[#fde3d3] opacity-80 blur-[14cqw]",
+            animate: { x: [0, 15, 0] },
+            transition: { duration: 12, repeat: 1 / 0, ease: "easeInOut" },
+          }),
+        ],
+      });
+    }
+    function a3({ invite: e, className: t }) {
+      return (0, v.jsxs)("span", {
+        className: `relative grid place-items-center ${t ?? ""}`,
+        children: [
+          (0, v.jsxs)("svg", {
+            viewBox: "-50 -50 100 100",
+            className:
+              "absolute inset-0 h-full w-full drop-shadow-[0_6px_10px_rgba(90,20,40,.45)]",
+            children: [
+              (0, v.jsx)("defs", {
+                children: (0, v.jsxs)("radialGradient", {
+                  id: "waxg",
+                  cx: "35%",
+                  cy: "30%",
+                  r: "80%",
+                  children: [
+                    (0, v.jsx)("stop", { offset: "0%", stopColor: "#d4677f" }),
+                    (0, v.jsx)("stop", { offset: "55%", stopColor: "#a2405f" }),
+                    (0, v.jsx)("stop", {
+                      offset: "100%",
+                      stopColor: "#6e2440",
+                    }),
+                  ],
+                }),
+              }),
+              (0, v.jsx)("path", {
+                d: "M0 -46 C14 -47 22 -40 32 -34 C42 -27 47 -14 46 0 C47 14 41 26 33 34 C23 43 12 47 0 46 C-14 47 -25 42 -34 33 C-43 24 -47 12 -46 -2 C-46 -15 -41 -26 -32 -34 C-23 -42 -12 -46 0 -46 Z",
+                fill: "url(#waxg)",
+              }),
+              (0, v.jsx)("circle", {
+                r: 33,
+                fill: "none",
+                stroke: "#f7c8d2",
+                strokeOpacity: 0.55,
+                strokeWidth: 1.2,
+              }),
+              (0, v.jsx)("circle", {
+                r: 29,
+                fill: "none",
+                stroke: "#5e1d36",
+                strokeOpacity: 0.4,
+                strokeWidth: 0.8,
+                strokeDasharray: "1 3",
+              }),
+            ],
+          }),
+          (0, v.jsx)("span", {
+            className:
+              "inv-script relative px-[3cqw] py-[2cqw] text-[9cqw] leading-none text-[#fbe1e6] [text-shadow:0_1px_0_#5e1d36]",
+            children: (0, L.u)(e),
+          }),
+        ],
+      });
+    }
+    function a6({ kicker: e, children: t }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.5cqw] text-[#869d7a]",
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className:
+              "inv-script mt-[1cqw] text-[12cqw] leading-tight text-[#a2405f]",
+            children: t,
+          }),
+        ],
+      });
+    }
+    let a8 = {
+        id: "gulmohar",
+        tapHint: "tapSeal",
+        root: "bg-[#fdf6f2] text-[#5a2236]",
+        vars: {
+          "--inv-script": "var(--font-pinyon), cursive",
+          "--inv-serif": "var(--font-cormorant), serif",
+          "--inv-label": "var(--font-manrope), sans-serif",
+        },
+        accent: a1,
+        ui: {
+          section: "relative px-[7cqw] py-[14cqw]",
+          card: "rounded-[6cqw] border border-white bg-white/75 shadow-[0_24px_50px_-30px_rgba(162,64,95,.5)] backdrop-blur",
+          input:
+            "w-full rounded-[3cqw] border border-[#a2405f]/20 bg-white px-[4cqw] py-[3cqw] text-[3.8cqw] text-[#5a2236] placeholder:text-[#5a2236]/35 outline-none focus:border-[#a2405f]/60",
+          chip: "rounded-full border border-[#a2405f]/25 bg-white text-[#5a2236]/80 transition",
+          chipOn:
+            "rounded-full border border-[#a2405f] bg-[#a2405f] text-white transition",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full bg-[#a2405f] px-[5cqw] py-[2.6cqw] text-[3.4cqw] font-semibold text-white shadow-[0_10px_24px_-10px_#a2405f] active:scale-95 transition",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#869d7a] px-[5cqw] py-[2.6cqw] text-[3.4cqw] text-[#5d7552] active:scale-95 transition",
+          muted: "text-[#5a2236]/65",
+          tile: "rounded-[4cqw] bg-white/80 text-[#a2405f] shadow-[0_10px_30px_-18px_rgba(162,64,95,.6)]",
+        },
+        Opening: function ({ invite: e, opened: t, onOpen: a }) {
+          let [s, i] = (0, L.g)(e);
+          return (0, v.jsxs)($.f.div, {
+            className: "absolute inset-0 overflow-hidden bg-[#fbeee9]",
+            style: { pointerEvents: t ? "none" : "auto" },
+            animate: { opacity: +!t },
+            transition: { delay: 1.9 * !!t, duration: 0.7 },
+            children: [
+              (0, v.jsx)(a4, {}),
+              (0, v.jsx)(a5, { count: 10, seed: 3 }),
+              (0, v.jsx)(e5, {
+                className: "absolute -top-[4cqw] -left-[6cqw] w-[58cqw]",
+              }),
+              (0, v.jsx)(e5, {
+                className:
+                  "absolute -right-[6cqw] -bottom-[4cqw] w-[58cqw] rotate-180",
+              }),
+              (0, v.jsx)($.f.p, {
+                className:
+                  "inv-script absolute inset-x-0 top-[34%] text-center text-[11cqw] text-[#a2405f]",
+                animate: { opacity: +!t, y: t ? -20 : 0 },
+                children: "You’re invited",
+              }),
+              (0, v.jsx)("button", {
+                onClick: a,
+                "aria-label": "Open invitation",
+                className:
+                  "absolute top-[47%] left-1/2 w-[80cqw] -translate-x-1/2",
+                style: { perspective: "200cqw" },
+                children: (0, v.jsxs)($.f.div, {
+                  className: "relative aspect-[1.45] w-full",
+                  animate: t
+                    ? { y: ["0%", "0%", "30%"], scale: [1, 1, 0.9] }
+                    : { y: [0, -6, 0] },
+                  transition: t
+                    ? { duration: 1.9, times: [0, 0.5, 1], ease: a2 }
+                    : { duration: 3.5, repeat: 1 / 0, ease: "easeInOut" },
+                  children: [
+                    (0, v.jsx)("div", {
+                      className:
+                        "absolute inset-0 rounded-[2cqw] bg-[#ecc6c3] shadow-[0_24px_50px_-20px_rgba(110,36,64,.5)]",
+                    }),
+                    (0, v.jsxs)($.f.div, {
+                      className:
+                        "absolute inset-x-[5cqw] top-[4cqw] bottom-[4cqw] flex flex-col items-center justify-center rounded-[1.5cqw] bg-[#fffaf6] text-center",
+                      animate: { y: t ? "-62%" : "0%" },
+                      transition: { delay: 0.7 * !!t, duration: 1, ease: a2 },
+                      style: { zIndex: t ? 3 : 1 },
+                      children: [
+                        (0, v.jsx)("span", {
+                          className:
+                            "inv-script text-[8cqw] leading-none text-[#a2405f]",
+                          children: s.first,
+                        }),
+                        (0, v.jsx)("span", {
+                          className:
+                            "inv-serif text-[3cqw] text-[#869d7a] italic",
+                          children: "and",
+                        }),
+                        (0, v.jsx)("span", {
+                          className:
+                            "inv-script text-[8cqw] leading-none text-[#a2405f]",
+                          children: i.first,
+                        }),
+                      ],
+                    }),
+                    (0, v.jsxs)("svg", {
+                      viewBox: "0 0 145 100",
+                      preserveAspectRatio: "none",
+                      className: "absolute inset-0 z-[2] h-full w-full",
+                      children: [
+                        (0, v.jsx)("path", {
+                          d: "M0 0 L72.5 58 L145 0 V100 H0 Z",
+                          fill: "#f4d5d1",
+                        }),
+                        (0, v.jsx)("path", {
+                          d: "M0 100 L60 50 M145 100 L85 50",
+                          stroke: "#e3b1ae",
+                          strokeWidth: 0.6,
+                        }),
+                        (0, v.jsx)("path", {
+                          d: "M0 0 L72.5 58 L145 0",
+                          fill: "none",
+                          stroke: "#e8bcb8",
+                          strokeWidth: 0.5,
+                        }),
+                      ],
+                    }),
+                    (0, v.jsx)($.f.div, {
+                      className: "absolute inset-x-0 top-0 h-[62%]",
+                      style: {
+                        transformOrigin: "top center",
+                        transformStyle: "preserve-3d",
+                        zIndex: 4 * !t,
+                      },
+                      animate: { rotateX: 180 * !!t },
+                      transition: { duration: 0.8, ease: a2 },
+                      children: (0, v.jsx)("svg", {
+                        viewBox: "0 0 145 62",
+                        preserveAspectRatio: "none",
+                        className:
+                          "h-full w-full drop-shadow-[0_4px_4px_rgba(110,36,64,.15)]",
+                        children: (0, v.jsx)("path", {
+                          d: "M0 0 H145 L76 58 Q72.5 61 69 58 Z",
+                          fill: "#efcbc7",
+                        }),
+                      }),
+                    }),
+                    (0, v.jsx)($.f.span, {
+                      className:
+                        "absolute top-[62%] left-1/2 z-[5] block -translate-x-1/2 -translate-y-1/2",
+                      animate: {
+                        scale: t ? [1, 1.15, 0] : 1,
+                        rotate: 25 * !!t,
+                      },
+                      transition: { duration: 0.5 },
+                      children: (0, v.jsx)(a3, {
+                        invite: e,
+                        className: "size-[22cqw]",
+                      }),
+                    }),
+                  ],
+                }),
+              }),
+            ],
+          });
+        },
+        Hero: function ({ invite: e }) {
+          let t = g(),
+            [a, s] = (0, L.g)(e),
+            i = (e) => ({
+              initial: { opacity: 0, y: 20 },
+              animate: t ? { opacity: 1, y: 0 } : {},
+              transition: { duration: 1.2, delay: e, ease: a2 },
+            });
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex min-h-[var(--screen-h,100dvh)] flex-col items-center justify-center overflow-hidden px-[8cqw] py-[18cqw]",
+            children: [
+              (0, v.jsx)(a4, {}),
+              (0, v.jsx)(a5, {}),
+              (0, v.jsxs)($.f.div, {
+                ...i(0.1),
+                className: "relative w-[78cqw]",
+                children: [
+                  (0, v.jsxs)("div", {
+                    className:
+                      "relative rounded-t-full border border-[#869d7a]/50 bg-white/55 px-[6cqw] pt-[24cqw] pb-[12cqw] text-center shadow-[0_30px_60px_-30px_rgba(162,64,95,.35)] backdrop-blur-[2px]",
+                    children: [
+                      (0, v.jsx)("div", {
+                        className:
+                          "pointer-events-none absolute inset-[2cqw] rounded-t-full border border-[#a2405f]/20",
+                      }),
+                      (0, v.jsx)($.f.p, {
+                        ...i(0.5),
+                        className: "inv-deva text-[4cqw] text-[#a2405f]",
+                        children: e.invocation,
+                      }),
+                      e.showMeaning &&
+                        e.invocationMeaning &&
+                        (0, v.jsx)($.f.p, {
+                          ...i(0.6),
+                          className:
+                            "inv-serif mt-[2cqw] text-[3.4cqw] text-[#a2405f]/80 italic",
+                          children: e.invocationMeaning,
+                        }),
+                      (0, v.jsx)($.f.p, {
+                        ...i(0.7),
+                        className:
+                          "inv-label mt-[4cqw] text-[2.3cqw] text-[#869d7a]",
+                        children: e.hosts,
+                      }),
+                      e.heroKicker &&
+                        (0, v.jsx)($.f.p, {
+                          ...i(0.85),
+                          className:
+                            "inv-label mt-[4cqw] text-[2.3cqw] text-[#a2405f]",
+                          children: e.heroKicker,
+                        }),
+                      (0, v.jsxs)($.f.h1, {
+                        ...i(1),
+                        className: "mt-[4cqw] flex flex-col items-center",
+                        children: [
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-script text-[16cqw] leading-[1.1] text-[#a2405f]",
+                            children: a.first,
+                          }),
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-serif text-[6cqw] leading-none text-[#869d7a] italic",
+                            children: e.joiner ?? "&",
+                          }),
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-script text-[16cqw] leading-[1.1] text-[#a2405f]",
+                            children: s.first,
+                          }),
+                        ],
+                      }),
+                      (0, v.jsxs)($.f.div, {
+                        ...i(1.3),
+                        children: [
+                          (0, v.jsx)("p", {
+                            className:
+                              "inv-serif mx-auto mt-[3cqw] max-w-[56cqw] text-[3.8cqw] leading-snug text-[#5a2236]/80 italic",
+                            children: e.message,
+                          }),
+                          !e.plainCover &&
+                            (0, v.jsxs)(v.Fragment, {
+                              children: [
+                                !e.hideHeroDate &&
+                                  (0, v.jsxs)("div", {
+                                    className:
+                                      "mt-[6cqw] flex items-center justify-center gap-[3cqw] text-[#5a2236]",
+                                    children: [
+                                      (0, v.jsx)("span", {
+                                        className:
+                                          "inv-label border-y border-[#a2405f]/30 py-[1.5cqw] text-[2.4cqw]",
+                                        children: (0, T.e)(e.date),
+                                      }),
+                                      (0, v.jsx)("span", {
+                                        className:
+                                          "inv-serif text-[11cqw] leading-none text-[#a2405f]",
+                                        children: (0, T.v)(e.date),
+                                      }),
+                                      (0, v.jsxs)("span", {
+                                        className:
+                                          "inv-label border-y border-[#a2405f]/30 py-[1.5cqw] text-[2.4cqw]",
+                                        children: [
+                                          (0, T.D)(e.date).slice(0, 3),
+                                          " ",
+                                          (0, T.X)(e.date),
+                                        ],
+                                      }),
+                                    ],
+                                  }),
+                                !e.hideHeroCity &&
+                                  (0, v.jsx)("p", {
+                                    className:
+                                      "inv-label mt-[3cqw] text-[2.4cqw] text-[#869d7a]",
+                                    children: e.city,
+                                  }),
+                              ],
+                            }),
+                        ],
+                      }),
+                    ],
+                  }),
+                  (0, v.jsx)($.f.div, {
+                    className: "absolute -top-[10cqw] -left-[14cqw] w-[48cqw]",
+                    initial: { opacity: 0, scale: 0.6, rotate: -20 },
+                    animate: t ? { opacity: 1, scale: 1, rotate: 0 } : {},
+                    transition: { duration: 1.4, delay: 0.3, ease: a2 },
+                    children: (0, v.jsx)(e5, { className: "w-full" }),
+                  }),
+                  (0, v.jsx)($.f.div, {
+                    className:
+                      "absolute -right-[14cqw] -bottom-[10cqw] w-[48cqw]",
+                    initial: { opacity: 0, scale: 0.6, rotate: 20 },
+                    animate: t ? { opacity: 1, scale: 1, rotate: 0 } : {},
+                    transition: { duration: 1.4, delay: 0.5, ease: a2 },
+                    children: (0, v.jsx)(e5, {
+                      className: "w-full rotate-180",
+                    }),
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+        Blessing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw] text-center",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(a6, {
+                  kicker: "The couple",
+                  children: "Two hearts, one home",
+                }),
+              }),
+              (0, v.jsx)("div", {
+                className: "mt-[10cqw] space-y-[6cqw]",
+                children: [t, a].map((t, a) =>
+                  (0, v.jsx)(
+                    B.b,
+                    {
+                      delay: 0.15 * a,
+                      children: (0, v.jsxs)("div", {
+                        className: `flex items-center gap-[5cqw] ${a ? "flex-row-reverse text-right" : "text-left"}`,
+                        children: [
+                          (0, v.jsxs)("span", {
+                            className:
+                              "relative grid size-[26cqw] shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#f7d6d8] to-[#e7efe0]",
+                            children: [
+                              (0, v.jsx)("span", {
+                                className:
+                                  "absolute inset-[1.5cqw] rounded-full border border-dashed border-[#a2405f]/40",
+                              }),
+                              (0, v.jsx)("span", {
+                                className:
+                                  "inv-script text-[13cqw] leading-none text-[#a2405f]",
+                                children: t.first[0],
+                              }),
+                            ],
+                          }),
+                          (0, v.jsxs)("div", {
+                            children: [
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-script text-[10cqw] leading-none text-[#a2405f]",
+                                children: t.first,
+                              }),
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-label mt-[2cqw] text-[2.2cqw] text-[#5a2236]",
+                                children: t.full,
+                              }),
+                              t.elders &&
+                                !t.eldersBelow &&
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-serif mt-[1cqw] text-[3.4cqw] whitespace-pre-line text-[#5a2236] italic",
+                                  children: t.elders,
+                                }),
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-serif mt-[1cqw] text-[3.4cqw] text-[#5a2236] italic",
+                                children: t.parents,
+                              }),
+                              t.elders &&
+                                t.eldersBelow &&
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-serif mt-[1cqw] text-[3.4cqw] whitespace-pre-line text-[#5a2236] italic",
+                                  children: t.elders,
+                                }),
+                            ],
+                          }),
+                        ],
+                      }),
+                    },
+                    t === e.bride ? "bride" : "groom",
+                  ),
+                ),
+              }),
+            ],
+          });
+        },
+        Events: function ({ invite: e }) {
+          let { t } = (0, N.G)();
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw]",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(a6, {
+                  kicker: t.eventsKicker,
+                  children: t.eventsTitle,
+                }),
+              }),
+              (0, v.jsxs)("div", {
+                className: "relative mt-[10cqw]",
+                children: [
+                  (0, v.jsx)("span", {
+                    className:
+                      "absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-[#a2405f]/30 to-transparent",
+                  }),
+                  e.events.map((t, a) =>
+                    (0, v.jsx)(
+                      B.b,
+                      {
+                        className: "relative mb-[8cqw]",
+                        children: (0, v.jsxs)("article", {
+                          className:
+                            "relative overflow-hidden rounded-[6cqw] border border-white bg-white/75 px-[6cqw] pt-[8cqw] pb-[7cqw] text-center shadow-[0_24px_50px_-30px_rgba(162,64,95,.5)] backdrop-blur",
+                          children: [
+                            (0, v.jsx)(e5, {
+                              className: `absolute -top-[6cqw] w-[30cqw] opacity-90 ${a % 2 ? "-left-[6cqw]" : "-right-[6cqw] -scale-x-100"}`,
+                            }),
+                            (0, v.jsx)("span", {
+                              className:
+                                "mx-auto grid size-[14cqw] place-items-center rounded-full bg-[#f8e3e4] text-[#a2405f]",
+                              children: (0, v.jsx)(z, {
+                                kind: t.kind,
+                                className: "size-[8cqw]",
+                              }),
+                            }),
+                            (0, v.jsx)("h3", {
+                              className:
+                                "inv-script mt-[3cqw] text-[12cqw] leading-none text-[#a2405f]",
+                              children: t.name,
+                            }),
+                            t.devanagari &&
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-deva mt-[1cqw] text-[3.4cqw] text-[#869d7a]",
+                                children: t.devanagari,
+                              }),
+                            (0, v.jsxs)("p", {
+                              className:
+                                "inv-label mt-[4cqw] text-[2.5cqw] text-[#5a2236]",
+                              children: [
+                                (0, T.e)(t.start),
+                                " · ",
+                                (0, T.v)(t.start),
+                                " ",
+                                (0, T.D)(t.start),
+                                !t.noTime &&
+                                  (0, v.jsxs)(v.Fragment, {
+                                    children: [
+                                      " · ",
+                                      t.timeText ?? (0, T.U)(t.start),
+                                    ],
+                                  }),
+                              ],
+                            }),
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-serif mt-[3cqw] text-[5cqw] leading-tight text-[#5a2236]",
+                              children: t.venue,
+                            }),
+                            t.address &&
+                              (0, v.jsx)("p", {
+                                className:
+                                  "mt-[1cqw] text-[3.2cqw] text-[#5a2236]/60",
+                                children: t.address,
+                              }),
+                            t.dress &&
+                              (0, v.jsxs)("p", {
+                                className:
+                                  "mt-[3cqw] inline-block rounded-full bg-[#eef2e8] px-[3.5cqw] py-[1.2cqw] text-[3cqw] text-[#5d7552]",
+                                children: ["Dress · ", t.dress],
+                              }),
+                            t.note &&
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-serif mt-[2cqw] text-[3.6cqw] text-[#a2405f] italic",
+                                children: t.note,
+                              }),
+                            (0, v.jsx)(B.W, { event: t, invite: e, theme: a8 }),
+                          ],
+                        }),
+                      },
+                      t.name,
+                    ),
+                  ),
+                ],
+              }),
+            ],
+          });
+        },
+        Closing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className:
+              "relative overflow-hidden px-[7cqw] pt-[18cqw] pb-[26cqw] text-center",
+            children: [
+              (0, v.jsx)(e5, {
+                className: "absolute top-0 -left-[8cqw] w-[50cqw]",
+              }),
+              (0, v.jsx)(e5, {
+                className:
+                  "absolute top-0 -right-[8cqw] w-[50cqw] -scale-x-100",
+              }),
+              (0, v.jsxs)(B.b, {
+                className: "relative pt-[20cqw]",
+                children: [
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mx-auto max-w-[70cqw] text-[5.4cqw] leading-snug text-[#5a2236] italic",
+                    children: e.closing,
+                  }),
+                  (0, v.jsxs)("p", {
+                    className:
+                      "inv-script mt-[5cqw] text-[14cqw] leading-none text-[#a2405f]",
+                    children: [t.first, " ", e.joiner ?? "&", " ", a.first],
+                  }),
+                  e.hashtag &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-label !normal-case mt-[5cqw] text-[2.6cqw] text-[#869d7a]",
+                      children: e.hashtag,
+                    }),
+                  e.extras?.map((e, t) =>
+                    (0, v.jsxs)(
+                      "div",
+                      {
+                        className: "mt-[8cqw]",
+                        children: [
+                          (0, v.jsx)("p", {
+                            className: "inv-label text-[2.6cqw] text-[#869d7a]",
+                            children: e.title,
+                          }),
+                          (0, v.jsx)("div", {
+                            className: "mt-[2cqw] space-y-[1cqw]",
+                            children: e.lines.map((e, t) =>
+                              (0, v.jsx)(
+                                "p",
+                                {
+                                  className:
+                                    "inv-serif text-[3.8cqw] leading-snug text-[#5a2236] italic",
+                                  children: e,
+                                },
+                                t,
+                              ),
+                            ),
+                          }),
+                        ],
+                      },
+                      e.title + t,
+                    ),
+                  ),
+                ],
+              }),
+              !e.noBranding &&
+                (0, v.jsxs)(k.default, {
+                  href: "/",
+                  className:
+                    "inv-label absolute inset-x-0 bottom-[6cqw] text-[2cqw] text-[#5a2236]/40",
+                  children: ["Crafted by ", F.B.name],
+                }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          return (0, v.jsx)("div", {
+            className:
+              "pointer-events-none absolute inset-0 overflow-hidden bg-[#fdf6f2]",
+            children: (0, v.jsx)("div", {
+              className: "absolute inset-0",
+              style: {
+                background:
+                  "radial-gradient(80% 40% at 0% 30%, #fbe3e3 0%, transparent 70%), radial-gradient(70% 40% at 100% 70%, #e9efe1 0%, transparent 70%)",
+              },
+            }),
+          });
+        },
+        Divider: function ({ className: e }) {
+          return (0, v.jsx)(e3, {
+            color: a1,
+            className: `mx-auto w-[50cqw] opacity-60 ${e ?? ""}`,
+          });
+        },
+        Title: a6,
+      },
+      a9 = "#9c1650",
+      a7 = "#d9a53c",
+      se = "#3f8f3a",
+      st = "#fbf6ea",
+      sa = [0.22, 1, 0.36, 1],
+      ss = { fontFamily: "var(--font-tamil), serif" };
+    function si({
+      className: e,
+      color: t = st,
+      play: a = !0,
+      size: s = 7,
+      speed: i = 1,
+    }) {
+      let n = (0, f.useMemo)(
+          () =>
+            (function (e) {
+              let t = [],
+                a = Math.floor(e / 2);
+              for (let s = -a; s <= a; s++) {
+                let a = e - 2 * Math.abs(s);
+                for (let e = 0; e < a; e++)
+                  t.push([(e - (a - 1) / 2) * 20, 20 * s]);
+              }
+              return t;
+            })(s),
+          [s],
+        ),
+        l = (Math.floor(s / 2) + 1) * 20,
+        r = (0, f.useMemo)(() => {
+          let e = [];
+          for (let t = 0; t <= 240; t++) {
+            let a = (t / 240) * Math.PI * 2,
+              s = l * (0.92 + 0.16 * Math.cos(4 * a)) + 2.5 * Math.cos(12 * a);
+            e.push(
+              `${eL(Math.cos(a - Math.PI / 4) * s)} ${eL(Math.sin(a - Math.PI / 4) * s)}`,
+            );
+          }
+          return `M${e.join(" L")} Z`;
+        }, [l]),
+        c = { pathLength: 1, opacity: 1 },
+        o = { pathLength: 0, opacity: 0 };
+      return (0, v.jsxs)("svg", {
+        viewBox: `${-l - 16} ${-l - 16} ${2 * l + 32} ${2 * l + 32}`,
+        className: e,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("g", {
+            fill: t,
+            children: n.map(([e, t], s) =>
+              (0, v.jsx)(
+                $.f.circle,
+                {
+                  cx: e,
+                  cy: t,
+                  r: 1.8,
+                  initial: { opacity: 0, scale: 0 },
+                  animate: a ? { opacity: 1, scale: 1 } : {},
+                  transition: { delay: (0.02 * s) / i, duration: 0.3 },
+                },
+                s,
+              ),
+            ),
+          }),
+          (0, v.jsxs)("g", {
+            fill: "none",
+            stroke: t,
+            strokeWidth: 1.4,
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            children: [
+              n.map(([e, t], s) =>
+                (0, v.jsx)(
+                  "g",
+                  {
+                    transform: `translate(${e} ${t})`,
+                    children: [0, 90, 180, 270].map((e) =>
+                      (0, v.jsx)(
+                        $.f.path,
+                        {
+                          d: eW(3, 6.5, 4.2),
+                          transform: `rotate(${e + 45})`,
+                          initial: o,
+                          animate: a ? c : {},
+                          transition: {
+                            delay: (0.6 + 0.03 * s) / i,
+                            duration: 0.6 / i,
+                            ease: "easeInOut",
+                          },
+                        },
+                        e,
+                      ),
+                    ),
+                  },
+                  s,
+                ),
+              ),
+              (0, v.jsx)($.f.path, {
+                d: r,
+                strokeWidth: 1.6,
+                initial: o,
+                animate: a ? c : {},
+                transition: {
+                  delay: 1.6 / i,
+                  duration: 2.2 / i,
+                  ease: "easeInOut",
+                },
+              }),
+              (0, v.jsx)($.f.path, {
+                d: r,
+                strokeWidth: 0.8,
+                strokeDasharray: "1 4",
+                transform: "scale(1.1)",
+                initial: o,
+                animate: a ? c : {},
+                transition: {
+                  delay: 2.4 / i,
+                  duration: 2 / i,
+                  ease: "easeInOut",
+                },
+              }),
+            ],
+          }),
+        ],
+      });
+    }
+    function sn({ className: e, flip: t }) {
+      let a = eO((0, f.useId)());
+      return (0, v.jsxs)("svg", {
+        className: e,
+        preserveAspectRatio: "none",
+        style: { transform: t ? "scaleY(-1)" : void 0 },
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsxs)("defs", {
+            children: [
+              (0, v.jsxs)("pattern", {
+                id: `${a}t`,
+                width: "24",
+                height: "22",
+                patternUnits: "userSpaceOnUse",
+                children: [
+                  (0, v.jsx)("path", { d: "M0 22 L12 4 L24 22 Z", fill: a7 }),
+                  (0, v.jsx)("path", { d: "M6 22 L12 12 L18 22 Z", fill: a9 }),
+                  (0, v.jsx)("circle", {
+                    cx: "12",
+                    cy: "2.5",
+                    r: "2",
+                    fill: a7,
+                  }),
+                ],
+              }),
+              (0, v.jsxs)("linearGradient", {
+                id: `${a}z`,
+                x1: "0",
+                x2: "1",
+                children: [
+                  (0, v.jsx)("stop", { offset: "0", stopColor: "#b7832b" }),
+                  (0, v.jsx)("stop", { offset: "0.5", stopColor: "#f3d68c" }),
+                  (0, v.jsx)("stop", { offset: "1", stopColor: "#b7832b" }),
+                ],
+              }),
+            ],
+          }),
+          (0, v.jsx)("rect", { width: "100%", height: "100%", fill: a9 }),
+          (0, v.jsx)("rect", {
+            y: "18%",
+            width: "100%",
+            height: "10%",
+            fill: `url(#${a}z)`,
+          }),
+          (0, v.jsx)("rect", {
+            y: "34%",
+            width: "100%",
+            height: "34%",
+            fill: `url(#${a}t)`,
+          }),
+          (0, v.jsx)("rect", {
+            y: "72%",
+            width: "100%",
+            height: "6%",
+            fill: se,
+          }),
+          (0, v.jsx)("rect", {
+            y: "84%",
+            width: "100%",
+            height: "4%",
+            fill: `url(#${a}z)`,
+          }),
+        ],
+      });
+    }
+    function sl({ className: e, delay: t = 0 }) {
+      let a = eO((0, f.useId)());
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 80 200",
+        className: e,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsxs)("defs", {
+            children: [
+              (0, v.jsxs)("linearGradient", {
+                id: `${a}b`,
+                x1: "0",
+                x2: "1",
+                children: [
+                  (0, v.jsx)("stop", { offset: "0", stopColor: "#8a5a14" }),
+                  (0, v.jsx)("stop", { offset: "0.45", stopColor: "#f2cf7a" }),
+                  (0, v.jsx)("stop", { offset: "1", stopColor: "#7a4c10" }),
+                ],
+              }),
+              (0, v.jsxs)("radialGradient", {
+                id: `${a}f`,
+                cx: "50%",
+                cy: "80%",
+                r: "70%",
+                children: [
+                  (0, v.jsx)("stop", { offset: "0", stopColor: "#fffbe6" }),
+                  (0, v.jsx)("stop", { offset: "0.45", stopColor: "#ffd34a" }),
+                  (0, v.jsx)("stop", { offset: "1", stopColor: "#f07a1a" }),
+                ],
+              }),
+            ],
+          }),
+          (0, v.jsx)("path", {
+            d: "M40 2 C44 8 44 14 40 18 C36 14 36 8 40 2 Z",
+            fill: `url(#${a}b)`,
+          }),
+          (0, v.jsx)("rect", {
+            x: "37",
+            y: "18",
+            width: "6",
+            height: "16",
+            fill: `url(#${a}b)`,
+          }),
+          [12, 26, 40, 54, 68].map((e, s) =>
+            (0, v.jsxs)(
+              "g",
+              {
+                className: "animate-flicker",
+                style: {
+                  transformOrigin: `${e}px 44px`,
+                  transformBox: "view-box",
+                  animationDelay: `${t + 0.25 * s}s`,
+                },
+                children: [
+                  (0, v.jsx)("circle", {
+                    cx: e,
+                    cy: 34,
+                    r: 8,
+                    fill: "#ffd34a",
+                    opacity: 0.22,
+                  }),
+                  (0, v.jsx)("path", {
+                    d: `M${e} 26 C${e + 4} 33 ${e + 3} 39 ${e} 42 C${e - 3} 39 ${e - 4} 33 ${e} 26 Z`,
+                    fill: `url(#${a}f)`,
+                  }),
+                ],
+              },
+              e,
+            ),
+          ),
+          (0, v.jsx)("path", {
+            d: "M4 44 H76 C72 54 58 58 40 58 C22 58 8 54 4 44 Z",
+            fill: `url(#${a}b)`,
+          }),
+          (0, v.jsx)("path", {
+            d: "M36 58 H44 V150 H36 Z",
+            fill: `url(#${a}b)`,
+          }),
+          [78, 104, 128].map((e) =>
+            (0, v.jsx)(
+              "ellipse",
+              { cx: "40", cy: e, rx: "9", ry: "6", fill: `url(#${a}b)` },
+              e,
+            ),
+          ),
+          (0, v.jsx)("path", {
+            d: "M40 150 C28 152 22 160 22 168 H58 C58 160 52 152 40 150 Z",
+            fill: `url(#${a}b)`,
+          }),
+          (0, v.jsx)("path", {
+            d: "M10 176 C14 168 66 168 70 176 C74 184 66 192 40 192 C14 192 6 184 10 176 Z",
+            fill: `url(#${a}b)`,
+          }),
+        ],
+      });
+    }
+    function sr({ className: e, length: t = 9, delay: a = 0 }) {
+      return (0, v.jsx)("div", {
+        className: e,
+        children: (0, v.jsx)("div", {
+          className: "animate-sway",
+          style: { transformOrigin: "top center", animationDelay: `${a}s` },
+          children: (0, v.jsxs)("svg", {
+            viewBox: `0 0 20 ${14 * t + 10}`,
+            className: "w-full",
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)("line", {
+                x1: "10",
+                y1: "0",
+                x2: "10",
+                y2: 14 * t,
+                stroke: se,
+                strokeWidth: "0.8",
+              }),
+              Array.from({ length: t }, (e, t) =>
+                (0, v.jsxs)(
+                  "g",
+                  {
+                    transform: `translate(10 ${8 + 14 * t})`,
+                    children: [
+                      (0, v.jsx)("ellipse", {
+                        rx: "4",
+                        ry: "6",
+                        fill: "#fffdf6",
+                        transform: "rotate(-30)",
+                      }),
+                      (0, v.jsx)("ellipse", {
+                        rx: "4",
+                        ry: "6",
+                        fill: "#f6efdc",
+                        transform: "rotate(30)",
+                      }),
+                      (0, v.jsx)("circle", { r: "1.4", fill: "#e9d79c" }),
+                    ],
+                  },
+                  t,
+                ),
+              ),
+              (0, v.jsx)("path", { d: `M10 ${14 * t} l-3 8 h6 Z`, fill: a7 }),
+            ],
+          }),
+        }),
+      });
+    }
+    function sc({ className: e, color: t = a7 }) {
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 200 220",
+        className: e,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsxs)("g", {
+            fill: t,
+            children: [
+              Array.from({ length: 6 }, (e, t) => {
+                let a = 180 - 24 * t,
+                  s = 200 - 26 * t;
+                return (0, v.jsx)(
+                  "path",
+                  {
+                    d: `M${100 - a / 2} ${s} H${100 + a / 2} L${100 + a / 2 - 8} ${s - 24} H${100 - a / 2 + 8} Z`,
+                    opacity: 0.55 + 0.07 * t,
+                  },
+                  t,
+                );
+              }),
+              (0, v.jsx)("path", { d: "M58 44 C58 24 142 24 142 44 Z" }),
+              [76, 100, 124].map((e) =>
+                (0, v.jsx)(
+                  "path",
+                  {
+                    d: `M${e} 26 C${e + 5} 18 ${e + 4} 10 ${e} 4 C${e - 4} 10 ${e - 5} 18 ${e} 26 Z`,
+                  },
+                  e,
+                ),
+              ),
+            ],
+          }),
+          (0, v.jsx)("g", {
+            fill: "#00000033",
+            children: Array.from({ length: 5 }, (e, t) =>
+              (0, v.jsx)(
+                "rect",
+                { x: 96, y: 186 - 26 * t, width: 8, height: 10, rx: 4 },
+                t,
+              ),
+            ),
+          }),
+        ],
+      });
+    }
+    function so({ className: e, flip: t }) {
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 120 160",
+        className: e,
+        style: { transform: t ? "scaleX(-1)" : void 0 },
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("path", {
+            d: "M8 156 C10 100 40 40 112 6 C96 60 70 120 8 156 Z",
+            fill: se,
+          }),
+          (0, v.jsx)("path", {
+            d: "M8 156 C46 104 76 56 112 6",
+            stroke: "#bfe39a",
+            strokeWidth: "1.6",
+            fill: "none",
+          }),
+          Array.from({ length: 9 }, (e, t) => {
+            let a = 0.15 + 0.09 * t;
+            return (0, v.jsx)(
+              "path",
+              {
+                d: `M${8 + 104 * a} ${156 - 150 * a} l${18 - t} ${6 + t}`,
+                stroke: "#2d6e29",
+                strokeWidth: "0.8",
+              },
+              t,
+            );
+          }),
+        ],
+      });
+    }
+    let sd = ["kartheek-weds-sahithi"];
+    function sx({ kicker: e, children: t }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.5cqw] text-[#3f8f3a]",
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className:
+              "inv-script mt-[2cqw] text-[10cqw] leading-tight text-[#9c1650]",
+            children: t,
+          }),
+          (0, v.jsxs)("div", {
+            className:
+              "mx-auto mt-[3cqw] flex w-[40cqw] items-center gap-[2cqw]",
+            children: [
+              (0, v.jsx)("span", {
+                className: "h-[0.6cqw] flex-1 bg-[#d9a53c]",
+              }),
+              (0, v.jsx)("span", {
+                className: "size-[2.4cqw] rotate-45 bg-[#3f8f3a]",
+              }),
+              (0, v.jsx)("span", {
+                className: "h-[0.6cqw] flex-1 bg-[#d9a53c]",
+              }),
+            ],
+          }),
+        ],
+      });
+    }
+    let sf = {
+        id: "kolam",
+        tapHint: "tapKolam",
+        root: "bg-[#fbf6ea] text-[#3b0a1f]",
+        vars: {
+          "--inv-script": "var(--font-yeseva), serif",
+          "--inv-serif": "var(--font-cormorant), serif",
+          "--inv-label": "var(--font-marcellus), serif",
+        },
+        accent: a9,
+        ui: {
+          section: "relative px-[7cqw] py-[14cqw]",
+          card: "rounded-[5cqw] bg-white shadow-[0_2cqw_6cqw_-4cqw_rgba(59,10,31,.35)]",
+          input:
+            "w-full rounded-[3cqw] border border-[#9c1650]/20 bg-[#fbf6ea] px-[4cqw] py-[3cqw] text-[3.8cqw] text-[#3b0a1f] placeholder:text-[#3b0a1f]/35 outline-none focus:border-[#9c1650]",
+          chip: "rounded-full border border-[#9c1650]/25 text-[#3b0a1f]/80 transition",
+          chipOn:
+            "rounded-full border border-[#9c1650] bg-[#9c1650] text-[#fbf6ea] transition",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full bg-[#d9a53c] px-[5cqw] py-[2.6cqw] text-[3.4cqw] font-semibold text-[#3b0a1f] active:scale-95 transition",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border border-current/40 px-[5cqw] py-[2.6cqw] text-[3.4cqw] active:scale-95 transition",
+          muted: "text-[#3b0a1f]/65",
+          tile: "rounded-[3cqw] bg-white text-[#9c1650] shadow-[0_1cqw_4cqw_-2cqw_rgba(59,10,31,.35)]",
+        },
+        Opening: function ({ invite: e, opened: t, onOpen: a }) {
+          let [s, i] = (0, L.g)(e);
+          return (0, v.jsxs)("div", {
+            className: "absolute inset-0 overflow-hidden",
+            style: { pointerEvents: t ? "none" : "auto" },
+            children: [
+              (0, v.jsx)($.f.div, {
+                className:
+                  "absolute inset-x-0 top-0 h-1/2 overflow-hidden bg-[#fbf6ea]",
+                animate: { y: t ? "-101%" : "0%" },
+                transition: {
+                  duration: 1.2,
+                  ease: [0.7, 0, 0.3, 1],
+                  delay: 0.15,
+                },
+                children: (0, v.jsx)(sn, {
+                  className: "absolute inset-x-0 top-0 h-[16cqw] w-full",
+                }),
+              }),
+              (0, v.jsx)($.f.div, {
+                className:
+                  "absolute inset-x-0 bottom-0 h-1/2 overflow-hidden bg-[#fbf6ea]",
+                animate: { y: t ? "101%" : "0%" },
+                transition: {
+                  duration: 1.2,
+                  ease: [0.7, 0, 0.3, 1],
+                  delay: 0.15,
+                },
+                children: (0, v.jsx)(sn, {
+                  className: "absolute inset-x-0 bottom-0 h-[16cqw] w-full",
+                  flip: !0,
+                }),
+              }),
+              (0, v.jsxs)($.f.div, {
+                className:
+                  "absolute inset-0 flex flex-col items-center justify-center",
+                animate: { opacity: +!t, scale: t ? 1.1 : 1 },
+                transition: { duration: 0.4 },
+                children: [
+                  (0, v.jsx)("p", {
+                    className: "text-[4.6cqw] text-[#9c1650]",
+                    style: ss,
+                    children: e.invocation,
+                  }),
+                  (0, v.jsxs)("button", {
+                    onClick: a,
+                    "aria-label": "Open invitation",
+                    className: "relative mt-[4cqw] w-[74cqw]",
+                    children: [
+                      (0, v.jsx)(si, {
+                        className: "w-full",
+                        color: a9,
+                        speed: 1.4,
+                      }),
+                      (0, v.jsx)("span", {
+                        className: "absolute inset-0 grid place-items-center",
+                        children: (0, v.jsx)("span", {
+                          className:
+                            "grid size-[20cqw] place-items-center rounded-full bg-[#9c1650] text-[3cqw] font-semibold tracking-[0.2em] text-[#fbf6ea] uppercase shadow-[0_0_0_1.2cqw_#fbf6ea,0_0_0_1.8cqw_#d9a53c]",
+                          style: { fontFamily: "var(--font-marcellus)" },
+                          children: "Enter",
+                        }),
+                      }),
+                    ],
+                  }),
+                  (0, v.jsxs)("p", {
+                    className:
+                      "inv-script mt-[5cqw] text-[8cqw] leading-none text-[#3b0a1f]",
+                    children: [
+                      s.first,
+                      " ",
+                      (0, v.jsx)("span", {
+                        className: "text-[#d9a53c]",
+                        children: e.joiner ?? "&",
+                      }),
+                      " ",
+                      i.first,
+                    ],
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+        Hero: function ({ invite: e }) {
+          let t = g(),
+            [a, s] = (0, L.g)(e),
+            i = (e) => ({
+              initial: { opacity: 0, y: 22 },
+              animate: t ? { opacity: 1, y: 0 } : {},
+              transition: { duration: 1.1, delay: e, ease: sa },
+            });
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex min-h-[var(--screen-h,100dvh)] flex-col overflow-hidden",
+            style: {
+              background:
+                "linear-gradient(160deg,#b01d5e 0%,#9c1650 40%,#6e0d38 100%)",
+            },
+            children: [
+              (0, v.jsx)("div", {
+                className: "pointer-events-none absolute inset-0 opacity-20",
+                style: {
+                  backgroundImage:
+                    "repeating-linear-gradient(115deg, #ffffff22 0 1px, transparent 1px 6px)",
+                },
+              }),
+              (0, v.jsx)(sn, {
+                className: "relative h-[16cqw] w-full shrink-0",
+              }),
+              (0, v.jsx)(sr, {
+                className: "absolute top-[14cqw] left-[4cqw] w-[6cqw]",
+                length: 10,
+              }),
+              (0, v.jsx)(sr, {
+                className: "absolute top-[14cqw] left-[12cqw] w-[5cqw]",
+                length: 6,
+                delay: -1,
+              }),
+              (0, v.jsx)(sr, {
+                className: "absolute top-[14cqw] right-[4cqw] w-[6cqw]",
+                length: 12,
+                delay: -2,
+              }),
+              (0, v.jsx)(sr, {
+                className: "absolute top-[14cqw] right-[12cqw] w-[5cqw]",
+                length: 7,
+                delay: -0.5,
+              }),
+              (0, v.jsxs)("div", {
+                className:
+                  "relative flex flex-1 flex-col items-center justify-center px-[8cqw] py-[10cqw] text-center",
+                children: [
+                  (0, v.jsx)("div", {
+                    className:
+                      "absolute top-1/2 left-1/2 w-[110cqw] -translate-x-1/2 -translate-y-1/2 opacity-25",
+                    children: (0, v.jsx)($.f.div, {
+                      animate: { rotate: 360 },
+                      transition: {
+                        duration: 120,
+                        repeat: 1 / 0,
+                        ease: "linear",
+                      },
+                      children: (0, v.jsx)(si, {
+                        className: "w-full",
+                        color: a7,
+                        play: t,
+                        size: 9,
+                      }),
+                    }),
+                  }),
+                  (0, v.jsx)($.f.p, {
+                    ...i(0.3),
+                    className: "relative text-[5.6cqw] text-[#f3d68c]",
+                    style: ss,
+                    children: e.invocation,
+                  }),
+                  (0, v.jsx)($.f.p, {
+                    ...i(0.45),
+                    className:
+                      "inv-label relative mt-[1.5cqw] text-[2.4cqw] text-[#fbf6ea]/70",
+                    children: e.invocationMeaning,
+                  }),
+                  e.heroKicker &&
+                    (0, v.jsx)($.f.p, {
+                      ...i(0.65),
+                      className:
+                        "inv-label relative mt-[6cqw] text-[2.6cqw] text-[#f3d68c]",
+                      children: e.heroKicker,
+                    }),
+                  (0, v.jsxs)($.f.h1, {
+                    ...i(0.8),
+                    className: `relative ${e.heroKicker ? "mt-[2.5cqw]" : "mt-[6cqw]"} flex flex-col items-center`,
+                    children: [
+                      (0, v.jsx)("span", {
+                        className:
+                          "inv-script text-[14cqw] leading-[1.05] text-[#fbf6ea]",
+                        children: a.first,
+                      }),
+                      (0, v.jsx)("span", {
+                        className:
+                          "inv-serif my-[1cqw] text-[6cqw] text-[#f3d68c] italic",
+                        children: e.joiner ?? "weds",
+                      }),
+                      (0, v.jsx)("span", {
+                        className:
+                          "inv-script text-[14cqw] leading-[1.05] text-[#fbf6ea]",
+                        children: s.first,
+                      }),
+                    ],
+                  }),
+                  !e.hideHeroDate &&
+                    (0, v.jsxs)($.f.div, {
+                      ...i(1.2),
+                      className:
+                        "relative mt-[7cqw] flex items-center gap-[4cqw] text-[#fbf6ea]",
+                      children: [
+                        (0, v.jsxs)("div", {
+                          className: "text-right",
+                          children: [
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-label text-[2.4cqw] text-[#f3d68c]",
+                              children: (0, T.e)(e.date),
+                            }),
+                            (0, v.jsx)("p", {
+                              className: "inv-label text-[2.4cqw]",
+                              children: (0, T.D)(e.date),
+                            }),
+                          ],
+                        }),
+                        (0, v.jsx)("p", {
+                          className:
+                            "inv-script text-[14cqw] leading-none text-[#f3d68c]",
+                          children: (0, T.v)(e.date),
+                        }),
+                        (0, v.jsxs)("div", {
+                          className: "text-left",
+                          children: [
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-label text-[2.4cqw] text-[#f3d68c]",
+                              children: (0, T.X)(e.date),
+                            }),
+                            (0, v.jsx)("p", {
+                              className: "inv-label text-[2.4cqw]",
+                              children: (0, T.U)(e.date),
+                            }),
+                          ],
+                        }),
+                      ],
+                    }),
+                  !e.hideHeroCity &&
+                    (0, v.jsx)($.f.p, {
+                      ...i(1.35),
+                      className: `inv-serif relative ${e.hideHeroDate ? "mt-[7cqw]" : "mt-[3cqw]"} text-[4cqw] text-[#fbf6ea]/80 italic`,
+                      children: e.city,
+                    }),
+                ],
+              }),
+              (0, v.jsxs)("div", {
+                className: "relative h-[34cqw] shrink-0",
+                children: [
+                  (0, v.jsx)(sc, {
+                    className:
+                      "absolute bottom-[6cqw] left-1/2 w-[40cqw] -translate-x-1/2 opacity-50",
+                    color: "#f3d68c",
+                  }),
+                  (0, v.jsx)(so, {
+                    className: "absolute bottom-[4cqw] -left-[4cqw] w-[26cqw]",
+                  }),
+                  (0, v.jsx)(so, {
+                    className: "absolute -right-[4cqw] bottom-[4cqw] w-[26cqw]",
+                    flip: !0,
+                  }),
+                  (0, v.jsx)(sl, {
+                    className: "absolute bottom-[5cqw] left-[18cqw] w-[11cqw]",
+                  }),
+                  (0, v.jsx)(sl, {
+                    className: "absolute right-[18cqw] bottom-[5cqw] w-[11cqw]",
+                    delay: 0.6,
+                  }),
+                  (0, v.jsx)(sn, {
+                    className: "absolute inset-x-0 bottom-0 h-[8cqw] w-full",
+                    flip: !0,
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+        Blessing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e),
+            s = sd.includes(e.slug);
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw] text-center",
+            children: [
+              (0, v.jsxs)(B.b, {
+                children: [
+                  (0, v.jsx)(si, {
+                    className: "mx-auto w-[30cqw]",
+                    color: a9,
+                    size: 5,
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-label mt-[4cqw] text-[2.5cqw] text-[#9c1650]",
+                    children: e.hosts,
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mx-auto mt-[4cqw] max-w-[76cqw] text-[5.2cqw] leading-snug text-[#3b0a1f] italic",
+                    children: e.message,
+                  }),
+                ],
+              }),
+              (0, v.jsx)("div", {
+                className: "mt-[10cqw] space-y-[4cqw]",
+                children: [t, a].map((t, a) =>
+                  (0, v.jsx)(
+                    B.b,
+                    {
+                      delay: 0.15 * a,
+                      children: (0, v.jsxs)("div", {
+                        className:
+                          "overflow-hidden rounded-[4cqw] bg-white shadow-[0_2cqw_6cqw_-4cqw_rgba(59,10,31,.35)]",
+                        children: [
+                          (0, v.jsx)(sn, { className: "h-[7cqw] w-full" }),
+                          (0, v.jsxs)("div", {
+                            className: "px-[6cqw] py-[5cqw]",
+                            children: [
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-label text-[2.3cqw] text-[#3f8f3a]",
+                                children:
+                                  t === e.bride
+                                    ? s
+                                      ? "Bride"
+                                      : "Manamagal · Bride"
+                                    : s
+                                      ? "Groom"
+                                      : "Manamagan · Groom",
+                              }),
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-script mt-[1.5cqw] text-[9cqw] leading-none text-[#9c1650]",
+                                children: t.full,
+                              }),
+                              t.elders &&
+                                !t.eldersBelow &&
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-serif mt-[2cqw] text-[3.8cqw] whitespace-pre-line text-[#3b0a1f] italic",
+                                  children: t.elders,
+                                }),
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-serif mt-[2cqw] text-[3.8cqw] text-[#3b0a1f] italic",
+                                children: t.parents,
+                              }),
+                              t.elders &&
+                                t.eldersBelow &&
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-serif mt-[2cqw] text-[3.8cqw] whitespace-pre-line text-[#3b0a1f] italic",
+                                  children: t.elders,
+                                }),
+                            ],
+                          }),
+                        ],
+                      }),
+                    },
+                    t === e.bride ? "bride" : "groom",
+                  ),
+                ),
+              }),
+            ],
+          });
+        },
+        Events: function ({ invite: e }) {
+          let { t } = (0, N.G)();
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw]",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(sx, {
+                  kicker: t.eventsKicker,
+                  children: t.eventsTitle,
+                }),
+              }),
+              (0, v.jsx)("div", {
+                className: "mt-[10cqw] space-y-[7cqw]",
+                children: e.events.map((t, a) => {
+                  let s = "muhurtham" === t.kind;
+                  return (0, v.jsx)(
+                    B.b,
+                    {
+                      children: (0, v.jsxs)("article", {
+                        className: `relative overflow-hidden rounded-[5cqw] ${s ? "bg-[#9c1650] text-[#fbf6ea]" : "bg-white text-[#3b0a1f]"} shadow-[0_2cqw_6cqw_-4cqw_rgba(59,10,31,.35)]`,
+                        children: [
+                          (0, v.jsx)("div", {
+                            className: "h-[2.4cqw]",
+                            style: { background: a % 2 ? se : a7 },
+                          }),
+                          (0, v.jsxs)("div", {
+                            className: "px-[7cqw] py-[7cqw]",
+                            children: [
+                              (0, v.jsxs)("div", {
+                                className: "flex items-center gap-[4cqw]",
+                                children: [
+                                  (0, v.jsx)("span", {
+                                    className: `grid size-[14cqw] shrink-0 place-items-center rounded-full ${s ? "bg-[#fbf6ea] text-[#9c1650]" : "bg-[#9c1650] text-[#f3d68c]"}`,
+                                    children: (0, v.jsx)(z, {
+                                      kind: t.kind,
+                                      className: "size-[8cqw]",
+                                    }),
+                                  }),
+                                  (0, v.jsxs)("div", {
+                                    className: "min-w-0",
+                                    children: [
+                                      (0, v.jsx)("h3", {
+                                        className: `inv-script leading-none ${t.name.length > 11 ? "text-[5.6cqw]" : "text-[8cqw]"}`,
+                                        children: t.name,
+                                      }),
+                                      (0, v.jsxs)("p", {
+                                        className: `inv-label mt-[1.5cqw] text-[2.4cqw] ${s ? "text-[#f3d68c]" : "text-[#3f8f3a]"}`,
+                                        children: [
+                                          (0, T.e)(t.start),
+                                          " · ",
+                                          (0, T.v)(t.start),
+                                          " ",
+                                          (0, T.D)(t.start).slice(0, 3),
+                                          !t.noTime &&
+                                            (0, v.jsxs)(v.Fragment, {
+                                              children: [
+                                                " · ",
+                                                t.timeText ?? (0, T.U)(t.start),
+                                              ],
+                                            }),
+                                        ],
+                                      }),
+                                    ],
+                                  }),
+                                ],
+                              }),
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-serif mt-[5cqw] text-[5cqw] leading-tight font-semibold",
+                                children: t.venue,
+                              }),
+                              t.address &&
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "mt-[1cqw] text-[3.2cqw] opacity-70",
+                                  children: t.address,
+                                }),
+                              (t.dress || t.note) &&
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-serif mt-[3cqw] text-[3.8cqw] italic opacity-90",
+                                  children: [
+                                    t.dress && `Dress: ${t.dress}`,
+                                    t.note,
+                                  ]
+                                    .filter(Boolean)
+                                    .join(" · "),
+                                }),
+                              (0, v.jsx)("div", {
+                                className: "[&>div]:justify-start",
+                                children: (0, v.jsx)(B.W, {
+                                  event: t,
+                                  invite: e,
+                                  theme: sf,
+                                }),
+                              }),
+                            ],
+                          }),
+                        ],
+                      }),
+                    },
+                    t.name,
+                  );
+                }),
+              }),
+            ],
+          });
+        },
+        Closing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className:
+              "relative overflow-hidden bg-[#9c1650] pt-[16cqw] pb-[26cqw] text-center text-[#fbf6ea]",
+            children: [
+              (0, v.jsx)(sn, {
+                className: "absolute inset-x-0 top-0 h-[10cqw] w-full",
+              }),
+              (0, v.jsxs)(B.b, {
+                className: "relative px-[7cqw]",
+                children: [
+                  (0, v.jsxs)("div", {
+                    className: "flex items-end justify-center gap-[6cqw]",
+                    children: [
+                      (0, v.jsx)(sl, { className: "w-[12cqw]" }),
+                      (0, v.jsx)(sl, { className: "w-[12cqw]", delay: 0.5 }),
+                    ],
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mx-auto mt-[5cqw] max-w-[72cqw] text-[5.4cqw] leading-snug italic",
+                    children: e.closing,
+                  }),
+                  (0, v.jsxs)("p", {
+                    className:
+                      "inv-script mt-[6cqw] text-[11cqw] leading-none text-[#f3d68c]",
+                    children: [t.first, " ", e.joiner ?? "&", " ", a.first],
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-label mt-[4cqw] text-[2.4cqw] text-[#fbf6ea]/70",
+                    children: e.hosts,
+                  }),
+                  e.extras?.map((e, t) =>
+                    (0, v.jsxs)(
+                      "div",
+                      {
+                        className: "mt-[8cqw]",
+                        children: [
+                          (0, v.jsx)("p", {
+                            className:
+                              "inv-serif text-[4.6cqw] font-semibold text-[#f3d68c]",
+                            children: e.title,
+                          }),
+                          (0, v.jsx)("div", {
+                            className: "mt-[2cqw] space-y-[1cqw]",
+                            children: e.lines.map((e, t) =>
+                              (0, v.jsx)(
+                                "p",
+                                {
+                                  className:
+                                    "inv-serif text-[4cqw] leading-snug text-[#fbf6ea]/85 italic",
+                                  children: e,
+                                },
+                                t,
+                              ),
+                            ),
+                          }),
+                        ],
+                      },
+                      e.title + t,
+                    ),
+                  ),
+                ],
+              }),
+              !e.noBranding &&
+                (0, v.jsxs)(k.default, {
+                  href: "/",
+                  className:
+                    "inv-label absolute inset-x-0 bottom-[6cqw] text-[2cqw] text-[#fbf6ea]/45",
+                  children: ["Crafted by ", F.B.name],
+                }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          return (0, v.jsx)("div", {
+            className: "pointer-events-none absolute inset-0",
+            style: {
+              background: st,
+              backgroundImage:
+                "radial-gradient(#9c165022 1.2px, transparent 1.2px)",
+              backgroundSize: "6cqw 6cqw",
+            },
+          });
+        },
+        Divider: function ({ className: e }) {
+          return (0, v.jsx)("div", {
+            className: `flex justify-center ${e ?? ""}`,
+            children: (0, v.jsx)(si, {
+              className: "w-[18cqw]",
+              color: a9,
+              size: 3,
+            }),
+          });
+        },
+        Title: sx,
+      },
+      sm = "/art/illus",
+      sp = "#b19254",
+      sh = {
+        paper: "#f3ece0",
+        ink: "var(--ch-ink, #4f4020)",
+        soft: "var(--ch-soft, #6a5b38)",
+        gold: `var(--ch-gold, ${sp})`,
+        goldHi: "#e9d39b",
+        ribbon: "#e8dcc1",
+      },
+      sw = [0.22, 1, 0.36, 1],
+      su = (e, t) => (0, T.s)(e, t);
+    function sg({ iso: e }) {
+      let { lang: t, d: a } = (0, N.G)(),
+        s = Number(su(e, { day: "numeric" }));
+      return "hi" === t
+        ? (0, v.jsx)(v.Fragment, { children: a.long(e) })
+        : (0, v.jsxs)(v.Fragment, {
+            children: [
+              su(e, { weekday: "long" }),
+              ", ",
+              s,
+              (0, v.jsx)("sup", {
+                className: "text-[0.65em]",
+                children:
+                  s % 10 == 1 && 11 !== s
+                    ? "st"
+                    : s % 10 == 2 && 12 !== s
+                      ? "nd"
+                      : s % 10 == 3 && 13 !== s
+                        ? "rd"
+                        : "th",
+              }),
+              " ",
+              su(e, { month: "long" }),
+              " ",
+              su(e, { year: "numeric" }),
+            ],
+          });
+    }
+    function sb({
+      src: e,
+      alt: t = "",
+      priority: a,
+      className: s = "object-cover",
+      style: i,
+    }) {
+      let n = j();
+      return (0, v.jsx)(R.default, {
+        src: e,
+        alt: t,
+        fill: !0,
+        priority: a && !n,
+        sizes: n ? y : q,
+        className: s,
+        style: i,
+      });
+    }
+    function sj({ className: e, delay: t = 0 }) {
+      let a = (e) =>
+        (0, v.jsx)($.f.span, {
+          className: "h-px flex-1",
+          style: { background: sh.gold, transformOrigin: e },
+          initial: { scaleX: 0 },
+          whileInView: { scaleX: 1 },
+          viewport: { once: !0 },
+          transition: { duration: 1.1, delay: t + 0.15, ease: sw },
+        });
+      return (0, v.jsxs)("div", {
+        className: `mx-auto flex w-[44cqw] items-center gap-[2cqw] ${e ?? "my-[5cqw]"}`,
+        "aria-hidden": !0,
+        children: [
+          a("right"),
+          (0, v.jsx)($.f.span, {
+            className: "size-[1.6cqw] rotate-45",
+            style: { background: sh.gold },
+            initial: { scale: 0 },
+            whileInView: { scale: 1 },
+            viewport: { once: !0 },
+            transition: { duration: 0.6, delay: t },
+          }),
+          a("left"),
+        ],
+      });
+    }
+    function sy({ kicker: e, children: t }) {
+      let { lang: a } = (0, N.G)(),
+        s = "hi" === a;
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[3.4cqw] tracking-[0.28em]",
+              children: e,
+            }),
+          (0, v.jsx)($.f.h2, {
+            className: "inv-label mt-[1cqw] text-[5.6cqw]",
+            initial: s
+              ? { opacity: 0 }
+              : { opacity: 0, letterSpacing: "0.6em" },
+            whileInView: s
+              ? { opacity: 1 }
+              : { opacity: 1, letterSpacing: "0.3em" },
+            viewport: { once: !0, amount: 0.6 },
+            transition: { duration: 1.4, ease: sw },
+            children: t,
+          }),
+          (0, v.jsx)(sj, {}),
+        ],
+      });
+    }
+    let sq = "inv-label tracking-[0.2em]",
+      sv = "inv-serif italic";
+    function sN(e) {
+      let t = e;
+      return () => ((t = (16807 * t) % 0x7fffffff) - 1) / 0x7ffffffe;
+    }
+    let sk = "polygon(0 0, 100% 0, 100% 34%, 50% 58.5%, 0 34%)",
+      s$ = "polygon(0 34%, 50% 58.5%, 100% 34%, 100% 100%, 0 100%)",
+      sC =
+        ((t = sN(7)),
+        Array.from({ length: 30 }, (e, a) => {
+          let s = -Math.PI / 2 + (t() - 0.5) * Math.PI * 1.5,
+            i = 45 + 70 * t();
+          return {
+            x: Math.cos(s) * i,
+            y: Math.sin(s) * i - 10 - 25 * t(),
+            rot: (t() - 0.5) * 720,
+            size: 2.4 + 3.2 * t(),
+            delay: 1 + 0.5 * t(),
+            blush: a % 3 != 0,
+          };
+        })),
+      sM =
+        ((a = sN(31)),
+        Array.from({ length: 26 }, () => ({
+          x: (a() - 0.5) * 90,
+          y: -10 - 70 * a(),
+          d: 1.05 + 0.9 * a(),
+          s: 0.6 + 1.2 * a(),
+        })));
+    function sS({ text: e, image: t }) {
+      return (0, v.jsxs)("div", {
+        className: "relative grid size-full place-items-center",
+        children: [
+          (0, v.jsxs)("svg", {
+            viewBox: "0 0 100 100",
+            className:
+              "absolute inset-0 size-full drop-shadow-[0_10px_16px_rgba(80,55,10,.45)]",
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)("defs", {
+                children: (0, v.jsxs)("radialGradient", {
+                  id: "ch-wax",
+                  cx: "38%",
+                  cy: "32%",
+                  r: "70%",
+                  children: [
+                    (0, v.jsx)("stop", { offset: "0%", stopColor: "#fbe7a8" }),
+                    (0, v.jsx)("stop", { offset: "45%", stopColor: "#d7a845" }),
+                    (0, v.jsx)("stop", { offset: "80%", stopColor: "#a8761f" }),
+                    (0, v.jsx)("stop", {
+                      offset: "100%",
+                      stopColor: "#7c5410",
+                    }),
+                  ],
+                }),
+              }),
+              (0, v.jsx)("path", {
+                d: "M50 3c6 0 9 4 14 5s10-1 13 3 1 9 4 13 9 6 9 12-4 8-4 13 4 9 2 14-8 6-11 10-3 10-8 12-10-2-15-1-9 6-14 5-7-6-12-8-11-1-13-6 1-10-1-15-8-7-8-13 5-8 6-13-3-10 0-14 9-3 13-6 5-9 10-10 8 1 13 0 8-4 12-4z",
+                fill: "url(#ch-wax)",
+              }),
+              (0, v.jsx)("circle", {
+                cx: "50",
+                cy: "50",
+                r: "31",
+                fill: "none",
+                stroke: "#fdeebf",
+                strokeOpacity: ".55",
+                strokeWidth: "1.4",
+              }),
+              (0, v.jsx)("circle", {
+                cx: "50",
+                cy: "50",
+                r: "27",
+                fill: "none",
+                stroke: "#7c5410",
+                strokeOpacity: ".35",
+                strokeWidth: ".8",
+              }),
+            ],
+          }),
+          t
+            ? (0, v.jsx)("span", {
+                className:
+                  "relative block aspect-[270/346] w-[11cqw] drop-shadow-[0_1px_2px_rgba(80,50,10,.65)]",
+                children: (0, v.jsx)(R.default, {
+                  src: t,
+                  alt: e,
+                  fill: !0,
+                  sizes: "80px",
+                  className: "object-contain",
+                }),
+              })
+            : (0, v.jsx)(tw, {
+                vertical: !0,
+                className:
+                  "relative text-[10cqw] leading-none text-[#6b4a10] [text-shadow:0_1px_0_rgba(255,240,200,.6)]",
+                style: { fontFamily: "var(--font-pinyon), cursive" },
+                children: e,
+              }),
+        ],
+      });
+    }
+    function s_({ text: e, delay: t, className: a }) {
+      let s = g(),
+        { lang: i } = (0, N.G)(),
+        [n, l] = (0, f.useState)(!1);
+      return ((0, f.useEffect)(() => {
+        if (!s) return;
+        let e = window.setTimeout(() => l(!0), (t + 1.5) * 1e3);
+        return () => window.clearTimeout(e);
+      }, [s, t]),
+      "hi" === i)
+        ? (0, v.jsx)($.f.span, {
+            className: `inline-block ${a}`,
+            initial: { opacity: 0, y: "0.3em", filter: "blur(6px)" },
+            animate: s ? { opacity: 1, y: "0em", filter: "blur(0px)" } : {},
+            transition: { delay: n ? 0 : t, duration: n ? 0.3 : 1, ease: sw },
+            children: e,
+          })
+        : (0, v.jsx)("span", {
+            className: `inline-block ${a}`,
+            "aria-label": e,
+            children: [...e].map((e, a) =>
+              (0, v.jsx)(
+                $.f.span,
+                {
+                  "aria-hidden": !0,
+                  className: "inline-block whitespace-pre",
+                  initial: { opacity: 0, y: "0.3em", filter: "blur(6px)" },
+                  animate: s
+                    ? { opacity: 1, y: "0em", filter: "blur(0px)" }
+                    : {},
+                  transition: n
+                    ? { duration: 0.3, ease: sw }
+                    : { delay: t + 0.045 * a, duration: 0.7, ease: sw },
+                  children: e,
+                },
+                a,
+              ),
+            ),
+          });
+    }
+    function sz({ invite: e }) {
+      let { t, lang: a, d: s } = (0, N.G)(),
+        i = "hi" === a,
+        n = [...e.events].sort((e, t) => e.start.localeCompare(t.start));
+      return (0, v.jsxs)("section", {
+        className: "relative px-[11cqw] pt-[10cqw] text-center",
+        children: [
+          (0, v.jsx)(B.b, {
+            children: (0, v.jsx)(sy, {
+              kicker: e.words?.celebrationsKicker ?? t.eventsKicker,
+              children: e.words?.glanceTitle ?? t.eventsTitle,
+            }),
+          }),
+          (0, v.jsx)("div", {
+            className: "grid gap-[8cqw]",
+            children: n.map((a, n) => {
+              var l;
+              let r, c;
+              return (0, v.jsxs)(
+                $.f.div,
+                {
+                  className:
+                    "relative overflow-hidden rounded-[3cqw] border px-[6cqw] pt-[6cqw] pb-[6cqw]",
+                  style: {
+                    borderColor: `${sp}66`,
+                    background: "rgba(251,247,239,.82)",
+                  },
+                  initial: { opacity: 0, y: 36, scale: 0.97 },
+                  whileInView: { opacity: 1, y: 0, scale: 1 },
+                  viewport: { once: !0, amount: 0.35 },
+                  transition: { duration: 0.9, ease: sw },
+                  children: [
+                    (0, v.jsx)($.f.p, {
+                      className:
+                        "inv-label mx-auto w-fit px-[5cqw] py-[1.8cqw] text-[3.1cqw] tracking-[0.14em] uppercase",
+                      style: { background: sh.ribbon },
+                      initial: i
+                        ? { opacity: 0 }
+                        : { opacity: 0, letterSpacing: "0.32em" },
+                      whileInView: i
+                        ? { opacity: 1 }
+                        : { opacity: 1, letterSpacing: "0.14em" },
+                      viewport: { once: !0 },
+                      transition: { duration: 1, delay: 0.2, ease: sw },
+                      children: (0, v.jsx)(sg, { iso: a.start }),
+                    }),
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-script mt-[3cqw] text-[9cqw] leading-tight",
+                      children: a.name,
+                    }),
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-label mt-[1.5cqw] text-[3.4cqw] tracking-[0.14em] uppercase",
+                      children:
+                        a.timeText ??
+                        (i
+                          ? t.onwards(s.time(a.start))
+                          : `${((r = Number(su((l = a.start), { hour: "numeric", hour12: !1 }))), (c = su(l, { minute: "2-digit" }).padStart(2, "0")), 12 === r && "00" === c ? "12:00 Noon" : `${((r + 11) % 12) + 1}:${c} ${r < 12 ? "A.M." : "P.M."}`)} onwards`),
+                    }),
+                    (0, v.jsxs)("p", {
+                      className: `${sv} mt-[2cqw] text-[4cqw] leading-relaxed`,
+                      style: { color: sh.soft },
+                      children: [
+                        a.venue,
+                        a.address &&
+                          (0, v.jsxs)(v.Fragment, {
+                            children: [(0, v.jsx)("br", {}), a.address],
+                          }),
+                      ],
+                    }),
+                    (a.dress || a.note) &&
+                      (0, v.jsx)("p", {
+                        className:
+                          "inv-serif mt-[2cqw] text-[3.8cqw] font-medium",
+                        style: { color: sh.gold },
+                        children: [a.dress && t.dress(a.dress), a.note]
+                          .filter(Boolean)
+                          .join(" · "),
+                      }),
+                    (0, v.jsx)("div", {
+                      className: "mt-[4cqw]",
+                      children: (0, v.jsx)(B.W, {
+                        event: a,
+                        invite: e,
+                        theme: sT,
+                      }),
+                    }),
+                  ],
+                },
+                a.name + n,
+              );
+            }),
+          }),
+        ],
+      });
+    }
+    let sF =
+        ((s = sN(91)),
+        Array.from({ length: 6 }, (e, t) => ({
+          x: 8 + 84 * s(),
+          delay: 3.1 * t + 2 * s(),
+          dur: 11 + 6 * s(),
+          sway: 6 + 8 * s(),
+          size: 1.6 + 1.4 * s(),
+        }))),
+      sT = {
+        id: "chameli",
+        tapHint: "tapSeal",
+        readable: !0,
+        openingMs: 3150,
+        root: "",
+        vars: {
+          "--inv-script": "var(--font-pinyon), cursive",
+          "--inv-serif": "var(--font-cormorant), serif",
+          "--inv-label": "var(--font-cinzel), serif",
+          "--inv-accent": sh.ink,
+          background: sh.paper,
+          color: sh.ink,
+        },
+        accent: sh.ink,
+        ui: {
+          section: "relative px-[11cqw] py-[12cqw]",
+          card: "rounded-[3cqw] border border-[#b19254]/40 bg-[#fbf7ef]/90",
+          input:
+            "w-full rounded-[2cqw] border border-black/15 bg-white/90 px-[4cqw] py-[3cqw] text-[3.8cqw] outline-none",
+          chip: "rounded-full border border-black/15 bg-white/70 transition",
+          chipOn:
+            "rounded-full border border-transparent font-semibold text-white transition [background:var(--inv-accent)]",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full px-[4.5cqw] py-[2.2cqw] text-[3.2cqw] font-medium text-[#f6efe2] active:scale-95 transition [background:var(--inv-accent)]",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#b19254] bg-[#fbf7ef] px-[4.5cqw] py-[2.2cqw] text-[3.2cqw] font-medium active:scale-95 transition",
+          muted: "opacity-80",
+          tile: "rounded-[3cqw] border border-[#b19254]/60 bg-[#fbf7ef]/95",
+        },
+        Opening: function ({ invite: e, opened: t, onOpen: a }) {
+          let s = (0, th.f)(),
+            [i, n] = (0, L.g)(e),
+            { t: l, lang: r } = (0, N.G)(),
+            c = t && !s,
+            o = `url(${sm}/chameli-envelope.jpg) center/cover`;
+          return (0, v.jsxs)($.f.div, {
+            className: "absolute inset-0 overflow-hidden",
+            style: { background: sh.paper, color: sh.ink },
+            animate: { opacity: +!t },
+            transition: { delay: t ? 2.35 * !s : 0, duration: 0.75, ease: sw },
+            children: [
+              (0, v.jsxs)($.f.div, {
+                className: "absolute inset-0 [perspective:1100px]",
+                animate: c ? { scale: 1.06 } : { scale: [1, 1.012, 1] },
+                transition: c
+                  ? { duration: 2.8, ease: sw }
+                  : { duration: 7, repeat: 1 / 0, ease: "easeInOut" },
+                children: [
+                  (0, v.jsxs)("div", {
+                    className: "absolute inset-0",
+                    style: { clipPath: sk },
+                    children: [
+                      (0, v.jsx)("div", {
+                        className: "absolute inset-0",
+                        style: {
+                          background: `url(${sm}/chameli-paper.jpg) center/cover`,
+                          filter: "brightness(.84) sepia(.18)",
+                        },
+                      }),
+                      (0, v.jsx)("div", {
+                        className: "absolute inset-0",
+                        style: {
+                          background:
+                            "linear-gradient(180deg, rgba(60,42,15,.3), rgba(60,42,15,.06) 60%, rgba(60,42,15,.25))",
+                        },
+                      }),
+                      c &&
+                        (0, v.jsx)($.f.div, {
+                          className: "absolute inset-0",
+                          style: {
+                            background:
+                              "radial-gradient(70% 60% at 50% 85%, rgba(255,236,180,1), rgba(255,222,150,.5) 50%, transparent 80%)",
+                          },
+                          initial: { opacity: 0 },
+                          animate: { opacity: [0, 1] },
+                          transition: { delay: 0.55, duration: 0.6 },
+                        }),
+                    ],
+                  }),
+                  (0, v.jsx)("div", {
+                    className: "absolute inset-0",
+                    style: { clipPath: s$, background: o },
+                  }),
+                  !t &&
+                    (0, v.jsx)($.f.div, {
+                      className:
+                        "pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 bg-[linear-gradient(105deg,transparent,rgba(255,250,235,.45),transparent)]",
+                      animate: { x: ["0%", "320%"] },
+                      transition: {
+                        duration: 2.6,
+                        repeat: 1 / 0,
+                        repeatDelay: 2.4,
+                        ease: "easeInOut",
+                      },
+                    }),
+                  (0, v.jsxs)($.f.div, {
+                    className: "absolute inset-0 origin-top",
+                    animate: c
+                      ? { rotateX: [0, 0, 92], opacity: [1, 1, 1, 0] }
+                      : { rotateX: 0, opacity: 1 },
+                    transition: c
+                      ? {
+                          rotateX: {
+                            duration: 1.05,
+                            times: [0, 0.18, 1],
+                            ease: [0.45, 0, 0.75, 0.4],
+                          },
+                          opacity: { duration: 1.06, times: [0, 0.5, 0.97, 1] },
+                        }
+                      : {},
+                    children: [
+                      (0, v.jsx)("div", {
+                        className: "absolute inset-0",
+                        style: { clipPath: sk, background: o },
+                      }),
+                      c &&
+                        (0, v.jsx)($.f.div, {
+                          className: "absolute inset-0",
+                          style: {
+                            clipPath: sk,
+                            background:
+                              "linear-gradient(180deg, transparent 45%, rgba(255,246,220,.75))",
+                          },
+                          initial: { opacity: 0 },
+                          animate: { opacity: [0, 1] },
+                          transition: { delay: 0.3, duration: 0.6 },
+                        }),
+                      (0, v.jsx)("button", {
+                        type: "button",
+                        onClick: a,
+                        "aria-label": l.openInvitation,
+                        className:
+                          "absolute size-[30cqw] -translate-x-1/2 -translate-y-1/2",
+                        style: { left: "50%", top: "58.5%" },
+                        children: (0, v.jsx)($.f.span, {
+                          className: "block size-full",
+                          animate: c
+                            ? { scale: [1, 1.1, 1.04] }
+                            : { scale: [1, 1.035, 1] },
+                          transition: c
+                            ? { duration: 0.45 }
+                            : {
+                                duration: 2.6,
+                                repeat: 1 / 0,
+                                ease: "easeInOut",
+                              },
+                          children: (0, v.jsx)(sS, {
+                            text: (0, L.g)(e)
+                              .map(
+                                (e) => e.first.trim()[0]?.toUpperCase() ?? "",
+                              )
+                              .join(""),
+                            image: e.seal,
+                          }),
+                        }),
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+              (0, v.jsxs)($.f.div, {
+                className:
+                  "pointer-events-none absolute inset-x-0 top-[9%] text-center",
+                animate: { opacity: +!t, y: t ? -16 : 0 },
+                transition: { duration: 0.4 },
+                children: [
+                  (0, v.jsx)("p", {
+                    className: "inv-label text-[2.9cqw] tracking-[0.34em]",
+                    style: { color: sh.soft },
+                    children: l.specialInvite,
+                  }),
+                  (0, v.jsxs)("p", {
+                    className: "inv-script mt-[3cqw] text-[10cqw] leading-none",
+                    style: { color: sh.ink },
+                    children: [
+                      i.first,
+                      " ",
+                      (0, v.jsx)("span", {
+                        style: { color: sh.gold },
+                        children: "hi" === r ? l.and : "&",
+                      }),
+                      " ",
+                      n.first,
+                    ],
+                  }),
+                ],
+              }),
+              c &&
+                (0, v.jsxs)(v.Fragment, {
+                  children: [
+                    (0, v.jsx)($.f.div, {
+                      className:
+                        "pointer-events-none absolute size-[60cqw] -translate-x-1/2 -translate-y-1/2 rounded-full",
+                      style: {
+                        left: "50%",
+                        top: "42%",
+                        background:
+                          "radial-gradient(closest-side, #fffaf0, #fbe6ad 45%, rgba(246,214,140,.4) 70%, transparent)",
+                      },
+                      initial: { scale: 0.1, opacity: 0 },
+                      animate: { scale: [0.1, 1.3, 5.5], opacity: [0, 1, 1] },
+                      transition: {
+                        delay: 0.95,
+                        duration: 1.6,
+                        times: [0, 0.4, 1],
+                        ease: "easeIn",
+                      },
+                    }),
+                    (0, v.jsx)("svg", {
+                      className:
+                        "pointer-events-none absolute inset-0 size-full",
+                      viewBox: "0 0 100 177",
+                      preserveAspectRatio: "none",
+                      "aria-hidden": !0,
+                      children: [
+                        "M50 76 C 20 64, 80 50, 40 34 S 70 12, 55 -4",
+                        "M50 76 C 85 66, 25 52, 68 36 S 30 14, 46 -6",
+                        "M50 76 C 40 56, 95 54, 80 30 S 92 10, 78 -8",
+                      ].map((e, t) =>
+                        (0, v.jsx)(
+                          $.f.path,
+                          {
+                            d: e,
+                            fill: "none",
+                            stroke: 1 === t ? "#fff3cf" : "#f5d989",
+                            strokeWidth: 0.7,
+                            strokeLinecap: "round",
+                            style: { filter: "drop-shadow(0 0 1.2px #fff3cf)" },
+                            initial: { pathLength: 0, opacity: 0 },
+                            animate: {
+                              pathLength: [0, 1, 1],
+                              opacity: [0, 1, 0],
+                            },
+                            transition: {
+                              delay: 1.05 + 0.12 * t,
+                              duration: 1.4,
+                              times: [0, 0.6, 1],
+                              ease: "easeOut",
+                            },
+                          },
+                          e,
+                        ),
+                      ),
+                    }),
+                    sM.map((e, t) =>
+                      (0, v.jsx)(
+                        $.f.span,
+                        {
+                          className:
+                            "pointer-events-none absolute rounded-full bg-[#fff6d6] shadow-[0_0_6px_2px_rgba(255,226,150,.8)]",
+                          style: {
+                            left: "50%",
+                            top: "42%",
+                            width: `${e.s}cqw`,
+                            height: `${e.s}cqw`,
+                          },
+                          initial: { x: 0, y: 0, opacity: 0 },
+                          animate: {
+                            x: `${e.x}cqw`,
+                            y: `${e.y}cqw`,
+                            opacity: [0, 1, 0],
+                          },
+                          transition: {
+                            delay: e.d,
+                            duration: 1.3,
+                            ease: "easeOut",
+                          },
+                        },
+                        `s${t}`,
+                      ),
+                    ),
+                    sC.map((e, t) =>
+                      (0, v.jsx)(
+                        $.f.span,
+                        {
+                          className:
+                            "pointer-events-none absolute rounded-[60%_40%_60%_40%] shadow-sm",
+                          style: {
+                            left: "50%",
+                            top: "42%",
+                            width: `${e.size}cqw`,
+                            height: `${1.35 * e.size}cqw`,
+                            background: e.blush
+                              ? "radial-gradient(circle at 30% 30%, #fde0e3, #f1a7b2)"
+                              : "radial-gradient(circle at 30% 30%, #ffffff, #efe6d2)",
+                          },
+                          initial: { x: 0, y: 0, rotate: 0, opacity: 0 },
+                          animate: {
+                            x: `${e.x}cqw`,
+                            y: ["0cqw", `${e.y}cqw`, `${e.y + 30}cqw`],
+                            rotate: e.rot,
+                            opacity: [0, 1, 1, 0],
+                          },
+                          transition: {
+                            delay: e.delay,
+                            duration: 1.9,
+                            ease: "easeOut",
+                          },
+                        },
+                        `p${t}`,
+                      ),
+                    ),
+                  ],
+                }),
+            ],
+          });
+        },
+        Hero: function ({ invite: e }) {
+          let t = g(),
+            { t: a } = (0, N.G)(),
+            [s, i] = (0, L.g)(e),
+            n = (e) => ({
+              initial: { opacity: 0, y: 14 },
+              animate: t ? { opacity: 1, y: 0 } : {},
+              transition: { delay: 2.45 + e, duration: 1.1, ease: sw },
+            });
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex min-h-[var(--screen-h,100dvh)] flex-col items-center justify-center px-[12cqw] pt-[24cqw] pb-[44cqw] text-center",
+            children: [
+              e.invocationArt &&
+                (0, v.jsx)($.f.div, {
+                  ...n(0),
+                  className: "relative mb-[3cqw] aspect-[270/346] w-[13cqw]",
+                  children: (0, v.jsx)(R.default, {
+                    src: e.invocationArt,
+                    alt: "",
+                    fill: !0,
+                    sizes: "120px",
+                    className: "object-contain",
+                  }),
+                }),
+              e.invocation &&
+                (0, v.jsx)($.f.p, {
+                  ...n(0),
+                  className: "inv-deva text-[4cqw]",
+                  style: { color: sh.gold },
+                  children:
+                    e.keepLines && e.invocation.includes("\n")
+                      ? e.invocation
+                          .split("\n")
+                          .map((e, t) =>
+                            (0, v.jsx)(
+                              "span",
+                              {
+                                "data-fit-line": !0,
+                                className:
+                                  "block overflow-hidden whitespace-nowrap",
+                                children: e,
+                              },
+                              t,
+                            ),
+                          )
+                      : e.invocation,
+                }),
+              a.heroThe
+                ? (0, v.jsx)($.f.p, {
+                    ...n(0.15),
+                    className: `${sq} mt-[4cqw] text-[3.6cqw]`,
+                    children: a.heroThe,
+                  })
+                : (0, v.jsx)("div", { className: "mt-[4cqw]" }),
+              (0, v.jsx)($.f.p, {
+                ...n(0.3),
+                className: "inv-script text-[15cqw] leading-none",
+                children:
+                  "engagement" === e.occasion
+                    ? a.heroEngagement
+                    : "reception" === e.occasion
+                      ? a.heroReception
+                      : a.heroWedding,
+              }),
+              (0, v.jsx)($.f.p, {
+                ...n(0.45),
+                className: `${sq} text-[3.6cqw]`,
+                children: a.heroCelebrations,
+              }),
+              (0, v.jsx)(sj, { className: "my-[5cqw]", delay: 2.95 }),
+              e.heroKicker &&
+                (0, v.jsx)($.f.p, {
+                  ...n(0.8),
+                  className: `${sq} text-[3.2cqw] leading-relaxed`,
+                  children: e.heroKicker,
+                }),
+              (0, v.jsx)("p", {
+                className: "mt-[3cqw] leading-tight",
+                children: (0, v.jsx)(s_, {
+                  text: s.first.toUpperCase(),
+                  delay: 3.45,
+                  className: `${sq} text-[7.4cqw] tracking-[0.24em]`,
+                }),
+              }),
+              (0, v.jsx)($.f.p, {
+                className: "inv-script text-[8cqw] leading-tight",
+                style: { color: sh.gold },
+                initial: { opacity: 0, clipPath: "inset(0 100% 0 0)" },
+                animate: t ? { opacity: 1, clipPath: "inset(0 0% 0 0)" } : {},
+                transition: { delay: 3.95, duration: 0.9, ease: sw },
+                children: e.joiner ?? a.and,
+              }),
+              (0, v.jsx)("p", {
+                className: "leading-tight",
+                children: (0, v.jsx)(s_, {
+                  text: i.first.toUpperCase(),
+                  delay: 4.15,
+                  className: `${sq} text-[7.4cqw] tracking-[0.24em]`,
+                }),
+              }),
+              !e.hideHeroDate &&
+                (0, v.jsx)($.f.p, {
+                  ...n(2.4),
+                  className:
+                    "inv-label mt-[6cqw] text-[3.3cqw] tracking-[0.16em] uppercase",
+                  children: (0, v.jsx)(sg, { iso: e.date }),
+                }),
+              !e.hideHeroCity &&
+                (0, v.jsx)($.f.p, {
+                  ...n(2.55),
+                  className: `${sv} mt-[1.5cqw] text-[4cqw]`,
+                  style: { color: sh.soft },
+                  children: e.city,
+                }),
+            ],
+          });
+        },
+        Blessing: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            [a, s] = (0, L.g)(e),
+            i = (e, t) =>
+              e.elders &&
+              !!e.eldersBelow === t &&
+              (e.eldersPlain
+                ? (0, v.jsx)("p", {
+                    className: `${sv} ${t ? "mt-[1.5cqw]" : "mb-[2cqw]"} text-[3.9cqw] leading-relaxed whitespace-pre-line`,
+                    style: { color: sh.soft },
+                    children: e.elders,
+                  })
+                : (0, v.jsx)("p", {
+                    className: `${sq} ${t ? "mt-[2cqw]" : "mb-[2cqw]"} text-[2.9cqw] leading-relaxed whitespace-pre-line`,
+                    style: { color: sh.soft },
+                    children: e.elders,
+                  })),
+            n = (e, t) =>
+              (0, v.jsxs)(B.b, {
+                delay: 0.12 * t,
+                className: "mt-[7cqw]",
+                children: [
+                  i(e, !1),
+                  (0, v.jsx)("p", {
+                    className: `${sq} text-[6cqw]`,
+                    children: e.full || e.first,
+                  }),
+                  e.parents &&
+                    (0, v.jsx)("p", {
+                      className: `${sv} mt-[1.5cqw] text-[3.9cqw] leading-relaxed whitespace-pre-line`,
+                      style: { color: sh.soft },
+                      children: e.parents,
+                    }),
+                  i(e, !0),
+                ],
+              });
+          return (0, v.jsxs)("section", {
+            className: "relative px-[12cqw] pt-[12cqw] text-center",
+            children: [
+              (0, v.jsxs)(B.b, {
+                children: [
+                  e.invocationMeaning &&
+                    (0, v.jsx)("p", {
+                      className: `${sq} text-[2.8cqw]`,
+                      style: { color: sh.soft },
+                      children: e.invocationMeaning,
+                    }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mt-[3cqw] text-[4.4cqw] font-semibold",
+                    children: e.hosts,
+                  }),
+                  (0, v.jsx)("p", {
+                    className: `${sv} mt-[2cqw] text-[4cqw] leading-relaxed whitespace-pre-line`,
+                    style: { color: sh.soft },
+                    children: e.message,
+                  }),
+                ],
+              }),
+              n(a, 0),
+              (0, v.jsx)(B.b, {
+                delay: 0.1,
+                children: (0, v.jsx)("p", {
+                  className: "inv-script mt-[3cqw] text-[8cqw] leading-none",
+                  style: { color: sh.gold },
+                  children: e.joiner ?? t.and,
+                }),
+              }),
+              n(s, 1),
+            ],
+          });
+        },
+        Events: function ({ invite: e }) {
+          return (0, v.jsx)(v.Fragment, {
+            children: (0, v.jsx)(sz, { invite: e }),
+          });
+        },
+        Closing: function ({ invite: e }) {
+          let { t, lang: a } = (0, N.G)(),
+            [s, i] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className: "relative px-[11cqw] pt-[12cqw] pb-[64cqw] text-center",
+            children: [
+              (0, v.jsx)(sj, { className: "mb-[8cqw]" }),
+              (0, v.jsxs)(B.b, {
+                children: [
+                  e.closing &&
+                    (0, v.jsx)("p", {
+                      className: `${sv} text-[4.6cqw] leading-relaxed whitespace-pre-line`,
+                      children: e.closing,
+                    }),
+                  (0, v.jsxs)("p", {
+                    className: "inv-script mt-[6cqw] text-[11cqw] leading-none",
+                    children: [
+                      s.first,
+                      " ",
+                      (0, v.jsx)("span", {
+                        style: { color: sh.gold },
+                        children: e.joiner ?? ("hi" === a ? t.and : "&"),
+                      }),
+                      " ",
+                      i.first,
+                    ],
+                  }),
+                  e.hashtag &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-serif mt-[4cqw] text-[4.2cqw] font-semibold tracking-[0.04em]",
+                      style: { color: sh.gold },
+                      children: e.hashtag,
+                    }),
+                ],
+              }),
+              e.extras?.map((e, t) =>
+                (0, v.jsxs)(
+                  B.b,
+                  {
+                    className: "mt-[10cqw]",
+                    children: [
+                      (0, v.jsx)(sj, { className: "mb-[7cqw]" }),
+                      (0, v.jsx)("p", {
+                        className: `${sq} text-[3.8cqw] leading-snug font-semibold`,
+                        style: { color: sh.ink },
+                        children: e.title,
+                      }),
+                      (0, v.jsx)("div", {
+                        className: "mt-[3.5cqw]",
+                        children: e.lines.map((e, t) => {
+                          let a = ah(e);
+                          return "gap" === a.kind
+                            ? (0, v.jsx)("div", { className: "h-[3cqw]" }, t)
+                            : "and" === a.kind
+                              ? (0, v.jsx)(
+                                  "p",
+                                  {
+                                    className: `${sv} my-[0.5cqw] text-[3.4cqw] leading-none`,
+                                    style: { color: sh.gold },
+                                    children: "&",
+                                  },
+                                  t,
+                                )
+                              : "sub" === a.kind
+                                ? (0, v.jsx)(
+                                    "p",
+                                    {
+                                      className: `${sq} mt-[2.5cqw] mb-[1cqw] text-[3.2cqw] font-semibold first:mt-0`,
+                                      style: { color: sh.gold },
+                                      children: a.text,
+                                    },
+                                    t,
+                                  )
+                                : "big" === a.kind
+                                  ? (0, v.jsx)(
+                                      "p",
+                                      {
+                                        className:
+                                          "inv-script my-[1.5cqw] text-[10cqw] leading-tight",
+                                        children: a.text,
+                                      },
+                                      t,
+                                    )
+                                  : (0, v.jsx)(
+                                      "p",
+                                      {
+                                        className: `${sv} text-[3.95cqw] leading-relaxed`,
+                                        style: {
+                                          color: sh.soft,
+                                          textWrap: "balance",
+                                        },
+                                        children: a.text,
+                                      },
+                                      t,
+                                    );
+                        }),
+                      }),
+                    ],
+                  },
+                  e.title + t,
+                ),
+              ),
+              !e.noBranding &&
+                (0, v.jsx)(B.b, {
+                  children: (0, v.jsx)(k.default, {
+                    href: "/",
+                    className:
+                      "inv-label mt-[10cqw] inline-block text-[2.4cqw] tracking-[0.26em] opacity-70",
+                    children: t.craftedBy(F.B.name),
+                  }),
+                }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          return (0, v.jsx)("div", {
+            className: "pointer-events-none absolute inset-0",
+            style: { background: sh.paper },
+            children: (0, v.jsx)("div", {
+              className: "sticky top-0 h-[var(--screen-h,100dvh)] w-full",
+              children: (0, v.jsx)(sb, { src: `${sm}/chameli-paper.jpg` }),
+            }),
+          });
+        },
+        Frame: function () {
+          let e = (0, th.f)(),
+            t = "radial-gradient(120% 115% at 0 0, #000 52%, transparent 80%)",
+            a = "linear-gradient(to bottom, transparent, #000 34%)";
+          return (0, v.jsxs)($.f.div, {
+            className: "absolute inset-0",
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            transition: { duration: 1.6, delay: 1.2 },
+            children: [
+              (0, v.jsx)("div", {
+                className: "absolute inset-[2.6cqw] border",
+                style: { borderColor: `${sp}aa` },
+              }),
+              (0, v.jsx)("div", {
+                className: "absolute inset-[3.6cqw] border",
+                style: { borderColor: `${sp}55` },
+              }),
+              (0, v.jsxs)($.f.div, {
+                className:
+                  "absolute top-0 left-0 aspect-[470/560] w-[34cqw] origin-top-left",
+                style: { maskImage: t, WebkitMaskImage: t },
+                animate: e ? {} : { rotate: [0, 0.8, 0, -0.5, 0] },
+                transition: { duration: 9, repeat: 1 / 0, ease: "easeInOut" },
+                children: [
+                  (0, v.jsx)(sb, { src: `${sm}/chameli-corner.jpg` }),
+                  (0, v.jsx)($.f.div, {
+                    className:
+                      "absolute top-[58%] left-[25%] h-[24%] w-[30%] rounded-full mix-blend-screen",
+                    style: {
+                      background:
+                        "radial-gradient(closest-side, rgba(255,226,160,.75), rgba(255,210,122,.18) 65%, transparent)",
+                    },
+                    animate: { opacity: [0.55, 1, 0.6, 0.9, 0.55] },
+                    transition: {
+                      duration: 3.2,
+                      repeat: 1 / 0,
+                      ease: "easeInOut",
+                    },
+                  }),
+                ],
+              }),
+              (0, v.jsxs)("div", {
+                className:
+                  "absolute inset-x-0 bottom-0 h-[48cqw] overflow-hidden",
+                style: { maskImage: a, WebkitMaskImage: a },
+                children: [
+                  (0, v.jsx)($.f.div, {
+                    className: "absolute inset-0",
+                    animate: e ? {} : { scale: [1, 1.025, 1] },
+                    transition: {
+                      duration: 16,
+                      repeat: 1 / 0,
+                      ease: "easeInOut",
+                    },
+                    children: (0, v.jsx)(sb, {
+                      src: `${sm}/chameli-ledge.jpg`,
+                      style: { objectPosition: "50% 100%" },
+                    }),
+                  }),
+                  !e &&
+                    (0, v.jsx)($.f.div, {
+                      className:
+                        "absolute top-[22%] h-[26%] w-[70%] rounded-full bg-white/45 blur-[5cqw]",
+                      animate: { x: ["-60%", "150%"] },
+                      transition: {
+                        duration: 26,
+                        repeat: 1 / 0,
+                        ease: "linear",
+                      },
+                    }),
+                ],
+              }),
+              !e &&
+                sF.map((e, t) =>
+                  (0, v.jsx)(
+                    $.f.span,
+                    {
+                      className:
+                        "absolute top-[-4%] rounded-[60%_40%_60%_40%] bg-[radial-gradient(circle_at_30%_30%,#fff,#efe6d2)] shadow-sm",
+                      style: {
+                        left: `${e.x}%`,
+                        width: `${e.size}cqw`,
+                        height: `${1.3 * e.size}cqw`,
+                      },
+                      animate: {
+                        y: ["0vh", "110vh"],
+                        x: [0, e.sway, -e.sway, 0].map((e) => `${e}cqw`),
+                        rotate: [0, 180, 360],
+                        opacity: [0, 0.9, 0.9, 0],
+                      },
+                      transition: {
+                        duration: e.dur,
+                        delay: e.delay,
+                        repeat: 1 / 0,
+                        ease: "linear",
+                      },
+                    },
+                    t,
+                  ),
+                ),
+            ],
+          });
+        },
+        Divider: sj,
+        Title: sy,
+      },
+      sB = { ...sT, id: "chamelisagai" },
+      sL = "/art/illus",
+      sO = "#f7ebd5",
+      sW = "#fdf6ec",
+      sI = "#5b2615",
+      sH = "#a8573a",
+      sD = "#b9853f",
+      sR = "#8c5f26",
+      sA = "#86553f",
+      sE = "var(--font-alex-brush), cursive",
+      sP = "#7d3a22",
+      sG = [0.22, 1, 0.36, 1],
+      sZ = { top: 16, bottom: 22, side: 6 },
+      sK = eB({
+        id: "mandir",
+        images: {
+          opening: `${sL}/mandir-gate.jpg`,
+          hero: `${sL}/mandir-temple.jpg`,
+          card: `${sL}/mandir-card.jpg`,
+        },
+        opening: "doors",
+        heroTextTop: 8,
+        frame: sZ,
+        colors: { ink: sI, accent: sH, soft: sA, paper: sO, onAccent: "#fff" },
+        fonts: {
+          script: "var(--font-bodoni), serif",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-marcellus), serif",
+        },
+      }),
+      sV = eB({
+        id: "mandir",
+        images: {
+          opening: `${sL}/mandir-gate-maroon.jpg`,
+          hero: `${sL}/mandir-temple.jpg`,
+          card: `${sL}/mandir-card.jpg`,
+        },
+        opening: "doors",
+        frameOverHero: !0,
+        heroTextTop: 8,
+        frame: sZ,
+        colors: { ink: sI, accent: sH, soft: sA, paper: sO, onAccent: "#fff" },
+        fonts: {
+          script: "var(--font-bodoni), serif",
+          serif: "var(--font-cormorant), serif",
+          label: "var(--font-marcellus), serif",
+        },
+      }).Opening;
+    function sY({ className: e }) {
+      let t = Array.from({ length: 11 }, (e, t) => {
+        let a = (Math.PI * (t + 1)) / 12,
+          s = t % 2 ? 9 : 15;
+        return (0, v.jsx)(
+          "line",
+          { x1: 60, y1: 3, x2: 60 + Math.cos(a) * s, y2: 3 + Math.sin(a) * s },
+          t,
+        );
+      });
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 120 20",
+        className: e,
+        fill: "none",
+        stroke: sD,
+        strokeWidth: 0.7,
+        strokeLinecap: "round",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("line", {
+            x1: 4,
+            y1: 3,
+            x2: 116,
+            y2: 3,
+            strokeOpacity: 0.7,
+          }),
+          t,
+        ],
+      });
+    }
+    function sU({ className: e }) {
+      return (0, v.jsx)(sY, {
+        className: `mx-auto block w-[30cqw] ${e ?? ""}`,
+      });
+    }
+    function sX({ kicker: e, children: t, plain: a }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.6cqw]",
+              style: { color: sD },
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className: "inv-script mt-[1.5cqw] text-[8.5cqw] leading-[1.05]",
+            style: { color: sI },
+            children: t,
+          }),
+          !a && (0, v.jsx)(sU, { className: "mt-[2.5cqw]" }),
+        ],
+      });
+    }
+    let sQ =
+      "Q0.5,14 6,13 Q9,8 15,8 Q18,3.5 25,4 Q30,1 37,2 Q42,0 50,0.5 Q58,0 63,2 Q70,1 75,4 Q82,3.5 85,8 Q91,8 94,13 Q99.5,14 99.5,20";
+    function sJ({ children: e }) {
+      return (0, v.jsxs)("div", {
+        className: "relative",
+        children: [
+          (0, v.jsxs)("svg", {
+            viewBox: "0 -1 100 31",
+            className: "block w-full",
+            preserveAspectRatio: "none",
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)("path", {
+                d: `M0.5,30 L0.5,20 ${sQ} L99.5,30 Z`,
+                fill: sW,
+              }),
+              (0, v.jsx)("path", {
+                d: `M0.5,30 L0.5,20 ${sQ} L99.5,30`,
+                fill: "none",
+                stroke: sD,
+                strokeWidth: 1,
+                vectorEffect: "non-scaling-stroke",
+              }),
+            ],
+          }),
+          (0, v.jsx)("div", {
+            className: "-mt-px rounded-b-[3cqw] border-x border-b",
+            style: { background: sW, borderColor: sD },
+            children: e,
+          }),
+        ],
+      });
+    }
+    function s0({ p: e, cover: t }) {
+      return e.title && e.titleInline
+        ? e.titleScript
+          ? t
+            ? null
+            : (0, v.jsx)("span", {
+                "data-fit-aside": !0,
+                className: "ml-[0.25em]",
+                style: { fontSize: "0.51em" },
+                children: e.title,
+              })
+          : (0, v.jsx)("span", {
+              "data-fit-aside": !0,
+              className:
+                "inv-label ml-[2cqw] inline-block align-middle text-[2.6cqw] leading-none font-semibold",
+              style: { color: sI },
+              children: e.title,
+            })
+        : null;
+    }
+    function s1({ invite: e, show: t }) {
+      let [a, s] = (0, L.g)(e),
+        { t: i, d: n, lang: l } = (0, N.G)(),
+        r = { fontSize: `${(15 * (e.nameScale ?? 1)).toFixed(2)}cqw` },
+        c = (e) =>
+          e.title &&
+          !e.titleInline &&
+          (0, v.jsx)("span", {
+            className:
+              "inv-label mt-[1.5cqw] mb-[1cqw] text-[2.8cqw] font-semibold",
+            style: { color: sI },
+            children: e.title,
+          });
+      return (0, v.jsxs)("div", {
+        className:
+          "flex flex-col items-center text-center [text-shadow:0_0_16px_rgba(255,240,228,.9)]",
+        children: [
+          (0, v.jsx)($.f.p, {
+            ...t(0.3),
+            className: "text-[3.4cqw]",
+            style: { color: sH, fontFamily: "var(--font-deva)" },
+            children: e.invocation,
+          }),
+          (e.heroKicker ||
+            ("engagement" === e.occasion && "vachan" === e.template)) &&
+            (0, v.jsx)($.f.p, {
+              ...t(0.45),
+              className:
+                "inv-label mt-[2.5cqw] text-[2.6cqw] font-semibold tracking-[0.2em]",
+              style: { color: sI },
+              children: e.heroKicker ?? "The engagement of",
+            }),
+          (0, v.jsxs)($.f.h1, {
+            ...t(0.6),
+            className: "mt-[3cqw] flex flex-col items-center",
+            children: [
+              (0, v.jsxs)("span", {
+                className: `inv-script text-[15cqw] leading-[0.95] ${a.coverName ? "whitespace-nowrap" : ""}`,
+                style: { color: sH, ...r },
+                children: [
+                  a.coverName ?? a.first,
+                  (0, v.jsx)(s0, { p: a, cover: !0 }),
+                ],
+              }),
+              c(a),
+              (0, v.jsx)("span", {
+                className: `text-[8.5cqw] leading-none ${"hi" === l ? "my-[2cqw]" : "-my-[1cqw]"}`,
+                style: {
+                  color: sI,
+                  fontFamily: "hi" === l ? "var(--inv-script)" : sE,
+                  ...(e.joinerGap?.above !== void 0
+                    ? { marginTop: `${e.joinerGap.above}cqw` }
+                    : {}),
+                  ...(e.joinerGap?.below !== void 0
+                    ? { marginBottom: `${e.joinerGap.below}cqw` }
+                    : {}),
+                },
+                children:
+                  e.joiner ?? ("engagement" === e.occasion ? "&" : i.weds),
+              }),
+              (0, v.jsxs)("span", {
+                className: `inv-script text-[15cqw] leading-[0.95] ${s.coverName ? "whitespace-nowrap" : ""}`,
+                style: { color: sH, ...r },
+                children: [
+                  s.coverName ?? s.first,
+                  (0, v.jsx)(s0, { p: s, cover: !0 }),
+                ],
+              }),
+              c(s),
+            ],
+          }),
+          !e.hideHeroDate &&
+            (0, v.jsxs)($.f.p, {
+              ...t(1),
+              className: "inv-label mt-[3cqw] text-[2.6cqw]",
+              style: { color: sI },
+              children: [
+                n.weekday(e.date),
+                " · ",
+                n.day(e.date),
+                " ",
+                n.month(e.date),
+                " ",
+                n.year(e.date),
+              ],
+            }),
+          !e.hideHeroCity &&
+            (0, v.jsx)($.f.p, {
+              ...t(1.15),
+              className: "inv-serif mt-[1.5cqw] text-[4cqw] italic",
+              style: { color: sI },
+              children: e.city,
+            }),
+        ],
+      });
+    }
+    let s2 = (e) => (t) => ({
+      initial: { opacity: 0, y: 14 },
+      animate: e ? { opacity: 1, y: 0 } : {},
+      transition: { duration: 1, delay: t, ease: sG },
+    });
+    function s5({ invite: e }) {
+      let t = g(),
+        [a, s] = (0, L.g)(e),
+        i = (0, f.useRef)(null),
+        { scrollYProgress: n } = e$({
+          target: i,
+          offset: ["start start", "end end"],
+        }),
+        l = (0, eS.f)(n, [0, 0.95], [1, 2.3]),
+        r = (0, eS.f)(n, [0, 0.3], ["0%", "-40%"]),
+        c = (0, eS.f)(n, [0.03, 0.26], [1, 0]),
+        o = (0, eS.f)(n, [0.68, 0.98], [1, 0]);
+      return (0, v.jsx)("section", {
+        ref: i,
+        className: "relative",
+        style: { height: "210dvh" },
+        children: (0, v.jsxs)($.f.div, {
+          className: "sticky top-0 h-[100dvh] w-full overflow-hidden",
+          style: { opacity: o },
+          children: [
+            (0, v.jsx)($.f.div, {
+              className: "absolute inset-0",
+              style: { scale: l, transformOrigin: "50% 61%" },
+              children: (0, v.jsx)(R.default, {
+                src: `${sL}/mandir-temple.jpg`,
+                alt: `A temple at sunrise for ${a.first} and ${s.first}'s ${"reception" === e.occasion ? "wedding reception" : (e.occasion ?? "wedding")}`,
+                fill: !0,
+                priority: !0,
+                sizes: "(max-width: 480px) 100vw, 480px",
+                className: "object-cover",
+              }),
+            }),
+            (0, v.jsx)($.f.div, {
+              className: "absolute inset-x-[14%] top-[8%]",
+              style: { y: r, opacity: c },
+              children: (0, v.jsx)(s1, { invite: e, show: s2(t) }),
+            }),
+          ],
+        }),
+      });
+    }
+    function s4({ invite: e, events: t }) {
+      let { t: a, d: s } = (0, N.G)(),
+        i = t[0],
+        n = t.every((e) => e.venue === i.venue),
+        l = (t) =>
+          (0, v.jsxs)(v.Fragment, {
+            children: [
+              (0, v.jsx)("p", {
+                className: `inv-serif text-[4.4cqw] leading-tight${e.boldEvents ? " font-semibold" : ""}`,
+                style: { color: sI },
+                children: t.venue,
+              }),
+              t.address &&
+                !t.address.toLowerCase().includes(t.venue.toLowerCase()) &&
+                (0, v.jsx)("p", {
+                  className: "mt-[1cqw] text-[3cqw]",
+                  style: { color: sA },
+                  children: t.address,
+                }),
+            ],
+          });
+      return (0, v.jsx)(sJ, {
+        children: (0, v.jsxs)("div", {
+          className: "-mt-[9cqw] px-[5cqw] pb-[6cqw] text-center",
+          children: [
+            (0, v.jsx)(sY, { className: "mx-auto block w-[16cqw]" }),
+            (0, v.jsx)("p", {
+              className: `inv-label mt-[2cqw] ${e.boldEvents ? "text-[3cqw] font-bold" : "text-[2.5cqw]"}`,
+              style: { color: sI },
+              children: s.weekday(i.start),
+            }),
+            (0, v.jsxs)("h3", {
+              className: "inv-script mt-[1.5cqw] text-[8.5cqw] leading-none",
+              style: { color: sH },
+              children: [s.day(i.start), " ", s.month(i.start)],
+            }),
+            (0, v.jsx)("ul", {
+              className:
+                "mx-auto mt-[5cqw] grid w-fit grid-cols-[auto_auto] gap-x-[4cqw] gap-y-[2.5cqw] text-left",
+              children: t.map((t, i) =>
+                (0, v.jsxs)(
+                  "li",
+                  {
+                    className: "col-span-2 grid grid-cols-subgrid",
+                    children: [
+                      (0, v.jsx)("span", {
+                        className:
+                          "inv-serif text-[5cqw] leading-tight font-semibold",
+                        style: { color: sH },
+                        children: t.timeText ?? s.time(t.start),
+                      }),
+                      (0, v.jsx)("span", {
+                        className:
+                          "inv-serif text-[5cqw] leading-tight font-bold",
+                        style: { color: sI },
+                        children: t.name,
+                      }),
+                      (t.dress || t.note) &&
+                        (0, v.jsx)("p", {
+                          className: `inv-serif col-start-2 mt-[0.5cqw] ${e.boldEvents ? "text-[4cqw] font-semibold" : "text-[3.6cqw] italic"}`,
+                          style: { color: e.boldEvents ? sP : sH },
+                          children: [t.dress && a.dress(t.dress), t.note]
+                            .filter(Boolean)
+                            .join(" · "),
+                        }),
+                      !n &&
+                        (0, v.jsxs)("div", {
+                          className: "col-span-2 mt-[2cqw] text-center",
+                          children: [
+                            l(t),
+                            (0, v.jsx)(B.W, { event: t, invite: e, theme: s3 }),
+                          ],
+                        }),
+                    ],
+                  },
+                  t.name + i,
+                ),
+              ),
+            }),
+            n &&
+              (0, v.jsxs)(v.Fragment, {
+                children: [
+                  (0, v.jsx)("div", {
+                    className: "mx-auto mt-[5cqw] h-px w-[30cqw]",
+                    style: { background: sD },
+                  }),
+                  (0, v.jsx)("div", { className: "mt-[4cqw]", children: l(i) }),
+                  (0, v.jsx)(B.W, { event: i, invite: e, theme: s3 }),
+                ],
+              }),
+          ],
+        }),
+      });
+    }
+    let s3 = {
+        ...sK,
+        id: "mandir",
+        scrollHint: "scrollToWalkIn",
+        root: "inv-mandir",
+        vars: { ...sK.vars, "--inv-accent": sH },
+        accent: sH,
+        Hero: function ({ invite: e }) {
+          let t = g();
+          return j()
+            ? (0, v.jsxs)("section", {
+                className: "relative h-full w-full overflow-hidden",
+                children: [
+                  (0, v.jsx)(R.default, {
+                    src: `${sL}/mandir-temple.jpg`,
+                    alt: "",
+                    fill: !0,
+                    sizes: y,
+                    className: "object-cover",
+                  }),
+                  (0, v.jsx)("div", {
+                    className: "absolute inset-x-[14%] top-[8%]",
+                    children: (0, v.jsx)(s1, { invite: e, show: s2(t) }),
+                  }),
+                ],
+              })
+            : (0, v.jsx)(s5, { invite: e });
+        },
+        Blessing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e),
+            s = (0, f.useRef)(null),
+            { scrollYProgress: i } = e$({
+              target: s,
+              offset: ["start end", "start 15%"],
+            }),
+            n = (0, eS.f)(i, [0, 1], [0.4, 1]),
+            l = (0, eS.f)(i, [0, 0.45], [0, 1]),
+            r = (0, eS.f)(i, [0, 0.7], ["blur(4px)", "blur(0px)"]),
+            c = j(),
+            { t: o, lang: d } = (0, N.G)(),
+            x = e.blessingTop ?? !0,
+            m = (e, t) =>
+              e.elders &&
+              !!e.eldersBelow === t &&
+              (e.eldersPlain
+                ? (0, v.jsx)("p", {
+                    className:
+                      "mx-auto max-w-[74cqw] text-[3.3cqw] leading-snug font-semibold whitespace-pre-line",
+                    style: {
+                      color: sH,
+                      margin: t ? "1.5cqw auto 0" : "0 auto 1.5cqw",
+                    },
+                    children: e.elders,
+                  })
+                : (0, v.jsx)("p", {
+                    className:
+                      "inv-label mx-auto max-w-[66cqw] text-[2.7cqw] leading-relaxed font-semibold whitespace-pre-line",
+                    style: {
+                      color: sR,
+                      margin: t ? "1.5cqw auto 0" : "0 auto 1.5cqw",
+                    },
+                    children: e.elders,
+                  })),
+            p = (e, t) =>
+              (0, v.jsxs)(v.Fragment, {
+                children: [
+                  m(e, !1),
+                  e.parents &&
+                    (0, v.jsx)("p", {
+                      className: `text-[3.3cqw] leading-snug font-semibold ${t}`,
+                      style: { color: sH },
+                      children: e.parents,
+                    }),
+                  m(e, !0),
+                ],
+              }),
+            h = (t) =>
+              (0, v.jsxs)("div", {
+                children: [
+                  !e.namesFirst && p(t, "mx-auto max-w-[62cqw]"),
+                  (0, v.jsxs)("p", {
+                    className: `inv-script text-[13.5cqw] leading-[0.95] ${e.namesFirst ? "whitespace-nowrap" : "mt-[2cqw]"} ${t.title && t.titleInline ? "-mx-[6cqw]" : ""}`,
+                    style: {
+                      color: sH,
+                      ...(e.nameScale
+                        ? { fontSize: `${(13.5 * e.nameScale).toFixed(2)}cqw` }
+                        : {}),
+                    },
+                    children: [t.full || t.first, (0, v.jsx)(s0, { p: t })],
+                  }),
+                  t.title &&
+                    !t.titleInline &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-label mt-[1.5cqw] text-[2.8cqw] font-semibold",
+                      style: { color: sI },
+                      children: t.title,
+                    }),
+                  e.namesFirst &&
+                    (t.parents || t.elders) &&
+                    (0, v.jsx)("div", {
+                      className: "mt-[3cqw]",
+                      children: p(t, "-mx-[6cqw] whitespace-pre-line"),
+                    }),
+                ],
+              });
+          return (0, v.jsx)("section", {
+            ref: s,
+            className: `relative z-10 px-[13cqw] pt-[24cqw] pb-[12cqw] text-center ${c ? "" : "-mt-[55dvh]"}`,
+            children: (0, v.jsxs)($.f.div, {
+              style: c
+                ? void 0
+                : {
+                    scale: n,
+                    opacity: l,
+                    filter: r,
+                    transformOrigin: "50% 30%",
+                  },
+              children: [
+                (0, v.jsx)(sU, {}),
+                e.invocationMeaning &&
+                  x &&
+                  (0, v.jsx)("p", {
+                    className: "inv-serif mt-[4cqw] text-[3.6cqw] italic",
+                    style: { color: sA },
+                    children: e.invocationMeaning,
+                  }),
+                e.hostsLines && e.hosts
+                  ? (0, v.jsx)("div", {
+                      className:
+                        "inv-label mt-[4cqw] text-[3cqw] leading-relaxed font-semibold whitespace-pre-line",
+                      style: { color: sR },
+                      children: e.hosts
+                        .split(/\s+&\s+/)
+                        .map((e, t) =>
+                          (0, v.jsxs)(
+                            "p",
+                            {
+                              children: [
+                                t > 0 &&
+                                  (0, v.jsx)("span", {
+                                    className: "my-[0.5cqw] block",
+                                    children: "&",
+                                  }),
+                                e,
+                              ],
+                            },
+                            t,
+                          ),
+                        ),
+                    })
+                  : (0, v.jsx)("p", {
+                      className:
+                        "inv-label mt-[4cqw] text-[2.7cqw] leading-relaxed whitespace-pre-line",
+                      style: { color: sR },
+                      children: e.hosts || o.togetherWithFamilies,
+                    }),
+                (0, v.jsx)("p", {
+                  className: "inv-serif mt-[3cqw] text-[4.6cqw] leading-snug",
+                  style: { color: sI },
+                  children: e.message,
+                }),
+                (0, v.jsx)(sU, { className: "my-[6cqw]" }),
+                h(t),
+                (0, v.jsx)("p", {
+                  className: "my-[3cqw] text-[8cqw] leading-none",
+                  style: {
+                    color: sI,
+                    fontFamily: "hi" === d ? "var(--inv-script)" : sE,
+                  },
+                  children: o.and,
+                }),
+                h(a),
+                e.invocationMeaning &&
+                  !x &&
+                  (0, v.jsx)("p", {
+                    className: "inv-serif mt-[7cqw] text-[3.6cqw] italic",
+                    style: { color: sA },
+                    children: e.invocationMeaning,
+                  }),
+              ],
+            }),
+          });
+        },
+        Events: function ({ invite: e }) {
+          let { t, d: a } = (0, N.G)();
+          return e.eventsByDay
+            ? (0, v.jsxs)("section", {
+                className: "relative px-[11cqw] py-[12cqw]",
+                children: [
+                  (0, v.jsx)(B.b, {
+                    children: (0, v.jsx)(sX, {
+                      kicker: t.eventsKicker,
+                      children: t.eventsTitle,
+                    }),
+                  }),
+                  (0, v.jsx)("ol", {
+                    className: "mt-[8cqw] space-y-[7cqw]",
+                    children: (function (e) {
+                      let t = [];
+                      for (let a of e) {
+                        let e = t[t.length - 1];
+                        e && e[0].start.slice(0, 10) === a.start.slice(0, 10)
+                          ? e.push(a)
+                          : t.push([a]);
+                      }
+                      return t;
+                    })(e.events).map((t) =>
+                      (0, v.jsx)(
+                        $.f.li,
+                        {
+                          initial: { opacity: 0, y: 30, scale: 0.96 },
+                          whileInView: { opacity: 1, y: 0, scale: 1 },
+                          viewport: { once: !0, amount: 0.2 },
+                          transition: { duration: 0.9, ease: sG },
+                          children: (0, v.jsx)(s4, { invite: e, events: t }),
+                        },
+                        t[0].start,
+                      ),
+                    ),
+                  }),
+                ],
+              })
+            : (0, v.jsxs)("section", {
+                className: "relative px-[11cqw] py-[12cqw]",
+                children: [
+                  (0, v.jsx)(B.b, {
+                    children: (0, v.jsx)(sX, {
+                      kicker: t.eventsKicker,
+                      children: t.eventsTitle,
+                    }),
+                  }),
+                  (0, v.jsx)("ol", {
+                    className: "mt-[8cqw] space-y-[7cqw]",
+                    children: e.events.map((s, i) =>
+                      (0, v.jsx)(
+                        $.f.li,
+                        {
+                          initial: { opacity: 0, y: 30, scale: 0.96 },
+                          whileInView: { opacity: 1, y: 0, scale: 1 },
+                          viewport: { once: !0, amount: 0.3 },
+                          transition: { duration: 0.9, ease: sG },
+                          children: (0, v.jsx)(sJ, {
+                            children: (0, v.jsxs)("div", {
+                              className:
+                                "-mt-[9cqw] px-[5cqw] pb-[6cqw] text-center",
+                              children: [
+                                (0, v.jsx)(sY, {
+                                  className: "mx-auto block w-[16cqw]",
+                                }),
+                                (0, v.jsx)("h3", {
+                                  className:
+                                    "inv-script mt-[2cqw] text-[8.5cqw] leading-none",
+                                  style: { color: sH },
+                                  children: s.name,
+                                }),
+                                (0, v.jsxs)("p", {
+                                  className: `inv-label mt-[2.5cqw] ${e.boldEvents ? "text-[3cqw] font-bold" : "text-[2.5cqw]"}`,
+                                  style: { color: sI },
+                                  children: [
+                                    a.weekday(s.start),
+                                    " · ",
+                                    a.shortMonthDate(s.start),
+                                  ],
+                                }),
+                                (0, v.jsx)("p", {
+                                  className: `inv-serif mt-[1cqw] ${e.boldEvents ? "text-[4.8cqw] font-semibold" : "text-[4cqw] italic"}`,
+                                  style: { color: e.boldEvents ? sI : sA },
+                                  children:
+                                    s.timeText ?? t.onwards(a.time(s.start)),
+                                }),
+                                (0, v.jsx)("p", {
+                                  className: `inv-serif mt-[3cqw] text-[4.4cqw] leading-tight${e.boldEvents ? " font-semibold" : ""}`,
+                                  style: { color: sI },
+                                  children: s.venue,
+                                }),
+                                s.address &&
+                                  (0, v.jsx)("p", {
+                                    className: "mt-[1cqw] text-[3cqw]",
+                                    style: { color: sA },
+                                    children: s.address,
+                                  }),
+                                (s.dress || s.note) &&
+                                  (0, v.jsx)("p", {
+                                    className: `inv-serif mt-[2cqw] ${e.boldEvents ? "text-[4cqw] font-semibold" : "text-[3.6cqw] italic"}`,
+                                    style: { color: e.boldEvents ? sP : sH },
+                                    children: [
+                                      s.dress && t.dress(s.dress),
+                                      s.note,
+                                    ]
+                                      .filter(Boolean)
+                                      .join(" · "),
+                                  }),
+                                (0, v.jsx)(B.W, {
+                                  event: s,
+                                  invite: e,
+                                  theme: s3,
+                                }),
+                              ],
+                            }),
+                          }),
+                        },
+                        s.name + i,
+                      ),
+                    ),
+                  }),
+                ],
+              });
+        },
+        Closing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e),
+            { t: s, lang: i } = (0, N.G)();
+          return (0, v.jsx)("section", {
+            className: "relative px-[13cqw] pt-[10cqw] text-center",
+            style: { paddingBottom: `calc(${sZ.bottom}vh + 16cqw)` },
+            children: (0, v.jsxs)(B.b, {
+              children: [
+                (0, v.jsx)(sU, {}),
+                (0, v.jsx)("p", {
+                  className:
+                    "inv-serif mt-[5cqw] text-[5cqw] leading-snug italic",
+                  style: { color: sI },
+                  children: e.closing,
+                }),
+                (0, v.jsx)("p", {
+                  className: "inv-script mt-[4cqw] text-[11cqw] leading-none",
+                  style: { color: sH },
+                  children:
+                    e.closingNames ??
+                    `${t.first} ${"hi" === i ? s.and : "&"} ${a.first}`,
+                }),
+                e.hashtag &&
+                  (0, v.jsx)("p", {
+                    className: "inv-label !normal-case mt-[3cqw] text-[2.8cqw]",
+                    style: { color: sD },
+                    children: e.hashtag,
+                  }),
+                e.extras?.map((e, t) =>
+                  (0, v.jsxs)(
+                    "div",
+                    {
+                      className: "mt-[8cqw]",
+                      children: [
+                        (0, v.jsx)("p", {
+                          className: "text-[4.4cqw] font-semibold",
+                          style: {
+                            color: sH,
+                            fontFamily: "var(--inv-serif), var(--font-deva)",
+                          },
+                          children: e.title,
+                        }),
+                        (0, v.jsx)("div", {
+                          className: "mt-[2cqw] space-y-[1cqw]",
+                          children: e.lines.map((e, t) => {
+                            let a = ah(e);
+                            return "gap" === a.kind
+                              ? (0, v.jsx)(
+                                  "div",
+                                  { "aria-hidden": !0, className: "h-[3cqw]" },
+                                  t,
+                                )
+                              : "and" === a.kind
+                                ? (0, v.jsx)(
+                                    "p",
+                                    {
+                                      className: "text-[4cqw] leading-none",
+                                      style: {
+                                        color: sD,
+                                        fontFamily:
+                                          "var(--inv-serif), var(--font-deva)",
+                                      },
+                                      children: "&",
+                                    },
+                                    t,
+                                  )
+                                : "sub" === a.kind
+                                  ? (0, v.jsx)(
+                                      "p",
+                                      {
+                                        className:
+                                          "inv-label pt-[2cqw] text-[2.8cqw] font-semibold",
+                                        style: { color: sR },
+                                        children: a.text,
+                                      },
+                                      t,
+                                    )
+                                  : "big" === a.kind
+                                    ? (0, v.jsx)(
+                                        "p",
+                                        {
+                                          className:
+                                            "inv-script text-[8cqw] leading-tight",
+                                          style: { color: sH },
+                                          children: a.text,
+                                        },
+                                        t,
+                                      )
+                                    : (0, v.jsx)(
+                                        "p",
+                                        {
+                                          className:
+                                            "text-[4.2cqw] leading-snug",
+                                          style: {
+                                            color: sI,
+                                            fontFamily:
+                                              "var(--inv-serif), var(--font-deva)",
+                                          },
+                                          children: a.text,
+                                        },
+                                        t,
+                                      );
+                          }),
+                        }),
+                      ],
+                    },
+                    e.title + t,
+                  ),
+                ),
+                !e.noBranding &&
+                  (0, v.jsxs)(k.default, {
+                    href: "/",
+                    className:
+                      "inv-label mt-[8cqw] inline-block text-[2.2cqw] opacity-60",
+                    style: { color: sI },
+                    children: ["Crafted with love by ", F.B.name],
+                  }),
+              ],
+            }),
+          });
+        },
+        Frame: function () {
+          let { scrollY: e } = e$(),
+            [t, a] = (0, f.useState)(800);
+          (0, f.useEffect)(() => {
+            let e = () => a(window.innerHeight);
+            return (
+              e(),
+              window.addEventListener("resize", e),
+              () => window.removeEventListener("resize", e)
+            );
+          }, []);
+          let s = (0, eS.f)(e, [0.8 * t, 1.08 * t], [0, 1]),
+            i = `linear-gradient(to bottom, #000 0%, #000 ${sZ.top}%, transparent ${sZ.top + 4}%, transparent ${100 - sZ.bottom - 4}%, #000 ${100 - sZ.bottom}%, #000 100%), linear-gradient(to right, #000 0%, #000 ${sZ.side}%, transparent ${sZ.side + 2}%, transparent ${100 - sZ.side - 2}%, #000 ${100 - sZ.side}%, #000 100%)`;
+          return (0, v.jsxs)($.f.div, {
+            className: "absolute inset-0",
+            style: { opacity: s },
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)("div", {
+                className: "absolute inset-x-0 bottom-full h-[50vh]",
+                style: { background: sO },
+              }),
+              (0, v.jsx)("div", {
+                className: "absolute inset-0",
+                style: { WebkitMaskImage: i, maskImage: i },
+                children: (0, v.jsx)(R.default, {
+                  src: `${sL}/mandir-card.jpg`,
+                  alt: "",
+                  fill: !0,
+                  sizes: "(max-width: 480px) 100vw, 480px",
+                  className: "object-cover",
+                }),
+              }),
+              (0, v.jsx)("div", {
+                className: "absolute inset-x-0 top-full h-[50vh]",
+                style: { background: sO },
+              }),
+            ],
+          });
+        },
+        Divider: sU,
+        Title: sX,
+      },
+      s6 = { ...s3, id: "vachan", countdownTitle: "Until the ring ceremony" };
+    e.s(["a", 0, s3, "k", 0, sV, "N", 0, s6], 72977);
+    var s8 = e.i(49492),
+      s9 = e.i(35382);
+    let s7 = "#7a1424",
+      ie = "#4a1d14",
+      it = "#b88a2e",
+      ia = "#f6d98c",
+      is = "#2d6a35",
+      ii = "#fbf0d6",
+      il = "#fdf5e2",
+      ir = (e) => `/art/illus/${e}`,
+      ic = [0.22, 1, 0.36, 1],
+      io = (e) => ({ letterSpacing: `${e}em` });
+    function id(e) {
+      let t = e;
+      return () => ((t = (16807 * t) % 0x7fffffff) - 1) / 0x7ffffffe;
+    }
+    function ix({
+      src: e,
+      alt: t = "",
+      priority: a,
+      className: s = "object-cover",
+    }) {
+      let i = j();
+      return (0, v.jsx)(R.default, {
+        src: e,
+        alt: t,
+        fill: !0,
+        priority: a && !i,
+        sizes: i ? y : q,
+        className: s,
+      });
+    }
+    function im({ className: e }) {
+      return (0, v.jsxs)("div", {
+        className: `mx-auto flex w-[50%] items-center gap-[2cqw] ${e ?? "my-[4cqw]"}`,
+        children: [
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: { background: it },
+          }),
+          (0, v.jsx)("span", {
+            className: "text-[3cqw]",
+            style: { color: s7 },
+            children: "✦",
+          }),
+          (0, v.jsx)("span", {
+            className: "h-px flex-1",
+            style: { background: it },
+          }),
+        ],
+      });
+    }
+    function ip({ width: e = "46%", className: t = "my-[3cqw]" }) {
+      return (0, v.jsxs)("div", {
+        className: `mx-auto flex items-center gap-[2cqw] ${t}`,
+        style: { width: e },
+        children: [
+          (0, v.jsx)("span", {
+            className: "h-[0.3cqw] flex-1",
+            style: { background: it },
+          }),
+          (0, v.jsx)("svg", {
+            viewBox: "0 0 24 14",
+            className: "w-[5cqw]",
+            "aria-hidden": !0,
+            children: (0, v.jsx)("path", {
+              d: "M12 1 C 15 4, 15 9, 12 13 C 9 9, 9 4, 12 1 Z M12 13 C 7 12, 3 9, 1 6 C 5 6, 9 8, 12 13 Z M12 13 C 17 12, 21 9, 23 6 C 19 6, 15 8, 12 13 Z",
+              fill: it,
+            }),
+          }),
+          (0, v.jsx)("span", {
+            className: "h-[0.3cqw] flex-1",
+            style: { background: it },
+          }),
+        ],
+      });
+    }
+    function ih({ kicker: e, children: t, plain: a }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.6cqw] font-semibold",
+              style: { color: it, ...io(0.28) },
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className: "inv-script text-[11cqw] leading-tight",
+            style: { color: s7 },
+            children: t,
+          }),
+          !a && (0, v.jsx)(ip, { width: "40%", className: "mt-[1.5cqw]" }),
+        ],
+      });
+    }
+    function iw({ children: e, color: t = ie, className: a = "" }) {
+      return (0, v.jsx)("p", {
+        className: `inv-label text-[2.6cqw] leading-relaxed font-semibold ${a}`,
+        style: { color: t, ...io(0.24) },
+        children: e,
+      });
+    }
+    function iu({
+      children: e,
+      edge: t = "4cqw 10cqw 9cqw 10cqw",
+      className: a = "absolute inset-0",
+    }) {
+      return (0, v.jsx)("div", {
+        className: a,
+        style: {
+          borderStyle: "solid",
+          borderWidth: t,
+          borderImage: `url(${ir("marathi-antarpat-plain.webp")}) 6% 17.5% 12% 17.5% / ${t} stretch stretch`,
+          background: `url(${ir("marathi-antarpat-silk.webp")}) center / 100% 100% no-repeat padding-box`,
+        },
+        children: e,
+      });
+    }
+    function ig({ invite: e, opened: t, reduce: a }) {
+      return a
+        ? (0, v.jsx)($.f.div, {
+            className: "absolute inset-0",
+            animate: { opacity: +!t },
+            transition: { duration: 0.6 },
+            children: (0, v.jsx)(iu, {
+              children: (0, v.jsx)(ib, { invite: e, opened: !1 }),
+            }),
+          })
+        : (0, v.jsx)($.f.div, {
+            className:
+              "absolute inset-0 drop-shadow-[0_10px_18px_rgba(60,20,10,.35)]",
+            initial: !1,
+            animate: t ? { y: "-112%" } : { y: "0%" },
+            transition: {
+              duration: 1.9,
+              delay: 1.3 * !!t,
+              ease: [0.65, 0, 0.35, 1],
+            },
+            children: (0, v.jsxs)($.f.div, {
+              className: "absolute inset-0 origin-top",
+              animate: t ? { skewX: [0, 0.8, -0.6, 0] } : {},
+              transition: { duration: 1.9, delay: 1.3, ease: "easeInOut" },
+              children: [
+                (0, v.jsxs)(iu, {
+                  children: [
+                    (0, v.jsx)(ib, { invite: e, opened: t }),
+                    t &&
+                      e.invocation &&
+                      (0, v.jsx)("div", {
+                        className:
+                          "absolute inset-x-[8%] top-[36%] flex flex-col items-center text-center",
+                        style: {
+                          color: "#ffe6a6",
+                          textShadow: "0 0 14px rgba(255,205,110,.6)",
+                        },
+                        children: e.invocation
+                          .split("\n")
+                          .map((e, t) =>
+                            (0, v.jsx)(
+                              ij,
+                              {
+                                text: e,
+                                delay: 0.1 + 0.45 * t,
+                                className: "text-[6.4cqw] leading-snug",
+                                style: {
+                                  fontFamily: "var(--font-cinzel), serif",
+                                  letterSpacing: "0.12em",
+                                },
+                              },
+                              t,
+                            ),
+                          ),
+                      }),
+                  ],
+                }),
+                (0, v.jsx)($.f.div, {
+                  className:
+                    "absolute inset-y-0 w-[55%] opacity-30 mix-blend-screen",
+                  style: {
+                    background:
+                      "linear-gradient(100deg, transparent, rgba(255,214,170,.6), transparent)",
+                  },
+                  animate: { x: ["-90%", "230%"] },
+                  transition: {
+                    duration: 5,
+                    repeat: 1 / 0,
+                    ease: "easeInOut",
+                    repeatDelay: 1.5,
+                  },
+                }),
+              ],
+            }),
+          });
+    }
+    function ib({ invite: e, opened: t }) {
+      let [a, s] = (0, L.g)(e);
+      return (0, v.jsxs)($.f.div, {
+        className:
+          "absolute inset-0 flex flex-col items-center justify-center px-[4cqw] pb-[6%] text-center",
+        animate: { opacity: +!t },
+        transition: { duration: 0.5 },
+        children: [
+          (e.heroKicker ?? iM(e.occasion)) &&
+            (0, v.jsx)("p", {
+              className: "text-[3.2cqw] uppercase",
+              style: {
+                fontFamily: "var(--font-cinzel), serif",
+                color: ia,
+                ...io(0.34),
+              },
+              children: e.heroKicker ?? iM(e.occasion),
+            }),
+          (0, v.jsx)("p", {
+            className: "inv-script mt-[2cqw] text-[15cqw] leading-[1.05]",
+            style: { color: ia },
+            children: a.first,
+          }),
+          (0, v.jsx)("p", {
+            className: "inv-serif text-[6cqw] leading-none",
+            style: { color: ia },
+            children: e.joiner ?? "&",
+          }),
+          (0, v.jsx)("p", {
+            className: "inv-script text-[15cqw] leading-[1.05]",
+            style: { color: ia },
+            children: s.first,
+          }),
+        ],
+      });
+    }
+    function ij({ text: e, delay: t, className: a, style: s }) {
+      return (0, v.jsx)("span", {
+        className: `inline-block ${a ?? ""}`,
+        style: s,
+        "aria-label": e,
+        children: [...e].map((e, a) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              "aria-hidden": !0,
+              className: "inline-block whitespace-pre",
+              initial: { opacity: 0, y: "0.3em", filter: "blur(6px)" },
+              animate: { opacity: 1, y: "0em", filter: "blur(0px)" },
+              transition: { delay: t + 0.045 * a, duration: 0.7, ease: ic },
+              children: e,
+            },
+            a,
+          ),
+        ),
+      });
+    }
+    function iy() {
+      return (0, v.jsx)($.f.div, {
+        className:
+          "pointer-events-none absolute size-[70cqw] -translate-x-1/2 -translate-y-1/2 rounded-full",
+        style: {
+          left: "50%",
+          top: "62%",
+          background:
+            "radial-gradient(closest-side, #fffaf0, #fbe3a0 45%, rgba(246,210,130,.4) 70%, transparent)",
+        },
+        initial: { scale: 0.1, opacity: 0 },
+        animate: { scale: [0.1, 1.3, 4.5], opacity: [0, 1, 0] },
+        transition: {
+          delay: 1.45,
+          duration: 2.4,
+          times: [0, 0.35, 1],
+          ease: "easeOut",
+        },
+      });
+    }
+    let iq =
+        ((i = id(29)),
+        Array.from({ length: 24 }, () => ({
+          x: (i() - 0.5) * 90,
+          y: -20 - 90 * i(),
+          d: 1.65 + 1.1 * i(),
+          s: 0.6 + 1.2 * i(),
+        }))),
+      iv =
+        ((n = id(7)),
+        Array.from({ length: 26 }, (e, t) => {
+          let a = -Math.PI / 2 + (n() - 0.5) * Math.PI * 1.6,
+            s = 40 + 60 * n();
+          return {
+            x: Math.cos(a) * s,
+            y: Math.sin(a) * s - 10,
+            rot: (n() - 0.5) * 720,
+            size: 2.4 + 2.8 * n(),
+            delay: 1.3 + 0.4 + 0.6 * n(),
+            jasmine: t % 2 == 0,
+          };
+        }));
+    function iN() {
+      return (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("svg", {
+            className: "pointer-events-none absolute inset-0 size-full",
+            viewBox: "0 0 100 177",
+            preserveAspectRatio: "none",
+            "aria-hidden": !0,
+            children: [
+              "M50 110 C 22 96, 78 80, 40 60 S 70 30, 54 -6",
+              "M50 110 C 82 98, 26 82, 64 62 S 30 32, 46 -8",
+              "M50 110 C 38 88, 92 80, 78 52 S 90 20, 76 -8",
+            ].map((e, t) =>
+              (0, v.jsx)(
+                $.f.path,
+                {
+                  d: e,
+                  fill: "none",
+                  stroke: 1 === t ? "#fff3cf" : "#f5d989",
+                  strokeWidth: 0.6,
+                  strokeLinecap: "round",
+                  style: { filter: "drop-shadow(0 0 1.2px #fff3cf)" },
+                  initial: { pathLength: 0, opacity: 0 },
+                  animate: { pathLength: [0, 1, 1], opacity: [0, 1, 0] },
+                  transition: {
+                    delay: 1.6 + 0.15 * t,
+                    duration: 1.8,
+                    times: [0, 0.6, 1],
+                    ease: "easeOut",
+                  },
+                },
+                e,
+              ),
+            ),
+          }),
+          iq.map((e, t) =>
+            (0, v.jsx)(
+              $.f.span,
+              {
+                className:
+                  "pointer-events-none absolute rounded-full bg-[#fff6d6] shadow-[0_0_6px_2px_rgba(255,226,150,.8)]",
+                style: {
+                  left: "50%",
+                  top: "62%",
+                  width: `${e.s}cqw`,
+                  height: `${e.s}cqw`,
+                },
+                initial: { x: 0, y: 0, opacity: 0 },
+                animate: { x: `${e.x}cqw`, y: `${e.y}cqw`, opacity: [0, 1, 0] },
+                transition: { delay: e.d, duration: 1.5, ease: "easeOut" },
+              },
+              `s${t}`,
+            ),
+          ),
+          iv.map((e, t) =>
+            (0, v.jsx)(
+              $.f.span,
+              {
+                className:
+                  "pointer-events-none absolute rounded-[60%_40%_60%_40%] shadow-sm",
+                style: {
+                  left: "50%",
+                  top: "62%",
+                  width: `${e.size}cqw`,
+                  height: `${1.35 * e.size}cqw`,
+                  background: e.jasmine
+                    ? "radial-gradient(circle at 30% 30%, #ffffff, #efe6d2)"
+                    : "radial-gradient(circle at 30% 30%, #ffd27a, #f08a1c)",
+                },
+                initial: { x: 0, y: 0, rotate: 0, opacity: 0 },
+                animate: {
+                  x: `${e.x}cqw`,
+                  y: ["0cqw", `${e.y}cqw`, `${e.y + 35}cqw`],
+                  rotate: e.rot,
+                  opacity: [0, 1, 1, 0],
+                },
+                transition: { delay: e.delay, duration: 2.2, ease: "easeOut" },
+              },
+              `p${t}`,
+            ),
+          ),
+        ],
+      });
+    }
+    let ik =
+      ((l = id(17)),
+      Array.from({ length: 34 }, (e, t) => ({
+        x: 6 + 88 * l(),
+        d: 1.6 + 1.6 * l(),
+        t: 3 + 1.5 * l(),
+        sway: (l() - 0.5) * 10,
+        rot: 360 * l(),
+        kind: t % 7 == 0 ? "petal" : t % 5 == 0 ? "red" : "rice",
+      })));
+    function i$() {
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0 overflow-hidden",
+        children: ik.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute -top-[3cqw]",
+              style: {
+                left: `${e.x}%`,
+                width: "red" === e.kind ? "1.2cqw" : "2.2cqw",
+                height:
+                  "petal" === e.kind
+                    ? "2.8cqw"
+                    : "red" === e.kind
+                      ? "1.2cqw"
+                      : "0.9cqw",
+                borderRadius: "petal" === e.kind ? "60% 40% 60% 40%" : 999,
+                background:
+                  "petal" === e.kind
+                    ? "#f4a03a"
+                    : "red" === e.kind
+                      ? "#c8202f"
+                      : "#fff4d6",
+                border: "rice" === e.kind ? "1px solid #c9a35a" : "none",
+              },
+              initial: { y: 0, x: 0, rotate: e.rot, opacity: 0 },
+              animate: {
+                y: "190cqw",
+                x: ["0cqw", `${e.sway}cqw`, `${-e.sway / 2}cqw`],
+                rotate: e.rot + 300,
+                opacity: [0, 1, 1, 0],
+              },
+              transition: {
+                duration: e.t,
+                delay: e.d,
+                ease: "linear",
+                times: [0, 0.1, 0.85, 1],
+              },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function iC({ text: e, delay: t, style: a }) {
+      return (0, v.jsx)($.f.span, {
+        className: "inline-block whitespace-pre",
+        style: a,
+        initial: { clipPath: "inset(-20% 100% -20% 0)", opacity: 0.4 },
+        animate: { clipPath: "inset(-20% -5% -20% 0)", opacity: 1 },
+        transition: { delay: t, duration: 1.3, ease: [0.45, 0, 0.25, 1] },
+        children: e,
+      });
+    }
+    let iM = (e) =>
+      "engagement" === e
+        ? "The engagement of"
+        : "reception" === e
+          ? "The wedding reception of"
+          : "Shubh Vivah";
+    function iS() {
+      let e = (0, f.useMemo)(() => {
+          let e = id(93);
+          return Array.from({ length: 46 }, (t, a) => ({
+            x: 100 * e(),
+            d: 0.9 * e(),
+            t: 2.4 + 1.6 * e(),
+            rot: 360 * e(),
+            sway: (e() - 0.5) * 14,
+            kind:
+              a % 3 == 0
+                ? "jasmine"
+                : a % 5 == 0
+                  ? "rice"
+                  : a % 7 == 0
+                    ? "gold"
+                    : "rose",
+          }));
+        }, []),
+        t = {
+          rose: ["3cqw", "3.6cqw"],
+          jasmine: ["1.6cqw", "2.6cqw"],
+          rice: ["2cqw", "0.9cqw"],
+          gold: ["1cqw", "1cqw"],
+        },
+        a = { rose: "#e0587a", jasmine: "#fffdf6", rice: "#fff4d6", gold: it };
+      return (0, v.jsx)("div", {
+        className:
+          "pointer-events-none absolute inset-x-0 -top-[10cqw] bottom-0 overflow-hidden",
+        "aria-hidden": !0,
+        children: e.map((e, s) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute top-0",
+              style: {
+                left: `${e.x}%`,
+                width: t[e.kind][0],
+                height: t[e.kind][1],
+                borderRadius:
+                  "rose" === e.kind
+                    ? "70% 30% 70% 30%"
+                    : "jasmine" === e.kind
+                      ? "50% 50% 50% 50% / 70% 70% 30% 30%"
+                      : 999,
+                background: a[e.kind],
+                border: "rice" === e.kind ? "1px solid #c9a35a" : void 0,
+                boxShadow:
+                  "jasmine" === e.kind
+                    ? "0 0 0.4cqw rgba(120,90,40,.4)"
+                    : void 0,
+              },
+              initial: { y: 0, rotate: e.rot, opacity: 0 },
+              animate: {
+                y: "150cqw",
+                x: ["0cqw", `${e.sway}cqw`, `${-e.sway / 2}cqw`],
+                rotate: e.rot + 300,
+                opacity: [0, 1, 1, 0],
+              },
+              transition: {
+                duration: e.t,
+                delay: e.d,
+                ease: "linear",
+                times: [0, 0.1, 0.85, 1],
+              },
+            },
+            s,
+          ),
+        ),
+      });
+    }
+    function i_() {
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 24 64",
+        className: "w-full",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("rect", {
+            x: "11",
+            y: "0",
+            width: "2",
+            height: "22",
+            rx: "1",
+            fill: it,
+          }),
+          (0, v.jsx)("circle", { cx: "12", cy: "25", r: "5", fill: it }),
+          (0, v.jsx)("rect", {
+            x: "7",
+            y: "29",
+            width: "10",
+            height: "4",
+            rx: "1.5",
+            fill: "#9c7424",
+          }),
+          (0, v.jsx)("path", { d: "M7 33 H17 L20 60 Q12 64 4 60 Z", fill: it }),
+          [8, 10.5, 13, 15.5].map((e) =>
+            (0, v.jsx)(
+              "path",
+              {
+                d: `M${e} 35 L${e + (e - 12) * 0.35} 59`,
+                stroke: "#9c7424",
+                strokeWidth: "0.8",
+              },
+              e,
+            ),
+          ),
+        ],
+      });
+    }
+    function iz({ children: e, rise: t = "24cqw" }) {
+      let a = `50% 50% 1.2cqw 1.2cqw / ${t} ${t} 1.2cqw 1.2cqw`;
+      return (0, v.jsx)("div", {
+        className: "relative",
+        style: {
+          borderRadius: a,
+          padding: "0.45cqw",
+          background: it,
+          boxShadow: "0 3cqw 6cqw -3.5cqw rgba(74,29,20,.45)",
+        },
+        children: (0, v.jsx)("div", {
+          className: "relative",
+          style: { borderRadius: a, padding: "1.1cqw", background: ii },
+          children: (0, v.jsx)("div", {
+            className: "relative h-full overflow-hidden",
+            style: {
+              borderRadius: a,
+              boxShadow: `inset 0 0 0 0.25cqw ${it}`,
+              background: il,
+            },
+            children: e,
+          }),
+        }),
+      });
+    }
+    function iF({ e, invite: t, compact: a }) {
+      let { t: s, d: i } = (0, N.G)(),
+        n = e.start === t.date && !t.occasion,
+        l = i.time(e.start);
+      return (0, v.jsx)(iz, {
+        children: (0, v.jsxs)("div", {
+          className: `flex flex-col items-center px-[5cqw] text-center ${a ? "pt-[8cqw] pb-[5cqw]" : "pt-[13cqw] pb-[7cqw]"}`,
+          children: [
+            e.image &&
+              (0, v.jsx)("div", {
+                className:
+                  "relative mb-[5cqw] aspect-[4/5] w-[40cqw] overflow-hidden border-[0.45cqw]",
+                style: {
+                  borderColor: it,
+                  borderRadius: "50% 50% 1cqw 1cqw / 30% 30% 1cqw 1cqw",
+                },
+                children: (0, v.jsx)(R.default, {
+                  src: e.image,
+                  alt: "",
+                  fill: !0,
+                  sizes: "240px",
+                  className: "object-cover",
+                }),
+              }),
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.6cqw] font-semibold",
+              style: { color: is, ...io(0.3) },
+              children: i.weekday(e.start),
+            }),
+            (0, v.jsxs)("div", {
+              className: "mt-[1.5cqw] flex items-center gap-[3cqw]",
+              children: [
+                (0, v.jsx)("span", {
+                  className: "h-px w-[8cqw]",
+                  style: { background: it },
+                }),
+                (0, v.jsx)("p", {
+                  className: "inv-label text-[9cqw] leading-none font-semibold",
+                  style: { color: it, letterSpacing: 0 },
+                  children: i.day(e.start),
+                }),
+                (0, v.jsx)("span", {
+                  className: "h-px w-[8cqw]",
+                  style: { background: it },
+                }),
+              ],
+            }),
+            (0, v.jsxs)("p", {
+              className: "inv-label mt-[1cqw] text-[2.8cqw] font-semibold",
+              style: { color: ie, ...io(0.3) },
+              children: [i.month(e.start), " ", i.year(e.start)],
+            }),
+            (0, v.jsx)("h3", {
+              className: "inv-script mt-[4cqw] leading-[1.1]",
+              style: {
+                color: s7,
+                fontSize: e.name.length > 12 ? "9cqw" : "12.5cqw",
+              },
+              children: e.name,
+            }),
+            e.note &&
+              (0, v.jsx)("p", {
+                className:
+                  "inv-serif mt-[0.5cqw] text-[3.8cqw] leading-snug italic",
+                style: { color: ie },
+                children: e.note,
+              }),
+            (0, v.jsx)(ip, { width: "40%" }),
+            e.schedule?.length
+              ? (0, v.jsx)("div", {
+                  className: "space-y-[2cqw]",
+                  children: e.schedule.map((e, t) =>
+                    (0, v.jsxs)(
+                      "p",
+                      {
+                        className: "inv-serif text-[4.2cqw] leading-snug",
+                        style: { color: ie },
+                        children: [
+                          (0, v.jsx)("span", {
+                            className: "font-bold",
+                            children: i.time(e.at),
+                          }),
+                          " · ",
+                          e.text,
+                        ],
+                      },
+                      e.at + t,
+                    ),
+                  ),
+                })
+              : !e.noTime &&
+                (0, v.jsx)("p", {
+                  className: "inv-serif text-[4.6cqw] font-semibold",
+                  style: { color: ie },
+                  children: e.timeText ?? (n ? l : s.onwards(l)),
+                }),
+            (0, v.jsx)("p", {
+              className:
+                "inv-serif mt-[2cqw] text-[4.2cqw] leading-snug font-semibold",
+              style: { color: ie },
+              children: e.venue,
+            }),
+            e.address &&
+              (0, v.jsx)("p", {
+                className: "inv-serif mt-[0.5cqw] text-[3.6cqw] leading-snug",
+                style: { color: ie },
+                children: e.address,
+              }),
+            e.dress &&
+              (0, v.jsx)("p", {
+                className: "inv-serif mt-[2cqw] text-[3.6cqw] italic",
+                style: { color: is },
+                children: s.dress(e.dress),
+              }),
+            (0, v.jsx)(B.W, { event: e, invite: t, theme: iO }),
+          ],
+        }),
+      });
+    }
+    function iT({ e, invite: t, i: a, next: s, self: i }) {
+      let [n, l] = (0, f.useState)(0),
+        r = (0, f.useRef)(null);
+      (0, f.useEffect)(() => {
+        let e = r.current;
+        if (!e) return;
+        let t = new ResizeObserver(() => l(e.offsetHeight));
+        return t.observe(e), () => t.disconnect();
+      }, []);
+      let { scrollYProgress: c } = e$({
+          target: s ?? i,
+          offset: ["start end", "start 34%"],
+        }),
+        o = (0, eS.f)(c, [0, 1], [1, s ? 0.94 : 1]),
+        d = (0, eS.f)(c, [0.3, 1], [0, 0.18 * !!s]),
+        x = `${(1.6 * a).toFixed(1)}cqw`;
+      return (0, v.jsx)("li", {
+        ref: i,
+        className: "sticky w-full",
+        style: {
+          top: n
+            ? `max(calc(16% + ${x}), calc(50% - ${Math.round(n / 2)}px + ${x}))`
+            : "16%",
+        },
+        children: (0, v.jsxs)($.f.div, {
+          ref: r,
+          className: "relative w-full",
+          style: { scale: o, transformOrigin: "50% 0%" },
+          children: [
+            (0, v.jsx)(iF, { e: e, invite: t, compact: !0 }),
+            (0, v.jsx)($.f.div, {
+              "aria-hidden": !0,
+              className: "pointer-events-none absolute inset-0",
+              style: {
+                opacity: d,
+                background: ii,
+                borderRadius:
+                  "50% 50% 1.2cqw 1.2cqw / 24cqw 24cqw 1.2cqw 1.2cqw",
+              },
+            }),
+          ],
+        }),
+      });
+    }
+    function iB({ invite: e }) {
+      let t = e.events.length,
+        a = (0, f.useMemo)(
+          () => Array.from({ length: t }, () => (0, f.createRef)()),
+          [t],
+        );
+      return (0, v.jsx)("ol", {
+        className: "mt-[6cqw] flex w-full flex-col gap-[28cqw] pb-[36cqw]",
+        children: e.events.map((t, s) =>
+          (0, v.jsx)(
+            iT,
+            { e: t, invite: e, i: s, self: a[s], next: a[s + 1] ?? null },
+            t.name + s,
+          ),
+        ),
+      });
+    }
+    function iL({ invite: e }) {
+      return e.extras?.length || e.welcome
+        ? (0, v.jsxs)("section", {
+            className:
+              "relative flex w-full flex-col items-center px-[17%] pt-[10cqw] pb-[16cqw] text-center",
+            children: [
+              e.extras?.map((e, t) =>
+                (0, v.jsxs)(
+                  B.b,
+                  {
+                    className: `flex w-full flex-col items-center ${t ? "mt-[10cqw]" : ""}`,
+                    children: [
+                      (0, v.jsx)(ih, { plain: !0, children: e.title }),
+                      (0, v.jsx)("div", {
+                        className: "mt-[2cqw] w-full",
+                        children: e.lines.map((e, t) => {
+                          let a = ah(e);
+                          return "gap" === a.kind
+                            ? (0, v.jsx)("div", { className: "h-[3cqw]" }, t)
+                            : "and" === a.kind
+                              ? (0, v.jsx)(
+                                  "p",
+                                  {
+                                    className:
+                                      "inv-serif my-[0.5cqw] text-[4cqw] leading-none",
+                                    style: { color: it },
+                                    children: "&",
+                                  },
+                                  t,
+                                )
+                              : "sub" === a.kind
+                                ? (0, v.jsx)(
+                                    "p",
+                                    {
+                                      className:
+                                        "inv-label mt-[3cqw] mb-[1cqw] text-[2.8cqw] font-semibold first:mt-0",
+                                      style: { color: is, ...io(0.24) },
+                                      children: a.text,
+                                    },
+                                    t,
+                                  )
+                                : "big" === a.kind
+                                  ? (0, v.jsx)(
+                                      "p",
+                                      {
+                                        className:
+                                          "inv-script my-[1cqw] text-[9cqw] leading-tight",
+                                        style: { color: s7 },
+                                        children: a.text,
+                                      },
+                                      t,
+                                    )
+                                  : (0, v.jsx)(
+                                      "p",
+                                      {
+                                        className:
+                                          "inv-serif text-[4.2cqw] leading-relaxed font-medium",
+                                        style: { color: ie },
+                                        children: a.text,
+                                      },
+                                      t,
+                                    );
+                        }),
+                      }),
+                    ],
+                  },
+                  e.title + t,
+                ),
+              ),
+              e.welcome &&
+                (0, v.jsx)(B.b, {
+                  children: (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mt-[8cqw] text-[4.4cqw] leading-snug font-semibold italic",
+                    style: { color: s7 },
+                    children: e.welcome,
+                  }),
+                }),
+            ],
+          })
+        : null;
+    }
+    let iO = {
+        id: "marathi",
+        tapHint: "tapCurtain",
+        tapHintDelay: 0.9,
+        openingMs: 4400,
+        readable: !0,
+        root: "",
+        vars: {
+          "--inv-script": "var(--font-great-vibes), cursive",
+          "--inv-serif": "var(--font-cormorant), serif",
+          "--inv-label": "var(--font-cinzel), serif",
+          "--inv-accent": s7,
+          background: ii,
+          color: ie,
+        },
+        accent: s7,
+        countdownTitle: "Till the muhurta",
+        ui: {
+          section: "relative px-[16cqw] py-[12cqw]",
+          card: "rounded-[2cqw] border border-[#b88a2e] bg-[#fdf5e2]",
+          input:
+            "w-full rounded-[2cqw] border border-[#b88a2e]/60 bg-[#fffaf0] px-[4cqw] py-[3cqw] text-[3.8cqw] outline-none placeholder:opacity-50",
+          chip: "rounded-full border border-[#b88a2e]/70 bg-[#fffaf0] transition",
+          chipOn:
+            "rounded-full border border-transparent font-semibold text-[#fbf0d6] transition [background:var(--inv-accent)]",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full px-[4.5cqw] py-[2.3cqw] text-[3.2cqw] font-semibold text-[#fbf0d6] active:scale-95 transition [background:var(--inv-accent)]",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#b88a2e] bg-[#fdf5e2] px-[4.5cqw] py-[2.3cqw] text-[3.2cqw] font-semibold text-[#7a1424] active:scale-95 transition",
+          muted: "opacity-80",
+          tile: "rounded-[2cqw] border border-[#b88a2e] bg-[#fdf5e2]",
+        },
+        Opening: function ({ invite: e, opened: t, onOpen: a }) {
+          let s = (0, th.f)(),
+            i = t && !s;
+          return (0, v.jsxs)("div", {
+            className: "absolute inset-0 overflow-hidden",
+            style: { pointerEvents: t ? "none" : "auto" },
+            children: [
+              i && (0, v.jsx)(iy, {}),
+              (0, v.jsx)(ig, { invite: e, opened: t, reduce: !!s }),
+              i &&
+                (0, v.jsxs)(v.Fragment, {
+                  children: [(0, v.jsx)(iN, {}), (0, v.jsx)(i$, {})],
+                }),
+              !t &&
+                (0, v.jsx)("button", {
+                  type: "button",
+                  onClick: a,
+                  "aria-label": "Draw the antarpat",
+                  className: "absolute inset-0 cursor-pointer",
+                }),
+            ],
+          });
+        },
+        Hero: function ({ invite: e }) {
+          let t = g(),
+            a = (0, th.f)(),
+            [s, i] = (0, L.g)(e),
+            n = (function () {
+              let { d: e } = (0, N.G)();
+              return (t) =>
+                `${e.weekday(t)} \xb7 ${e.day(t)} ${e.month(t)} ${e.year(t)}`;
+            })(),
+            l = (e) => (a ? 0 : 2.8 + e),
+            r = (e) => ({
+              initial: { opacity: 0, y: 12, filter: "blur(6px)" },
+              animate: t ? { opacity: 1, y: 0, filter: "blur(0px)" } : {},
+              transition: { duration: a ? 0.4 : 1, delay: l(e), ease: ic },
+            }),
+            c = e.heroKicker ?? iM(e.occasion),
+            o = [!e.hideHeroDate && n(e.date), !e.hideHeroCity && e.city]
+              .filter(Boolean)
+              .join(" · ");
+          return (0, v.jsxs)("section", {
+            className:
+              "relative h-[var(--screen-h,100dvh)] min-h-[170cqw] w-full overflow-hidden",
+            children: [
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-0",
+                style: { transformOrigin: "50% 60%" },
+                initial: !a && { scale: 1.3 },
+                animate: t ? { scale: 1 } : {},
+                transition: { duration: 2.8, delay: 1.5, ease: ic },
+                children: (0, v.jsx)(ix, {
+                  src: ir("marathi-couple-2.jpg"),
+                  alt: `A Marathi bride and groom face each other under the mandap, for ${s.first} and ${i.first}`,
+                  priority: !0,
+                  className: "object-cover object-bottom",
+                }),
+              }),
+              (0, v.jsxs)("div", {
+                className:
+                  "absolute inset-x-[16%] top-[22cqw] flex flex-col items-center text-center",
+                children: [
+                  e.invocation &&
+                    (0, v.jsx)($.f.p, {
+                      ...r(0),
+                      className:
+                        "inv-label text-[2.8cqw] leading-relaxed font-semibold whitespace-pre-line",
+                      style: { color: it, ...io(0.3) },
+                      children: e.invocation,
+                    }),
+                  c &&
+                    (0, v.jsx)($.f.p, {
+                      ...r(0.2),
+                      className:
+                        "inv-label mt-[2.5cqw] text-[3.6cqw] leading-snug",
+                      style: { color: s7, ...io(0.32) },
+                      children: c,
+                    }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-script -mx-[5cqw] mt-[2cqw] self-stretch text-[12cqw] leading-[1.1]",
+                    style: { color: ie, visibility: t ? "visible" : "hidden" },
+                    children: t
+                      ? (0, v.jsxs)(v.Fragment, {
+                          children: [
+                            (0, v.jsx)(iC, { text: s.first, delay: l(0.4) }),
+                            (0, v.jsx)(iC, {
+                              text: ` ${e.joiner ?? "&"} `,
+                              delay: l(1.1),
+                              style: { color: it },
+                            }),
+                            (0, v.jsx)(iC, { text: i.first, delay: l(1.4) }),
+                          ],
+                        })
+                      : `${s.first} ${e.joiner ?? "&"} ${i.first}`,
+                  }),
+                  o &&
+                    (0, v.jsx)($.f.p, {
+                      ...r(1.9),
+                      className:
+                        "inv-label mt-[2cqw] text-[2.6cqw] leading-relaxed font-semibold",
+                      style: { color: ie, ...io(0.22) },
+                      children: o,
+                    }),
+                ],
+              }),
+            ],
+          });
+        },
+        Blessing: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            a = j(),
+            [s, i] = (0, L.g)(e),
+            n = (e) =>
+              (0, v.jsx)("p", {
+                className:
+                  "inv-serif mt-[1cqw] text-[3.8cqw] leading-snug font-medium italic",
+                style: { color: ie },
+                children: e,
+              }),
+            l = (e, t) =>
+              (0, v.jsxs)(B.b, {
+                delay: 0.15 + 0.15 * t,
+                className: "flex flex-col items-center",
+                children: [
+                  (0, v.jsx)("p", {
+                    className: "inv-script text-[11cqw] leading-tight",
+                    style: { color: s7 },
+                    children: e.full || e.first,
+                  }),
+                  e.elders && !e.eldersBelow && n(e.elders),
+                  e.parents && n(e.parents),
+                  e.elders && e.eldersBelow && n(e.elders),
+                ],
+              });
+          return (0, v.jsxs)("section", {
+            className: `relative flex w-full flex-col items-center justify-center px-[17%] text-center ${a ? "pt-[8cqw] pb-[10cqw]" : "min-h-[var(--screen-h,100dvh)] pt-[50cqw] pb-[46cqw]"}`,
+            children: [
+              (0, v.jsxs)(B.b, {
+                className: "flex flex-col items-center",
+                children: [
+                  e.invocation &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-label text-[2.8cqw] leading-relaxed font-semibold whitespace-pre-line",
+                      style: { color: it, ...io(0.3) },
+                      children: e.invocation,
+                    }),
+                  e.invocationMeaning &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-serif mt-[2cqw] text-[3.6cqw] leading-snug italic",
+                      style: { color: ie },
+                      children: e.invocationMeaning,
+                    }),
+                  (0, v.jsx)(iw, {
+                    className: "mt-[3.5cqw]",
+                    children: e.hosts || t.togetherWithFamilies,
+                  }),
+                  e.message &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-serif mt-[3cqw] text-[4.4cqw] leading-snug font-semibold",
+                      style: {
+                        color: ie,
+                        ...(e.justifyMessage
+                          ? {
+                              textAlign: "justify",
+                              textAlignLast: "center",
+                              hyphens: "none",
+                            }
+                          : {}),
+                      },
+                      children: e.message,
+                    }),
+                ],
+              }),
+              (0, v.jsx)(im, {}),
+              l(s, 0),
+              (0, v.jsx)("p", {
+                className: "inv-serif my-[2.5cqw] text-[6cqw]",
+                style: { color: it },
+                children: e.joiner ?? "&",
+              }),
+              l(i, 1),
+            ],
+          });
+        },
+        Events: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            a = j(),
+            s = (0, th.f)(),
+            i = e.events.length > 1 && !s && !a;
+          return (0, v.jsxs)("section", {
+            className: `relative flex w-full flex-col items-center px-[13%] pb-[10cqw] text-center ${a ? "pt-[8cqw]" : "pt-[24cqw]"}`,
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(ih, {
+                  kicker: t.eventsKicker,
+                  plain: !0,
+                  children: t.eventsTitle,
+                }),
+              }),
+              i
+                ? (0, v.jsx)(iB, { invite: e })
+                : (0, v.jsx)("div", {
+                    className: "mt-[6cqw] flex w-full flex-col gap-[9cqw]",
+                    children: e.events.map((t, a) =>
+                      (0, v.jsx)(
+                        $.f.div,
+                        {
+                          className: "w-full",
+                          initial: { opacity: 0, y: 36, scale: 0.97 },
+                          whileInView: { opacity: 1, y: 0, scale: 1 },
+                          viewport: { once: !0, amount: 0.25 },
+                          transition: { duration: 1, ease: ic },
+                          children: (0, v.jsx)(iF, { e: t, invite: e }),
+                        },
+                        t.name + a,
+                      ),
+                    ),
+                  }),
+            ],
+          });
+        },
+        Closing: function ({ invite: e }) {
+          let t = j(),
+            { t: a } = (0, N.G)(),
+            [s, i] = (0, L.g)(e);
+          return (0, v.jsxs)(v.Fragment, {
+            children: [
+              (0, v.jsx)(iL, { invite: e }),
+              (0, v.jsxs)("section", {
+                className: "relative w-full overflow-hidden",
+                children: [
+                  (0, v.jsx)("div", {
+                    className: `relative z-10 flex flex-col items-center px-[17%] text-center ${t ? "pt-[8cqw]" : "pt-[19cqw]"}`,
+                    children: (0, v.jsxs)(B.b, {
+                      className: "flex flex-col items-center",
+                      children: [
+                        e.closing &&
+                          (0, v.jsx)("p", {
+                            className:
+                              "inv-serif text-[4.2cqw] leading-snug font-semibold italic",
+                            style: { color: ie },
+                            children: e.closing,
+                          }),
+                        (0, v.jsx)("p", {
+                          className:
+                            "inv-script mt-[1cqw] text-[11cqw] leading-tight",
+                          style: { color: s7 },
+                          children:
+                            e.closingNames ??
+                            `${s.first} ${e.joiner ?? "&"} ${i.first}`,
+                        }),
+                        e.hashtag &&
+                          (0, v.jsx)("p", {
+                            className:
+                              "inv-serif mt-[1cqw] text-[4.4cqw] font-bold",
+                            style: { color: it },
+                            children: e.hashtag,
+                          }),
+                      ],
+                    }),
+                  }),
+                  (0, v.jsx)("div", {
+                    className: "relative -mt-[47cqw] aspect-[864/1536] w-full",
+                    style: {
+                      maskImage:
+                        "linear-gradient(to bottom, transparent 0, #000 14%)",
+                      WebkitMaskImage:
+                        "linear-gradient(to bottom, transparent 0, #000 14%)",
+                    },
+                    children: (0, v.jsx)(ix, {
+                      src: ir("marathi-wada.jpg"),
+                      alt: "The bride and groom walk home together, her pallu tied to his shela",
+                      className: "object-cover object-bottom",
+                    }),
+                  }),
+                  !e.noBranding &&
+                    (0, v.jsx)("div", {
+                      className:
+                        "relative z-10 flex justify-center pt-[6cqw] pb-[16cqw]",
+                      children: (0, v.jsx)(k.default, {
+                        href: "/",
+                        className:
+                          "inv-label inline-block text-[2.2cqw] font-semibold",
+                        style: { color: ie, ...io(0.22) },
+                        children: e.brandLine ?? a.craftedBy(F.B.name),
+                      }),
+                    }),
+                ],
+              }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          return (0, v.jsx)("div", {
+            className: "pointer-events-none absolute inset-0",
+            style: { background: ii },
+          });
+        },
+        Frame: function () {
+          let e = (0, th.f)(),
+            t = (t) => ({
+              duration: e ? 0.3 : 1.4,
+              delay: e ? 0 : 2.3 + t,
+              ease: ic,
+            });
+          return (0, v.jsxs)("div", {
+            className: "absolute inset-0 overflow-hidden",
+            children: [
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-x-0 top-0",
+                style: { aspectRatio: "864 / 506" },
+                initial: { y: "-4%", opacity: 0 },
+                animate: { y: "0%", opacity: 1 },
+                transition: t(0),
+                children: (0, v.jsx)(R.default, {
+                  src: ir("marathi-frame-arch.webp"),
+                  alt: "",
+                  fill: !0,
+                  priority: !0,
+                  sizes: q,
+                }),
+              }),
+              ["left", "right"].map((e) =>
+                (0, v.jsx)(
+                  $.f.div,
+                  {
+                    className: "absolute inset-x-0 top-[57cqw] bottom-[64cqw]",
+                    style: {
+                      clipPath:
+                        "left" === e ? "inset(0 50% 0 0)" : "inset(0 0 0 50%)",
+                    },
+                    initial: { x: "left" === e ? "-3%" : "3%", opacity: 0 },
+                    animate: { x: "0%", opacity: 1 },
+                    transition: t(0.1),
+                    children: (0, v.jsx)(R.default, {
+                      src: ir("marathi-frame-pillars-2.webp"),
+                      alt: "",
+                      fill: !0,
+                      priority: !0,
+                      sizes: q,
+                      className: "object-fill",
+                    }),
+                  },
+                  e,
+                ),
+              ),
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-x-0 bottom-0",
+                style: { aspectRatio: "864 / 569" },
+                initial: { y: "4%", opacity: 0 },
+                animate: { y: "0%", opacity: 1 },
+                transition: t(0.1),
+                children: (0, v.jsx)(R.default, {
+                  src: ir("marathi-frame-lamps-3.webp"),
+                  alt: "",
+                  fill: !0,
+                  priority: !0,
+                  sizes: q,
+                }),
+              }),
+            ],
+          });
+        },
+        Divider: im,
+        Title: ih,
+        CountdownSection: function ({ invite: e }) {
+          let { t, d: a } = (0, N.G)(),
+            s = (function (e) {
+              let [t, a] = (0, f.useState)(null);
+              return (
+                (0, f.useEffect)(() => {
+                  let t = () =>
+                      a(Math.max(0, new Date(e).getTime() - Date.now())),
+                    s = window.setTimeout(t, 0),
+                    i = window.setInterval(t, 1e3);
+                  return () => {
+                    window.clearTimeout(s), window.clearInterval(i);
+                  };
+                }, [e]),
+                t
+              );
+            })(e.date),
+            i = null === s ? null : Math.floor(s / 1e3),
+            n = [
+              null === i ? null : Math.floor(i / 86400),
+              null === i ? null : Math.floor((i % 86400) / 3600),
+              null === i ? null : Math.floor((i % 3600) / 60),
+              null === i ? null : i % 60,
+            ];
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex w-full flex-col items-center px-[14%] pt-[14cqw] pb-[30cqw] text-center",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(ih, {
+                  kicker: t.countdownKicker,
+                  plain: !0,
+                  children: e.countdownTitle ?? t.countdownTitle,
+                }),
+              }),
+              0 === s
+                ? (0, v.jsx)("p", {
+                    className: "inv-script mt-[7cqw] text-[11cqw]",
+                    style: { color: s7 },
+                    children: t.justMarried,
+                  })
+                : (0, v.jsx)("div", {
+                    className:
+                      "mt-[7cqw] flex w-full items-start justify-center",
+                    children: t.units.map((e, t) =>
+                      (0, v.jsxs)(
+                        "div",
+                        {
+                          className: "flex items-start",
+                          children: [
+                            t > 0 &&
+                              (0, v.jsx)("span", {
+                                className:
+                                  "mx-[3.5cqw] mt-[1.5cqw] h-[9cqw] w-px",
+                                style: { background: it },
+                              }),
+                            (0, v.jsxs)("div", {
+                              className: "flex w-[13cqw] flex-col items-center",
+                              children: [
+                                (0, v.jsx)(
+                                  $.f.span,
+                                  {
+                                    initial: { opacity: 0.35 },
+                                    animate: { opacity: 1 },
+                                    transition: { duration: 0.6 },
+                                    className:
+                                      "inv-label text-[10cqw] leading-none font-semibold tabular-nums",
+                                    style: { color: it, letterSpacing: 0 },
+                                    children:
+                                      null === n[t]
+                                        ? "··"
+                                        : String(n[t]).padStart(2, "0"),
+                                  },
+                                  n[t] ?? "x",
+                                ),
+                                (0, v.jsx)("span", {
+                                  className:
+                                    "inv-label mt-[2cqw] text-[2.1cqw] font-semibold",
+                                  style: { color: ie, ...io(0.22) },
+                                  children: e,
+                                }),
+                              ],
+                            }),
+                          ],
+                        },
+                        e,
+                      ),
+                    ),
+                  }),
+              (0, v.jsx)(ip, { width: "40%" }),
+              (0, v.jsxs)("p", {
+                className: "inv-label text-[3cqw] font-semibold",
+                style: { color: s7, ...io(0.2) },
+                children: [
+                  a.weekday(e.date),
+                  ", ",
+                  a.day(e.date),
+                  " ",
+                  a.month(e.date),
+                  e.hideCountdownCity ? "" : ` \xb7 ${e.city}`,
+                ],
+              }),
+            ],
+          });
+        },
+        ScratchSection: function ({ invite: e }) {
+          let { t, d: a } = (0, N.G)(),
+            s = (0, th.f)(),
+            [i, n] = (0, f.useState)(!1),
+            [l, r] = (0, f.useState)(!1),
+            c = (0, s9.f)(0),
+            o = (0, f.useRef)(null),
+            d = (0, f.useRef)(null),
+            x = () => o.current?.offsetHeight ?? 300,
+            m = () => {
+              i ||
+                (n(!0),
+                s
+                  ? c.set(1.2 * x())
+                  : (0, s8.f)(c, 1.2 * x(), {
+                      duration: 0.9,
+                      ease: [0.5, 0, 0.3, 1],
+                    }));
+            },
+            p = (e) => {
+              let t = d.current;
+              (d.current = null),
+                r(!1),
+                t &&
+                  (!e && (t.moved < 6 || c.get() > 0.4 * x())
+                    ? m()
+                    : (0, s8.f)(c, 0, {
+                        type: "spring",
+                        stiffness: 320,
+                        damping: 24,
+                      }));
+            },
+            h = e.events.find((t) => t.start === e.date),
+            w = h?.noTime ? null : (h?.timeText ?? a.time(e.date)),
+            u = !e.occasion;
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex w-full flex-col items-center px-[14%] pt-[16cqw] pb-[6cqw] text-center",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(ih, {
+                  kicker: t.scratchKicker,
+                  plain: !0,
+                  children: t.scratchTitle,
+                }),
+              }),
+              (0, v.jsxs)("div", {
+                className: "relative mt-[5cqw] w-full",
+                children: [
+                  (0, v.jsxs)("div", {
+                    className: "relative mx-auto w-[86%]",
+                    children: [
+                      (0, v.jsxs)("div", {
+                        ref: o,
+                        className:
+                          "relative overflow-hidden rounded-[1.2cqw] p-[0.45cqw]",
+                        style: {
+                          background: it,
+                          boxShadow: "0 3cqw 6cqw -3.5cqw rgba(74,29,20,.45)",
+                        },
+                        children: [
+                          (0, v.jsx)("div", {
+                            className: "rounded-[1cqw] p-[1.1cqw]",
+                            style: { background: ii },
+                            children: (0, v.jsxs)("div", {
+                              className:
+                                "flex flex-col items-center rounded-[0.8cqw] px-[4cqw] pt-[8cqw] pb-[7cqw]",
+                              style: {
+                                background: il,
+                                boxShadow: `inset 0 0 0 0.25cqw ${it}`,
+                              },
+                              children: [
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-label text-[2.8cqw] font-semibold",
+                                  style: { color: is, ...io(0.3) },
+                                  children: a.weekday(e.date),
+                                }),
+                                (0, v.jsxs)("div", {
+                                  className:
+                                    "mt-[1.5cqw] flex items-center gap-[3cqw]",
+                                  children: [
+                                    (0, v.jsx)("span", {
+                                      className: "h-px w-[8cqw]",
+                                      style: { background: it },
+                                    }),
+                                    (0, v.jsx)("p", {
+                                      className:
+                                        "inv-label text-[16cqw] leading-none font-semibold",
+                                      style: { color: it, letterSpacing: 0 },
+                                      children: e.padDay
+                                        ? a.day(e.date).padStart(2, "0")
+                                        : a.day(e.date),
+                                    }),
+                                    (0, v.jsx)("span", {
+                                      className: "h-px w-[8cqw]",
+                                      style: { background: it },
+                                    }),
+                                  ],
+                                }),
+                                (0, v.jsxs)("p", {
+                                  className:
+                                    "inv-label mt-[1.5cqw] text-[2.8cqw] font-semibold",
+                                  style: { color: ie, ...io(0.3) },
+                                  children: [
+                                    a.month(e.date),
+                                    " ",
+                                    a.year(e.date),
+                                  ],
+                                }),
+                                (0, v.jsx)(ip, {
+                                  width: "50%",
+                                  className: "my-[3.5cqw]",
+                                }),
+                                w &&
+                                  (0, v.jsx)(v.Fragment, {
+                                    children: (0, v.jsx)("p", {
+                                      className:
+                                        "inv-script text-[9cqw] leading-tight",
+                                      style: { color: s7 },
+                                      children: w,
+                                    }),
+                                  }),
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-serif mt-[1.5cqw] text-[4cqw] leading-snug font-semibold",
+                                  style: { color: ie },
+                                  children: e.city,
+                                }),
+                              ],
+                            }),
+                          }),
+                          (0, v.jsx)($.f.div, {
+                            className: "pointer-events-none absolute inset-0",
+                            style: { y: c },
+                            "aria-hidden": i,
+                            children: (0, v.jsx)(iu, {
+                              edge: "3cqw 7cqw 6cqw 7cqw",
+                              children:
+                                !i &&
+                                (0, v.jsxs)("div", {
+                                  className:
+                                    "absolute inset-0 flex flex-col items-center justify-center px-[2cqw] text-center",
+                                  children: [
+                                    (0, v.jsx)("p", {
+                                      className: "text-[2.6cqw] uppercase",
+                                      style: {
+                                        fontFamily: "var(--font-cinzel), serif",
+                                        color: ia,
+                                        ...io(0.3),
+                                      },
+                                      children: "Pull the tassel",
+                                    }),
+                                    (0, v.jsx)("p", {
+                                      className:
+                                        "inv-serif mt-[1cqw] text-[4cqw] italic",
+                                      style: { color: ia },
+                                      children: u
+                                        ? "to reveal the muhurta"
+                                        : "to reveal the date",
+                                    }),
+                                    (0, v.jsx)("svg", {
+                                      viewBox: "0 0 20 12",
+                                      className: "mt-[2cqw] w-[4cqw]",
+                                      "aria-hidden": !0,
+                                      children: (0, v.jsx)("path", {
+                                        d: "M2 2 L10 10 L18 2",
+                                        fill: "none",
+                                        stroke: ia,
+                                        strokeWidth: "2",
+                                        strokeLinecap: "round",
+                                        strokeLinejoin: "round",
+                                      }),
+                                    }),
+                                  ],
+                                }),
+                            }),
+                          }),
+                        ],
+                      }),
+                      (0, v.jsx)($.f.div, {
+                        className:
+                          "absolute top-full left-1/2 z-10 -mt-[3cqw] w-[9cqw] -translate-x-1/2",
+                        style: { y: c, pointerEvents: i ? "none" : "auto" },
+                        animate: { opacity: +!i },
+                        transition: { duration: 0.5 },
+                        children: (0, v.jsx)($.f.button, {
+                          type: "button",
+                          "aria-label": t.revealInstead,
+                          className:
+                            "block w-full cursor-grab touch-none select-none active:cursor-grabbing",
+                          style: { transformOrigin: "50% 0%" },
+                          animate:
+                            l || i || s
+                              ? { rotate: 0 }
+                              : { rotate: [0, 5, -4, 0] },
+                          transition:
+                            l || i || s
+                              ? { duration: 0.2 }
+                              : {
+                                  duration: 2.6,
+                                  repeat: 1 / 0,
+                                  ease: "easeInOut",
+                                  repeatDelay: 0.6,
+                                },
+                          onPointerDown: (e) => {
+                            i ||
+                              (e.currentTarget.setPointerCapture(e.pointerId),
+                              (d.current = { from: e.clientY, moved: 0 }),
+                              r(!0));
+                          },
+                          onPointerMove: (e) => {
+                            let t = d.current;
+                            if (!t) return;
+                            let a = e.clientY - t.from;
+                            (t.moved = Math.max(t.moved, Math.abs(a))),
+                              c.set(Math.max(0, a));
+                          },
+                          onPointerUp: () => p(!1),
+                          onPointerCancel: () => p(!0),
+                          onKeyDown: (e) => {
+                            ("Enter" === e.key || " " === e.key) &&
+                              (e.preventDefault(), m());
+                          },
+                          children: (0, v.jsx)(i_, {}),
+                        }),
+                      }),
+                    ],
+                  }),
+                  i && !s && (0, v.jsx)(iS, {}),
+                ],
+              }),
+              (0, v.jsx)("div", {
+                className:
+                  "mt-[18cqw] flex min-h-[10cqw] items-center justify-center",
+                children: (0, v.jsx)(tA.f, {
+                  mode: "wait",
+                  initial: !1,
+                  children: i
+                    ? (0, v.jsx)("span", {}, "blessing")
+                    : (0, v.jsx)(
+                        $.f.button,
+                        {
+                          type: "button",
+                          onClick: m,
+                          exit: { opacity: 0 },
+                          className:
+                            "inv-serif text-[3.6cqw] italic underline underline-offset-4",
+                          style: { color: ie, textDecorationColor: it },
+                          children: t.revealInstead,
+                        },
+                        "tap",
+                      ),
+                }),
+              }),
+            ],
+          });
+        },
+      },
+      iW = "#6e1a2c",
+      iI = "#3d2418",
+      iH = "#a8812f",
+      iD = "#f3d48b",
+      iR = "#1f5e46",
+      iA = "#fbf4e6",
+      iE = "#fffaf0",
+      iP = (e) => `/art/illus/${e}`,
+      iG = [0.22, 1, 0.36, 1],
+      iZ = (e) => ({ letterSpacing: `${e}em` }),
+      iK = "var(--screen-h, 100dvh)",
+      iV = { top: 371 / 864, bottom: 214 / 864, rail: 46 / 864 },
+      iY = { x: { l: 0, r: 624 / 864 }, y: 0.625, w: 240 / 864, h: 0.375 },
+      iU = {
+        w: 1.8,
+        ratio: 600 / 793,
+        at: {
+          l: { left: "-11%", top: "5.7%" },
+          r: { left: "-69%", top: "5.7%" },
+        },
+      },
+      iX = "9.5cqw";
+    function iQ({ children: e, className: t = "" }) {
+      return (0, v.jsx)("div", {
+        className: `absolute top-1/2 left-1/2 aspect-[9/16] -translate-x-1/2 -translate-y-1/2 ${t}`,
+        style: { height: "max(100%, calc(100cqw * 16 / 9))" },
+        children: e,
+      });
+    }
+    function iJ({
+      src: e,
+      alt: t = "",
+      priority: a,
+      className: s = "object-cover",
+      sizes: i,
+    }) {
+      let n = j();
+      return (0, v.jsx)(R.default, {
+        src: e,
+        alt: t,
+        fill: !0,
+        priority: a && !n,
+        sizes: i ?? (n ? y : q),
+        className: s,
+      });
+    }
+    function i0(e, t) {
+      let a = t,
+        s = () => ((a = (16807 * a) % 0x7fffffff) - 1) / 0x7ffffffe;
+      return Array.from({ length: e }, () => [s(), s(), s(), s()]);
+    }
+    function i1({ n: e = 3, className: t = "my-[4cqw]" }) {
+      return (0, v.jsxs)("div", {
+        className: `mx-auto flex items-center justify-center gap-[1.6cqw] ${t}`,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("span", {
+            className: "h-[0.3cqw] w-[8cqw]",
+            style: { background: iH },
+          }),
+          Array.from({ length: e }, (e, t) =>
+            (0, v.jsxs)(
+              "span",
+              {
+                className: "flex items-center gap-[1.6cqw]",
+                children: [
+                  t > 0 &&
+                    (0, v.jsx)("span", {
+                      className: "size-[0.9cqw] rotate-45",
+                      style: { background: iW },
+                    }),
+                  (0, v.jsx)("span", {
+                    className: "block size-[2.3cqw] rounded-full",
+                    style: {
+                      background:
+                        "radial-gradient(circle at 35% 35%, #fff, #dfe5ea 55%, #b9c3cb)",
+                      boxShadow: `0 0 0 0.45cqw ${iH}`,
+                    },
+                  }),
+                ],
+              },
+              t,
+            ),
+          ),
+          (0, v.jsx)("span", {
+            className: "h-[0.3cqw] w-[8cqw]",
+            style: { background: iH },
+          }),
+        ],
+      });
+    }
+    function i2({ kicker: e, children: t, plain: a }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.6cqw] font-semibold",
+              style: { color: iR, ...iZ(0.28) },
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className: "inv-script text-[11.5cqw] leading-tight",
+            style: { color: iW },
+            children: t,
+          }),
+          !a && (0, v.jsx)(i1, { n: 3, className: "mt-[1cqw]" }),
+        ],
+      });
+    }
+    function i5({ children: e, className: t = "", style: a }) {
+      return (0, v.jsx)("section", {
+        className: `relative flex w-full flex-col items-center text-center ${t}`,
+        style: { paddingInline: iX, ...a },
+        children: e,
+      });
+    }
+    let i4 = i0(64, 7).map(([e, t, a, s]) => ({
+        x: 0.2 + 0.6 * e,
+        y: 0.07 + 0.36 * t,
+        s: 0.18 + 0.32 * a,
+        d: 3 * s,
+      })),
+      i3 = i0(16, 23).map(([e, t, a, s]) => ({
+        x: 0.14 + 0.72 * e,
+        y: 0.5 + 0.2 * t,
+        dur: 5 + 5 * a,
+        delay: 4 * s,
+        dx: (a - 0.5) * 8,
+        dy: (s - 0.5) * 6,
+      })),
+      i6 = i0(26, 11).map(([e, t, a, s]) => ({
+        x: 0.04 + 0.92 * e,
+        delay: 7 * t,
+        dur: 7 + 5 * a,
+        sway: (s - 0.5) * 14,
+        hue: s > 0.45 ? "#f39a1e" : "#f6c12c",
+        size: 1.3 + 1.1 * a,
+      })),
+      i8 = [
+        { x: 0.5, y: 0.693 },
+        { x: 0.4, y: 0.703 },
+        { x: 0.6, y: 0.703 },
+        { x: 0.31, y: 0.714 },
+        { x: 0.69, y: 0.714 },
+        { x: 0.35, y: 0.75 },
+        { x: 0.65, y: 0.75 },
+      ],
+      i9 = [
+        { dx: 0, dy: 0, s: 1 },
+        { dx: -0.05, dy: 0.018, s: 0.8 },
+        { dx: -0.03, dy: -0.016, s: 0.85 },
+        { dx: -0.1, dy: 0.006, s: 0.7 },
+        { dx: -0.085, dy: -0.022, s: 0.65 },
+      ];
+    function i7({ x: e, y: t, t: a, at: s, dim: i }) {
+      let n = (0, eS.f)(
+          a,
+          s < 0 ? [0, 1] : [s, s + 0.25],
+          s < 0 ? [1, 1] : [0, 1],
+        ),
+        l = (0, eS.f)([n, i], ([e, t]) => e * t);
+      return (0, v.jsxs)("div", {
+        className: "kk-bob absolute",
+        style: {
+          left: `${100 * e}%`,
+          top: `${100 * t}%`,
+          width: `${4.4 * (0.75 + (t - 0.69) * 4)}cqw`,
+          transform: "translate(-50%, -60%)",
+          animationDelay: `${3 * e}s`,
+        },
+        children: [
+          (0, v.jsx)($.f.div, {
+            className:
+              "absolute top-[60%] left-1/2 h-[70%] w-[260%] -translate-x-1/2 rounded-[50%] mix-blend-screen",
+            style: {
+              opacity: l,
+              background:
+                "radial-gradient(ellipse, rgba(255,190,90,.55), rgba(255,170,70,0) 70%)",
+            },
+          }),
+          (0, v.jsx)($.f.div, {
+            className:
+              "absolute bottom-[45%] left-1/2 aspect-[1/2] w-[34%] -translate-x-1/2",
+            style: { opacity: l },
+            children: (0, v.jsx)("div", {
+              className:
+                "kk-flame size-full rounded-[50%_50%_45%_45%/65%_65%_35%_35%]",
+              style: {
+                background:
+                  "radial-gradient(ellipse at 50% 75%, #fffbe0 0%, #ffd15c 38%, #ff8a1f 72%, rgba(255,90,20,0) 100%)",
+                boxShadow: "0 0 2.4cqw 0.9cqw rgba(255,178,70,.75)",
+              },
+            }),
+          }),
+          (0, v.jsxs)("svg", {
+            viewBox: "0 0 40 16",
+            className: "relative block w-full",
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)("path", {
+                d: "M2 4 Q20 10 38 4 Q34 15 20 15 Q6 15 2 4 Z",
+                fill: "#9a4a22",
+              }),
+              (0, v.jsx)("path", {
+                d: "M2 4 Q20 10 38 4",
+                fill: "none",
+                stroke: "#c9733a",
+                strokeWidth: "1.4",
+              }),
+              (0, v.jsx)("path", {
+                d: "M8 9 Q20 12.5 32 9",
+                fill: "none",
+                stroke: "#e8b04a",
+                strokeWidth: "0.9",
+                opacity: ".8",
+              }),
+            ],
+          }),
+        ],
+      });
+    }
+    function ne({ a: e, b: t, joiner: a }) {
+      let s =
+        Math.max(e.length, t.length) > 10
+          ? "10cqw"
+          : Math.max(e.length, t.length) > 7
+            ? "11.5cqw"
+            : "13cqw";
+      return (0, v.jsxs)("div", {
+        className: "inv-script",
+        children: [
+          (0, v.jsx)("p", {
+            className: "leading-[1.04]",
+            style: { fontSize: s },
+            children: e,
+          }),
+          (0, v.jsx)("p", {
+            className: "inv-serif -my-[0.6cqw] text-[8cqw] leading-none italic",
+            children: a,
+          }),
+          (0, v.jsx)("p", {
+            className: "leading-[1.04]",
+            style: { fontSize: s },
+            children: t,
+          }),
+        ],
+      });
+    }
+    function nt() {
+      let e = (0, f.useMemo)(
+        () =>
+          i0(36, 77).map(([e, t, a, s], i) => ({
+            x: 100 * e,
+            delay: 0.7 * t,
+            dur: 2.2 + 1.5 * a,
+            rot: 360 * s,
+            sway: (a - 0.5) * 12,
+            kind: i % 3 == 0 ? "mirror" : i % 2 ? "marigold" : "petal",
+          })),
+        [],
+      );
+      return (0, v.jsx)("div", {
+        className:
+          "pointer-events-none absolute inset-x-0 -top-[6cqw] bottom-[-30cqw] overflow-hidden",
+        "aria-hidden": !0,
+        children: e.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute top-0 block",
+              style: {
+                left: `${e.x}%`,
+                width: "mirror" === e.kind ? "2.2cqw" : "2.8cqw",
+                height: "mirror" === e.kind ? "2.2cqw" : "3.2cqw",
+                borderRadius: "mirror" === e.kind ? 999 : "70% 30% 70% 30%",
+                background:
+                  "mirror" === e.kind
+                    ? "#e6ebee"
+                    : "marigold" === e.kind
+                      ? "#f39a1e"
+                      : "#e35d6a",
+                boxShadow: "mirror" === e.kind ? `0 0 0 0.4cqw ${iH}` : void 0,
+              },
+              initial: { y: 0, rotate: e.rot, opacity: 0 },
+              animate: {
+                y: "120cqw",
+                x: ["0cqw", `${e.sway}cqw`, `${-e.sway / 2}cqw`],
+                rotate: e.rot + 280,
+                opacity: [0, 1, 1, 0],
+              },
+              transition: {
+                duration: e.dur,
+                delay: e.delay,
+                ease: "linear",
+                times: [0, 0.1, 0.85, 1],
+              },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function na({ children: e }) {
+      let t = "50% 50% 0.8cqw 0.8cqw / 34% 34% 0.8cqw 0.8cqw";
+      return (0, v.jsxs)("div", {
+        className: "relative flex w-[16.5cqw] flex-col items-center",
+        children: [
+          (0, v.jsx)("span", {
+            className: "mb-[-0.3cqw] block h-[1.8cqw] w-[6cqw]",
+            style: {
+              background: iH,
+              clipPath: "polygon(50% 0, 100% 100%, 0 100%)",
+            },
+            "aria-hidden": !0,
+          }),
+          (0, v.jsx)("div", {
+            className: "w-full p-[0.4cqw]",
+            style: { background: iH, borderRadius: t },
+            children: (0, v.jsx)("div", {
+              className:
+                "flex flex-col items-center px-[1cqw] pt-[4cqw] pb-[2.4cqw]",
+              style: {
+                background: iE,
+                borderRadius: t,
+                boxShadow: `inset 0 0 0 0.35cqw ${iA}, inset 0 0 0 0.6cqw ${iD}`,
+              },
+              children: e,
+            }),
+          }),
+          (0, v.jsx)("span", {
+            className: "mt-[0.5cqw] block h-[1cqw] w-[110%] rounded-[0.4cqw]",
+            style: { background: iH },
+            "aria-hidden": !0,
+          }),
+        ],
+      });
+    }
+    let ns = (e) => iP(`kankotri2-obj-${e}.webp`),
+      ni = {
+        mehndi: { src: ns("mehndi"), ratio: 525 / 720 },
+        haldi: { src: ns("haldi"), ratio: 705 / 720 },
+        sangeet: { src: ns("garba"), ratio: 673 / 720 },
+        jaggo: { src: ns("garba"), ratio: 673 / 720 },
+        phere: { src: ns("pheras"), ratio: 572 / 720 },
+        muhurtham: { src: ns("pheras"), ratio: 572 / 720 },
+        anandkaraj: { src: ns("pheras"), ratio: 572 / 720 },
+        nikah: { src: ns("pheras"), ratio: 572 / 720 },
+        reception: { src: ns("reception"), ratio: 0.95 },
+        engagement: { src: ns("reception"), ratio: 0.95 },
+        walima: { src: ns("reception"), ratio: 0.95 },
+        baraat: { src: ns("baraat"), ratio: 678 / 720 },
+        other: { src: ns("baraat"), ratio: 678 / 720 },
+      };
+    function nn({ lit: e }) {
+      let t = (0, eS.f)(e, [0, 0.6], [1, 0]),
+        a = (0, eS.f)(e, [0, 1], [0.3, 1]),
+        s = (0, eS.f)(e, [0, 1], [-270, 0]);
+      return (0, v.jsxs)("div", {
+        className: "relative size-[10cqw]",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)($.f.svg, {
+            viewBox: "-10 -10 20 20",
+            className: "absolute inset-[2.5cqw]",
+            style: { opacity: t },
+            children: (0, v.jsx)("path", {
+              d: "M0 -9 C1.2 -2.4 2.4 -1.2 9 0 C2.4 1.2 1.2 2.4 0 9 C-1.2 2.4 -2.4 1.2 -9 0 C-2.4 -1.2 -1.2 -2.4 0 -9 Z",
+              fill: iA,
+              stroke: iH,
+              strokeWidth: "1.2",
+            }),
+          }),
+          (0, v.jsx)($.f.div, {
+            className: "absolute inset-0",
+            style: { opacity: e, scale: a, rotate: s },
+            children: (0, v.jsx)(R.default, {
+              src: iP("kankotri2-disc.webp"),
+              alt: "",
+              fill: !0,
+              sizes: "60px",
+              className: "object-contain",
+            }),
+          }),
+        ],
+      });
+    }
+    let nl =
+        "inline-flex items-center gap-[1.2cqw] text-[3.3cqw] font-semibold underline underline-offset-[0.8cqw] decoration-[0.25cqw] active:opacity-70 transition",
+      nr = {
+        button: `${nl} text-[#6e1a2c] decoration-[#a8812f]`,
+        ghost: `${nl} text-[#1f5e46] decoration-[#a8812f]`,
+      };
+    function nc({ e, invite: t, i: a, still: s }) {
+      let { t: i, d: n } = (0, N.G)(),
+        l = (0, f.useRef)(null),
+        { scrollYProgress: r } = e$({
+          target: l,
+          offset: ["start 92%", "center 55%"],
+        }),
+        c = (0, eS.f)(r, [0.55, 1], [0, 1]),
+        o = (0, s9.f)(1),
+        d = a % 2 == 0,
+        x = (0, eS.f)(r, [0, 0.8], [d ? "-18%" : "18%", "0%"]),
+        m = (0, eS.f)(r, [0.1, 0.9], [d ? "18%" : "-18%", "0%"]),
+        p = (0, eS.f)(r, [0, 0.7], [0, 1]),
+        h = e.start === t.date && !t.occasion,
+        w = n.time(e.start),
+        u = ni[e.kind] ?? ni.other,
+        g = (0, v.jsx)($.f.div, {
+          className: "relative w-full",
+          style: s ? void 0 : { x: x, opacity: p },
+          children: e.image
+            ? (0, v.jsx)("div", {
+                className:
+                  "relative mx-auto aspect-[4/5] w-[88%] overflow-hidden",
+                style: {
+                  borderRadius: "50% 50% 1cqw 1cqw / 30% 30% 1cqw 1cqw",
+                  boxShadow: `0 0 0 0.5cqw ${iD}`,
+                },
+                children: (0, v.jsx)(R.default, {
+                  src: e.image,
+                  alt: "",
+                  fill: !0,
+                  sizes: "200px",
+                  className: "object-cover",
+                }),
+              })
+            : (0, v.jsx)("div", {
+                className: "relative w-full",
+                style: { aspectRatio: u.ratio },
+                children: (0, v.jsx)(R.default, {
+                  src: u.src,
+                  alt: "",
+                  fill: !0,
+                  sizes: "(max-width: 480px) 40vw, 200px",
+                  className: "object-contain",
+                }),
+              }),
+        }),
+        b = (0, v.jsxs)($.f.div, {
+          className: `flex flex-col ${d ? "items-start text-left [&_[data-event-actions]]:items-start" : "items-end text-right [&_[data-event-actions]]:items-end"}`,
+          style: s ? void 0 : { x: m, opacity: p },
+          children: [
+            (0, v.jsxs)("p", {
+              className: "inv-label text-[2.6cqw] font-semibold",
+              style: { color: iR, ...iZ(0.12) },
+              children: [
+                n.weekday(e.start),
+                ", ",
+                n.day(e.start),
+                " ",
+                n.month(e.start),
+                " ",
+                n.year(e.start),
+              ],
+            }),
+            e.schedule?.length
+              ? null
+              : !e.noTime &&
+                (0, v.jsx)("p", {
+                  className:
+                    "inv-script mt-[1.5cqw] text-[5.2cqw] leading-tight",
+                  style: { color: iH },
+                  children: e.timeText ?? (h ? w : i.onwards(w)),
+                }),
+            (0, v.jsx)("h3", {
+              className: "inv-script leading-[1.05]",
+              style: {
+                color: iW,
+                fontSize: e.name.length > 10 ? "7.4cqw" : "9.4cqw",
+              },
+              children: e.name,
+            }),
+            e.note &&
+              (0, v.jsx)("p", {
+                className:
+                  "inv-serif mt-[0.5cqw] text-[3.3cqw] leading-snug italic",
+                style: { color: iI },
+                children: e.note,
+              }),
+            e.schedule?.length
+              ? (0, v.jsx)("div", {
+                  className: "mt-[1.5cqw] space-y-[1cqw]",
+                  children: e.schedule.map((e, t) =>
+                    (0, v.jsxs)(
+                      "p",
+                      {
+                        className: "inv-serif text-[3.4cqw] leading-snug",
+                        style: { color: iI },
+                        children: [
+                          (0, v.jsx)("span", {
+                            className: "font-bold",
+                            style: { color: iW },
+                            children: n.time(e.at),
+                          }),
+                          " ",
+                          "· ",
+                          e.text,
+                        ],
+                      },
+                      e.at + t,
+                    ),
+                  ),
+                })
+              : null,
+            (0, v.jsx)("p", {
+              className:
+                "inv-serif mt-[2cqw] text-[3.7cqw] leading-snug font-semibold",
+              style: { color: iI },
+              children: e.venue,
+            }),
+            e.address &&
+              (0, v.jsx)("p", {
+                className: "inv-serif mt-[0.5cqw] text-[3.2cqw] leading-snug",
+                style: { color: iI, opacity: 0.8 },
+                children: e.address,
+              }),
+            e.dress &&
+              (0, v.jsx)("p", {
+                className: "inv-serif mt-[1.5cqw] text-[3.2cqw] italic",
+                style: { color: iH },
+                children: i.dress(e.dress),
+              }),
+            (0, v.jsx)("div", {
+              className:
+                "[&_[data-event-actions]]:mt-[2.5cqw] [&_[data-event-actions]]:flex-col [&_[data-event-actions]]:gap-[1.6cqw]",
+              style: { fontFamily: "var(--inv-serif)" },
+              children: (0, v.jsx)(B.W, {
+                event: e,
+                invite: t,
+                theme: { ...nx, ui: { ...nx.ui, ...nr } },
+              }),
+            }),
+          ],
+        });
+      return (0, v.jsxs)("li", {
+        ref: l,
+        className:
+          "relative grid w-full grid-cols-[1fr_10cqw_1fr] items-center gap-x-[2.5cqw]",
+        children: [
+          d ? g : b,
+          (0, v.jsx)("div", {
+            className: "flex justify-center self-center",
+            children: (0, v.jsx)(nn, { lit: s ? o : c }),
+          }),
+          d ? b : g,
+        ],
+      });
+    }
+    function no({ invite: e }) {
+      return e.extras?.length || e.welcome
+        ? (0, v.jsxs)(i5, {
+            className: "pt-[8cqw] pb-[8cqw]",
+            children: [
+              e.extras?.map((e, t) =>
+                (0, v.jsxs)(
+                  B.b,
+                  {
+                    className: `flex w-full flex-col items-center ${t ? "mt-[10cqw]" : ""}`,
+                    children: [
+                      (0, v.jsx)(i2, { plain: !0, children: e.title }),
+                      (0, v.jsx)("div", {
+                        className: "mt-[2cqw] w-full",
+                        children: e.lines.map((e, t) => {
+                          let a = ah(e);
+                          return "gap" === a.kind
+                            ? (0, v.jsx)("div", { className: "h-[3cqw]" }, t)
+                            : "and" === a.kind
+                              ? (0, v.jsx)(
+                                  "p",
+                                  {
+                                    className:
+                                      "inv-serif my-[0.5cqw] text-[4cqw] leading-none",
+                                    style: { color: iH },
+                                    children: "&",
+                                  },
+                                  t,
+                                )
+                              : "sub" === a.kind
+                                ? (0, v.jsx)(
+                                    "p",
+                                    {
+                                      className:
+                                        "inv-label mt-[3cqw] mb-[1cqw] text-[2.8cqw] font-semibold first:mt-0",
+                                      style: { color: iR, ...iZ(0.24) },
+                                      children: a.text,
+                                    },
+                                    t,
+                                  )
+                                : "big" === a.kind
+                                  ? (0, v.jsx)(
+                                      "p",
+                                      {
+                                        className:
+                                          "inv-script my-[1cqw] text-[9cqw] leading-tight",
+                                        style: { color: iW },
+                                        children: a.text,
+                                      },
+                                      t,
+                                    )
+                                  : (0, v.jsx)(
+                                      "p",
+                                      {
+                                        className:
+                                          "inv-serif text-[4.2cqw] leading-relaxed font-medium",
+                                        style: { color: iI },
+                                        children: a.text,
+                                      },
+                                      t,
+                                    );
+                        }),
+                      }),
+                    ],
+                  },
+                  e.title + t,
+                ),
+              ),
+              e.welcome &&
+                (0, v.jsx)(B.b, {
+                  children: (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mt-[8cqw] text-[4.4cqw] leading-snug font-semibold italic",
+                    style: { color: iW },
+                    children: e.welcome,
+                  }),
+                }),
+            ],
+          })
+        : null;
+    }
+    function nd() {
+      return (0, v.jsxs)(v.Fragment, {
+        children: [
+          (0, v.jsx)("div", {
+            className: "relative mt-[4cqw] aspect-[672/500] w-[100cqw]",
+            style: {
+              marginInline: `calc(-1 * ${iX})`,
+              maskImage: "linear-gradient(to bottom, transparent 0%, #000 30%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent 0%, #000 30%)",
+            },
+            children: (0, v.jsx)(iJ, {
+              src: iP("kankotri2-garden-end2.jpg"),
+              alt: "The palace and its garden, with the fountain and the royal elephant",
+              sizes: "(max-width: 480px) 100vw, 480px",
+            }),
+          }),
+          (0, v.jsx)("div", {
+            "aria-hidden": !0,
+            style: { height: `${(iV.bottom - iV.rail) * 100 - 2}cqw` },
+          }),
+        ],
+      });
+    }
+    let nx = {
+        id: "kankotri",
+        tapHint: "tapDiyas",
+        tapHintDelay: 0.8,
+        scrollHint: "scrollToWalkIn",
+        openingMs: 5200,
+        readable: !0,
+        root: "inv-kankotri",
+        vars: {
+          "--inv-script": "var(--font-great-vibes), cursive",
+          "--inv-serif": "var(--font-cormorant), serif",
+          "--inv-label": "var(--font-cinzel), serif",
+          "--inv-accent": iW,
+          "--kk-side": "12.5cqw",
+          background: iA,
+          color: iI,
+        },
+        accent: iW,
+        ui: {
+          section: "relative px-[var(--kk-side)] py-[10cqw]",
+          card: "rounded-[2cqw] border border-[#a8812f] bg-[#fffaf0]",
+          input:
+            "w-full rounded-[2cqw] border border-[#a8812f]/60 bg-[#fffdf7] px-[4cqw] py-[3cqw] text-[3.8cqw] outline-none placeholder:opacity-50",
+          chip: "rounded-full border border-[#a8812f]/70 bg-[#fffdf7] transition",
+          chipOn:
+            "rounded-full border border-transparent font-semibold text-[#fbf6ea] transition [background:var(--inv-accent)]",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full px-[4.5cqw] py-[2.3cqw] text-[3.2cqw] font-semibold text-[#fbf6ea] active:scale-95 transition [background:var(--inv-accent)]",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#a8812f] bg-[#fffaf0] px-[4.5cqw] py-[2.3cqw] text-[3.2cqw] font-semibold text-[#6e1a2c] active:scale-95 transition",
+          muted: "opacity-80",
+          tile: "rounded-[2cqw] border border-[#a8812f] bg-[#fffaf0]",
+        },
+        Opening: function ({ opened: e, onOpen: t }) {
+          return e
+            ? null
+            : (0, v.jsx)("button", {
+                type: "button",
+                onClick: t,
+                "aria-label": "Open the invitation",
+                className: "absolute inset-0 cursor-pointer",
+              });
+        },
+        Hero: function ({ invite: e }) {
+          let t = g(),
+            a = j(),
+            s = !!(0, th.f)(),
+            [i] = (0, f.useState)(t),
+            n = a || s || i,
+            l = (0, s9.f)(7.2 * !!n),
+            [r, c] = (0, f.useState)(n);
+          (0, f.useEffect)(() => {
+            if (!t || n) return;
+            let e = (0, s8.f)(l, 7.2, { duration: 7.2, ease: "linear" }),
+              a = window.setTimeout(() => c(!0), 7200);
+            return () => {
+              e.stop(), window.clearTimeout(a);
+            };
+          }, [t, n, l]);
+          let o = (0, f.useRef)(null),
+            { scrollYProgress: d } = e$({
+              target: o,
+              offset: ["start start", "end end"],
+            }),
+            x = !a && !s,
+            m = (0, eS.f)(d, [0, 0.12], [1, 0]),
+            p = (0, eS.f)(d, [0, 0.12], ["0cqw", "-8cqw"]),
+            h = (0, eS.f)(d, [0.03, 0.18], [1, 0]),
+            w = (0, eS.f)(l, [1.8, 3.6], [1, 0]),
+            u = (0, eS.f)(l, [1.8, 3, 4.4, 5.8], [0, 1, 1, 0]),
+            b = (0, eS.f)(l, [2.1, 4.8], [1, 0]),
+            y = (0, eS.f)(l, [0, 0.3, 1.8, 2.8, 4.6], [0.32, 0.55, 1, 1, 0]),
+            q = (0, eS.f)(l, [0.25, 1.9], [0, 140]),
+            k = (0, eS.f)(
+              q,
+              (e) =>
+                `radial-gradient(circle at 50% 46%, #000 ${e}%, transparent ${e + 18}%)`,
+            ),
+            C = (0, eS.f)(l, [1.9, 5.6], ["56%", "39.5%"]),
+            M = (0, eS.f)(l, [1.9, 2.4], [0, 1]),
+            S = (0, eS.f)(l, [1.9, 5.6], [1.3, 0.8]),
+            _ = (0, eS.f)(l, [5, 7], [1, 0.18]),
+            z = (0, eS.f)(l, [2.4, 3.8, 6.4], [0, 0.6, 0.22]),
+            F = (0, eS.f)(l, [2.2, 3.5, 5, 6.4], [0, 0.6, 0.35, 0]),
+            T = (0, eS.f)(l, [1.6, 2.8], [1, 0]),
+            B = (0, eS.f)(l, [0.2, 1.6, 2.6, 4.2], [0, 0.55, 0.45, 0]),
+            O = (0, eS.f)(l, [1.8, 3.2], [1, 0]),
+            W = (0, eS.f)(l, [3, 3.9], [1, 0]),
+            I = (0, eS.f)(l, [2.4, 3.5], [0, 1]),
+            H = (0, eS.f)(l, [4.6, 5.6], [0, 1]),
+            D = (0, eS.f)(l, [4.6, 5.6], [8, 0]),
+            R = (0, eS.f)(l, [2.6, 7.2], ["12%", "98%"]),
+            A = (0, eS.f)(l, [2.6, 7.2], ["41%", "33.5%"]),
+            E = (0, eS.f)(l, [2.6, 3, 6.6, 7.2], [0, 0.75, 0.75, 0]),
+            P = (0, eS.f)(l, [3.6, 4.2], [0, 1]),
+            G = (0, eS.f)(l, [4.4, 6], [1, 0.5]),
+            [Z, K] = (0, L.g)(e),
+            { d: V } = (0, N.G)(),
+            Y = [
+              !e.hideHeroDate &&
+                `${V.day(e.date)} ${V.month(e.date)} ${V.year(e.date)}`,
+              !e.hideHeroCity && e.city,
+            ]
+              .filter(Boolean)
+              .join(" · "),
+            U = !n,
+            X = (0, v.jsx)("div", {
+              className: "absolute inset-0 overflow-hidden bg-[#070b22]",
+              children: (0, v.jsxs)(iQ, {
+                className: "@container",
+                children: [
+                  (0, v.jsx)("div", {
+                    className: "absolute inset-0",
+                    style: {
+                      background:
+                        "linear-gradient(180deg, #8fc0ea 0%, #a4cdee 30%, #c9e2f3 48%, #dcebf3 60%)",
+                    },
+                  }),
+                  U &&
+                    (0, v.jsxs)(v.Fragment, {
+                      children: [
+                        (0, v.jsx)($.f.div, {
+                          className: "absolute inset-0",
+                          style: {
+                            opacity: u,
+                            background:
+                              "linear-gradient(180deg, #2b2f6b 0%, #7d4f86 18%, #e98a72 34%, #f8c27c 44%, #fde3a6 52%)",
+                          },
+                        }),
+                        (0, v.jsx)($.f.div, {
+                          className: "absolute inset-0",
+                          style: {
+                            opacity: w,
+                            background:
+                              "linear-gradient(180deg, #050925 0%, #0d1540 26%, #1d2457 42%, #3b2f62 52%)",
+                          },
+                          children: i4.map((e, t) =>
+                            (0, v.jsx)(
+                              "span",
+                              {
+                                className:
+                                  "kk-star absolute rounded-full bg-white",
+                                style: {
+                                  left: `${100 * e.x}%`,
+                                  top: `${100 * e.y}%`,
+                                  width: `${e.s}cqw`,
+                                  height: `${e.s}cqw`,
+                                  animationDelay: `${e.d}s`,
+                                },
+                              },
+                              t,
+                            ),
+                          ),
+                        }),
+                        (0, v.jsx)($.f.div, {
+                          className: "absolute",
+                          style: {
+                            opacity: T,
+                            left: "68%",
+                            top: "11%",
+                            width: "7cqw",
+                            height: "7cqw",
+                            borderRadius: "50%",
+                            boxShadow: "1.4cqw -0.9cqw 0 0 #f5e6b8",
+                            filter:
+                              "drop-shadow(0 0 2cqw rgba(245,230,184,.45))",
+                          },
+                        }),
+                      ],
+                    }),
+                  (0, v.jsxs)($.f.div, {
+                    className: "absolute left-1/2",
+                    style: {
+                      top: C,
+                      opacity: M,
+                      scale: S,
+                      x: "-50%",
+                      y: "-50%",
+                    },
+                    children: [
+                      (0, v.jsx)($.f.div, {
+                        className:
+                          "kk-rays absolute top-1/2 left-1/2 size-[150cqw] -translate-x-1/2 -translate-y-1/2 rounded-full",
+                        style: {
+                          opacity: z,
+                          background:
+                            "repeating-conic-gradient(from 0deg, rgba(255,236,180,.55) 0deg 4deg, rgba(255,236,180,0) 4deg 15deg)",
+                          maskImage:
+                            "radial-gradient(circle, #000 0%, transparent 62%)",
+                          WebkitMaskImage:
+                            "radial-gradient(circle, #000 0%, transparent 62%)",
+                        },
+                      }),
+                      (0, v.jsx)("div", {
+                        className:
+                          "absolute top-1/2 left-1/2 size-[70cqw] -translate-x-1/2 -translate-y-1/2 rounded-full",
+                        style: {
+                          background:
+                            "radial-gradient(circle, rgba(255,226,150,.9) 0%, rgba(255,190,110,.45) 22%, rgba(255,170,90,0) 60%)",
+                        },
+                      }),
+                      (0, v.jsx)($.f.div, {
+                        className: "relative size-[15cqw] rounded-full",
+                        style: {
+                          opacity: _,
+                          background:
+                            "radial-gradient(circle at 45% 40%, #fffbe8 0%, #ffe9a8 45%, #ffc45e 100%)",
+                          boxShadow: "0 0 6cqw 2cqw rgba(255,214,130,.8)",
+                        },
+                      }),
+                    ],
+                  }),
+                  (0, v.jsx)(iJ, {
+                    src: iP("kankotri2-day.webp"),
+                    alt: "A Gujarati palace beyond a garden, seen through a carved marble arch with a mirror-work toran and two peacocks",
+                    priority: !0,
+                  }),
+                  U &&
+                    !r &&
+                    (0, v.jsxs)(v.Fragment, {
+                      children: [
+                        (0, v.jsx)($.f.div, {
+                          className: "absolute inset-0",
+                          style: { opacity: b },
+                          children: (0, v.jsx)(iJ, {
+                            src: iP("kankotri2-night.webp"),
+                            priority: !0,
+                          }),
+                        }),
+                        (0, v.jsx)($.f.div, {
+                          className: `absolute inset-0 mix-blend-screen ${t ? "" : "kk-flicker"}`,
+                          style: {
+                            opacity: y,
+                            ...(t ? { maskImage: k, WebkitMaskImage: k } : {}),
+                          },
+                          children: (0, v.jsx)(iJ, {
+                            src: iP("kankotri2-lamps.webp"),
+                            priority: !0,
+                          }),
+                        }),
+                        (0, v.jsx)($.f.div, {
+                          className:
+                            "pointer-events-none absolute inset-0 mix-blend-screen",
+                          style: {
+                            opacity: B,
+                            background:
+                              "radial-gradient(ellipse 60% 22% at 50% 47%, rgba(255,186,96,.7), rgba(255,150,60,.18) 55%, rgba(255,150,60,0) 80%)",
+                          },
+                        }),
+                        (0, v.jsx)($.f.div, {
+                          className: "pointer-events-none absolute inset-0",
+                          style: { opacity: O },
+                          children: i3.map((e, t) =>
+                            (0, v.jsx)(
+                              "span",
+                              {
+                                className:
+                                  "kk-fly absolute size-[0.9cqw] rounded-full bg-[#fff1a8]",
+                                style: {
+                                  left: `${100 * e.x}%`,
+                                  top: `${100 * e.y}%`,
+                                  animationDuration: `${e.dur}s`,
+                                  animationDelay: `${e.delay}s`,
+                                  "--dx": `${e.dx}cqw`,
+                                  "--dy": `${e.dy}cqw`,
+                                },
+                              },
+                              t,
+                            ),
+                          ),
+                        }),
+                        (0, v.jsx)($.f.div, {
+                          className:
+                            "pointer-events-none absolute inset-0 mix-blend-soft-light",
+                          style: {
+                            opacity: F,
+                            background:
+                              "linear-gradient(180deg, #ffb35c 0%, #ff9b4a 45%, #ffcf8a 100%)",
+                          },
+                        }),
+                      ],
+                    }),
+                  i8.map((e, t) =>
+                    (0, v.jsx)(
+                      i7,
+                      {
+                        x: e.x,
+                        y: e.y,
+                        t: l,
+                        at: 0 === t ? -1 : 0.15 + 0.13 * t,
+                        dim: G,
+                      },
+                      t,
+                    ),
+                  ),
+                  U &&
+                    (0, v.jsx)($.f.div, {
+                      className: "absolute",
+                      style: { left: R, top: A, opacity: E },
+                      children: i9.map((e, t) =>
+                        (0, v.jsx)(
+                          "svg",
+                          {
+                            viewBox: "0 0 24 10",
+                            className: "kk-bird absolute",
+                            style: {
+                              left: `${100 * e.dx}cqw`,
+                              top: `${100 * e.dy}cqw`,
+                              width: `${3.4 * e.s}cqw`,
+                              animationDelay: `${0.13 * t}s`,
+                            },
+                            "aria-hidden": !0,
+                            children: (0, v.jsx)("path", {
+                              d: "M1 6 Q6 0 12 6 Q18 0 23 6",
+                              fill: "none",
+                              stroke: "#3a2638",
+                              strokeWidth: "1.6",
+                              strokeLinecap: "round",
+                            }),
+                          },
+                          t,
+                        ),
+                      ),
+                    }),
+                  U &&
+                    t &&
+                    (0, v.jsx)($.f.div, {
+                      className:
+                        "pointer-events-none absolute inset-0 overflow-hidden",
+                      style: { opacity: P },
+                      children: i6.map((e, t) =>
+                        (0, v.jsx)(
+                          "span",
+                          {
+                            className:
+                              "kk-petal absolute top-0 rounded-[50%_50%_50%_50%/60%_60%_40%_40%]",
+                            style: {
+                              left: `${100 * e.x}%`,
+                              width: `${e.size}cqw`,
+                              height: `${1.5 * e.size}cqw`,
+                              background: `radial-gradient(circle at 40% 35%, #ffe08a, ${e.hue})`,
+                              animationDelay: `${3.6 + e.delay}s`,
+                              animationDuration: `${e.dur}s`,
+                              "--sway": `${e.sway}cqw`,
+                            },
+                          },
+                          t,
+                        ),
+                      ),
+                    }),
+                  (0, v.jsxs)($.f.div, {
+                    className: "absolute inset-x-[16%] top-[11.5%] text-center",
+                    style: x ? { opacity: m, y: p } : void 0,
+                    children: [
+                      e.heroKicker &&
+                        (0, v.jsx)("p", {
+                          className:
+                            "inv-label mb-[1.5cqw] text-[2.8cqw] font-semibold",
+                          style: { color: r || n ? iW : iD, ...iZ(0.26) },
+                          children: e.heroKicker,
+                        }),
+                      (0, v.jsxs)("div", {
+                        className: "relative",
+                        children: [
+                          U &&
+                            (0, v.jsx)($.f.div, {
+                              style: {
+                                opacity: W,
+                                color: iD,
+                                textShadow: "0 0 3cqw rgba(243,212,139,.4)",
+                              },
+                              children: (0, v.jsx)(ne, {
+                                a: Z.first,
+                                b: K.first,
+                                joiner: e.joiner ?? "&",
+                              }),
+                            }),
+                          (0, v.jsx)($.f.div, {
+                            className: `kk-name ${U ? "absolute inset-0" : ""} ${r && U ? "kk-shine" : ""}`,
+                            style: U ? { opacity: I } : void 0,
+                            children: (0, v.jsx)(ne, {
+                              a: Z.first,
+                              b: K.first,
+                              joiner: e.joiner ?? "&",
+                            }),
+                          }),
+                        ],
+                      }),
+                      Y &&
+                        (0, v.jsx)($.f.p, {
+                          className:
+                            "inv-label mt-[2.4cqw] text-[2.8cqw] font-semibold whitespace-nowrap",
+                          style: {
+                            color: "#5a1726",
+                            textShadow: "0 0 1.5cqw rgba(255,250,240,.9)",
+                            ...iZ(0.16),
+                            ...(U ? { opacity: H, y: D } : {}),
+                          },
+                          children: Y,
+                        }),
+                    ],
+                  }),
+                ],
+              }),
+            });
+          return x
+            ? (0, v.jsx)("section", {
+                ref: o,
+                className: "relative z-[1] w-full",
+                style: { height: `calc(${iK} * 2)` },
+                children: (0, v.jsx)($.f.div, {
+                  className:
+                    "pointer-events-none sticky top-0 w-full overflow-hidden",
+                  style: { height: iK, opacity: h },
+                  children: X,
+                }),
+              })
+            : (0, v.jsx)("section", {
+                ref: o,
+                className: `relative w-full overflow-hidden ${a ? "h-full min-h-[100cqw]" : "h-[var(--screen-h,100dvh)]"}`,
+                children: X,
+              });
+        },
+        Blessing: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            a = j(),
+            s = (0, th.f)(),
+            [i, n] = (0, L.g)(e),
+            l = (e) =>
+              (0, v.jsx)("p", {
+                className:
+                  "inv-serif mt-[1cqw] text-[3.9cqw] leading-snug italic",
+                style: { color: iI },
+                children: e,
+              }),
+            r = (e, t) =>
+              (0, v.jsxs)(B.b, {
+                delay: 0.1 + 0.12 * t,
+                className: "flex flex-col items-center",
+                children: [
+                  (0, v.jsx)("p", {
+                    className: "inv-script text-[11.5cqw] leading-tight",
+                    style: { color: iW },
+                    children: e.full || e.first,
+                  }),
+                  e.elders && !e.eldersBelow && l(e.elders),
+                  e.parents && l(e.parents),
+                  e.elders && e.eldersBelow && l(e.elders),
+                ],
+              });
+          return (0, v.jsxs)(i5, {
+            className: "pt-[14cqw] pb-[8cqw]",
+            style: a || s ? void 0 : { marginTop: `calc(${iK} * -0.78)` },
+            children: [
+              (0, v.jsxs)(B.b, {
+                className: "flex flex-col items-center",
+                children: [
+                  e.invocation &&
+                    (0, v.jsxs)(v.Fragment, {
+                      children: [
+                        (0, v.jsx)("div", {
+                          className:
+                            "relative mb-[3cqw] aspect-[360/505] w-[30cqw]",
+                          children: (0, v.jsx)(iJ, {
+                            src: iP("kankotri2-ganesha.webp"),
+                            alt: "Lord Ganesha in a marble niche",
+                            sizes: "160px",
+                            className: "object-contain",
+                          }),
+                        }),
+                        (0, v.jsx)("p", {
+                          className:
+                            "inv-label text-[2.8cqw] leading-relaxed font-semibold whitespace-pre-line",
+                          style: { color: iR, ...iZ(0.26) },
+                          children: e.invocation,
+                        }),
+                      ],
+                    }),
+                  e.invocationMeaning &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-serif mt-[1.5cqw] text-[3.7cqw] leading-snug italic",
+                      style: { color: iI },
+                      children: e.invocationMeaning,
+                    }),
+                  (0, v.jsx)(i1, { n: 1, className: "my-[3.5cqw]" }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-label text-[3cqw] leading-relaxed font-semibold",
+                    style: { color: iW, ...iZ(0.2) },
+                    children: e.hosts || t.togetherWithFamilies,
+                  }),
+                  e.message &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-serif mt-[2cqw] text-[4.3cqw] leading-snug",
+                      style: {
+                        color: iI,
+                        ...(e.justifyMessage
+                          ? {
+                              textAlign: "justify",
+                              textAlignLast: "center",
+                              hyphens: "none",
+                            }
+                          : {}),
+                      },
+                      children: e.message,
+                    }),
+                ],
+              }),
+              (0, v.jsxs)("div", {
+                className: "mt-[6cqw] flex w-full flex-col items-center",
+                children: [
+                  r(i, 0),
+                  (0, v.jsxs)("div", {
+                    className: "my-[3cqw] flex items-center gap-[2cqw]",
+                    "aria-hidden": !0,
+                    children: [
+                      (0, v.jsx)("span", {
+                        className: "h-[0.3cqw] w-[12cqw]",
+                        style: {
+                          background: `linear-gradient(90deg, transparent, ${iH})`,
+                        },
+                      }),
+                      (0, v.jsx)("span", {
+                        className: "inv-serif text-[7cqw] leading-none italic",
+                        style: { color: iH },
+                        children: e.joiner ?? "&",
+                      }),
+                      (0, v.jsx)("span", {
+                        className: "h-[0.3cqw] w-[12cqw]",
+                        style: {
+                          background: `linear-gradient(90deg, ${iH}, transparent)`,
+                        },
+                      }),
+                    ],
+                  }),
+                  r(n, 1),
+                ],
+              }),
+            ],
+          });
+        },
+        Events: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            a = j(),
+            s = !!(0, th.f)(),
+            i = a || s,
+            n = (0, f.useRef)(null),
+            { scrollYProgress: l } = e$({
+              target: n,
+              offset: ["start 80%", "end 60%"],
+            });
+          return (0, v.jsxs)(i5, {
+            className: "pt-[10cqw] pb-[10cqw]",
+            style: { paddingInline: "11cqw" },
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(i2, {
+                  kicker: t.eventsKicker,
+                  children: t.eventsTitle,
+                }),
+              }),
+              (0, v.jsxs)("div", {
+                className: "relative mt-[8cqw] w-full",
+                children: [
+                  (0, v.jsx)("div", {
+                    className:
+                      "absolute inset-y-0 left-1/2 w-[0.4cqw] -translate-x-1/2",
+                    style: { background: "rgba(168,129,47,.22)" },
+                    "aria-hidden": !0,
+                  }),
+                  (0, v.jsx)($.f.div, {
+                    className:
+                      "absolute inset-y-0 left-1/2 w-[0.4cqw] -translate-x-1/2 origin-top",
+                    style: { background: iH, scaleY: i ? 1 : l },
+                    "aria-hidden": !0,
+                  }),
+                  ["top-0 -translate-y-1/2", "bottom-0 translate-y-1/2"].map(
+                    (e) =>
+                      (0, v.jsx)(
+                        "svg",
+                        {
+                          viewBox: "-10 -10 20 20",
+                          className: `absolute left-1/2 size-[5cqw] -translate-x-1/2 ${e}`,
+                          "aria-hidden": !0,
+                          children: (0, v.jsx)("path", {
+                            d: "M0 -9 C1.2 -2.4 2.4 -1.2 9 0 C2.4 1.2 1.2 2.4 0 9 C-1.2 2.4 -2.4 1.2 -9 0 C-2.4 -1.2 -1.2 -2.4 0 -9 Z",
+                            fill: iH,
+                          }),
+                        },
+                        e,
+                      ),
+                  ),
+                  (0, v.jsx)("ol", {
+                    ref: n,
+                    className: "relative flex flex-col gap-[16cqw] py-[6cqw]",
+                    children: e.events.map((t, a) =>
+                      (0, v.jsx)(
+                        nc,
+                        { e: t, invite: e, i: a, still: i },
+                        t.name + a,
+                      ),
+                    ),
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+        Closing: function ({ invite: e }) {
+          let { t } = (0, N.G)(),
+            [a, s] = (0, L.g)(e);
+          return (0, v.jsxs)(v.Fragment, {
+            children: [
+              (0, v.jsx)(no, { invite: e }),
+              (0, v.jsxs)(i5, {
+                className: "pt-[8cqw]",
+                children: [
+                  (0, v.jsxs)(B.b, {
+                    className: "flex flex-col items-center",
+                    children: [
+                      e.closing &&
+                        (0, v.jsx)("p", {
+                          className:
+                            "inv-serif text-[4.3cqw] leading-snug italic",
+                          style: { color: iI },
+                          children: e.closing,
+                        }),
+                      (0, v.jsx)("p", {
+                        className:
+                          "inv-script mt-[2cqw] text-[12cqw] leading-tight",
+                        style: { color: iW },
+                        children:
+                          e.closingNames ??
+                          `${a.first} ${e.joiner ?? "&"} ${s.first}`,
+                      }),
+                      e.hashtag &&
+                        (0, v.jsx)("p", {
+                          className:
+                            "inv-label mt-[1cqw] text-[3cqw] font-semibold",
+                          style: { color: iR, ...iZ(0.14) },
+                          children: e.hashtag,
+                        }),
+                      (0, v.jsx)(i1, { n: 3, className: "mt-[5cqw]" }),
+                    ],
+                  }),
+                  !e.noBranding &&
+                    (0, v.jsx)(k.default, {
+                      href: "/",
+                      className:
+                        "inv-label mt-[6cqw] inline-block text-[2.2cqw] font-semibold",
+                      style: { color: iI, ...iZ(0.22) },
+                      children: e.brandLine ?? t.craftedBy(F.B.name),
+                    }),
+                  (0, v.jsx)(nd, {}),
+                ],
+              }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          return (0, v.jsx)("div", {
+            className: "pointer-events-none absolute inset-0",
+            style: { background: iA },
+          });
+        },
+        Frame: function () {
+          let { scrollY: e } = e$(),
+            t = (0, th.f)(),
+            a = (0, f.useRef)(null),
+            [s, i] = (0, f.useState)({ w: 390, h: 800 });
+          (0, f.useEffect)(() => {
+            let e = a.current;
+            if (!e) return;
+            let t = () => i({ w: e.clientWidth, h: e.clientHeight });
+            t();
+            let s = new ResizeObserver(t);
+            return s.observe(e), () => s.disconnect();
+          }, []);
+          let { w: n, h: l } = s,
+            r = (0, eS.f)(e, [0.03 * l, 0.18 * l], [0, 1]),
+            c = Math.max(l, (16 * n) / 9),
+            o = (9 * c) / 16,
+            d = (0, eS.f)(e, [0, 2, 0.6 * l, 0.76 * l], [0, 1, 1, 0]),
+            x = (0, eS.f)(e, [0.08 * l, 0.75 * l], [0, -(0.95 * l)], {
+              ease: (e) => e * e * (3 - 2 * e),
+            }),
+            m = (0, eS.f)(e, [0.08 * l, 0.6 * l], [1, 1.12]),
+            p = (0, eS.f)(e, [0.12 * l, 0.24 * l], [1, 0]),
+            h = (0, eS.f)(e, [0.1 * l, 0.22 * l], [0, 1]),
+            w = (0, eS.f)(e, [0.1 * l, 0.3 * l], [0.3, 1]),
+            u = (0, eS.f)(e, [0.1 * l, 0.3 * l], [0.8, 1]),
+            g = (e, t, a = "object-cover") =>
+              (0, v.jsx)("div", {
+                className: "absolute inset-x-0",
+                style: t,
+                children: (0, v.jsx)(R.default, {
+                  src: iP(e),
+                  alt: "",
+                  fill: !0,
+                  sizes: "(max-width: 480px) 100vw, 480px",
+                  className: a,
+                }),
+              });
+          return (0, v.jsxs)("div", {
+            ref: a,
+            className: "absolute inset-0 overflow-hidden",
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsxs)($.f.div, {
+                className: "absolute inset-0",
+                style: { opacity: r },
+                children: [
+                  g("kankotri2-arch-top.webp", {
+                    top: 0,
+                    height: `${100 * iV.top}cqw`,
+                  }),
+                  g(
+                    "kankotri2-arch-mid.webp",
+                    {
+                      top: `calc(${100 * iV.top}cqw - 1px)`,
+                      bottom: `calc(${100 * iV.bottom}cqw - 1px)`,
+                    },
+                    "object-fill",
+                  ),
+                  g("kankotri2-arch-bottom.webp", {
+                    bottom: 0,
+                    height: `${100 * iV.bottom}cqw`,
+                  }),
+                ],
+              }),
+              !t &&
+                ["l", "r"].map((e) =>
+                  (0, v.jsxs)(
+                    $.f.div,
+                    {
+                      className: "absolute",
+                      style: {
+                        ...{
+                          left: (n - o) / 2 + iY.x[e] * o,
+                          top: (l - c) / 2 + iY.y * c,
+                          width: iY.w * o,
+                          height: iY.h * c,
+                        },
+                        y: x,
+                        scale: m,
+                        opacity: d,
+                        transformOrigin: "50% 30%",
+                      },
+                      children: [
+                        (0, v.jsx)($.f.div, {
+                          className: "absolute inset-0",
+                          style: { opacity: p },
+                          children: (0, v.jsx)(R.default, {
+                            src: iP(`kankotri2-peacock-${e}.webp`),
+                            alt: "",
+                            fill: !0,
+                            sizes: "200px",
+                            className: "object-contain",
+                          }),
+                        }),
+                        (0, v.jsx)($.f.div, {
+                          className: "absolute",
+                          style: {
+                            ...iU.at[e],
+                            width: `${100 * iU.w}%`,
+                            aspectRatio: iU.ratio,
+                            opacity: h,
+                            scaleX: w,
+                            scaleY: u,
+                            transformOrigin: "50% 17%",
+                          },
+                          children: (0, v.jsx)($.f.div, {
+                            className: "absolute inset-0",
+                            style: { transformOrigin: "50% 17%" },
+                            animate: { scaleX: [1, 0.84, 1] },
+                            transition: {
+                              duration: 0.55,
+                              repeat: 1 / 0,
+                              ease: "easeInOut",
+                            },
+                            children: (0, v.jsx)(R.default, {
+                              src: iP("kankotri2-peacock-up.webp"),
+                              alt: "",
+                              fill: !0,
+                              sizes: "300px",
+                              className: "object-contain",
+                            }),
+                          }),
+                        }),
+                      ],
+                    },
+                    e,
+                  ),
+                ),
+            ],
+          });
+        },
+        Divider: function ({ className: e }) {
+          return (0, v.jsx)(i1, { n: 3, className: e ?? "my-[6cqw]" });
+        },
+        Title: i2,
+        CountdownSection: function ({ invite: e }) {
+          let { t, d: a } = (0, N.G)(),
+            s = (function (e) {
+              let [t, a] = (0, f.useState)(null);
+              return (
+                (0, f.useEffect)(() => {
+                  let t = () =>
+                      a(Math.max(0, new Date(e).getTime() - Date.now())),
+                    s = window.setTimeout(t, 0),
+                    i = window.setInterval(t, 1e3);
+                  return () => {
+                    window.clearTimeout(s), window.clearInterval(i);
+                  };
+                }, [e]),
+                t
+              );
+            })(e.date),
+            i = null === s ? null : Math.floor(s / 1e3),
+            n = [
+              null === i ? null : Math.floor(i / 86400),
+              null === i ? null : Math.floor((i % 86400) / 3600),
+              null === i ? null : Math.floor((i % 3600) / 60),
+              null === i ? null : i % 60,
+            ];
+          return (0, v.jsxs)(i5, {
+            className: "pt-[10cqw] pb-[10cqw]",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(i2, {
+                  kicker: t.countdownKicker,
+                  plain: !0,
+                  children: e.countdownTitle ?? t.countdownTitle,
+                }),
+              }),
+              0 === s
+                ? (0, v.jsx)("p", {
+                    className: "inv-script mt-[6cqw] text-[11cqw]",
+                    style: { color: iW },
+                    children: t.justMarried,
+                  })
+                : (0, v.jsx)(B.b, {
+                    delay: 0.1,
+                    className:
+                      "mt-[6cqw] flex w-full justify-center gap-[1.6cqw]",
+                    children: t.units.map((e, t) =>
+                      (0, v.jsxs)(
+                        na,
+                        {
+                          children: [
+                            (0, v.jsx)(
+                              $.f.span,
+                              {
+                                initial: { opacity: 0.35 },
+                                animate: { opacity: 1 },
+                                transition: { duration: 0.6 },
+                                className:
+                                  "inv-label text-[6.6cqw] leading-none font-semibold tabular-nums",
+                                style: { color: iW, letterSpacing: 0 },
+                                children:
+                                  null === n[t]
+                                    ? "··"
+                                    : String(n[t]).padStart(2, "0"),
+                              },
+                              n[t] ?? "x",
+                            ),
+                            (0, v.jsx)("span", {
+                              className:
+                                "inv-label mt-[1.4cqw] text-[1.8cqw] font-semibold",
+                              style: { color: iH, ...iZ(0.14) },
+                              children: e,
+                            }),
+                          ],
+                        },
+                        e,
+                      ),
+                    ),
+                  }),
+              (0, v.jsx)(i1, { n: 3, className: "my-[5cqw]" }),
+              (0, v.jsxs)("p", {
+                className: "inv-label text-[2.8cqw] font-semibold",
+                style: { color: iW, ...iZ(0.18) },
+                children: [
+                  a.weekday(e.date),
+                  ", ",
+                  a.day(e.date),
+                  " ",
+                  a.month(e.date),
+                  " ",
+                  a.year(e.date),
+                  e.hideCountdownCity ? "" : ` \xb7 ${e.city}`,
+                ],
+              }),
+            ],
+          });
+        },
+        ScratchSection: function ({ invite: e }) {
+          let { t, d: a } = (0, N.G)(),
+            s = (0, th.f)(),
+            [i, n] = (0, f.useState)(!1),
+            l = (0, s9.f)(0),
+            r = (0, s9.f)(0),
+            c = (0, f.useRef)(null),
+            o = (0, f.useRef)(null),
+            d = (0, f.useRef)(null),
+            x = (0, eS.f)(
+              r,
+              (e) =>
+                `conic-gradient(from 0deg, ${iH} ${360 * Math.min(1, e / 360)}deg, rgba(168,129,47,.18) 0deg)`,
+            ),
+            m = (0, eS.f)(r, [0, 60], [1, 0.35]),
+            p = () => {
+              d.current?.stop(), n(!0), navigator.vibrate?.(20);
+            },
+            h = (e) => {
+              r.set(r.get() + Math.abs(e)), r.get() >= 360 && p();
+            },
+            w = (e) => {
+              let t = c.current.getBoundingClientRect();
+              return (
+                (180 *
+                  Math.atan2(
+                    e.clientY - (t.top + t.height / 2),
+                    e.clientX - (t.left + t.width / 2),
+                  )) /
+                Math.PI
+              );
+            },
+            u = (e) => {
+              let t = l.get();
+              d.current = (0, s8.f)(l, t + 750 * e, {
+                duration: 1.6,
+                ease: [0.16, 1, 0.3, 1],
+                onUpdate: (e) => {
+                  h(e - t), (t = e);
+                },
+              });
+            },
+            g = e.events.find((t) => t.start === e.date),
+            b = g?.noTime ? null : (g?.timeText ?? a.time(e.date));
+          return (0, v.jsxs)(i5, {
+            className: "pt-[8cqw] pb-[4cqw]",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(i2, {
+                  kicker: t.scratchKicker,
+                  plain: !0,
+                  children: t.scratchTitle,
+                }),
+              }),
+              (0, v.jsxs)(B.b, {
+                delay: 0.1,
+                className:
+                  "relative mt-[4cqw] flex w-full flex-col items-center",
+                children: [
+                  (0, v.jsxs)("div", {
+                    className: "relative aspect-square w-[60cqw]",
+                    children: [
+                      (0, v.jsxs)("div", {
+                        className:
+                          "absolute inset-[14%] flex flex-col items-center justify-center rounded-full",
+                        style: {
+                          background: iE,
+                          boxShadow: `0 0 0 0.6cqw ${iH}, 0 0 0 1.3cqw ${iA}, 0 0 0 1.6cqw ${iD}`,
+                        },
+                        children: [
+                          (0, v.jsx)("p", {
+                            className: "inv-label text-[2.6cqw] font-semibold",
+                            style: { color: iR, ...iZ(0.22) },
+                            children: a.weekday(e.date),
+                          }),
+                          (0, v.jsx)("p", {
+                            className:
+                              "inv-label text-[15cqw] leading-none font-semibold",
+                            style: { color: iW, letterSpacing: 0 },
+                            children: e.padDay
+                              ? a.day(e.date).padStart(2, "0")
+                              : a.day(e.date),
+                          }),
+                          (0, v.jsxs)("p", {
+                            className:
+                              "inv-label mt-[0.6cqw] text-[2.5cqw] font-semibold",
+                            style: { color: iI, ...iZ(0.12) },
+                            children: [a.month(e.date), " ", a.year(e.date)],
+                          }),
+                        ],
+                      }),
+                      !i &&
+                        (0, v.jsx)($.f.div, {
+                          "aria-hidden": !0,
+                          className:
+                            "pointer-events-none absolute -inset-[3%] rounded-full",
+                          style: {
+                            background: x,
+                            maskImage:
+                              "radial-gradient(circle, transparent 66%, #000 67.5%, #000 70%, transparent 71.5%)",
+                            WebkitMaskImage:
+                              "radial-gradient(circle, transparent 66%, #000 67.5%, #000 70%, transparent 71.5%)",
+                          },
+                        }),
+                      (0, v.jsxs)("div", {
+                        ref: c,
+                        role: "button",
+                        tabIndex: 0,
+                        "aria-label": t.spinToReveal,
+                        className: `absolute inset-0 touch-none select-none ${i ? "pointer-events-none" : "cursor-grab active:cursor-grabbing"}`,
+                        onPointerDown: (e) => {
+                          i ||
+                            (d.current?.stop(),
+                            e.currentTarget.setPointerCapture(e.pointerId),
+                            (o.current = {
+                              a: w(e),
+                              t: performance.now(),
+                              v: 0,
+                              moved: 0,
+                            }));
+                        },
+                        onPointerMove: (e) => {
+                          let t = o.current;
+                          if (!t) return;
+                          let a = w(e),
+                            s = a - t.a;
+                          s > 180 && (s -= 360), s < -180 && (s += 360);
+                          let i = performance.now();
+                          (t.v = s / Math.max(8, i - t.t)),
+                            (t.a = a),
+                            (t.t = i),
+                            (t.moved += Math.abs(s)),
+                            l.set(l.get() + s),
+                            h(s);
+                        },
+                        onPointerUp: () => {
+                          let e = o.current;
+                          (o.current = null),
+                            e &&
+                              !i &&
+                              u(
+                                e.moved < 6 || 0.25 > Math.abs(e.v)
+                                  ? 0.35
+                                  : Math.max(-1.4, 1.2 * Math.min(1.4, e.v)),
+                              );
+                        },
+                        onPointerCancel: () => (o.current = null),
+                        onDragStart: (e) => e.preventDefault(),
+                        onKeyDown: (e) =>
+                          ("Enter" === e.key || " " === e.key) &&
+                          (e.preventDefault(), u(0.6)),
+                        children: [
+                          (0, v.jsx)($.f.div, {
+                            className: "absolute inset-0",
+                            style: { rotate: l },
+                            children: Array.from({ length: 8 }, (e, t) => {
+                              var a, n;
+                              let l,
+                                r = (45 * t * Math.PI) / 180;
+                              return (0, v.jsx)(
+                                $.f.div,
+                                {
+                                  className: "absolute inset-0",
+                                  style: {
+                                    clipPath:
+                                      ((a = 45 * t - 22.5),
+                                      (n = 45 * t + 22.5),
+                                      (l = [0, 0.25, 0.5, 0.75, 1].map((e) => {
+                                        let t =
+                                          ((a + (n - a) * e) * Math.PI) / 180;
+                                        return `${(50 + 72 * Math.sin(t)).toFixed(2)}% ${(50 - 72 * Math.cos(t)).toFixed(2)}%`;
+                                      })),
+                                      `polygon(50% 50%, ${l.join(", ")})`),
+                                  },
+                                  initial: !1,
+                                  animate: i
+                                    ? {
+                                        x: `${70 * Math.sin(r)}%`,
+                                        y: `${-(70 * Math.cos(r))}%`,
+                                        rotate: (t % 2 ? 1 : -1) * 50,
+                                        opacity: 0,
+                                      }
+                                    : {
+                                        x: "0%",
+                                        y: "0%",
+                                        rotate: 0,
+                                        opacity: 1,
+                                      },
+                                  transition: i
+                                    ? {
+                                        duration: 1.1 * !s,
+                                        ease: [0.22, 1, 0.36, 1],
+                                      }
+                                    : { duration: 0 },
+                                  children: (0, v.jsx)(R.default, {
+                                    src: iP("kankotri2-disc.webp"),
+                                    alt: "",
+                                    fill: !0,
+                                    draggable: !1,
+                                    sizes: "(max-width: 480px) 60vw, 300px",
+                                    className:
+                                      "pointer-events-none object-contain select-none",
+                                  }),
+                                },
+                                t,
+                              );
+                            }),
+                          }),
+                          (0, v.jsx)(tA.f, {
+                            children:
+                              !i &&
+                              (0, v.jsxs)(
+                                $.f.svg,
+                                {
+                                  viewBox: "0 0 24 24",
+                                  exit: { scale: 0, opacity: 0 },
+                                  transition: { duration: 0.4 },
+                                  className:
+                                    "pointer-events-none absolute top-1/2 left-1/2 size-[7cqw] -translate-x-1/2 -translate-y-1/2",
+                                  fill: "none",
+                                  stroke: iH,
+                                  strokeWidth: "1.8",
+                                  strokeLinecap: "round",
+                                  strokeLinejoin: "round",
+                                  "aria-hidden": !0,
+                                  children: [
+                                    (0, v.jsx)("path", {
+                                      d: "M20 12a8 8 0 1 1-2.3-5.6",
+                                    }),
+                                    (0, v.jsx)("path", { d: "M20 4v4.5h-4.5" }),
+                                  ],
+                                },
+                                "boss",
+                              ),
+                          }),
+                        ],
+                      }),
+                    ],
+                  }),
+                  i && !s && (0, v.jsx)(nt, {}),
+                  (0, v.jsx)(tA.f, {
+                    initial: !1,
+                    mode: "wait",
+                    children: i
+                      ? (0, v.jsxs)(
+                          $.f.div,
+                          {
+                            initial: { opacity: 0, y: 10 },
+                            animate: { opacity: 1, y: 0 },
+                            transition: { duration: 0.8, delay: 0.4, ease: iG },
+                            className: "mt-[3cqw] flex flex-col items-center",
+                            children: [
+                              b &&
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-script text-[9cqw] leading-tight",
+                                  style: { color: iW },
+                                  children: b,
+                                }),
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-serif text-[4.2cqw] font-semibold",
+                                style: { color: iI },
+                                children: e.city,
+                              }),
+                            ],
+                          },
+                          "more",
+                        )
+                      : (0, v.jsxs)(
+                          $.f.div,
+                          {
+                            className: "mt-[4cqw] flex flex-col items-center",
+                            style: { opacity: m },
+                            children: [
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-label text-[2.6cqw] font-semibold",
+                                style: { color: iW, ...iZ(0.16) },
+                                children: t.spinToReveal,
+                              }),
+                              (0, v.jsx)("button", {
+                                type: "button",
+                                onClick: p,
+                                className:
+                                  "inv-serif mt-[1.5cqw] text-[3.4cqw] italic underline underline-offset-4",
+                                style: { color: iI, textDecorationColor: iH },
+                                children: t.revealInstead,
+                              }),
+                            ],
+                          },
+                          "hint",
+                        ),
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+      },
+      nf = "#e3b964",
+      nm = "#f4efe2",
+      np = [0.22, 1, 0.36, 1];
+    function nh(e) {
+      let t = [];
+      for (let a = 0; a < 16; a++) {
+        let s = (a / 16) * Math.PI * 2 - Math.PI / 2,
+          i = a % 2 ? 0.72 * e : e;
+        t.push(`${eL(Math.cos(s) * i)} ${eL(Math.sin(s) * i)}`);
+      }
+      return `M${t.join(" L")} Z`;
+    }
+    function nw(e, t, a) {
+      let s = e / 2;
+      return `M0 ${t} L0 ${a} C0 ${eL(0.4 * a)} ${eL(0.16 * e)} ${eL(0.3 * a)} ${eL(0.32 * e)} ${eL(0.18 * a)} C${eL(0.43 * e)} ${eL(0.1 * a)} ${eL(s - 0.02 * e)} ${eL(0.06 * a)} ${s} 0 C${eL(s + 0.02 * e)} ${eL(0.06 * a)} ${eL(0.57 * e)} ${eL(0.1 * a)} ${eL(0.68 * e)} ${eL(0.18 * a)} C${eL(0.84 * e)} ${eL(0.3 * a)} ${e} ${eL(0.4 * a)} ${e} ${a} L${e} ${t} Z`;
+    }
+    function nu({
+      id: e,
+      size: t = 40,
+      stroke: a = nf,
+      width: s = 1,
+      opacity: i = 1,
+    }) {
+      let n = t / 2;
+      return (0, v.jsx)("pattern", {
+        id: e,
+        width: t,
+        height: t,
+        patternUnits: "userSpaceOnUse",
+        children: (0, v.jsxs)("g", {
+          fill: "none",
+          stroke: a,
+          strokeWidth: s,
+          strokeOpacity: i,
+          children: [
+            (0, v.jsx)("path", {
+              d: nh(0.62 * n),
+              transform: `translate(${n} ${n})`,
+            }),
+            (0, v.jsx)("path", {
+              d: `M0 0 L${0.38 * n} ${0.38 * n} M${t} 0 L${t - 0.38 * n} ${0.38 * n} M0 ${t} L${0.38 * n} ${t - 0.38 * n} M${t} ${t} L${t - 0.38 * n} ${t - 0.38 * n}`,
+            }),
+            (0, v.jsx)("path", {
+              d: `M${n} 0 V${0.38 * n} M${n} ${t} V${t - 0.38 * n} M0 ${n} H${0.38 * n} M${t} ${n} H${t - 0.38 * n}`,
+            }),
+          ],
+        }),
+      });
+    }
+    function ng({ className: e, color: t = nf }) {
+      return (0, v.jsx)("svg", {
+        viewBox: "-100 -100 200 200",
+        className: e,
+        "aria-hidden": !0,
+        children: (0, v.jsxs)("g", {
+          fill: "none",
+          stroke: t,
+          strokeWidth: 0.8,
+          children: [
+            [96, 78, 58, 38].map((e, t) =>
+              (0, v.jsx)(
+                "path",
+                {
+                  d: nh(e),
+                  transform: `rotate(${11.25 * t})`,
+                  strokeOpacity: 0.4 + 0.15 * t,
+                },
+                e,
+              ),
+            ),
+            Array.from({ length: 16 }, (e, t) =>
+              (0, v.jsx)(
+                "line",
+                {
+                  x1: 0,
+                  y1: -20,
+                  x2: 0,
+                  y2: -96,
+                  transform: `rotate(${22.5 * t})`,
+                  strokeOpacity: 0.25,
+                },
+                t,
+              ),
+            ),
+            (0, v.jsx)("circle", { r: 14 }),
+          ],
+        }),
+      });
+    }
+    function nb({ className: e }) {
+      let t = eO((0, f.useId)());
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 100 100",
+        className: e,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsxs)("defs", {
+            children: [
+              (0, v.jsxs)("radialGradient", {
+                id: `${t}g`,
+                cx: "50%",
+                cy: "50%",
+                r: "50%",
+                children: [
+                  (0, v.jsx)("stop", {
+                    offset: "0%",
+                    stopColor: nm,
+                    stopOpacity: 0.35,
+                  }),
+                  (0, v.jsx)("stop", {
+                    offset: "100%",
+                    stopColor: nm,
+                    stopOpacity: 0,
+                  }),
+                ],
+              }),
+              (0, v.jsxs)("mask", {
+                id: `${t}m`,
+                children: [
+                  (0, v.jsx)("rect", {
+                    width: "100",
+                    height: "100",
+                    fill: "white",
+                  }),
+                  (0, v.jsx)("circle", {
+                    cx: "62",
+                    cy: "40",
+                    r: "28",
+                    fill: "black",
+                  }),
+                ],
+              }),
+            ],
+          }),
+          (0, v.jsx)("circle", {
+            cx: "50",
+            cy: "50",
+            r: "48",
+            fill: `url(#${t}g)`,
+          }),
+          (0, v.jsx)("circle", {
+            cx: "50",
+            cy: "50",
+            r: "30",
+            fill: nm,
+            mask: `url(#${t}m)`,
+          }),
+        ],
+      });
+    }
+    function nj({ className: e, delay: t = 0, chain: a = 60 }) {
+      let s = eO((0, f.useId)());
+      return (0, v.jsx)("div", {
+        className: e,
+        children: (0, v.jsxs)("div", {
+          className: "animate-sway",
+          style: {
+            transformOrigin: "top center",
+            animationDelay: `${t}s`,
+            animationDuration: "6s",
+          },
+          children: [
+            (0, v.jsx)("div", {
+              className:
+                "mx-auto w-px bg-gradient-to-b from-transparent to-[#e3b964]",
+              style: { height: a },
+            }),
+            (0, v.jsxs)("svg", {
+              viewBox: "0 0 60 120",
+              className: "-mt-px w-full overflow-visible",
+              "aria-hidden": !0,
+              children: [
+                (0, v.jsxs)("defs", {
+                  children: [
+                    (0, v.jsxs)("radialGradient", {
+                      id: `${s}l`,
+                      cx: "50%",
+                      cy: "55%",
+                      r: "55%",
+                      children: [
+                        (0, v.jsx)("stop", {
+                          offset: "0%",
+                          stopColor: "#fff4c8",
+                        }),
+                        (0, v.jsx)("stop", {
+                          offset: "45%",
+                          stopColor: "#f2c463",
+                        }),
+                        (0, v.jsx)("stop", {
+                          offset: "100%",
+                          stopColor: "#b8742a",
+                        }),
+                      ],
+                    }),
+                    (0, v.jsxs)("radialGradient", {
+                      id: `${s}h`,
+                      cx: "50%",
+                      cy: "50%",
+                      r: "50%",
+                      children: [
+                        (0, v.jsx)("stop", {
+                          offset: "0%",
+                          stopColor: "#ffd77a",
+                          stopOpacity: 0.55,
+                        }),
+                        (0, v.jsx)("stop", {
+                          offset: "100%",
+                          stopColor: "#ffd77a",
+                          stopOpacity: 0,
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+                (0, v.jsx)("circle", {
+                  cx: "30",
+                  cy: "62",
+                  r: "55",
+                  fill: `url(#${s}h)`,
+                  className: "animate-pulse",
+                }),
+                (0, v.jsx)("circle", {
+                  cx: "30",
+                  cy: "4",
+                  r: "4",
+                  fill: "none",
+                  stroke: nf,
+                  strokeWidth: 1.5,
+                }),
+                (0, v.jsx)("path", { d: "M18 18 L30 8 L42 18 Z", fill: nf }),
+                (0, v.jsx)("path", {
+                  d: "M14 22 H46 L42 18 H18 Z",
+                  fill: "#b98a3a",
+                }),
+                (0, v.jsx)("path", {
+                  d: "M14 22 C6 40 6 78 18 96 H42 C54 78 54 40 46 22 Z",
+                  fill: `url(#${s}l)`,
+                  stroke: nf,
+                  strokeWidth: 1.5,
+                }),
+                (0, v.jsxs)("g", {
+                  stroke: "#7a4a14",
+                  strokeWidth: 1,
+                  fill: "none",
+                  opacity: 0.55,
+                  children: [
+                    (0, v.jsx)("path", {
+                      d: "M30 22 V96 M20 24 C14 46 14 72 22 95 M40 24 C46 46 46 72 38 95",
+                    }),
+                    (0, v.jsx)("path", {
+                      d: nh(7),
+                      transform: "translate(30 58)",
+                    }),
+                  ],
+                }),
+                (0, v.jsx)("path", {
+                  d: "M18 96 H42 L36 104 H24 Z",
+                  fill: "#b98a3a",
+                }),
+                (0, v.jsx)("path", {
+                  d: "M30 104 V116",
+                  stroke: nf,
+                  strokeWidth: 1.5,
+                }),
+                (0, v.jsx)("circle", {
+                  cx: "30",
+                  cy: "118",
+                  r: "2.5",
+                  fill: nf,
+                }),
+              ],
+            }),
+          ],
+        }),
+      });
+    }
+    function ny({ count: e = 26, seed: t = 11 }) {
+      let a = (0, f.useMemo)(() => {
+        let a = eR(t);
+        return Array.from({ length: e }, () => ({
+          x: 100 * a(),
+          y: 60 * a(),
+          s: 0.4 + 0.9 * a(),
+          d: 4 * a(),
+        }));
+      }, [e, t]);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0",
+        children: a.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute rounded-full bg-[#f4efe2]",
+              style: {
+                left: `${e.x}%`,
+                top: `${e.y}%`,
+                width: `${e.s}cqw`,
+                height: `${e.s}cqw`,
+              },
+              animate: { opacity: [0.2, 1, 0.2] },
+              transition: { duration: 2.5 + e.d, repeat: 1 / 0, delay: e.d },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function nq({ side: e }) {
+      let t = eO((0, f.useId)());
+      return (0, v.jsxs)("div", {
+        className: "relative h-full w-full overflow-hidden",
+        style: { background: "linear-gradient(180deg,#0f4a40,#082c26)" },
+        children: [
+          (0, v.jsxs)("svg", {
+            className: "absolute inset-0 h-full w-full",
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsx)("defs", {
+                children: (0, v.jsx)(nu, { id: `${t}p`, size: 46, width: 1.6 }),
+              }),
+              (0, v.jsx)("rect", {
+                width: "100%",
+                height: "100%",
+                fill: `url(#${t}p)`,
+                opacity: 0.75,
+              }),
+            ],
+          }),
+          (0, v.jsx)("div", {
+            className:
+              "absolute inset-[3cqw] rounded-t-[30cqw] border-2 border-[#e3b964]/70",
+          }),
+          (0, v.jsx)("div", {
+            className: `absolute top-0 bottom-0 w-[2cqw] ${"left" === e ? "right-0" : "left-0"}`,
+            style: {
+              background: "linear-gradient(90deg,#8a6420,#f3d48a,#8a6420)",
+            },
+          }),
+        ],
+      });
+    }
+    let nv = (e) =>
+      "bride" === e.lead
+        ? [e.secondCouple.bride, e.secondCouple.groom]
+        : [e.secondCouple.groom, e.secondCouple.bride];
+    function nN({ invite: e, names: t, show: a, second: s = !1 }) {
+      let i = eO((0, f.useId)()),
+        [n, l] = t,
+        r = s ? 380 : 440;
+      return (0, v.jsxs)($.f.div, {
+        ...a(0.1),
+        className: "relative w-[82cqw]",
+        children: [
+          (0, v.jsxs)("svg", {
+            viewBox: `-6 -6 312 ${r + 12}`,
+            className: "absolute inset-0 h-full w-full",
+            preserveAspectRatio: "none",
+            "aria-hidden": !0,
+            children: [
+              (0, v.jsxs)("defs", {
+                children: [
+                  (0, v.jsx)(nu, {
+                    id: `${i}h`,
+                    size: 34,
+                    width: 0.8,
+                    opacity: 0.35,
+                  }),
+                  (0, v.jsx)("clipPath", {
+                    id: `${i}c`,
+                    children: (0, v.jsx)("path", { d: nw(300, r, 170) }),
+                  }),
+                ],
+              }),
+              (0, v.jsx)("path", { d: nw(300, r, 170), fill: "#072822" }),
+              (0, v.jsx)("rect", {
+                width: 300,
+                height: r,
+                fill: `url(#${i}h)`,
+                clipPath: `url(#${i}c)`,
+              }),
+              (0, v.jsx)("path", {
+                d: nw(300, r, 170),
+                fill: "none",
+                stroke: nf,
+                strokeWidth: 2,
+              }),
+              (0, v.jsx)("path", {
+                d: nw(280, r - 14, 160),
+                transform: "translate(10 12)",
+                fill: "none",
+                stroke: nf,
+                strokeOpacity: 0.5,
+                strokeWidth: 1,
+                strokeDasharray: "2 4",
+              }),
+            ],
+          }),
+          (0, v.jsxs)("div", {
+            className: `relative flex ${s ? "min-h-[106cqw]" : "min-h-[124cqw]"} flex-col items-center px-[9cqw] pt-[30cqw] pb-[10cqw] text-center`,
+            children: [
+              !s &&
+                (0, v.jsxs)(v.Fragment, {
+                  children: [
+                    (0, v.jsx)($.f.p, {
+                      ...a(0.4),
+                      dir: "rtl",
+                      className: "text-[6.4cqw] leading-tight text-[#e3b964]",
+                      style: { fontFamily: "var(--font-amiri)" },
+                      children: e.invocation,
+                    }),
+                    (0, v.jsx)($.f.p, {
+                      ...a(0.55),
+                      className:
+                        "inv-label mt-[2cqw] text-[2.2cqw] text-[#f4efe2]/60",
+                      children: e.invocationMeaning,
+                    }),
+                  ],
+                }),
+              !s &&
+                e.heroKicker &&
+                (0, v.jsx)($.f.p, {
+                  ...a(0.7),
+                  className: "inv-label mt-[6cqw] text-[2.6cqw] text-[#e3b964]",
+                  children: e.heroKicker,
+                }),
+              (0, v.jsxs)($.f.h1, {
+                ...a(0.85),
+                className: `${s ? "" : e.heroKicker ? "mt-[3cqw]" : "mt-[6cqw]"} flex flex-col items-center`,
+                children: [
+                  (0, v.jsx)("span", {
+                    className:
+                      "inv-script text-[13cqw] leading-[1] text-[#f4efe2]",
+                    children: n,
+                  }),
+                  (0, v.jsxs)("span", {
+                    className:
+                      "my-[1cqw] flex items-center gap-[2cqw] text-[#e3b964]",
+                    children: [
+                      (0, v.jsx)("span", {
+                        className: "h-px w-[10cqw] bg-[#e3b964]/60",
+                      }),
+                      (0, v.jsx)("svg", {
+                        viewBox: "-10 -10 20 20",
+                        className: "w-[5cqw]",
+                        "aria-hidden": !0,
+                        children: (0, v.jsx)("path", { d: nh(9), fill: nf }),
+                      }),
+                      (0, v.jsx)("span", {
+                        className: "h-px w-[10cqw] bg-[#e3b964]/60",
+                      }),
+                    ],
+                  }),
+                  (0, v.jsx)("span", {
+                    className:
+                      "inv-script text-[13cqw] leading-[1] text-[#f4efe2]",
+                    children: l,
+                  }),
+                ],
+              }),
+              !(e.hideHeroDate && e.hideHeroCity) &&
+                (0, v.jsxs)($.f.div, {
+                  ...a(1.2),
+                  className: "mt-[6cqw]",
+                  children: [
+                    !e.hideHeroDate &&
+                      (0, v.jsxs)("p", {
+                        className: "inv-label text-[2.6cqw] text-[#e3b964]",
+                        children: [
+                          (0, T.e)(e.date),
+                          " · ",
+                          (0, T.v)(e.date),
+                          " ",
+                          (0, T.D)(e.date),
+                          " ",
+                          (0, T.X)(e.date),
+                        ],
+                      }),
+                    !e.hideHeroCity &&
+                      (0, v.jsx)("p", {
+                        className: `inv-serif ${e.hideHeroDate ? "" : "mt-[1.5cqw]"} text-[4cqw] text-[#f4efe2]/75 italic`,
+                        children: e.city,
+                      }),
+                  ],
+                }),
+            ],
+          }),
+        ],
+      });
+    }
+    function nk({ className: e }) {
+      return (0, v.jsxs)("div", {
+        className: `flex items-center justify-center gap-[3cqw] ${e ?? ""}`,
+        children: [
+          (0, v.jsx)("span", {
+            className:
+              "h-px w-[20cqw] bg-gradient-to-r from-transparent to-[#e3b964]",
+          }),
+          (0, v.jsx)("svg", {
+            viewBox: "-10 -10 20 20",
+            className: "w-[5cqw]",
+            "aria-hidden": !0,
+            children: (0, v.jsx)("path", {
+              d: nh(9),
+              fill: "none",
+              stroke: nf,
+            }),
+          }),
+          (0, v.jsx)("span", {
+            className:
+              "h-px w-[20cqw] bg-gradient-to-l from-transparent to-[#e3b964]",
+          }),
+        ],
+      });
+    }
+    function n$({ kicker: e, children: t }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.5cqw] text-[#e3b964]",
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className:
+              "inv-script mt-[2cqw] text-[10cqw] leading-tight text-[#f4efe2]",
+            children: t,
+          }),
+          (0, v.jsx)(nk, { className: "mt-[3cqw]" }),
+        ],
+      });
+    }
+    let nC = {
+        id: "noor",
+        tapHint: "tapMoon",
+        root: "bg-[#0c3b33] text-[#f4efe2]",
+        vars: {
+          "--inv-script": "var(--font-amiri), serif",
+          "--inv-serif": "var(--font-cormorant), serif",
+          "--inv-label": "var(--font-marcellus), serif",
+        },
+        accent: nf,
+        ui: {
+          section: "relative px-[7cqw] py-[14cqw]",
+          card: "rounded-[5cqw] border border-[#e3b964]/40 bg-[#072822]/80 backdrop-blur-sm",
+          input:
+            "w-full rounded-[3cqw] border border-[#e3b964]/35 bg-[#05211c]/60 px-[4cqw] py-[3cqw] text-[3.8cqw] text-[#f4efe2] placeholder:text-[#f4efe2]/35 outline-none focus:border-[#e3b964]",
+          chip: "rounded-full border border-[#e3b964]/40 text-[#f4efe2]/80 transition",
+          chipOn:
+            "rounded-full border border-[#e3b964] bg-[#e3b964] font-semibold text-[#0c3b33] transition",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full bg-[#e3b964] px-[5cqw] py-[2.6cqw] text-[3.4cqw] font-semibold text-[#0c3b33] active:scale-95 transition",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border border-[#e3b964]/60 px-[5cqw] py-[2.6cqw] text-[3.4cqw] text-[#e3b964] active:scale-95 transition",
+          muted: "text-[#f4efe2]/70",
+          tile: "rounded-[3cqw] border border-[#e3b964]/40 bg-[#072822]/70 text-[#e3b964]",
+        },
+        Opening: function ({ invite: e, opened: t, onOpen: a }) {
+          let [s, i] = (0, L.g)(e);
+          return (0, v.jsxs)("div", {
+            className: "absolute inset-0 overflow-hidden",
+            style: { pointerEvents: t ? "none" : "auto" },
+            children: [
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-0",
+                style: {
+                  background:
+                    "radial-gradient(circle at 50% 45%, #fff2c4 0%, #e3b964 25%, #0c3b33 70%)",
+                },
+                initial: { opacity: 0 },
+                animate: { opacity: t ? [0, 0.9, 0] : 0 },
+                transition: { duration: 2, times: [0, 0.35, 1] },
+              }),
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-y-0 left-0 w-1/2",
+                animate: { x: t ? "-102%" : "0%" },
+                transition: {
+                  duration: 1.6,
+                  ease: [0.7, 0, 0.3, 1],
+                  delay: 0.2,
+                },
+                children: (0, v.jsx)(nq, { side: "left" }),
+              }),
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-y-0 right-0 w-1/2",
+                animate: { x: t ? "102%" : "0%" },
+                transition: {
+                  duration: 1.6,
+                  ease: [0.7, 0, 0.3, 1],
+                  delay: 0.2,
+                },
+                children: (0, v.jsx)(nq, { side: "right" }),
+              }),
+              (0, v.jsxs)($.f.div, {
+                className: "absolute inset-x-0 top-[13%] text-center",
+                animate: { opacity: +!t, y: t ? -20 : 0 },
+                children: [
+                  "" !== e.heroKicker &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-label text-[2.6cqw] text-[#f4efe2] [text-shadow:0_1px_8px_#000]",
+                      children: e.heroKicker ?? "The Nikah of",
+                    }),
+                  (0, v.jsxs)("p", {
+                    className:
+                      "mt-[2cqw] text-[9cqw] leading-none text-[#f4efe2] [text-shadow:0_2px_12px_#000]",
+                    style: { fontFamily: "var(--font-amiri)" },
+                    children: [
+                      s.first,
+                      " ",
+                      (0, v.jsx)("span", {
+                        className: "text-[#e3b964]",
+                        children: e.joiner ?? "&",
+                      }),
+                      " ",
+                      i.first,
+                    ],
+                  }),
+                ],
+              }),
+              e.secondCouple &&
+                (0, v.jsx)($.f.div, {
+                  className: "absolute inset-x-0 bottom-[19%] text-center",
+                  animate: { opacity: +!t, y: 20 * !!t },
+                  children: (0, v.jsxs)("p", {
+                    className:
+                      "text-[9cqw] leading-none text-[#f4efe2] [text-shadow:0_2px_12px_#000]",
+                    style: { fontFamily: "var(--font-amiri)" },
+                    children: [
+                      nv(e)[0].first,
+                      " ",
+                      (0, v.jsx)("span", {
+                        className: "text-[#e3b964]",
+                        children: e.joiner ?? "&",
+                      }),
+                      " ",
+                      nv(e)[1].first,
+                    ],
+                  }),
+                }),
+              (0, v.jsxs)($.f.button, {
+                onClick: a,
+                "aria-label": "Open invitation",
+                className:
+                  "absolute top-1/2 left-1/2 z-10 grid size-[38cqw] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full",
+                animate: { scale: t ? 0.3 : 1, opacity: +!t, rotate: 90 * !!t },
+                transition: { duration: 0.6 },
+                children: [
+                  (0, v.jsx)("span", {
+                    className:
+                      "absolute inset-0 rounded-full bg-[#0c3b33] shadow-[0_0_0_2px_#e3b964,0_0_0_8px_#0c3b33,0_0_0_9px_#e3b96488,0_20px_50px_-10px_#000]",
+                  }),
+                  (0, v.jsx)(ng, {
+                    className: "absolute inset-[3cqw] animate-spin-slow",
+                  }),
+                  (0, v.jsx)(nb, { className: "relative w-[20cqw]" }),
+                ],
+              }),
+            ],
+          });
+        },
+        Hero: function ({ invite: e }) {
+          let t = g(),
+            [a, s] = (0, L.g)(e),
+            i = (e) => ({
+              initial: { opacity: 0, y: 22 },
+              animate: t ? { opacity: 1, y: 0 } : {},
+              transition: { duration: 1.2, delay: e, ease: np },
+            });
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex min-h-[var(--screen-h,100dvh)] flex-col items-center justify-center overflow-hidden px-[6cqw] pt-[22cqw] pb-[14cqw]",
+            children: [
+              (0, v.jsx)(ny, {}),
+              (0, v.jsx)(nb, {
+                className: "absolute top-[8cqw] right-[8cqw] w-[18cqw]",
+              }),
+              (0, v.jsx)(nj, {
+                className: "absolute top-0 left-[5cqw] w-[13cqw]",
+                chain: 90,
+              }),
+              (0, v.jsx)(nj, {
+                className: "absolute top-0 right-[22cqw] w-[9cqw] opacity-80",
+                chain: 40,
+                delay: -2,
+              }),
+              (0, v.jsx)(nj, {
+                className: "absolute top-0 right-[4cqw] w-[11cqw]",
+                chain: 150,
+                delay: -1,
+              }),
+              (0, v.jsx)(nN, { invite: e, names: [a.first, s.first], show: i }),
+              e.secondCouple &&
+                (0, v.jsx)("div", {
+                  className: "mt-[10cqw]",
+                  children: (0, v.jsx)(nN, {
+                    invite: e,
+                    names: [nv(e)[0].first, nv(e)[1].first],
+                    show: (e) => i(e + 0.4),
+                    second: !0,
+                  }),
+                }),
+            ],
+          });
+        },
+        Blessing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw] text-center",
+            children: [
+              (0, v.jsxs)(B.b, {
+                children: [
+                  (0, v.jsx)("p", {
+                    className: "inv-label text-[2.5cqw] text-[#e3b964]",
+                    children: e.hosts,
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mx-auto mt-[4cqw] max-w-[76cqw] text-[5.2cqw] leading-snug text-[#f4efe2]/90 italic",
+                    children: e.message,
+                  }),
+                ],
+              }),
+              [[t, a], ...(e.secondCouple ? [nv(e)] : [])].map(([t, a], s) =>
+                (0, v.jsx)(
+                  "div",
+                  {
+                    className: "mt-[10cqw] grid grid-cols-2 gap-[4cqw]",
+                    children: [t, a].map((t, a) =>
+                      (0, v.jsx)(
+                        B.b,
+                        {
+                          delay: 0.15 * a,
+                          children: (0, v.jsxs)("div", {
+                            className:
+                              "relative h-full overflow-hidden rounded-t-[30cqw] rounded-b-[3cqw] border border-[#e3b964]/50 bg-[#072822]/70 px-[3cqw] pt-[12cqw] pb-[5cqw]",
+                            children: [
+                              (0, v.jsx)(ng, {
+                                className:
+                                  "absolute -top-[14cqw] left-1/2 w-[34cqw] -translate-x-1/2 opacity-30",
+                              }),
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-label relative text-[2cqw] text-[#e3b964]",
+                                children:
+                                  t === e.bride || t === e.secondCouple?.bride
+                                    ? "The bride"
+                                    : "The groom",
+                              }),
+                              (0, v.jsx)("p", {
+                                className:
+                                  "inv-script relative mt-[2cqw] text-[8.5cqw] leading-none text-[#f4efe2]",
+                                children: t.first,
+                              }),
+                              t.elders &&
+                                !t.eldersBelow &&
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-serif relative mt-[3cqw] text-[3.4cqw] leading-snug whitespace-pre-line text-[#f4efe2] italic",
+                                  children: t.elders,
+                                }),
+                              (0, v.jsx)("p", {
+                                className: `inv-serif relative ${t.elders && !t.eldersBelow ? "mt-[2cqw]" : "mt-[3cqw]"} text-[3.4cqw] leading-snug text-[#f4efe2] italic`,
+                                children: t.parents,
+                              }),
+                              t.elders &&
+                                t.eldersBelow &&
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-serif relative mt-[2cqw] text-[3.4cqw] leading-snug whitespace-pre-line text-[#f4efe2] italic",
+                                  children: t.elders,
+                                }),
+                            ],
+                          }),
+                        },
+                        `${s}-${a}`,
+                      ),
+                    ),
+                  },
+                  s,
+                ),
+              ),
+            ],
+          });
+        },
+        Events: function ({ invite: e }) {
+          let { t } = (0, N.G)();
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw]",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(n$, {
+                  kicker: t.eventsKicker,
+                  children: t.eventsTitle,
+                }),
+              }),
+              (0, v.jsx)("div", {
+                className: "mt-[10cqw] space-y-[7cqw]",
+                children: e.events.map((t, a) =>
+                  (0, v.jsx)(
+                    B.b,
+                    {
+                      children: (0, v.jsxs)("article", {
+                        className:
+                          "relative overflow-hidden rounded-t-[42cqw] rounded-b-[4cqw] border border-[#e3b964]/60 bg-gradient-to-b from-[#0f4a40] to-[#072822] px-[7cqw] pt-[16cqw] pb-[8cqw] text-center",
+                        children: [
+                          (0, v.jsx)(ng, {
+                            className:
+                              "absolute -top-[20cqw] left-1/2 w-[64cqw] -translate-x-1/2 opacity-20",
+                          }),
+                          (0, v.jsx)("span", {
+                            className:
+                              "relative mx-auto grid size-[15cqw] place-items-center rounded-full border border-[#e3b964]/70 bg-[#0c3b33] text-[#e3b964]",
+                            children: (0, v.jsx)(z, {
+                              kind: t.kind,
+                              className: "size-[8.5cqw]",
+                            }),
+                          }),
+                          (0, v.jsx)("h3", {
+                            className:
+                              "inv-script relative mt-[4cqw] text-[10cqw] leading-none text-[#f4efe2]",
+                            children: t.name,
+                          }),
+                          t.subtitle &&
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-serif relative mt-[2cqw] text-[4.4cqw] text-[#e3b964] italic",
+                              children: t.subtitle,
+                            }),
+                          (0, v.jsxs)("p", {
+                            className: `inv-label relative ${t.subtitle ? "mt-[3cqw]" : "mt-[4cqw]"} text-[2.5cqw] text-[#e3b964]`,
+                            children: [
+                              (0, T.e)(t.start),
+                              " · ",
+                              (0, T.v)(t.start),
+                              " ",
+                              (0, T.D)(t.start).slice(0, 3),
+                              !t.noTime &&
+                                (0, v.jsxs)(v.Fragment, {
+                                  children: [
+                                    " · ",
+                                    t.timeText ?? (0, T.U)(t.start),
+                                  ],
+                                }),
+                            ],
+                          }),
+                          (0, v.jsx)("p", {
+                            className:
+                              "inv-serif relative mt-[3cqw] text-[5cqw] leading-tight text-[#f4efe2]",
+                            children: t.venue,
+                          }),
+                          t.address &&
+                            (0, v.jsx)("p", {
+                              className:
+                                "relative mt-[1cqw] text-[3.2cqw] text-[#f4efe2]/60",
+                              children: t.address,
+                            }),
+                          (t.dress || t.note) &&
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-serif relative mt-[3cqw] text-[3.6cqw] text-[#e3b964] italic",
+                              children: [t.dress && `Dress: ${t.dress}`, t.note]
+                                .filter(Boolean)
+                                .join(" · "),
+                            }),
+                          (0, v.jsx)("div", {
+                            className: "relative",
+                            children: (0, v.jsx)(B.W, {
+                              event: t,
+                              invite: e,
+                              theme: nC,
+                            }),
+                          }),
+                        ],
+                      }),
+                    },
+                    t.name + (t.start || a),
+                  ),
+                ),
+              }),
+            ],
+          });
+        },
+        Closing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className:
+              "relative overflow-hidden px-[7cqw] pt-[18cqw] pb-[26cqw] text-center",
+            children: [
+              (0, v.jsx)(ng, {
+                className:
+                  "absolute top-[6cqw] left-1/2 w-[110cqw] -translate-x-1/2 animate-spin-slow opacity-10",
+              }),
+              (0, v.jsxs)(B.b, {
+                className: "relative",
+                children: [
+                  (0, v.jsx)(nb, { className: "mx-auto w-[20cqw]" }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mx-auto mt-[4cqw] max-w-[70cqw] text-[5.4cqw] leading-snug text-[#f4efe2]/90 italic",
+                    children: e.closing,
+                  }),
+                  (0, v.jsxs)("p", {
+                    className:
+                      "inv-script mt-[6cqw] text-[11cqw] leading-none text-[#e3b964]",
+                    children: [t.first, " ", e.joiner ?? "&", " ", a.first],
+                  }),
+                  e.secondCouple &&
+                    (0, v.jsxs)("p", {
+                      className:
+                        "inv-script mt-[3cqw] text-[11cqw] leading-none text-[#e3b964]",
+                      children: [
+                        nv(e)[0].first,
+                        " ",
+                        e.joiner ?? "&",
+                        " ",
+                        nv(e)[1].first,
+                      ],
+                    }),
+                  e.hashtag &&
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-label !normal-case mt-[5cqw] text-[2.6cqw] text-[#f4efe2]/70",
+                      children: e.hashtag,
+                    }),
+                  e.extras?.map((e, t) =>
+                    (0, v.jsxs)(
+                      "div",
+                      {
+                        className: "mt-[8cqw]",
+                        children: [
+                          (0, v.jsx)("p", {
+                            className: "inv-label text-[2.6cqw] text-[#e3b964]",
+                            children: e.title,
+                          }),
+                          (0, v.jsx)("div", {
+                            className: "mt-[2cqw] space-y-[1cqw]",
+                            children: e.lines.map((e, t) =>
+                              (0, v.jsx)(
+                                "p",
+                                {
+                                  className:
+                                    "inv-serif text-[4.2cqw] leading-snug text-[#f4efe2]/85 italic",
+                                  children: e,
+                                },
+                                t,
+                              ),
+                            ),
+                          }),
+                        ],
+                      },
+                      e.title + t,
+                    ),
+                  ),
+                ],
+              }),
+              !e.noBranding &&
+                (0, v.jsxs)(k.default, {
+                  href: "/",
+                  className:
+                    "inv-label absolute inset-x-0 bottom-[6cqw] text-[2cqw] text-[#f4efe2]/40",
+                  children: ["Crafted by ", F.B.name],
+                }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          let e = eO((0, f.useId)());
+          return (0, v.jsxs)("div", {
+            className: "pointer-events-none absolute inset-0 overflow-hidden",
+            children: [
+              (0, v.jsx)("div", {
+                className: "absolute inset-0",
+                style: {
+                  background:
+                    "radial-gradient(120% 50% at 50% 0%, #135447 0%, #0c3b33 40%, #05211c 100%)",
+                },
+              }),
+              (0, v.jsxs)("svg", {
+                className: "absolute inset-0 h-full w-full opacity-[0.07]",
+                "aria-hidden": !0,
+                children: [
+                  (0, v.jsx)("defs", {
+                    children: (0, v.jsx)(nu, { id: `${e}b`, size: 56 }),
+                  }),
+                  (0, v.jsx)("rect", {
+                    width: "100%",
+                    height: "100%",
+                    fill: `url(#${e}b)`,
+                  }),
+                ],
+              }),
+            ],
+          });
+        },
+        Divider: nk,
+        Title: n$,
+      },
+      nM = "#d6246e",
+      nS = "#f28a1a",
+      n_ = "#f6c445",
+      nz = "#5a0f2a",
+      nF = "#2f9e5b",
+      nT = "#fff4e0",
+      nB = [nM, nS, n_, nF],
+      nL = { [nM]: nT, [nS]: nz, [n_]: nz, [nF]: nT },
+      nO = { fontFamily: "var(--font-gurmukhi), sans-serif" };
+    function nW({ id: e, size: t = 48, ground: a = nz }) {
+      let s = t / 2,
+        i = (e) =>
+          `M${s} ${s - e} L${s + e} ${s} L${s} ${s + e} L${s - e} ${s} Z`;
+      return (0, v.jsxs)("pattern", {
+        id: e,
+        width: t,
+        height: t,
+        patternUnits: "userSpaceOnUse",
+        children: [
+          (0, v.jsx)("rect", { width: t, height: t, fill: a }),
+          (0, v.jsx)("path", { d: i(0.92 * s), fill: nS }),
+          (0, v.jsx)("path", { d: i(0.7 * s), fill: n_ }),
+          (0, v.jsx)("path", { d: i(0.48 * s), fill: nM }),
+          (0, v.jsx)("path", { d: i(0.26 * s), fill: n_ }),
+          (0, v.jsxs)("g", {
+            stroke: nT,
+            strokeOpacity: 0.55,
+            strokeWidth: 0.7,
+            strokeDasharray: "1.5 2",
+            children: [
+              (0, v.jsx)("path", {
+                d: `M${s} ${s - 0.92 * s} V${s + 0.92 * s} M${s - 0.92 * s} ${s} H${s + 0.92 * s}`,
+              }),
+              (0, v.jsx)("path", { d: i(0.6 * s), fill: "none" }),
+            ],
+          }),
+          [
+            [0, 0],
+            [t, 0],
+            [0, t],
+            [t, t],
+          ].map(([e, t]) =>
+            (0, v.jsx)(
+              "path",
+              {
+                d: `M${e} ${t - 4} L${e + 4} ${t} L${e} ${t + 4} L${e - 4} ${t} Z`,
+                fill: nF,
+              },
+              `${e}${t}`,
+            ),
+          ),
+        ],
+      });
+    }
+    function nI({ className: e, size: t = 40 }) {
+      let a = eO((0, f.useId)());
+      return (0, v.jsxs)("svg", {
+        className: e,
+        preserveAspectRatio: "none",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("defs", {
+            children: (0, v.jsx)(nW, { id: `${a}b`, size: t }),
+          }),
+          (0, v.jsx)("rect", {
+            width: "100%",
+            height: "100%",
+            fill: `url(#${a}b)`,
+          }),
+          (0, v.jsx)("line", {
+            x1: "0",
+            y1: "2",
+            x2: "100%",
+            y2: "2",
+            stroke: n_,
+            strokeWidth: "2",
+            strokeDasharray: "6 4",
+          }),
+          (0, v.jsx)("line", {
+            x1: "0",
+            y1: "97%",
+            x2: "100%",
+            y2: "97%",
+            stroke: n_,
+            strokeWidth: "2",
+            strokeDasharray: "6 4",
+          }),
+        ],
+      });
+    }
+    function nH({ className: e }) {
+      let t = eO((0, f.useId)());
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 120 130",
+        className: e,
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsxs)("defs", {
+            children: [
+              (0, v.jsxs)("linearGradient", {
+                id: `${t}c`,
+                x1: "0",
+                x2: "1",
+                children: [
+                  (0, v.jsx)("stop", { offset: "0", stopColor: "#8a3d14" }),
+                  (0, v.jsx)("stop", { offset: "0.45", stopColor: "#e08a3c" }),
+                  (0, v.jsx)("stop", { offset: "1", stopColor: "#7a3210" }),
+                ],
+              }),
+              (0, v.jsxs)("radialGradient", {
+                id: `${t}f`,
+                cx: "50%",
+                cy: "80%",
+                r: "70%",
+                children: [
+                  (0, v.jsx)("stop", { offset: "0", stopColor: "#fffbe0" }),
+                  (0, v.jsx)("stop", { offset: "0.4", stopColor: n_ }),
+                  (0, v.jsx)("stop", { offset: "1", stopColor: nS }),
+                ],
+              }),
+            ],
+          }),
+          [30, 60, 90].map((e, a) =>
+            (0, v.jsxs)(
+              "g",
+              {
+                children: [
+                  (0, v.jsx)("circle", {
+                    cx: e,
+                    cy: 1 === a ? 22 : 30,
+                    r: "14",
+                    fill: n_,
+                    opacity: "0.25",
+                    className: "animate-pulse",
+                  }),
+                  (0, v.jsx)("g", {
+                    className: "animate-flicker",
+                    style: {
+                      transformOrigin: `${e}px ${1 === a ? 34 : 42}px`,
+                      transformBox: "view-box",
+                      animationDelay: `${0.3 * a}s`,
+                    },
+                    children: (0, v.jsx)("path", {
+                      d: `M${e} ${1 === a ? 10 : 18} C${e + 6} ${1 === a ? 20 : 28} ${e + 5} ${1 === a ? 30 : 38} ${e} ${1 === a ? 33 : 41} C${e - 5} ${1 === a ? 30 : 38} ${e - 6} ${1 === a ? 20 : 28} ${e} ${1 === a ? 10 : 18} Z`,
+                      fill: `url(#${t}f)`,
+                    }),
+                  }),
+                  (0, v.jsx)("ellipse", {
+                    cx: e,
+                    cy: 1 === a ? 36 : 44,
+                    rx: "9",
+                    ry: "3.5",
+                    fill: "#b8642a",
+                  }),
+                ],
+              },
+              e,
+            ),
+          ),
+          (0, v.jsx)("path", {
+            d: "M28 52 H92 C96 56 96 60 92 62 H28 C24 60 24 56 28 52 Z",
+            fill: "#b8642a",
+          }),
+          (0, v.jsx)("path", {
+            d: "M34 62 C10 74 10 116 40 124 H80 C110 116 110 74 86 62 Z",
+            fill: `url(#${t}c)`,
+          }),
+          (0, v.jsxs)("g", {
+            fill: "none",
+            stroke: n_,
+            strokeWidth: "2",
+            strokeDasharray: "3 3",
+            children: [
+              (0, v.jsx)("path", { d: "M24 86 C44 92 76 92 96 86" }),
+              (0, v.jsx)("path", { d: "M22 100 C44 107 76 107 98 100" }),
+            ],
+          }),
+          (0, v.jsx)("g", {
+            fill: nM,
+            children: [38, 52, 66, 80].map((e) =>
+              (0, v.jsx)("path", { d: `M${e} 92 l4 4 -4 4 -4 -4 Z` }, e),
+            ),
+          }),
+        ],
+      });
+    }
+    function nD({ count: e = 18, seed: t = 5 }) {
+      let a = (0, f.useMemo)(() => {
+        let a = eR(t);
+        return Array.from({ length: e }, (e, t) => ({
+          x: 100 * a(),
+          y: 100 * a(),
+          s: 1.5 + 2.5 * a(),
+          c: nB[t % 4],
+          r: 360 * a(),
+          d: 3 * a(),
+        }));
+      }, [e, t]);
+      return (0, v.jsx)("div", {
+        className: "pointer-events-none absolute inset-0 overflow-hidden",
+        children: a.map((e, t) =>
+          (0, v.jsx)(
+            $.f.span,
+            {
+              className: "absolute",
+              style: {
+                left: `${e.x}%`,
+                top: `${e.y}%`,
+                width: `${e.s}cqw`,
+                height: `${e.s}cqw`,
+                background: e.c,
+                rotate: `${e.r}deg`,
+                clipPath: "polygon(50% 0,100% 50%,50% 100%,0 50%)",
+              },
+              animate: { y: [0, -10, 0], rotate: [e.r, e.r + 90, e.r] },
+              transition: {
+                duration: 4 + e.d,
+                repeat: 1 / 0,
+                ease: "easeInOut",
+              },
+            },
+            t,
+          ),
+        ),
+      });
+    }
+    function nR({ side: e }) {
+      let t = eO((0, f.useId)());
+      return (0, v.jsxs)("svg", {
+        className: "h-full w-full",
+        preserveAspectRatio: "none",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("defs", {
+            children: (0, v.jsx)(nW, { id: `${t}p`, size: 56 }),
+          }),
+          (0, v.jsx)("rect", {
+            width: "100%",
+            height: "100%",
+            fill: `url(#${t}p)`,
+          }),
+          (0, v.jsx)("rect", {
+            x: "left" === e ? "0" : "6%",
+            width: "94%",
+            height: "100%",
+            fill: "none",
+            stroke: n_,
+            strokeWidth: "6",
+            strokeDasharray: "10 6",
+          }),
+        ],
+      });
+    }
+    function nA({ bg: e, rotate: t, className: a, children: s }) {
+      return (0, v.jsx)("span", {
+        className: `inline-block rounded-[2.5cqw] px-[4cqw] py-[1.5cqw] shadow-[0_1.2cqw_0_#5a0f2a] ${a ?? ""}`,
+        style: { background: e, color: nL[e], rotate: `${t}deg` },
+        children: s,
+      });
+    }
+    function nE({ kicker: e, children: t }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("span", {
+              className:
+                "inline-block -rotate-2 rounded-full bg-[#f6c445] px-[3.5cqw] py-[1cqw] text-[2.8cqw] font-bold tracking-[0.15em] text-[#5a0f2a] uppercase",
+              style: nO,
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className:
+              "inv-script mt-[3cqw] text-[12cqw] leading-none text-[#fff4e0] [text-shadow:0_1cqw_0_#d6246e]",
+            children: t,
+          }),
+        ],
+      });
+    }
+    let nP = {
+        id: "phulkari",
+        tapHint: "tapDupatta",
+        root: "bg-[#5a0f2a] text-[#fff4e0]",
+        vars: {
+          "--inv-script": "var(--font-rozha), serif",
+          "--inv-serif": "var(--font-gurmukhi), sans-serif",
+          "--inv-label": "var(--font-gurmukhi), sans-serif",
+        },
+        accent: n_,
+        ui: {
+          section: "relative px-[7cqw] py-[14cqw]",
+          card: "rounded-[5cqw] bg-[#fff4e0] text-[#5a0f2a] shadow-[0_2cqw_0_#2a0614]",
+          input:
+            "w-full rounded-[3cqw] border-[0.5cqw] border-[#5a0f2a]/20 bg-white px-[4cqw] py-[3cqw] text-[3.8cqw] text-[#5a0f2a] placeholder:text-[#5a0f2a]/40 outline-none focus:border-[#d6246e]",
+          chip: "rounded-full border-[0.5cqw] border-[#5a0f2a]/25 bg-white text-[#5a0f2a] font-semibold transition",
+          chipOn:
+            "rounded-full border-[0.5cqw] border-[#d6246e] bg-[#d6246e] text-white font-bold transition",
+          button:
+            "inline-flex items-center gap-[1.5cqw] rounded-full bg-[#5a0f2a] px-[5cqw] py-[2.6cqw] text-[3.4cqw] font-bold text-[#f6c445] shadow-[0_1cqw_0_rgba(0,0,0,.3)] active:translate-y-[0.5cqw] transition",
+          ghost:
+            "inline-flex items-center gap-[1.5cqw] rounded-full border-[0.5cqw] border-current px-[5cqw] py-[2.6cqw] text-[3.4cqw] font-bold active:scale-95 transition",
+          muted: "opacity-75",
+          tile: "rounded-[3cqw] bg-[#f6c445] text-[#5a0f2a] shadow-[0_1cqw_0_#2a0614]",
+        },
+        Opening: function ({ invite: e, opened: t, onOpen: a }) {
+          let [s, i] = (0, L.g)(e);
+          return (0, v.jsxs)("div", {
+            className: "absolute inset-0 overflow-hidden",
+            style: { pointerEvents: t ? "none" : "auto" },
+            children: [
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-y-0 left-0 w-1/2 origin-left",
+                animate: t
+                  ? { x: "-105%", rotate: -8, skewY: 4 }
+                  : { x: "0%", rotate: 0, skewY: 0 },
+                transition: {
+                  duration: 1.1,
+                  ease: [0.7, 0, 0.3, 1],
+                  delay: 0.9 * !!t,
+                },
+                children: (0, v.jsx)(nR, { side: "left" }),
+              }),
+              (0, v.jsx)($.f.div, {
+                className: "absolute inset-y-0 right-0 w-1/2 origin-right",
+                animate: t
+                  ? { x: "105%", rotate: 8, skewY: -4 }
+                  : { x: "0%", rotate: 0, skewY: 0 },
+                transition: {
+                  duration: 1.1,
+                  ease: [0.7, 0, 0.3, 1],
+                  delay: 0.9 * !!t,
+                },
+                children: (0, v.jsx)(nR, { side: "right" }),
+              }),
+              (0, v.jsxs)($.f.div, {
+                className:
+                  "absolute top-0 left-1/2 h-full w-[1.2cqw] -translate-x-1/2",
+                animate: { opacity: t ? [1, 1, 0] : 1 },
+                transition: { duration: 1.2, times: [0, 0.8, 1] },
+                children: [
+                  (0, v.jsx)("div", {
+                    className: "h-full w-full",
+                    style: {
+                      background: `repeating-linear-gradient(180deg, ${nT} 0 3cqw, transparent 3cqw 5cqw)`,
+                    },
+                  }),
+                  (0, v.jsx)($.f.div, {
+                    className: "absolute inset-x-0 top-0 bg-[#5a0f2a]",
+                    initial: { height: "0%" },
+                    animate: { height: t ? "100%" : "0%" },
+                    transition: { duration: 0.9, ease: "easeIn" },
+                  }),
+                  (0, v.jsx)($.f.span, {
+                    className:
+                      "absolute left-1/2 h-[7cqw] w-[0.8cqw] -translate-x-1/2 rounded-full bg-[#e8e8e8] shadow",
+                    initial: { top: "-8%" },
+                    animate: { top: t ? "102%" : "-8%" },
+                    transition: { duration: 0.9, ease: "easeIn" },
+                  }),
+                ],
+              }),
+              (0, v.jsxs)($.f.div, {
+                className:
+                  "absolute inset-x-[8cqw] top-[12%] -rotate-2 rounded-[3cqw] bg-[#fff4e0] px-[5cqw] py-[4cqw] text-center shadow-[0_2cqw_0_#5a0f2a]",
+                animate: { opacity: +!t, y: t ? -30 : 0 },
+                transition: { duration: 0.4 },
+                children: [
+                  (0, v.jsx)("p", {
+                    className:
+                      "text-[2.8cqw] font-bold tracking-[0.2em] text-[#d6246e] uppercase",
+                    style: nO,
+                    children: "Shaadi di khabar!",
+                  }),
+                  (0, v.jsxs)("p", {
+                    className:
+                      "inv-script mt-[1cqw] text-[10cqw] leading-none text-[#5a0f2a]",
+                    children: [
+                      s.first,
+                      " ",
+                      (0, v.jsx)("span", {
+                        className: "text-[#f28a1a]",
+                        children: "+",
+                      }),
+                      " ",
+                      i.first,
+                    ],
+                  }),
+                ],
+              }),
+              (0, v.jsxs)($.f.button, {
+                onClick: a,
+                "aria-label": "Open invitation",
+                className:
+                  "absolute top-[56%] left-1/2 z-10 grid size-[34cqw] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#d6246e] shadow-[0_0_0_2cqw_#f6c445,0_0_0_3cqw_#5a0f2a,0_3cqw_0_3cqw_#5a0f2a]",
+                animate: { scale: t ? 0 : [1, 1.05, 1], rotate: 180 * !!t },
+                transition: t
+                  ? { duration: 0.5 }
+                  : { duration: 1.6, repeat: 1 / 0 },
+                children: [
+                  (0, v.jsx)("span", {
+                    className:
+                      "absolute inset-[2cqw] rounded-full border-[0.6cqw] border-dashed border-[#fff4e0]/80",
+                  }),
+                  e.seal
+                    ? (0, v.jsx)("span", {
+                        className: "relative block h-[22cqw] w-[10cqw]",
+                        children: (0, v.jsx)(R.default, {
+                          src: e.seal,
+                          alt: "",
+                          fill: !0,
+                          sizes: "120px",
+                          className: "object-contain",
+                        }),
+                      })
+                    : (0, v.jsx)("span", {
+                        className:
+                          "relative text-[15cqw] leading-none text-[#f6c445]",
+                        style: nO,
+                        children: e.invocation,
+                      }),
+                ],
+              }),
+            ],
+          });
+        },
+        Hero: function ({ invite: e }) {
+          let t = g(),
+            [a, s] = (0, L.g)(e),
+            i = (e, a = 0) => ({
+              initial: { opacity: 0, scale: 0.6, rotate: a - 10 },
+              animate: t ? { opacity: 1, scale: 1, rotate: a } : {},
+              transition: {
+                type: "spring",
+                stiffness: 160,
+                damping: 12,
+                delay: e,
+              },
+            });
+          return (0, v.jsxs)("section", {
+            className:
+              "relative flex min-h-[var(--screen-h,100dvh)] flex-col overflow-hidden",
+            children: [
+              (0, v.jsx)(nI, { className: "h-[14cqw] w-full shrink-0" }),
+              (0, v.jsxs)("div", {
+                className:
+                  "relative flex flex-1 flex-col items-center justify-center px-[6cqw] py-[8cqw] text-center",
+                children: [
+                  (0, v.jsx)(nD, {}),
+                  e.invocationArt &&
+                    (0, v.jsx)($.f.div, {
+                      ...i(0.2),
+                      className: "relative mb-[3cqw] h-[36cqw] w-[16cqw]",
+                      children: (0, v.jsx)(R.default, {
+                        src: e.invocationArt,
+                        alt: "",
+                        fill: !0,
+                        sizes: "160px",
+                        className:
+                          "object-contain drop-shadow-[0_0.8cqw_0_#d6246e]",
+                      }),
+                    }),
+                  (0, v.jsx)($.f.p, {
+                    ...i(0.3),
+                    className:
+                      "text-[16cqw] leading-none text-[#f6c445] [text-shadow:0_1.2cqw_0_#d6246e]",
+                    style: nO,
+                    children: e.invocation,
+                  }),
+                  e.showMeaning &&
+                    e.invocationMeaning &&
+                    (0, v.jsx)($.f.p, {
+                      ...i(0.4),
+                      className:
+                        "mt-[2cqw] text-[3.4cqw] text-[#fff4e0]/85 italic",
+                      children: e.invocationMeaning,
+                    }),
+                  !e.hideHeroHosts &&
+                    (0, v.jsx)($.f.p, {
+                      ...i(0.45),
+                      className:
+                        "mt-[2cqw] text-[2.8cqw] font-bold tracking-[0.25em] text-[#fff4e0]/80 uppercase",
+                      style: nO,
+                      children: e.hosts,
+                    }),
+                  e.heroKicker &&
+                    (0, v.jsx)($.f.p, {
+                      ...i(0.6),
+                      className:
+                        "mt-[4cqw] -mb-[2cqw] text-[2.8cqw] font-bold tracking-[0.25em] text-[#f6c445] uppercase",
+                      style: nO,
+                      children: e.heroKicker,
+                    }),
+                  (0, v.jsxs)($.f.h1, {
+                    className:
+                      "mt-[5cqw] flex flex-col items-center gap-[2cqw]",
+                    children: [
+                      (0, v.jsx)($.f.span, {
+                        ...i(0.7, -3),
+                        children: (0, v.jsx)(nA, {
+                          bg: nM,
+                          rotate: 0,
+                          children: (0, v.jsx)("span", {
+                            className: "inv-script text-[15cqw] leading-[1.05]",
+                            children: a.first,
+                          }),
+                        }),
+                      }),
+                      (0, v.jsx)($.f.span, {
+                        ...i(0.85, 4),
+                        children: (0, v.jsx)(nA, {
+                          bg: nF,
+                          rotate: 0,
+                          className:
+                            "text-[4cqw] font-bold tracking-[0.2em] uppercase",
+                          children: (0, v.jsx)("span", {
+                            style: nO,
+                            children: e.joiner ?? "weds",
+                          }),
+                        }),
+                      }),
+                      (0, v.jsx)($.f.span, {
+                        ...i(1, 2),
+                        children: (0, v.jsx)(nA, {
+                          bg: n_,
+                          rotate: 0,
+                          children: (0, v.jsx)("span", {
+                            className: "inv-script text-[15cqw] leading-[1.05]",
+                            children: s.first,
+                          }),
+                        }),
+                      }),
+                    ],
+                  }),
+                  !e.hideHeroDate &&
+                    (0, v.jsxs)($.f.div, {
+                      ...i(1.25, -2),
+                      className: "mt-[7cqw] flex items-stretch gap-[2cqw]",
+                      children: [
+                        (0, v.jsx)(nA, {
+                          bg: nS,
+                          rotate: -3,
+                          className: "flex flex-col justify-center",
+                          children: (0, v.jsx)("span", {
+                            className: "text-[2.6cqw] font-bold uppercase",
+                            style: nO,
+                            children: (0, T.e)(e.date).slice(0, 3),
+                          }),
+                        }),
+                        (0, v.jsx)(nA, {
+                          bg: nT,
+                          rotate: 2,
+                          children: (0, v.jsx)("span", {
+                            className:
+                              "inv-script block text-[10cqw] leading-none text-[#d6246e]",
+                            children: (0, T.v)(e.date),
+                          }),
+                        }),
+                        (0, v.jsx)(nA, {
+                          bg: nM,
+                          rotate: -2,
+                          className: "flex flex-col justify-center text-left",
+                          children: (0, v.jsxs)("span", {
+                            className: "text-[2.6cqw] font-bold uppercase",
+                            style: nO,
+                            children: [
+                              (0, T.D)(e.date),
+                              (0, v.jsx)("br", {}),
+                              (0, T.X)(e.date),
+                            ],
+                          }),
+                        }),
+                      ],
+                    }),
+                  !e.hideHeroCity &&
+                    (0, v.jsxs)($.f.p, {
+                      ...i(1.4),
+                      className:
+                        "mt-[4cqw] text-[3.4cqw] font-bold text-[#f6c445]",
+                      style: nO,
+                      children: ["📍 ", e.city],
+                    }),
+                  (0, v.jsx)(nH, {
+                    className: "absolute right-[3cqw] bottom-[2cqw] w-[20cqw]",
+                  }),
+                ],
+              }),
+              (0, v.jsx)(nI, {
+                className: "h-[8cqw] w-full shrink-0",
+                size: 30,
+              }),
+            ],
+          });
+        },
+        Blessing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw] text-center",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsxs)("p", {
+                  className:
+                    "mx-auto max-w-[78cqw] text-[5cqw] leading-snug font-semibold text-[#fff4e0]",
+                  style: nO,
+                  children: [
+                    e.hosts,
+                    " ",
+                    (0, v.jsx)("span", {
+                      className: "text-[#f6c445]",
+                      children: e.message,
+                    }),
+                  ],
+                }),
+              }),
+              (0, v.jsx)("div", {
+                className: "mt-[10cqw] grid grid-cols-2 gap-[4cqw]",
+                children: [t, a].map((t, a) =>
+                  (0, v.jsx)(
+                    B.b,
+                    {
+                      delay: 0.15 * a,
+                      children: (0, v.jsx)("div", {
+                        className:
+                          "h-full rounded-[4cqw] p-[4cqw] text-left shadow-[0_1.5cqw_0_#2a0614]",
+                        style: {
+                          background: a ? n_ : nM,
+                          color: a ? nz : nT,
+                          rotate: `${a ? 2 : -2}deg`,
+                        },
+                        children: (0, v.jsxs)("div", {
+                          className:
+                            "rounded-[2.5cqw] border-[0.5cqw] border-dashed border-current/40 p-[3cqw]",
+                          children: [
+                            (0, v.jsx)("p", {
+                              className:
+                                "text-[2.4cqw] font-bold tracking-[0.2em] uppercase opacity-80",
+                              style: nO,
+                              children: t === e.bride ? "Kudi" : "Munda",
+                            }),
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-script mt-[1cqw] text-[9cqw] leading-none",
+                              children: t.first,
+                            }),
+                            t.elders &&
+                              !t.eldersBelow &&
+                              (0, v.jsx)("p", {
+                                className:
+                                  "mt-[2cqw] text-[3cqw] leading-snug font-medium whitespace-pre-line",
+                                style: nO,
+                                children: t.elders,
+                              }),
+                            (0, v.jsx)("p", {
+                              className:
+                                "mt-[2cqw] text-[3cqw] leading-snug font-medium",
+                              style: nO,
+                              children: t.parents,
+                            }),
+                            t.elders &&
+                              t.eldersBelow &&
+                              (0, v.jsx)("p", {
+                                className:
+                                  "mt-[2cqw] text-[3cqw] leading-snug font-medium whitespace-pre-line",
+                                style: nO,
+                                children: t.elders,
+                              }),
+                          ],
+                        }),
+                      }),
+                    },
+                    t === e.bride ? "bride" : "groom",
+                  ),
+                ),
+              }),
+            ],
+          });
+        },
+        Events: function ({ invite: e }) {
+          let { t } = (0, N.G)();
+          return (0, v.jsxs)("section", {
+            className: "relative px-[7cqw] py-[14cqw]",
+            children: [
+              (0, v.jsx)(B.b, {
+                children: (0, v.jsx)(nE, {
+                  kicker: t.eventsKicker,
+                  children: t.eventsTitle,
+                }),
+              }),
+              (0, v.jsx)("div", {
+                className: "mt-[10cqw] space-y-[8cqw]",
+                children: e.events.map((t, a) => {
+                  let s = nB[a % 4],
+                    i = nL[s];
+                  return (0, v.jsx)(
+                    B.b,
+                    {
+                      children: (0, v.jsx)("article", {
+                        className:
+                          "rounded-[5cqw] p-[3cqw] shadow-[0_2cqw_0_#2a0614]",
+                        style: {
+                          background: s,
+                          color: i,
+                          rotate: `${a % 2 ? 1.5 : -1.5}deg`,
+                        },
+                        children: (0, v.jsxs)("div", {
+                          className:
+                            "rounded-[3.5cqw] border-[0.6cqw] border-dashed border-current/40 px-[5cqw] py-[6cqw]",
+                          children: [
+                            (0, v.jsxs)("div", {
+                              className: "flex items-start justify-between",
+                              children: [
+                                (0, v.jsx)("p", {
+                                  className:
+                                    "inv-script text-[16cqw] leading-[0.8] opacity-30",
+                                  children: String(a + 1).padStart(2, "0"),
+                                }),
+                                (0, v.jsx)(z, {
+                                  kind: t.kind,
+                                  className: "size-[13cqw]",
+                                }),
+                              ],
+                            }),
+                            (0, v.jsx)("h3", {
+                              className:
+                                "inv-script mt-[2cqw] text-[11cqw] leading-none",
+                              children: t.name,
+                            }),
+                            (0, v.jsxs)("p", {
+                              className: "mt-[4cqw] text-[3.4cqw] font-bold",
+                              style: nO,
+                              children: [
+                                (0, T.e)(t.start),
+                                ", ",
+                                (0, T.v)(t.start),
+                                " ",
+                                (0, T.D)(t.start),
+                                !t.noTime &&
+                                  (0, v.jsxs)(v.Fragment, {
+                                    children: [
+                                      " · ",
+                                      t.timeText ?? (0, T.U)(t.start),
+                                    ],
+                                  }),
+                              ],
+                            }),
+                            (0, v.jsx)("p", {
+                              className:
+                                "mt-[2cqw] text-[4.4cqw] leading-tight font-bold",
+                              style: nO,
+                              children: t.venue,
+                            }),
+                            t.address &&
+                              (0, v.jsx)("p", {
+                                className: "mt-[1cqw] text-[3.2cqw] opacity-80",
+                                style: nO,
+                                children: t.address,
+                              }),
+                            (t.dress || t.note) &&
+                              (0, v.jsx)("p", {
+                                className:
+                                  "mt-[3cqw] inline-block rounded-full bg-black/10 px-[3cqw] py-[1cqw] text-[3cqw] font-semibold",
+                                style: nO,
+                                children: [
+                                  t.dress && `Wear: ${t.dress}`,
+                                  t.note,
+                                ]
+                                  .filter(Boolean)
+                                  .join(" · "),
+                              }),
+                            (0, v.jsx)("div", {
+                              className: "[&>div]:justify-start",
+                              children: (0, v.jsx)(B.W, {
+                                event: t,
+                                invite: e,
+                                theme: nP,
+                              }),
+                            }),
+                          ],
+                        }),
+                      }),
+                    },
+                    t.name,
+                  );
+                }),
+              }),
+            ],
+          });
+        },
+        Closing: function ({ invite: e }) {
+          let [t, a] = (0, L.g)(e);
+          return (0, v.jsxs)("section", {
+            className: "relative overflow-hidden pb-[24cqw] text-center",
+            children: [
+              (0, v.jsx)(nI, { className: "h-[10cqw] w-full" }),
+              (0, v.jsxs)("div", {
+                className: "relative px-[7cqw] pt-[14cqw]",
+                children: [
+                  (0, v.jsx)(nD, { count: 12, seed: 9 }),
+                  (0, v.jsxs)(B.b, {
+                    className: "relative",
+                    children: [
+                      (0, v.jsx)(nH, { className: "mx-auto w-[28cqw]" }),
+                      (0, v.jsx)("p", {
+                        className:
+                          "mx-auto mt-[4cqw] max-w-[76cqw] text-[5.6cqw] leading-snug font-bold text-[#fff4e0]",
+                        style: nO,
+                        children: e.closing,
+                      }),
+                      (0, v.jsxs)("p", {
+                        className:
+                          "inv-script mt-[6cqw] text-[12cqw] leading-none text-[#f6c445] [text-shadow:0_1cqw_0_#d6246e]",
+                        children: [t.first, " ", e.joiner ?? "&", " ", a.first],
+                      }),
+                      e.hashtag &&
+                        (0, v.jsx)("span", {
+                          className:
+                            "mt-[5cqw] inline-block -rotate-2 rounded-full bg-[#d6246e] px-[4cqw] py-[1.5cqw] text-[3.2cqw] font-bold text-[#fff4e0]",
+                          style: nO,
+                          children: e.hashtag,
+                        }),
+                      e.extras?.map((e, t) =>
+                        (0, v.jsxs)(
+                          "div",
+                          {
+                            className: "mt-[8cqw]",
+                            children: [
+                              (0, v.jsx)("p", {
+                                className:
+                                  "text-[4.4cqw] font-bold text-[#f6c445]",
+                                style: nO,
+                                children: e.title,
+                              }),
+                              (0, v.jsx)("div", {
+                                className: "mt-[2cqw] space-y-[1cqw]",
+                                children: e.lines.map((e, t) =>
+                                  (0, v.jsx)(
+                                    "p",
+                                    {
+                                      className:
+                                        "text-[3.6cqw] leading-snug font-medium text-[#fff4e0]/85",
+                                      style: nO,
+                                      children: e,
+                                    },
+                                    t,
+                                  ),
+                                ),
+                              }),
+                            ],
+                          },
+                          e.title + t,
+                        ),
+                      ),
+                    ],
+                  }),
+                ],
+              }),
+              !e.noBranding &&
+                (0, v.jsxs)(k.default, {
+                  href: "/",
+                  className:
+                    "absolute inset-x-0 bottom-[6cqw] text-[2.4cqw] font-semibold text-[#fff4e0]/50",
+                  style: nO,
+                  children: ["Crafted by ", F.B.name],
+                }),
+            ],
+          });
+        },
+        Backdrop: function () {
+          return (0, v.jsx)("div", {
+            className: "pointer-events-none absolute inset-0",
+            style: {
+              background: `radial-gradient(120% 40% at 50% 0%, #7a1438 0%, ${nz} 45%, #3a0819 100%)`,
+            },
+          });
+        },
+        Divider: function ({ className: e }) {
+          return (0, v.jsx)("div", {
+            className: `flex justify-center gap-[2cqw] ${e ?? ""}`,
+            children: nB.map((e) =>
+              (0, v.jsx)(
+                "span",
+                {
+                  className: "size-[3cqw] rotate-45",
+                  style: { background: e },
+                },
+                e,
+              ),
+            ),
+          });
+        },
+        Title: nE,
+      },
+      nG = "/art/illus",
+      nZ = "#faf7f1",
+      nK = "#3a1d20",
+      nV = "#8a1c2b",
+      nY = "#5c0f1c",
+      nU = "#b0873a",
+      nX = "#6b4a4c",
+      nQ = "#dcc2c4",
+      nJ = "var(--font-gurmukhi), sans-serif",
+      n0 = [0.22, 1, 0.36, 1],
+      n1 = (e, t) => (0, T.s)(e, t);
+    function n2({
+      src: e,
+      alt: t = "",
+      priority: a,
+      className: s = "object-cover",
+    }) {
+      let i = j();
+      return (0, v.jsx)(R.default, {
+        src: e,
+        alt: t,
+        fill: !0,
+        priority: a && !i,
+        sizes: i ? y : q,
+        className: s,
+        unoptimized: e.startsWith("http"),
+      });
+    }
+    function n5({ light: e }) {
+      return (0, v.jsxs)("svg", {
+        viewBox: "0 0 44 30",
+        className: "w-[9cqw]",
+        fill: "none",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("circle", {
+            cx: "16",
+            cy: "18",
+            r: "9",
+            stroke: e ? "#f3dfe0" : nV,
+            strokeWidth: "2",
+          }),
+          (0, v.jsx)("circle", {
+            cx: "28",
+            cy: "18",
+            r: "9",
+            stroke: e ? "#d9d6d2" : "#b9b5b0",
+            strokeWidth: "2",
+          }),
+          (0, v.jsx)("path", {
+            d: "M28 4.5l2.6 2.6L28 9.7l-2.6-2.6z",
+            stroke: e ? "#d9d6d2" : "#b9b5b0",
+            strokeWidth: "1.2",
+          }),
+        ],
+      });
+    }
+    function n4({ className: e, light: t }) {
+      let a = t ? "rgba(255,240,240,.35)" : nQ;
+      return (0, v.jsxs)("div", {
+        className: `flex items-center justify-center gap-[3cqw] ${e ?? "my-[8cqw]"}`,
+        children: [
+          (0, v.jsx)("span", {
+            className: "h-px w-[18cqw]",
+            style: { background: a },
+          }),
+          (0, v.jsx)(n5, { light: t }),
+          (0, v.jsx)("span", {
+            className: "h-px w-[18cqw]",
+            style: { background: a },
+          }),
+        ],
+      });
+    }
+    function n3({ kicker: e, children: t }) {
+      return (0, v.jsxs)("div", {
+        className: "text-center",
+        children: [
+          e &&
+            (0, v.jsx)("p", {
+              className: "inv-label text-[2.9cqw] tracking-[0.3em] uppercase",
+              style: { color: nV },
+              children: e,
+            }),
+          (0, v.jsx)("h2", {
+            className: "inv-script mt-[1cqw] text-[12cqw] leading-[1.15]",
+            style: { color: nV },
+            children: t,
+          }),
+        ],
+      });
+    }
+    let n6 = [
+        "ਸਤਿਗੁਰ ਦਾਤੇ ਕਾਜ ਰਚਾਇਆ ਆਪਣੀ ਮੇਹਰ ਕਰਾਈ ॥",
+        "ਦਾਸਾਂ ਕਾਰਜ ਆਪ ਸਵਾਰੇ ਇਹ ਉਸਦੀ ਵਡਿਆਈ ॥",
+      ],
+      n8 = [
+        [/arambh|palki|parkash|prakash|aagman/i, "palki"],
+        [/akhand|sehaj|bhog|kirtan|ardas/i, "path"],
+        [/jaggo|jago/i, "jaggo"],
+        [/anand karaj|laav|wedding ceremony|^wedding$/i, "anandkaraj"],
+        [/phere|pheras|vivah|lagna/i, "phere"],
+        [
+          /engagement|\bring\b|roka|sagai|kurmai|shagun|chunni|mangni/i,
+          "engagement",
+        ],
+        [/haldi|maiyan|vatna|batna|ubtan/i, "haldi"],
+        [/mehndi|mehendi|henna/i, "mehndi"],
+        [/sangeet|ladies|giddha/i, "sangeet"],
+        [/baraat|barat|sehra|ghodi|milni/i, "baraat"],
+        [/nikah/i, "nikah"],
+        [/walima/i, "walima"],
+        [/muhurtham|muhurtam|kalyanam/i, "muhurtham"],
+        [/reception|party|dinner|cocktail/i, "reception"],
+      ],
+      n9 = {
+        engagement: "engagement",
+        haldi: "haldi",
+        mehndi: "mehndi",
+        sangeet: "sangeet",
+        jaggo: "jaggo",
+        baraat: "baraat",
+        phere: "phere",
+        anandkaraj: "anandkaraj",
+        nikah: "nikah",
+        muhurtham: "muhurtham",
+        walima: "walima",
+        reception: "reception",
+        other: "celebration",
+      },
+      n7 = (e) =>
+        n1(e, { hour: "numeric", minute: "2-digit", hour12: !0 }).toUpperCase();
+    function le() {
+      return (0, v.jsx)("svg", {
+        viewBox: "0 0 24 24",
+        className: "mr-[1.5cqw] inline-block size-[4cqw] align-[-0.4cqw]",
+        fill: "#b4636e",
+        "aria-hidden": !0,
+        children: (0, v.jsx)("path", {
+          d: "M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z",
+        }),
+      });
+    }
+    function lt({ src: e }) {
+      return (0, v.jsx)($.f.div, {
+        className:
+          "relative mx-auto aspect-[4/5] w-[56cqw] overflow-hidden rounded-[50%] border-[0.6cqw] shadow-[0_2cqw_6cqw_-3cqw_rgba(90,20,30,.35)]",
+        style: { borderColor: nU },
+        initial: { opacity: 0, scale: 0.88 },
+        whileInView: { opacity: 1, scale: 1 },
+        viewport: { once: !0, amount: 0.4 },
+        transition: { duration: 1.4, ease: n0 },
+        children: (0, v.jsx)(n2, { src: e, alt: "" }),
+      });
+    }
+    function la({ children: e, delay: t = 0 }) {
+      return (0, v.jsx)($.f.div, {
+        initial: { opacity: 0.12, filter: "blur(5px)" },
+        whileInView: { opacity: 1, filter: "blur(0px)" },
+        viewport: { once: !0, amount: 0.3 },
+        transition: { duration: 1.2, delay: t, ease: n0 },
+        children: e,
+      });
+    }
+    function ls({ target: e }) {
+      let { scrollYProgress: t } = e$({
+          target: e,
+          offset: ["start 60%", "end 60%"],
+        }),
+        a = (0, eS.f)(t, [0, 1], ["4%", "100%"]);
+      return (0, v.jsxs)("div", {
+        className:
+          "pointer-events-none absolute top-0 bottom-0 left-[5cqw] w-[1.1cqw]",
+        "aria-hidden": !0,
+        children: [
+          (0, v.jsx)("span", {
+            className: "absolute inset-0 rounded-full opacity-15",
+            style: { background: nV },
+          }),
+          (0, v.jsx)($.f.span, {
+            className: "absolute top-0 left-0 w-full rounded-full",
+            style: {
+              height: a,
+              background:
+                "repeating-linear-gradient(160deg, #8a1c2b 0 1.2cqw, #b3243a 1.2cqw 2.2cqw)",
+            },
+          }),
+          (0, v.jsxs)($.f.span, {
+            className:
+              "absolute left-1/2 flex -translate-x-1/2 flex-col items-center",
+            style: { top: a },
+            children: [
+              (0, v.jsx)("span", {
+                className: "block h-[2cqw] w-[2.6cqw] rounded-t-full",
+                style: { background: nU },
+              }),
+              (0, v.jsx)("span", {
+                className: "block h-[7cqw] w-[4cqw]",
+                style: {
+                  background:
+                    "repeating-linear-gradient(90deg, #8a1c2b 0 0.6cqw, #b3243a 0.6cqw 1cqw)",
+                  clipPath: "polygon(15% 0, 85% 0, 100% 100%, 0 100%)",
+                },
+              }),
+            ],
+          }),
+        ],
+      });
+    }
+    function li({ e, invite: t, n: a }) {
+      let s = n8.find(([t]) => t.test(e.name))?.[1] ?? n9[e.kind];
+      return (0, v.jsxs)("div", {
+        className:
+          "relative overflow-hidden border-t px-[10cqw] py-[12cqw] text-center",
+        style: { borderColor: nQ },
+        children: [
+          (0, v.jsx)("span", {
+            className:
+              "inv-script pointer-events-none absolute top-[18cqw] right-[3cqw] text-[40cqw] leading-none opacity-[0.06]",
+            style: { color: nV },
+            "aria-hidden": !0,
+            children: a,
+          }),
+          e.image
+            ? (0, v.jsx)(lt, { src: e.image })
+            : s
+              ? (0, v.jsx)(lt, { src: `${nG}/sarovar-${s}.jpg` })
+              : (0, v.jsx)(n5, {}),
+          (0, v.jsxs)(la, {
+            delay: 0.2,
+            children: [
+              (0, v.jsxs)("p", {
+                className:
+                  "inv-label mt-[6cqw] text-[3.2cqw] tracking-[0.25em] uppercase",
+                style: { color: nV },
+                children: [
+                  n1(e.start, { weekday: "long" }),
+                  " ",
+                  n1(e.start, { day: "numeric" }),
+                  " ",
+                  n1(e.start, { month: "long" }),
+                  " ",
+                  n1(e.start, { year: "numeric" }),
+                ],
+              }),
+              (0, v.jsx)("h3", {
+                className: "inv-script mt-[1cqw] text-[12cqw] leading-[1.12]",
+                style: { color: nY },
+                children: e.name,
+              }),
+              e.schedule?.length
+                ? e.schedule.map((e) =>
+                    (0, v.jsxs)(
+                      "div",
+                      {
+                        className: "mt-[3cqw]",
+                        children: [
+                          (0, v.jsx)("p", {
+                            className: "inv-serif text-[4.6cqw] font-semibold",
+                            style: { color: nY },
+                            children: n7(e.at),
+                          }),
+                          (0, v.jsx)("p", {
+                            className:
+                              "inv-serif mx-auto max-w-[72cqw] text-[4.4cqw] leading-snug",
+                            style: { color: nY },
+                            children: e.text,
+                          }),
+                        ],
+                      },
+                      e.at + e.text,
+                    ),
+                  )
+                : !e.noTime &&
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mt-[3cqw] text-[4.6cqw] font-semibold",
+                    style: { color: nY },
+                    children: e.timeText ?? n7(e.start),
+                  }),
+              (0, v.jsxs)("p", {
+                className:
+                  "inv-serif mx-auto mt-[4cqw] max-w-[62cqw] text-[4.2cqw] italic",
+                style: { color: nX },
+                children: [
+                  (0, v.jsx)(le, {}),
+                  e.venue,
+                  e.address &&
+                    (0, v.jsxs)(v.Fragment, {
+                      children: [", ", (0, v.jsx)("br", {}), e.address],
+                    }),
+                ],
+              }),
+              (e.dress || e.note) &&
+                (0, v.jsx)("p", {
+                  className:
+                    "inv-label mx-auto mt-[4cqw] max-w-[62cqw] text-[3cqw] leading-relaxed tracking-[0.14em] uppercase",
+                  style: { color: nV },
+                  children: [e.note, e.dress && `Dress: ${e.dress}`]
+                    .filter(Boolean)
+                    .join(" · "),
+                }),
+              (0, v.jsx)(B.W, { event: e, invite: t, theme: lc }),
+            ],
+          }),
+        ],
+      });
+    }
+    let ln = [
+      {
+        n: "First",
+        line: "ਹਰਿ ਪਹਿਲੜੀ ਲਾਵ ਪਰਵਿਰਤੀ ਕਰਮ ਦ੍ਰਿੜਾਇਆ ਬਲਿ ਰਾਮ ਜੀਉ ॥",
+        meaning:
+          "The first round sets the couple on a life of honest work and duty, rooted in the Guru's word.",
+      },
+      {
+        n: "Second",
+        line: "ਹਰਿ ਦੂਜੜੀ ਲਾਵ ਸਤਿਗੁਰੁ ਪੁਰਖੁ ਮਿਲਾਇਆ ਬਲਿ ਰਾਮ ਜੀਉ ॥",
+        meaning:
+          "The second round brings them to the True Guru, letting go of fear and ego.",
+      },
+      {
+        n: "Third",
+        line: "ਹਰਿ ਤੀਜੜੀ ਲਾਵ ਮਨਿ ਚਾਉ ਭਇਆ ਬੈਰਾਗੀਆ ਬਲਿ ਰਾਮ ਜੀਉ ॥",
+        meaning:
+          "The third round fills their hearts with longing for the Divine, in the company of the holy.",
+      },
+      {
+        n: "Fourth",
+        line: "ਹਰਿ ਚਉਥੜੀ ਲਾਵ ਮਨਿ ਸਹਜੁ ਭਇਆ ਹਰਿ ਪਾਇਆ ਬਲਿ ਰਾਮ ਜੀਉ ॥",
+        meaning:
+          "The fourth round brings peace and union: two souls become one light.",
+      },
+    ];
+    function ll() {
+      let e = (0, f.useRef)([]),
+        [t, a] = (0, f.useState)(0);
+      return (
+        (0, f.useEffect)(() => {
+          let t = new IntersectionObserver(
+            (e) =>
+              e.forEach(
+                (e) => e.isIntersecting && a(Number(e.target.dataset.i)),
+              ),
+            { rootMargin: "-45% 0px -45% 0px" },
+          );
+          return (
+            e.current.forEach((e) => e && t.observe(e)), () => t.disconnect()
+          );
+        }, []),
+        (0, v.jsx)($.f.section, {
+          className: "relative text-center text-white",
+          initial: "down",
+          whileInView: "up",
+          viewport: { once: !0, amount: 0.02 },
+          children: (0, v.jsxs)($.f.div, {
+            className: "pt-[14cqw] pb-[8cqw]",
+            style: { background: `linear-gradient(180deg, ${nV}, ${nY})` },
+            variants: {
+              down: { clipPath: "inset(100% 0 0 0)" },
+              up: { clipPath: "inset(0% 0 0 0)" },
+            },
+            transition: { duration: 1.4, ease: [0.65, 0, 0.35, 1] },
+            children: [
+              (0, v.jsxs)(B.b, {
+                children: [
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-label text-[2.9cqw] tracking-[0.35em] uppercase opacity-90",
+                    children: "The Four Laavan",
+                  }),
+                  (0, v.jsx)("h2", {
+                    className:
+                      "inv-script mt-[1cqw] text-[14cqw] leading-tight",
+                    children: "Anand Karaj",
+                  }),
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mx-auto mt-[2cqw] max-w-[78cqw] text-[4cqw] opacity-90",
+                    children:
+                      "The sacred Sikh wedding: four rounds around Sri Guru Granth Sahib Ji.",
+                  }),
+                ],
+              }),
+              (0, v.jsx)("div", {
+                className:
+                  "sticky top-[3cqw] z-10 mx-auto mt-[6cqw] flex w-fit gap-[3cqw] rounded-full bg-black/25 px-[4cqw] py-[2cqw] backdrop-blur-sm",
+                children: ln.map((a, s) =>
+                  (0, v.jsx)(
+                    "button",
+                    {
+                      type: "button",
+                      onClick: () =>
+                        e.current[s]?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "center",
+                        }),
+                      className: `inv-serif grid size-[9cqw] place-items-center rounded-full border text-[4cqw] transition ${t === s ? "border-white border-2" : "border-white/40"}`,
+                      "aria-label": `${a.n} laav`,
+                      children: s + 1,
+                    },
+                    a.n,
+                  ),
+                ),
+              }),
+              ln.map((t, a) =>
+                (0, v.jsxs)(
+                  "div",
+                  {
+                    ref: (t) => void (e.current[a] = t),
+                    "data-i": a,
+                    className:
+                      "border-t border-white/15 px-[6cqw] py-[10cqw] first:mt-[6cqw]",
+                    children: [
+                      (0, v.jsxs)("p", {
+                        className:
+                          "inv-label flex items-center justify-center gap-[3cqw] text-[3.2cqw] tracking-[0.3em] uppercase",
+                        children: [
+                          (0, v.jsx)("span", {
+                            className:
+                              "inv-serif grid size-[8cqw] place-items-center rounded-full border border-white/50 text-[3.6cqw] tracking-normal",
+                            children: a + 1,
+                          }),
+                          t.n,
+                          " Laav",
+                        ],
+                      }),
+                      (0, v.jsx)("p", {
+                        className: "mt-[4cqw] text-[4.4cqw] leading-relaxed",
+                        style: { fontFamily: nJ },
+                        children: t.line,
+                      }),
+                      (0, v.jsx)("p", {
+                        className:
+                          "inv-serif mx-auto mt-[3cqw] max-w-[80cqw] text-[3.9cqw] italic opacity-85",
+                        children: t.meaning,
+                      }),
+                    ],
+                  },
+                  t.n,
+                ),
+              ),
+              (0, v.jsx)("p", {
+                className: "inv-serif mt-[2cqw] text-[3.2cqw] opacity-75",
+                children: "Guru Ram Das Ji · Raag Suhi, Mahalla 4",
+              }),
+            ],
+          }),
+        })
+      );
+    }
+    function lr() {
+      let e;
+      return (
+        (e = eC()),
+        (0, f.useEffect)(() => {
+          let t = eM(e),
+            a = 0,
+            s = !1,
+            i = 0,
+            n = 0,
+            l = (e) => {
+              !s &&
+                (i && (n += ((e - i) / 1e3) * (t.view() / 14)),
+                (i = e),
+                n >= 1 && (t.by({ top: Math.floor(n) }), (n -= Math.floor(n))),
+                t.view() + t.y() < t.height() - 2 &&
+                  (a = requestAnimationFrame(l)));
+            },
+            r = () => {
+              (s = !0), cancelAnimationFrame(a);
+            },
+            c = window.setTimeout(() => (a = requestAnimationFrame(l)), 3200),
+            o = ["wheel", "touchstart", "keydown", "mousedown"];
+          return (
+            o.forEach((e) => window.addEventListener(e, r, { passive: !0 })),
+            () => {
+              window.clearTimeout(c),
+                r(),
+                o.forEach((e) => window.removeEventListener(e, r));
+            }
+          );
+        }, [e]),
+        null
+      );
+    }
+    let lc = {
+      id: "sarovar",
+      tapHint: "tapRing",
+      root: "",
+      vars: {
+        "--inv-script": "var(--font-dancing), cursive",
+        "--inv-serif": "var(--font-cormorant), serif",
+        "--inv-label": "var(--font-cinzel), serif",
+        "--inv-accent": nV,
+        background: nZ,
+        color: nK,
+      },
+      accent: nV,
+      ui: {
+        section: "relative px-[10cqw] py-[12cqw]",
+        card: "rounded-[2cqw] border border-[#dcc2c4] bg-white",
+        input:
+          "w-full rounded-[2cqw] border border-[#dcc2c4] bg-white px-[4cqw] py-[3cqw] text-[3.8cqw] outline-none",
+        chip: "rounded-full border border-[#dcc2c4] bg-white transition",
+        chipOn:
+          "rounded-full border border-transparent font-semibold text-white transition [background:var(--inv-accent)]",
+        button:
+          "inv-label inline-flex items-center gap-[1.5cqw] rounded-full border border-[#8a1c2b] px-[4.5cqw] py-[2.4cqw] text-[3cqw] tracking-[0.14em] uppercase active:scale-95 transition text-[#8a1c2b]",
+        ghost:
+          "inv-label inline-flex items-center gap-[1.5cqw] rounded-full border border-[#8a1c2b] px-[4.5cqw] py-[2.4cqw] text-[3cqw] tracking-[0.14em] uppercase active:scale-95 transition text-[#8a1c2b]",
+        muted: "opacity-80",
+        tile: "rounded-[3cqw] border border-[#dcc2c4] bg-white/95",
+      },
+      Opening: function ({ invite: e, opened: t, onOpen: a }) {
+        let [s, i] = (0, L.g)(e),
+          n = e.date;
+        return (0, v.jsxs)($.f.div, {
+          className:
+            "absolute inset-0 flex flex-col items-center justify-center text-center [perspective:220cqw]",
+          style: {
+            background: `radial-gradient(90% 60% at 50% 50%, #fffdf9, ${nZ} 70%, #f1ebe2)`,
+            color: nV,
+          },
+          animate: t ? { opacity: 0 } : { opacity: 1 },
+          transition: { duration: 0.35, delay: 0.95 * !!t, ease: "easeOut" },
+          children: [
+            (0, v.jsx)("span", {
+              className: "absolute inset-x-0 top-[2%] h-px",
+              style: { background: nQ },
+            }),
+            (0, v.jsx)("span", {
+              className: "absolute inset-x-0 bottom-[2%] h-px",
+              style: { background: nQ },
+            }),
+            (0, v.jsx)($.f.p, {
+              className: "inv-label text-[3.2cqw] tracking-[0.35em] uppercase",
+              initial: { opacity: 0, y: 10 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 1, delay: 0.2 },
+              children: "Save the date",
+            }),
+            (0, v.jsx)($.f.p, {
+              className: "inv-script mt-[2cqw] text-[13cqw] leading-tight",
+              initial: { opacity: 0, y: 10 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 1, delay: 0.4 },
+              children: "Wedding Invitation",
+            }),
+            (0, v.jsxs)($.f.button, {
+              type: "button",
+              onClick: a,
+              "aria-label": "Open the invitation",
+              className:
+                "relative mt-[6cqw] aspect-square w-[74cqw] [transform-style:preserve-3d]",
+              initial: { opacity: 0, scale: 0.9 },
+              animate: t
+                ? {
+                    rotateY: [0, 90, 90],
+                    scale: [1, 0.55, 0.04],
+                    opacity: [1, 1, 0],
+                  }
+                : { opacity: 1, scale: 1, rotateY: [-18, 18, -18] },
+              transition: t
+                ? { duration: 1, times: [0, 0.55, 1], ease: "easeIn" }
+                : {
+                    opacity: { duration: 1, delay: 0.6 },
+                    scale: { duration: 1, delay: 0.6 },
+                    rotateY: { duration: 5, repeat: 1 / 0, ease: "easeInOut" },
+                  },
+              children: [
+                (0, v.jsx)(n2, {
+                  src: `${nG}/sarovar-ring.webp`,
+                  alt: "A gold solitaire ring",
+                  priority: !0,
+                  className: "object-contain",
+                }),
+                (0, v.jsxs)("span", {
+                  className:
+                    "absolute top-[58.5%] left-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center",
+                  children: [
+                    (0, v.jsx)("span", {
+                      className: "h-px w-[16cqw]",
+                      style: { background: nQ },
+                    }),
+                    (0, v.jsxs)("span", {
+                      className: "flex items-center gap-[2.5cqw] py-[2cqw]",
+                      children: [
+                        (0, v.jsx)("span", {
+                          className:
+                            "inv-label text-[13cqw] leading-none !tracking-normal",
+                          style: { color: nV },
+                          children: s.first[0],
+                        }),
+                        (0, v.jsx)("span", {
+                          className: "inv-script text-[6cqw]",
+                          style: { color: nX },
+                          children: "&",
+                        }),
+                        (0, v.jsx)("span", {
+                          className:
+                            "inv-label text-[13cqw] leading-none !tracking-normal",
+                          style: { color: nV },
+                          children: i.first[0],
+                        }),
+                      ],
+                    }),
+                    (0, v.jsxs)("span", {
+                      className:
+                        "inv-label pl-[0.3em] text-[3cqw] tracking-[0.3em]",
+                      style: { color: nX },
+                      children: [
+                        n1(n, { day: "numeric" }).padStart(2, "0"),
+                        " ·",
+                        " ",
+                        n1(n, { month: "numeric" }).padStart(2, "0"),
+                        " · ",
+                        n1(n, { year: "2-digit" }),
+                      ],
+                    }),
+                    (0, v.jsx)("span", {
+                      className: "mt-[2cqw] h-px w-[16cqw]",
+                      style: { background: nQ },
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        });
+      },
+      Hero: function ({ invite: e }) {
+        let t = g(),
+          [a, s] = (0, L.g)(e),
+          i = e.date,
+          n = j(),
+          l = (e) => ({
+            initial: { opacity: 0, filter: "blur(6px)" },
+            animate: t ? { opacity: 1, filter: "blur(0px)" } : {},
+            transition: { duration: 1.2, delay: e + 1.1, ease: n0 },
+          });
+        return (0, v.jsxs)($.f.section, {
+          className: "relative w-full overflow-hidden",
+          style: {
+            aspectRatio: "864 / 1536",
+            minHeight: "var(--screen-h, 100dvh)",
+            background: nZ,
+          },
+          initial: !n && { clipPath: "circle(0% at 50% 50%)" },
+          animate: t || n ? { clipPath: "circle(150% at 50% 50%)" } : {},
+          transition: { duration: 1.3, delay: 0.85, ease: [0.65, 0, 0.35, 1] },
+          children: [
+            (0, v.jsx)(n2, {
+              src: `${nG}/sarovar-hero.jpg`,
+              alt: `${a.first} and ${s.first} at the edge of a Gurudwara's sarovar at sunset`,
+              priority: !0,
+            }),
+            (0, v.jsxs)("div", {
+              className:
+                "absolute inset-x-[12%] top-[3.5%] flex flex-col items-center text-center [text-shadow:0_0_18px_rgba(255,246,236,.9)]",
+              children: [
+                (0, v.jsx)($.f.p, {
+                  ...l(0.3),
+                  className: "text-[11cqw] leading-none",
+                  style: { color: nU, fontFamily: nJ },
+                  children: "ੴ",
+                }),
+                e.invocation &&
+                  (0, v.jsx)($.f.p, {
+                    ...l(0.45),
+                    className: "mt-[1cqw] text-[3.4cqw] whitespace-pre-line",
+                    style: { color: nU, fontFamily: nJ },
+                    children: e.invocation,
+                  }),
+                e.heroKicker &&
+                  (0, v.jsx)($.f.p, {
+                    ...l(0.6),
+                    className:
+                      "inv-label mt-[3cqw] text-[2.8cqw] tracking-[0.3em] uppercase",
+                    style: { color: nV },
+                    children: e.heroKicker,
+                  }),
+                (0, v.jsxs)($.f.h1, {
+                  ...l(0.7),
+                  className: `${e.heroKicker ? "mt-[1.5cqw]" : "mt-[3cqw]"} flex flex-col items-center`,
+                  style: { color: nY },
+                  children: [
+                    (0, v.jsx)("span", {
+                      className: "inv-script text-[9.5cqw] leading-[1.05]",
+                      children: a.full || a.first,
+                    }),
+                    (0, v.jsx)("span", {
+                      className: "inv-serif text-[4.4cqw]",
+                      children: e.joiner ?? "&",
+                    }),
+                    (0, v.jsx)("span", {
+                      className: "inv-script text-[9.5cqw] leading-[1.05]",
+                      children: s.full || s.first,
+                    }),
+                  ],
+                }),
+                !e.hideHeroDate &&
+                  (0, v.jsxs)($.f.p, {
+                    ...l(1),
+                    className:
+                      "inv-label mt-[2cqw] flex items-center gap-[3cqw] text-[4.4cqw] font-semibold tracking-[0.12em]",
+                    style: { color: nY },
+                    children: [
+                      (0, v.jsx)("span", {
+                        className: "h-px w-[6cqw]",
+                        style: { background: nV },
+                      }),
+                      n1(i, { day: "numeric" }).padStart(2, "0"),
+                      " ·",
+                      " ",
+                      n1(i, { month: "numeric" }).padStart(2, "0"),
+                      " · ",
+                      n1(i, { year: "numeric" }),
+                      (0, v.jsx)("span", {
+                        className: "h-px w-[6cqw]",
+                        style: { background: nV },
+                      }),
+                    ],
+                  }),
+                !e.hideHeroCity &&
+                  (0, v.jsx)($.f.p, {
+                    ...l(1.15),
+                    className: `inv-serif ${e.hideHeroDate ? "mt-[2cqw]" : "mt-[1cqw]"} text-[3.8cqw] font-medium italic`,
+                    style: { color: nK },
+                    children: e.city,
+                  }),
+              ],
+            }),
+          ],
+        });
+      },
+      Blessing: function ({ invite: e }) {
+        let [t, a] = (0, L.g)(e),
+          s = (e, t) =>
+            e.elders &&
+            !!e.eldersBelow === t &&
+            (0, v.jsx)("p", {
+              className:
+                "inv-serif mt-[1cqw] text-[3.8cqw] whitespace-pre-line italic",
+              style: { color: nX },
+              children: e.elders,
+            }),
+          i = (e) =>
+            (0, v.jsxs)(v.Fragment, {
+              children: [
+                (0, v.jsx)("p", {
+                  className: "inv-script text-[12cqw] leading-[1.1]",
+                  style: { color: nY },
+                  children: e.full || e.first,
+                }),
+                s(e, !1),
+                e.parents &&
+                  (0, v.jsx)("p", {
+                    className:
+                      "inv-serif mt-[1cqw] text-[3.8cqw] whitespace-pre-line italic",
+                    style: { color: nX },
+                    children: e.parents,
+                  }),
+                s(e, !0),
+              ],
+            });
+        return (0, v.jsxs)("section", {
+          className: "relative px-[8cqw] pt-[14cqw] text-center",
+          children: [
+            (0, v.jsxs)(B.b, {
+              children: [
+                (0, v.jsx)("p", {
+                  className: "text-[6.4cqw]",
+                  style: { color: nV, fontFamily: nJ },
+                  children: "ੴ ਸਤਿਗੁਰ ਪ੍ਰਸਾਦਿ",
+                }),
+                (0, v.jsx)("div", {
+                  className: "mt-[4cqw] space-y-[1cqw] text-[4cqw]",
+                  style: { color: nV, fontFamily: nJ },
+                  children: n6.map((e) => (0, v.jsx)("p", { children: e }, e)),
+                }),
+              ],
+            }),
+            (0, v.jsx)(n4, {}),
+            (0, v.jsxs)(B.b, {
+              children: [
+                e.showMeaning &&
+                  e.invocationMeaning &&
+                  (0, v.jsx)("p", {
+                    className: "inv-serif mb-[3cqw] text-[3.8cqw] italic",
+                    style: { color: nX },
+                    children: e.invocationMeaning,
+                  }),
+                (0, v.jsx)("p", {
+                  className: "inv-label text-[4.2cqw] tracking-[0.06em]",
+                  style: { color: nV },
+                  children: e.hosts,
+                }),
+                (0, v.jsx)("p", {
+                  className: "inv-serif mt-[2cqw] text-[4.4cqw] leading-snug",
+                  style: { color: nK },
+                  children: e.message,
+                }),
+              ],
+            }),
+            (0, v.jsx)(n4, {}),
+            (0, v.jsxs)(B.b, {
+              children: [
+                i(t),
+                (0, v.jsx)("p", {
+                  className:
+                    "inv-label my-[4cqw] text-[2.8cqw] tracking-[0.35em] uppercase",
+                  style: { color: nK },
+                  children: e.joiner ?? "with",
+                }),
+                i(a),
+              ],
+            }),
+          ],
+        });
+      },
+      Events: function ({ invite: e }) {
+        let { t } = (0, N.G)(),
+          a = (0, f.useRef)(null);
+        return (0, v.jsxs)("section", {
+          className: "relative pt-[10cqw]",
+          children: [
+            (0, v.jsxs)(B.b, {
+              children: [
+                (0, v.jsx)(n4, { className: "mb-[6cqw]" }),
+                (0, v.jsx)(n3, {
+                  kicker: t.eventsKicker,
+                  children: t.eventsTitle,
+                }),
+              ],
+            }),
+            (0, v.jsxs)("div", {
+              ref: a,
+              className: "relative mt-[6cqw]",
+              children: [
+                (0, v.jsx)(ls, { target: a }),
+                e.events.map((t, a) =>
+                  (0, v.jsx)(li, { e: t, invite: e, n: a + 1 }, t.name + a),
+                ),
+              ],
+            }),
+          ],
+        });
+      },
+      Closing: function ({ invite: e }) {
+        let [t, a] = (0, L.g)(e);
+        return (0, v.jsxs)(v.Fragment, {
+          children: [
+            c(e, "laavan") && (0, v.jsx)(ll, {}),
+            (0, v.jsxs)("section", {
+              className:
+                "relative overflow-hidden px-[6cqw] pt-[16cqw] pb-[24cqw] text-center text-white",
+              style: {
+                background: `radial-gradient(120% 80% at 30% 20%, #8e2b35, ${nY} 60%, #3d0a13)`,
+              },
+              children: [
+                (0, v.jsxs)(B.b, {
+                  children: [
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-label text-[2.9cqw] tracking-[0.35em] uppercase opacity-85",
+                      children: "Cordially invited by",
+                    }),
+                    (0, v.jsx)("p", {
+                      className:
+                        "inv-script mt-[3cqw] text-[10cqw] leading-[1.15] whitespace-pre-line",
+                      children: e.hosts,
+                    }),
+                    e.closing &&
+                      (0, v.jsx)("p", {
+                        className:
+                          "inv-serif mx-auto mt-[6cqw] max-w-[80cqw] text-[4.4cqw] whitespace-pre-line",
+                        children: e.closing,
+                      }),
+                  ],
+                }),
+                (0, v.jsx)(n4, { light: !0 }),
+                (0, v.jsxs)(B.b, {
+                  children: [
+                    (0, v.jsx)("p", {
+                      className: "inv-script text-[18cqw] leading-[1]",
+                      style: { color: "#f4ebe6" },
+                      children: t.first,
+                    }),
+                    (0, v.jsx)($.f.svg, {
+                      viewBox: "0 0 24 22",
+                      className: "mx-auto my-[2cqw] w-[11cqw]",
+                      fill: "#f4ebe6",
+                      animate: { scale: [1, 1.12, 1] },
+                      transition: { duration: 1.6, repeat: 1 / 0 },
+                      "aria-hidden": !0,
+                      children: (0, v.jsx)("path", {
+                        d: "M12 21s-9-5.6-9-12.2A5.2 5.2 0 0 1 12 6a5.2 5.2 0 0 1 9 2.8C21 15.4 12 21 12 21z",
+                      }),
+                    }),
+                    (0, v.jsx)("p", {
+                      className: "inv-script text-[18cqw] leading-[1]",
+                      style: { color: "#f4ebe6" },
+                      children: a.first,
+                    }),
+                    (0, v.jsxs)("p", {
+                      className:
+                        "inv-label mt-[5cqw] text-[3.4cqw] tracking-[0.3em] opacity-85",
+                      children: [
+                        n1(e.date, { day: "numeric" }).padStart(2, "0"),
+                        " ·",
+                        " ",
+                        n1(e.date, { month: "numeric" }).padStart(2, "0"),
+                        " ·",
+                        " ",
+                        n1(e.date, { year: "numeric" }),
+                      ],
+                    }),
+                    e.hashtag &&
+                      (0, v.jsx)("p", {
+                        className:
+                          "inv-label !normal-case mt-[5cqw] text-[3cqw] tracking-[0.25em] opacity-80",
+                        children: e.hashtag,
+                      }),
+                    e.extras?.map((e, t) =>
+                      (0, v.jsxs)(
+                        "div",
+                        {
+                          className: "mt-[8cqw]",
+                          children: [
+                            (0, v.jsx)("p", {
+                              className:
+                                "inv-label text-[2.9cqw] tracking-[0.3em] uppercase opacity-85",
+                              children: e.title,
+                            }),
+                            (0, v.jsx)("div", {
+                              className: "mt-[2cqw] space-y-[1cqw]",
+                              children: e.lines.map((e, t) =>
+                                (0, v.jsx)(
+                                  "p",
+                                  {
+                                    className:
+                                      "inv-serif mx-auto max-w-[80cqw] text-[4.2cqw] leading-snug",
+                                    children: e,
+                                  },
+                                  t,
+                                ),
+                              ),
+                            }),
+                          ],
+                        },
+                        e.title + t,
+                      ),
+                    ),
+                    e.brandLine
+                      ? (0, v.jsx)("p", {
+                          className:
+                            "inv-label mt-[10cqw] text-[2.6cqw] tracking-[0.26em] uppercase opacity-75",
+                          children: e.brandLine,
+                        })
+                      : !e.noBranding &&
+                        (0, v.jsxs)(k.default, {
+                          href: "/",
+                          className:
+                            "inv-label mt-[10cqw] inline-block text-[2.3cqw] tracking-[0.26em] uppercase opacity-60",
+                          children: ["Crafted with love by ", F.B.name],
+                        }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        });
+      },
+      Backdrop: function () {
+        return (0, v.jsx)("div", {
+          className: "pointer-events-none absolute inset-0",
+          style: { background: nZ },
+        });
+      },
+      Frame: function () {
+        return j() ? null : (0, v.jsx)(lr, {});
+      },
+      Divider: n4,
+      Title: n3,
+      countdownTitle: "Anand Karaj in",
+    };
+    e.s(
+      [
+        "f",
+        0,
+        {
+          gaurishankar: tR,
+          mandir: s3,
+          mahal: ta,
+          khat: ts,
+          gopuram: tl,
+          bagh: tr,
+          rajwada: te,
+          gulmohar: a8,
+          agni: D,
+          noor: nC,
+          phulkari: nP,
+          kolam: sf,
+          haveli: tc,
+          khatred: tn,
+          sarovar: lc,
+          vachan: s6,
+          mudrika: ti,
+          angoothi: td,
+          chandni: tx,
+          roka: tf,
+          rajwadasagai: tp,
+          chameli: sT,
+          chamelisagai: sB,
+          shivakalyanam: ap,
+          marathi: iO,
+          shivshakti: a0,
+          kankotri: nx,
+        },
+      ],
+      47517,
+    );
+  },
+]);

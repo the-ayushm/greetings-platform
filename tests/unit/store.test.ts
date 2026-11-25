@@ -25,7 +25,7 @@ const list = () =>
 describe("storefront catalog", () => {
   it("describes every real template, and only real templates", () => {
     for (const k of Object.keys(PRODUCT_META)) expect(isTemplateKey(k), k).toBe(true);
-    for (const k of ["scrapbook", "lovestory", "wedding", "doyouloveme"]) expect(PRODUCT_META[k], k).toBeDefined();
+    for (const k of ["scrapbook", "lovestory", "wedding", "doyouloveme", "vivah"]) expect(PRODUCT_META[k], k).toBeDefined();
   });
 
   it("has unique category slugs, and every product's categories exist", () => {

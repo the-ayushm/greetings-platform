@@ -11,7 +11,7 @@
  */
 
 export type CategoryId = "birthday" | "romance" | "love-stories" | "weddings" | "anniversary" | "interactive";
-export type ArtKind = "scrapbook" | "lovestory" | "wedding" | "ask";
+export type ArtKind = "scrapbook" | "lovestory" | "wedding" | "ask" | "vivah";
 
 export type Category = {
   id: CategoryId;
@@ -94,6 +94,16 @@ export type ProductMeta = {
 };
 
 export const PRODUCT_META: Record<string, ProductMeta> = {
+  vivah: {
+    href: "/products/shiv-parvati-wedding-invitation",
+    demo: "/demo/shiv-parvati",
+    label: "Shiv–Parvati Wedding",
+    tagline: "A divine Hindu wedding invitation for WhatsApp",
+    categories: ["weddings", "interactive"],
+    art: "vivah",
+    highlights: ["Tap-to-open Shiv–Parvati opening", "Scratch-to-reveal date & countdown", "Every function with maps", "RSVPs straight to your WhatsApp"],
+    tint: "from-[#f6d9df] via-[#fbeef0] to-[#fff7f2]",
+  },
   scrapbook: {
     href: "/product",
     demo: "/demo",

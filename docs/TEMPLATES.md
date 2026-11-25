@@ -53,6 +53,27 @@ the published content and caps the count. Regenerate the seed with
 share image: `node scripts/make-ask-og.mjs`. Store-side pictures (`src/components/AskMini.tsx`)
 are drawn in JSX with the template's own character, so there are no screenshot assets to refresh.
 
+## Shiv–Parvati wedding invitation (`vivah`)
+
+A traditional Hindu wedding invitation (from the standalone build in `wedding-gauri/`). Unlike the
+other templates, the experience is a **plain-JS runtime** served as static files from
+`public/vivah-assets/` (`js/invite.js` + `js/motion.js`, its compiled stylesheet `css/aavjoo.css`,
+fonts, artwork, demo photos and the default song). `src/templates/vivah/Stage.tsx` loads the
+scripts (allowed by the CSP's `'strict-dynamic'`) and calls
+`window.VivahInvite.mount(el, data, opts)`; `adapter.ts` turns stored content + signed media URLs
+into that `data`. Customer text only ever reaches the DOM as text nodes or encoded URL parts.
+
+Content: `schema.ts` + `defaults.ts` (names, parents, families, date/muhurat in IST, city,
+hashtag, up to 8 functions, up to 10 photos, WhatsApp number for RSVPs, song, wording, section
+toggles). RSVPs open WhatsApp to the couple's number (`waNumber()` normalises it; 10 digits = +91);
+nothing is stored on our side. Routes: guest `/vivah/<slug>` (renderer origin, plus its
+`/vivah-assets/*` files in `RENDERER_PATHS`), demo `/demo/shiv-parvati` (`?at=events` etc.), owner
+preview `/preview/vivah/:id`, studio `dashboard/sites/[siteId]/edit/vivah/`, store page
+`/products/shiv-parvati-wedding-invitation`, homepage spotlight `src/components/store/Spotlight.tsx`.
+Seed: `npx tsx scripts/gen-template-migration.ts vivah` (product on sale at ₹99, featured); share
+image: `node scripts/make-vivah-og.mjs`. Changing the runtime: edit `public/vivah-assets/js/*` and
+bump the `?v=` query in `Stage.tsx`.
+
 **Adding another customer:** nothing to code. Each purchase creates its own site from the
 current template version; the customer personalises it in the studio and publishes their own
 link. To change what *new* customers start with, edit `defaults.ts`, then generate a new

@@ -1,0 +1,89 @@
+
+== 360px  scrollHeight orig=6475 local=6475
+01-opening-2s              2.96 %
+02-opening-full            1.06 %
+03-opening-transition       0.3 %
+04-hero                    0.16 %
+10-scroll-01               0.11 %
+10-scroll-02                  0 %
+10-scroll-03                  0 %
+10-scroll-04               0.01 %
+10-scroll-05               0.03 %
+10-scroll-06               0.02 %
+10-scroll-07               0.03 %
+10-scroll-08                  0 %
+10-scroll-09               0.01 %
+10-scroll-10               0.04 %
+10-scroll-11               0.04 %
+
+== 430px  scrollHeight orig=7689 local=7689
+01-opening-2s              2.65 %
+02-opening-full            0.83 %
+03-opening-transition       0.3 %
+04-hero                    0.17 %
+10-scroll-01               0.16 %
+10-scroll-02               0.01 %
+10-scroll-03               0.01 %
+10-scroll-04               0.02 %
+10-scroll-05               0.03 %
+10-scroll-06               0.03 %
+10-scroll-07               0.02 %
+10-scroll-08               0.02 %
+10-scroll-09               0.01 %
+10-scroll-10               0.28 %
+10-scroll-11               0.29 %
+
+== 768px  scrollHeight orig=8547 local=8547
+01-opening-2s              1.83 %
+02-opening-full            0.43 %
+03-opening-transition       0.1 %
+04-hero                    0.11 %
+10-scroll-01               0.09 %
+10-scroll-02               0.01 %
+10-scroll-03                  0 %
+10-scroll-04               0.01 %
+10-scroll-05               0.09 %
+10-scroll-06               0.29 %
+10-scroll-07               0.01 %
+10-scroll-08                  0 %
+10-scroll-09                  0 %
+10-scroll-10                  0 %
+10-scroll-11                  0 %
+
+== 1024px  scrollHeight orig=8407 local=8407
+01-opening-2s              1.44 %
+02-opening-full            0.36 %
+03-opening-transition      0.16 %
+04-hero                    0.08 %
+10-scroll-01               0.07 %
+10-scroll-02                  0 %
+10-scroll-03                  0 %
+10-scroll-04                  0 %
+10-scroll-05               0.01 %
+10-scroll-06               0.01 %
+10-scroll-07                  0 %
+10-scroll-08               0.01 %
+10-scroll-09               0.01 %
+10-scroll-10                  0 %
+10-scroll-11                  0 %
+10-scroll-12                  0 %
+10-scroll-13               0.01 %
+10-scroll-14                  0 %
+
+== 1440px  scrollHeight orig=8479 local=8479
+01-opening-2s              0.93 %
+02-opening-full             0.2 %
+03-opening-transition       0.3 %
+04-hero                    0.27 %
+10-scroll-01               0.06 %
+10-scroll-02                  0 %
+10-scroll-03                  0 %
+10-scroll-04                  0 %
+10-scroll-05                  0 %
+10-scroll-06                  0 %
+10-scroll-07                  0 %
+10-scroll-08               0.01 %
+10-scroll-09                  0 %
+10-scroll-10                  0 %
+10-scroll-11                  0 %
+10-scroll-12                  0 %

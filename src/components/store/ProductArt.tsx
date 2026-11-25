@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { AskMini } from "@/components/AskMini";
+import { VivahMini } from "@/components/VivahMini";
 import type { ArtKind } from "@/lib/store";
 import { CoupleBack, Heart, Skyline } from "@/templates/lovestory/art";
 
@@ -10,6 +11,7 @@ import { CoupleBack, Heart, Skyline } from "@/templates/lovestory/art";
 export function ProductScreen({ art, priority = false }: { art: ArtKind; priority?: boolean }) {
   if (art === "scrapbook") return <Image src="/demo-poster.webp" alt="" fill sizes="(max-width: 640px) 40vw, 200px" priority={priority} unoptimized className="object-cover object-top" />;
   if (art === "wedding") return <Image src="/products/wedding/cover.webp" alt="" fill sizes="(max-width: 640px) 40vw, 200px" priority={priority} unoptimized className="object-cover object-top" />;
+  if (art === "vivah") return <VivahMini priority={priority} />;
   if (art === "ask")
     return (
       <span className="absolute inset-0 block">

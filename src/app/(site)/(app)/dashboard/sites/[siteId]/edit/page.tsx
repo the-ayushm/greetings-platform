@@ -11,9 +11,12 @@ import { newSiteContent } from "@/templates/scrapbook/defaults";
 import { draftContentSchema } from "@/templates/scrapbook/schema";
 import { newSiteContent as newWedding } from "@/templates/wedding/defaults";
 import { draftContentSchema as weddingDraftSchema } from "@/templates/wedding/schema";
+import { newSiteContent as newVivah } from "@/templates/vivah/defaults";
+import { draftContentSchema as vivahDraftSchema } from "@/templates/vivah/schema";
 import { AskStudio } from "./ask/AskStudio";
 import { Editor } from "./Editor";
 import { LoveStudio } from "./love/LoveStudio";
+import { VivahStudio } from "./vivah/VivahStudio";
 import { WeddingStudio } from "./wedding/WeddingStudio";
 
 export const dynamic = "force-dynamic";
@@ -68,6 +71,20 @@ export default async function EditPage({ params }: { params: Promise<{ siteId: s
       <WeddingStudio
         siteId={site.id}
         initial={parsed.success ? parsed.data : newWedding()}
+        initialRevision={site.draft_revision}
+        status={site.status}
+        publishedUrl={publishedUrl}
+        editUntil={site.edit_until}
+      />
+    );
+  }
+
+  if (site.template_key === "vivah") {
+    const parsed = vivahDraftSchema.safeParse(site.draft_content);
+    return (
+      <VivahStudio
+        siteId={site.id}
+        initial={parsed.success ? parsed.data : newVivah()}
         initialRevision={site.draft_revision}
         status={site.status}
         publishedUrl={publishedUrl}

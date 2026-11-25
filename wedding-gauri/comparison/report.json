@@ -1,0 +1,353 @@
+[
+  {
+    "width": 360,
+    "origScroll": 6475,
+    "localScroll": 6475,
+    "rows": [
+      {
+        "state": "01-opening-2s",
+        "mismatchPct": 2.96
+      },
+      {
+        "state": "02-opening-full",
+        "mismatchPct": 1.06
+      },
+      {
+        "state": "03-opening-transition",
+        "mismatchPct": 0.3
+      },
+      {
+        "state": "04-hero",
+        "mismatchPct": 0.16
+      },
+      {
+        "state": "10-scroll-01",
+        "mismatchPct": 0.11
+      },
+      {
+        "state": "10-scroll-02",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-03",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-04",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-05",
+        "mismatchPct": 0.03
+      },
+      {
+        "state": "10-scroll-06",
+        "mismatchPct": 0.02
+      },
+      {
+        "state": "10-scroll-07",
+        "mismatchPct": 0.03
+      },
+      {
+        "state": "10-scroll-08",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-09",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-10",
+        "mismatchPct": 0.04
+      },
+      {
+        "state": "10-scroll-11",
+        "mismatchPct": 0.04
+      }
+    ]
+  },
+  {
+    "width": 430,
+    "origScroll": 7689,
+    "localScroll": 7689,
+    "rows": [
+      {
+        "state": "01-opening-2s",
+        "mismatchPct": 2.65
+      },
+      {
+        "state": "02-opening-full",
+        "mismatchPct": 0.83
+      },
+      {
+        "state": "03-opening-transition",
+        "mismatchPct": 0.3
+      },
+      {
+        "state": "04-hero",
+        "mismatchPct": 0.17
+      },
+      {
+        "state": "10-scroll-01",
+        "mismatchPct": 0.16
+      },
+      {
+        "state": "10-scroll-02",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-03",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-04",
+        "mismatchPct": 0.02
+      },
+      {
+        "state": "10-scroll-05",
+        "mismatchPct": 0.03
+      },
+      {
+        "state": "10-scroll-06",
+        "mismatchPct": 0.03
+      },
+      {
+        "state": "10-scroll-07",
+        "mismatchPct": 0.02
+      },
+      {
+        "state": "10-scroll-08",
+        "mismatchPct": 0.02
+      },
+      {
+        "state": "10-scroll-09",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-10",
+        "mismatchPct": 0.28
+      },
+      {
+        "state": "10-scroll-11",
+        "mismatchPct": 0.29
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "origScroll": 8547,
+    "localScroll": 8547,
+    "rows": [
+      {
+        "state": "01-opening-2s",
+        "mismatchPct": 1.83
+      },
+      {
+        "state": "02-opening-full",
+        "mismatchPct": 0.43
+      },
+      {
+        "state": "03-opening-transition",
+        "mismatchPct": 0.1
+      },
+      {
+        "state": "04-hero",
+        "mismatchPct": 0.11
+      },
+      {
+        "state": "10-scroll-01",
+        "mismatchPct": 0.09
+      },
+      {
+        "state": "10-scroll-02",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-03",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-04",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-05",
+        "mismatchPct": 0.09
+      },
+      {
+        "state": "10-scroll-06",
+        "mismatchPct": 0.29
+      },
+      {
+        "state": "10-scroll-07",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-08",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-09",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-10",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-11",
+        "mismatchPct": 0
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "origScroll": 8407,
+    "localScroll": 8407,
+    "rows": [
+      {
+        "state": "01-opening-2s",
+        "mismatchPct": 1.44
+      },
+      {
+        "state": "02-opening-full",
+        "mismatchPct": 0.36
+      },
+      {
+        "state": "03-opening-transition",
+        "mismatchPct": 0.16
+      },
+      {
+        "state": "04-hero",
+        "mismatchPct": 0.08
+      },
+      {
+        "state": "10-scroll-01",
+        "mismatchPct": 0.07
+      },
+      {
+        "state": "10-scroll-02",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-03",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-04",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-05",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-06",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-07",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-08",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-09",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-10",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-11",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-12",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-13",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-14",
+        "mismatchPct": 0
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "origScroll": 8479,
+    "localScroll": 8479,
+    "rows": [
+      {
+        "state": "01-opening-2s",
+        "mismatchPct": 0.93
+      },
+      {
+        "state": "02-opening-full",
+        "mismatchPct": 0.2
+      },
+      {
+        "state": "03-opening-transition",
+        "mismatchPct": 0.3
+      },
+      {
+        "state": "04-hero",
+        "mismatchPct": 0.27
+      },
+      {
+        "state": "10-scroll-01",
+        "mismatchPct": 0.06
+      },
+      {
+        "state": "10-scroll-02",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-03",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-04",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-05",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-06",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-07",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-08",
+        "mismatchPct": 0.01
+      },
+      {
+        "state": "10-scroll-09",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-10",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-11",
+        "mismatchPct": 0
+      },
+      {
+        "state": "10-scroll-12",
+        "mismatchPct": 0
+      }
+    ]
+  }
+]

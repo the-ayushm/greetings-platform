@@ -48,7 +48,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
             {(data ?? []).map((o) => (
               <tr key={o.id} className="border-t border-ink/10">
                 <td className="px-3 py-2">{(o.profiles as { email?: string } | null)?.email ?? <em className="text-ink-soft">deleted account</em>}</td>
-                <td className="px-3 py-2">{o.template_key === "lovestory" ? "Love story" : o.template_key === "wedding" ? "Wedding invitation" : o.template_key === "doyouloveme" ? "Do You Love Me?" : "Scrapbook"}</td>
+                <td className="px-3 py-2">{o.template_key === "lovestory" ? "Love story" : o.template_key === "wedding" ? "Wedding invitation" : o.template_key === "doyouloveme" ? "Do You Love Me?" : o.template_key === "vivah" ? "Shiv–Parvati invitation" : "Scrapbook"}</td>
                 <td className="px-3 py-2">{formatINR(o.amount_paise)}</td>
                 <td className="px-3 py-2 capitalize">{o.status.replace("_", " ")}</td>
                 <td className="px-3 py-2 whitespace-nowrap">{formatDateTime(o.created_at)}</td>

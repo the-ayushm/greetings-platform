@@ -1,0 +1,8 @@
+/*
+ * Project-specific additions. Everything visual comes from css/aavjoo.css
+ * (the original compiled Tailwind stylesheet) — keep this file minimal.
+ */
+html,
+body {
+  background-color: #fbf4f1;
+}

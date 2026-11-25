@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AskTeaser } from "@/components/AskTeaser";
 import { DemoTeaser } from "@/components/DemoTeaser";
 import { LoveStoryTeaser } from "@/components/LoveStoryTeaser";
+import { VivahTeaser } from "@/components/VivahTeaser";
 import { WeddingTeaser } from "@/components/WeddingTeaser";
 import type { ArtKind } from "@/lib/store";
 
@@ -15,6 +16,7 @@ function Teaser({ art }: { art: ArtKind }) {
   if (art === "scrapbook") return <DemoTeaser />;
   if (art === "lovestory") return <LoveStoryTeaser />;
   if (art === "wedding") return <WeddingTeaser />;
+  if (art === "vivah") return <VivahTeaser />;
   return <AskTeaser />;
 }
 

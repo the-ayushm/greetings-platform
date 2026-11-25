@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CATEGORIES } from "@/lib/store";
+import { CATEGORIES, priceLabel } from "@/lib/store";
 import { currentUser, isAdminUser } from "@/server/auth";
 import { listStoreProducts } from "@/server/catalog";
 import { MainNav } from "./store/MainNav";
@@ -16,10 +16,24 @@ export function BrandMark({ className = "" }: { className?: string }) {
   );
 }
 
-export async function SiteHeader() {
+/** Slim promo bar above the header for the product the store currently leads with (only while it's on sale). */
+async function AnnouncementBar() {
+  const p = (await listStoreProducts()).find((x) => x.templateKey === "vivah");
+  if (!p) return null;
+  return (
+    <Link href={p.meta.href} className="block bg-[linear-gradient(90deg,#741225,#9a1d45,#741225)] px-4 py-2 text-center text-[13px] font-semibold text-white sm:text-sm" data-testid="announcement">
+      <span aria-hidden="true">🔱 </span>New: Shiv–Parvati wedding invitation for WhatsApp — just {priceLabel(p.pricePaise)}{" "}
+      <span className="underline underline-offset-2">Try the demo →</span>
+    </Link>
+  );
+}
+
+export async function SiteHeader({ promo = false }: { promo?: boolean } = {}) {
   const user = await currentUser();
   const isAdmin = user ? await isAdminUser(user.id) : false;
   return (
+    <>
+    {promo && <AnnouncementBar />}
     <header className="sticky top-0 z-40 border-b border-wine/10 bg-ivory/90 backdrop-blur-md">
       <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" aria-label="Digital Gifting — home" className="shrink-0">
@@ -28,6 +42,7 @@ export async function SiteHeader() {
         <MainNav signedIn={Boolean(user)} isAdmin={isAdmin} />
       </div>
     </header>
+    </>
   );
 }
 

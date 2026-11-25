@@ -1,0 +1,86 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([
+  "object" == typeof document ? document.currentScript : void 0,
+  59288,
+  (e) => {
+    "use strict";
+    var a = e.i(43476),
+      t = e.i(71645),
+      n = e.i(22016),
+      i = e.i(67766);
+    e.s([
+      "VideoInvite",
+      0,
+      function ({ invite: e }) {
+        let s = (0, t.useRef)(null),
+          [l, d] = (0, t.useState)("ready"),
+          [o, r] = (0, i.g)(e),
+          c = () => {
+            let e = s.current;
+            e &&
+              (e.paused || e.ended
+                ? (e.ended && (e.currentTime = 0), e.play())
+                : e.pause());
+          };
+        return (0, a.jsxs)("main", {
+          className: "relative h-svh overflow-hidden bg-[#2a0a0e]",
+          children: [
+            (0, a.jsx)("div", {
+              "aria-hidden": !0,
+              className:
+                "absolute inset-0 scale-110 bg-cover bg-center opacity-50 blur-2xl",
+              style: { backgroundImage: `url(${e.video.poster})` },
+            }),
+            (0, a.jsx)("video", {
+              ref: s,
+              src: e.video.src,
+              poster: e.video.poster,
+              playsInline: !0,
+              preload: "auto",
+              onPlay: () => d("playing"),
+              onPause: () => d((e) => ("ended" === e ? e : "paused")),
+              onEnded: () => d("ended"),
+              onClick: c,
+              className: "absolute inset-0 size-full object-contain",
+              "aria-label": `${o.first} & ${r.first}'s wedding invitation`,
+            }),
+            "playing" !== l &&
+              (0, a.jsx)("button", {
+                type: "button",
+                onClick: c,
+                className:
+                  "absolute inset-0 grid place-items-center bg-black/25",
+                "aria-label": "ended" === l ? "Watch again" : "Play invitation",
+                children: (0, a.jsxs)("span", {
+                  className:
+                    "flex items-center gap-2 rounded-full bg-[#fdf3dc] px-6 py-3 text-[16px] font-medium text-[#5a1520] shadow-lg",
+                  children: [
+                    (0, a.jsx)("svg", {
+                      width: "16",
+                      height: "16",
+                      viewBox: "0 0 16 16",
+                      "aria-hidden": !0,
+                      fill: "currentColor",
+                      children: (0, a.jsx)("path", { d: "M4 2.5v11l9-5.5z" }),
+                    }),
+                    "ended" === l
+                      ? "Watch again"
+                      : "paused" === l
+                        ? "Continue"
+                        : "Tap to open",
+                  ],
+                }),
+              }),
+            !e.noBranding &&
+              "ended" === l &&
+              (0, a.jsx)(n.default, {
+                href: "/",
+                className:
+                  "absolute bottom-4 left-1/2 -translate-x-1/2 text-[12px] text-white/60 underline underline-offset-4",
+                children: "Made with Aavjoo",
+              }),
+          ],
+        });
+      },
+    ]);
+  },
+]);

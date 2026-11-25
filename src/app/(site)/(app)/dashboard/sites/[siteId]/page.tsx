@@ -28,6 +28,7 @@ export default async function SitePage({ params }: { params: Promise<{ siteId: s
   const love = site.template_key === "lovestory";
   const wedding = site.template_key === "wedding";
   const ask = site.template_key === "doyouloveme";
+  const vivah = site.template_key === "vivah";
   const name = def.recipientName(site.draft_content);
   const editable = ["draft", "published", "unpublished"].includes(site.status) && new Date(site.edit_until) > new Date();
   // Recipient responses (love story answers, "Do You Love Me?" yes): owner-only through RLS.
@@ -41,7 +42,7 @@ export default async function SitePage({ params }: { params: Promise<{ siteId: s
   return (
     <PageShell narrow>
       <div className="flex items-start justify-between gap-3">
-        <h1 className="font-display text-3xl font-semibold break-words">{wedding ? `${name || "Your"} wedding invitation` : `For ${name || "someone special"} ♡`}</h1>
+        <h1 className="font-display text-3xl font-semibold break-words">{wedding || vivah ? `${name || "Your"} wedding invitation` : `For ${name || "someone special"} ♡`}</h1>
         <Badge tone={site.status === "published" ? "good" : site.status === "draft" ? "warn" : "neutral"}>{site.status}</Badge>
       </div>
       <p className="mt-1 text-sm text-ink-soft">
@@ -50,7 +51,7 @@ export default async function SitePage({ params }: { params: Promise<{ siteId: s
       </p>
       {editable && (
         <ButtonLink href={`/dashboard/sites/${site.id}/edit`} className="mt-5 w-full">
-          {love || wedding || ask ? "Open the customization studio" : "Open the editor"}
+          {love || wedding || ask || vivah ? "Open the customization studio" : "Open the editor"}
         </ButtonLink>
       )}
       <SiteManager
@@ -61,8 +62,8 @@ export default async function SitePage({ params }: { params: Promise<{ siteId: s
         editable={editable}
         disabledReason={site.disabled_reason}
         shareText={def.shareText}
-        kindLabel={love ? "love story" : wedding ? "wedding invitation" : ask ? "page" : "birthday site"}
-        qrFile={love ? "love-story-qr.png" : wedding ? "wedding-invitation-qr.png" : ask ? "do-you-love-me-qr.png" : "birthday-qr.png"}
+        kindLabel={love ? "love story" : wedding || vivah ? "wedding invitation" : ask ? "page" : "birthday site"}
+        qrFile={love ? "love-story-qr.png" : wedding || vivah ? "wedding-invitation-qr.png" : ask ? "do-you-love-me-qr.png" : "birthday-qr.png"}
       />
       {love && <ResponsesPanel siteId={site.id} responses={responses} />}
       {ask && <ResponsesPanel siteId={site.id} responses={responses} variant="ask" />}

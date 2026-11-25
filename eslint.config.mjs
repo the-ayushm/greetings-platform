@@ -5,7 +5,9 @@ const config = [
   ...nextCoreWebVitals,
   ...nextTypescript,
   {
-    ignores: [".next/**", "node_modules/**", "legacy/**", "supabase/**", "coverage/**", "test-results/**", "playwright-report/**", "next-env.d.ts", "Your_Birthday_Surprise.html"],
+    ignores: [".next/**", "node_modules/**", "legacy/**", "supabase/**", "coverage/**", "test-results/**", "playwright-report/**", "next-env.d.ts", "Your_Birthday_Surprise.html",
+      // Shiv–Parvati invitation: the standalone source and its plain-JS runtime (vanilla, no build step).
+      "wedding-gauri/**", "public/vivah-assets/**"],
   },
   {
     rules: {
