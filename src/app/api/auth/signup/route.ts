@@ -1,7 +1,7 @@
 import { signupSchema } from "@/lib/auth-rules";
 import { adminDb } from "@/lib/supabase/admin";
 import { userDb } from "@/lib/supabase/server";
-import { appOrigin, env } from "@/server/env";
+import { appOrigins, env } from "@/server/env";
 import { ApiError, badRequest, clientIp, conflict, json, rateLimit, readJson, requireOrigin, route } from "@/server/http";
 import { log } from "@/server/log";
 
@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
  * dashboard's "Confirm email" setting. Then the visitor is signed in (session cookie).
  */
 export const POST = route(async (req) => {
-  requireOrigin(req, [appOrigin()]);
+  requireOrigin(req, appOrigins());
   const { email, password } = await readJson(req, signupSchema, 4 * 1024);
   // Generous per-IP ceiling (shared Wi-Fi / mobile carrier NAT); higher locally for the test suite.
   await rateLimit("signup", clientIp(req), env().DEPLOY_ENV === "local" ? 500 : 20, 3600);

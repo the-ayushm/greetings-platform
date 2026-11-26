@@ -6,10 +6,22 @@ import { z } from "zod";
  * Production guard rails: live Razorpay keys must talk to the real Razorpay API, and the
  * renderer must be on a different origin from the app.
  */
+function splitAliases(value: string | undefined): string[] {
+  return (value ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 const schema = z
   .object({
     APP_ORIGIN: z.url(),
     RENDERER_ORIGIN: z.url(),
+    // Comma-separated extra origins that should keep working as the app/renderer host —
+    // e.g. a domain being migrated away from. Links are always generated from the ORIGIN
+    // above; aliases only affect which Host headers proxy.ts accepts.
+    APP_ORIGIN_ALIASES: z.string().optional(),
+    RENDERER_ORIGIN_ALIASES: z.string().optional(),
     NEXT_PUBLIC_SUPABASE_URL: z.url(),
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(20),
     SUPABASE_SECRET_KEY: z.string().min(20),
@@ -22,6 +34,15 @@ const schema = z
     DEPLOY_ENV: z.enum(["local", "staging", "production"]).default("local"),
   })
   .superRefine((e, ctx) => {
+    for (const k of ["APP_ORIGIN_ALIASES", "RENDERER_ORIGIN_ALIASES"] as const) {
+      for (const alias of splitAliases(e[k])) {
+        try {
+          new URL(alias);
+        } catch {
+          ctx.addIssue({ code: "custom", path: [k], message: `alias "${alias}" is not a valid URL` });
+        }
+      }
+    }
     if (new URL(e.APP_ORIGIN).origin === new URL(e.RENDERER_ORIGIN).origin) {
       ctx.addIssue({ code: "custom", path: ["RENDERER_ORIGIN"], message: "must be a different origin from APP_ORIGIN" });
     }
@@ -31,6 +52,11 @@ const schema = z
       }
       for (const k of ["APP_ORIGIN", "RENDERER_ORIGIN", "NEXT_PUBLIC_SUPABASE_URL"] as const) {
         if (!e[k].startsWith("https://")) ctx.addIssue({ code: "custom", path: [k], message: "must be https outside local" });
+      }
+      for (const k of ["APP_ORIGIN_ALIASES", "RENDERER_ORIGIN_ALIASES"] as const) {
+        for (const alias of splitAliases(e[k])) {
+          if (!alias.startsWith("https://")) ctx.addIssue({ code: "custom", path: [k], message: `alias "${alias}" must be https outside local` });
+        }
       }
     }
     if (e.DEPLOY_ENV === "production" && !e.RAZORPAY_KEY_ID.startsWith("rzp_live_")) {
@@ -58,3 +84,7 @@ export function env(): Env {
 
 export const appOrigin = () => new URL(env().APP_ORIGIN).origin;
 export const rendererOrigin = () => new URL(env().RENDERER_ORIGIN).origin;
+
+/** All origins (canonical + aliases) that should be accepted as this surface. */
+export const appOrigins = () => [appOrigin(), ...splitAliases(env().APP_ORIGIN_ALIASES).map((a) => new URL(a).origin)];
+export const rendererOrigins = () => [rendererOrigin(), ...splitAliases(env().RENDERER_ORIGIN_ALIASES).map((a) => new URL(a).origin)];

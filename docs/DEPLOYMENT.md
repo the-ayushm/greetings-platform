@@ -81,6 +81,14 @@ non-Razorpay API base outside local, or http origins outside local.
 - **Secret rotation:** generate new value → update Vercel env (and Razorpay webhook secret in both
   places) → redeploy. Rotating `APP_SECRET` logs everyone out of passcode-unlocked pages only.
   Rotating the Supabase secret key: create a new secret key in Supabase, deploy, revoke the old.
+- **Domain migration:** add the new domain in Vercel (Project → Settings → Domains) — adding it
+  there alone does **not** make proxy.ts accept it. Move the old value of `APP_ORIGIN` or
+  `RENDERER_ORIGIN` into `APP_ORIGIN_ALIASES` / `RENDERER_ORIGIN_ALIASES` (comma-separated if more
+  than one), then set `APP_ORIGIN`/`RENDERER_ORIGIN` itself to the new domain and redeploy. New
+  invitation links (built from `rendererOrigin()` at request time, never stored) immediately use
+  the new domain; the old domain keeps resolving via the alias, so links already sent out keep
+  working. Also update the Supabase Auth redirect URLs and the Razorpay webhook URL if `APP_ORIGIN`
+  changed. Drop the alias once nothing depends on the old domain anymore.
 - **Restore drill (do before launch, then quarterly):** restore the latest Supabase backup into a
   scratch project, sync the backup bucket into its storage with the same paths, point a preview
   deployment at it and open a known published link.

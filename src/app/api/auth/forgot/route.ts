@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import { emailSchema } from "@/lib/auth-rules";
-import { appOrigin, env } from "@/server/env";
+import { appOrigin, appOrigins, env } from "@/server/env";
 import { ApiError, clientIp, json, rateLimit, readJson, requireOrigin, route } from "@/server/http";
 import { log } from "@/server/log";
 
@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
  * Always answers the same way whether or not the account exists (no account discovery).
  */
 export const POST = route(async (req) => {
-  requireOrigin(req, [appOrigin()]);
+  requireOrigin(req, appOrigins());
   const { email } = await readJson(req, z.object({ email: emailSchema }), 2 * 1024);
   await rateLimit("forgot-ip", clientIp(req), env().DEPLOY_ENV === "local" ? 200 : 10, 3600);
   await rateLimit("forgot-email", email, 3, 3600);

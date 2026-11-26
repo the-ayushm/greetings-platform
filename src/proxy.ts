@@ -13,6 +13,20 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const APP = new URL(process.env.APP_ORIGIN ?? "http://app.localhost:3000");
 const RENDERER = new URL(process.env.RENDERER_ORIGIN ?? "http://wishes.localhost:3000");
+// Extra hostnames that should keep routing as app/renderer during a domain migration —
+// e.g. an old production domain kept alive alongside a new one. Links are always generated
+// from APP_ORIGIN/RENDERER_ORIGIN above; aliases only widen which Host headers are accepted.
+function aliasHosts(value: string | undefined): Set<string> {
+  return new Set(
+    (value ?? "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .map((s) => new URL(s).host),
+  );
+}
+const APP_HOSTS = new Set([APP.host, ...aliasHosts(process.env.APP_ORIGIN_ALIASES)]);
+const RENDERER_HOSTS = new Set([RENDERER.host, ...aliasHosts(process.env.RENDERER_ORIGIN_ALIASES)]);
 const SUPABASE = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? "http://127.0.0.1:54321").origin;
 const DEV = process.env.NODE_ENV === "development";
 // Wedding invitations can embed a Google Maps view of the venue (keyless embed, no scripts of ours).
@@ -92,8 +106,8 @@ export async function proxy(req: NextRequest) {
   const isApi = path.startsWith("/api/");
 
   let kind: "app" | "renderer";
-  if (host === RENDERER.host) kind = "renderer";
-  else if (host === APP.host) kind = "app";
+  if (RENDERER_HOSTS.has(host)) kind = "renderer";
+  else if (APP_HOSTS.has(host)) kind = "app";
   else return new NextResponse("Unknown host", { status: 421 });
 
   if (kind === "renderer" && !RENDERER_PATHS.test(path)) return notFound("renderer");
